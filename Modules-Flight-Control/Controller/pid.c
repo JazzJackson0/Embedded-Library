@@ -1,0 +1,122 @@
+#include <stdbool. h>
+#include "pid.h"
+
+//Static Prototypes-------------------------------------
+static void Initialize(PIDController *PID);
+
+// Global Variables--------------------------------------			
+
+void PID_Init(PIDController *PID) {
+	
+	PID->Integrator = 0.0f;
+	PID->previous_error = 0.0f;
+	PID->Differentiator = 0.0f;
+	PID->previous_measurement = 0.0f;
+	PID->controller_direction = DIRECT;
+	PID->inAutoMode = false;
+}
+
+double PID_Update(PIDController *PID, double set_point, double current_measurement) {
+	
+	if (!PID->inAutoMode) return;
+	
+	/*Calculate dt: Time since last calculation*/
+	unsigned long current_time = millis(); //Use an RTC Function in place of millis()
+	change_in_time = (double) (current_time - PID->previous_time); // dt
+	
+	if (change_in_time >= PID->sample_time) {
+		
+		PID->current_measurement = current_measurement;
+		/*Current Error*/
+		double current_error = set_point - current_measurement; // e(t)
+		/*Proportional Term*/
+		double proportional_term = PID->proportional_gain * current_error;
+		/*Integral Term*/
+		PID->Integrator += PID->integral_gain * current_error;
+		if (PID->Integrator > PID->max_output) PID->Integrator = PID->max_output;
+		else if (PID->Integrator < PID->min_output) PID->Integrator = PID->min_output;
+		/*Derivative Term*/
+		PID->Differentiator = current_measurement - PID->previous_measurement;
+		/*PID formula*/
+		PID->output_data = proportional_term + PID->Integrator + (PID->derivative_gain * PID->Differentiator);
+		if (PID->output_data > PID->max_output) PID->output_data = PID->max_output;
+		else if (PID->output_data < PID->min_output) PID->output_data = PID->min_output;
+		
+		/*Update Measurement & Time*/
+		PID->previous_measurement = current_measurement;
+		PID->previous_time = current_time;
+	}
+	
+	return PID->output_data;
+}
+
+void Set_Tuning_Parameters(PIDController *PID, double kp, double ki, double kd) {
+	
+	if (PID->proportional_gain < 0 || PID->integral_gain < 0 || PID->derivative_gain < 0) return;
+	
+	double sample_time_in_secs = ((double) PID->sample_time) / 1000;
+	PID->proportional_gain = kp;
+	PID->integral_gain = ki * sample_time_in_secs;
+	PID->derivative_gain = kd / sample_time_in_secs;
+	
+	if (PID->controller_direction == REVERSE) {				
+		
+		PID->proportional_gain = (0 - PID->proportional_gain);
+		PID->integral_gain = (0 - PID->integral_gain);
+		PID->derivative_gain = (0 - PID->derivative_gain);
+	}
+}
+
+void Set_Sample_Time(PIDController *PID, int new_sample_time) {
+	
+	if (new_sample_time > 0) {
+		
+		double ratio = (double) new_sample_time / (double) PID->sample_time;
+		
+		PID->integral_gain *= ratio; // (Ki * dt) * integral(e(t) == Ki integral(e(t) * dt)
+		PID->derivative_gain /= ratio; // (Kd / dt) * de == Kd * (de/dt)
+		
+		PID->sample_time = (unsigned long) new_sample_time;
+	}
+}
+
+void Set_Output_Limits(PIDController *PID, double min, double max) {
+	
+	if (min > max) return;
+	PID->min_output = min;		
+	PID->max_output = max;			
+	
+	if (PID->output_data > PID->max_output) PID->output_data = PID->max_output;			
+	else if (PID->output_data < PID->min_output) PID->output_data = PID->min_output;	
+	
+	if (PID->Integrator > PID->max_output) PID->Integrator = PID->max_output;	
+	else if (PID->Integrator < PID->min_output) PID->Integrator = PID->min_output;
+}
+
+/*
+Manual Mode
+OR
+Automatic Mode
+*/
+void Set_PIDMode(PIDController *PID, int mode) { 
+	
+	bool newAutoMode = (mode == AUTOMATIC);
+	if (newAutoMode && !PID->inAutoMode) Initialize(PID); //If going from manunal to auto
+	PID->inAutoMode = newAutoMode;
+}
+
+void Set_ControllerDirection(PIDController *PID, int direction) {
+	
+	PID->controller_direction = direction;
+}
+
+
+//Helper Functions------------------------------------------------------------------------
+
+static void Initialize(PIDController *PID) {		
+	
+	PID->previous_measurement = PID->current_measurement;	//Keep derivative from spiking
+	PID->Integrator = output_data;									
+	if (PID->Integrator > max_output) PID->Integrator = PID->max_output;
+	else if (PID->Integrator < min_output) PID->Integrator = PID->min_output;
+}
