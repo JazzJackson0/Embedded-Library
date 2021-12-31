@@ -87,7 +87,7 @@ static Matrix* Set_InitialCovariance(KalmanFilter *k_filter) {
 /*
  * 			TO-DO
  * 			-----
- *  - Add timestep loop to kalman filter (watch a video on a code IMU example)
+ *  - Add timestep loop to kalman filter
  *
  *  - Test Code
  *  
