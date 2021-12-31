@@ -25,3 +25,13 @@ void Matrix_Display(double matrix[3][3]) {
 	printf("%-.2lf     %-.2lf     %-.2lf\n", matrix[2][0], matrix[2][1], matrix[2][2]);
 	printf("\n");
 }
+
+/*
+ * 			TO-DO
+ * 			-----
+ *  - Adjust for any size matrix (Check your python matrix mult code for what you did there)
+ *
+ *  - Test Code
+ *  
+ *  - 
+ *  */

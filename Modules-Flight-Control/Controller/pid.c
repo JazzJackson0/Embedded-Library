@@ -1,28 +1,24 @@
-#include <stdbool. h>
+#include <stdbool.h>
 #include "pid.h"
 
 //Static Prototypes-------------------------------------
 static void Initialize(PIDController *PID);
 
-// Global Variables--------------------------------------			
 
-void PID_Init(PIDController *PID) {
+PIDController* PID_Init(void) {
 	
-	PID->Integrator = 0.0f;
-	PID->previous_error = 0.0f;
-	PID->Differentiator = 0.0f;
-	PID->previous_measurement = 0.0f;
-	PID->controller_direction = DIRECT;
-	PID->inAutoMode = false;
+	PIDController PIDTarget = PID_INIT;
+	PIDController *PID = &PIDTarget;
+	return PID;
 }
 
-double PID_Update(PIDController *PID, double set_point, double current_measurement) {
+PIDController* PID_Update(PIDController *PID, double set_point, double current_measurement) {
 	
-	if (!PID->inAutoMode) return;
+	if (!PID->inAutoMode) return (void*) 0;
 	
 	/*Calculate dt: Time since last calculation*/
-	unsigned long current_time = millis(); //Use an RTC Function in place of millis()
-	change_in_time = (double) (current_time - PID->previous_time); // dt
+	unsigned long current_time = someRTCTimeKeepingFunction(); //Use an RTC Function here
+	double change_in_time = (double) (current_time - PID->previous_time); // dt
 	
 	if (change_in_time >= PID->sample_time) {
 		
@@ -47,7 +43,7 @@ double PID_Update(PIDController *PID, double set_point, double current_measureme
 		PID->previous_time = current_time;
 	}
 	
-	return PID->output_data;
+	return PID;
 }
 
 void Set_Tuning_Parameters(PIDController *PID, double kp, double ki, double kd) {
@@ -116,7 +112,18 @@ void Set_ControllerDirection(PIDController *PID, int direction) {
 static void Initialize(PIDController *PID) {		
 	
 	PID->previous_measurement = PID->current_measurement;	//Keep derivative from spiking
-	PID->Integrator = output_data;									
-	if (PID->Integrator > max_output) PID->Integrator = PID->max_output;
-	else if (PID->Integrator < min_output) PID->Integrator = PID->min_output;
+	PID->Integrator = PID->output_data;									
+	if (PID->Integrator > PID->max_output) PID->Integrator = PID->max_output;
+	else if (PID->Integrator < PID->min_output) PID->Integrator = PID->min_output;
 }
+
+
+/*
+ * 			TO-DO
+ * 			-----
+ *  - Test Code
+ *
+ *  - 
+ *  
+ *  - 
+ *  */
