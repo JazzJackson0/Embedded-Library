@@ -1,45 +1,59 @@
 #include <iostream>
+#include "tree.h"
 
-class Tree {
-    public:
+TreeNode::TreeNode(int aData) {
+    currentNumOfChildren = 0;
+    data = aData;
+}
 
-        Tree() {
+int TreeNode::Get_Data() {
+    return data;
+}
 
+void TreeNode::AddChild(int newElement) {
+    children[currentNumOfChildren] = TreeNode(newElement);
+    currentNumOfChildren++;
+}
 
+int TreeNode::FindChild(int element) {
+
+    for (int i = 0; i < currentNumOfChildren; i++) {
+        
+        if (element == children[i].Get_Data()) { return i; }
+    }
+}
+
+void TreeNode::RemoveChild(int elementToRemove) {
+
+    int index = FindChild(elementToRemove);
+    children[index] = 0;
+
+    for (int i = index; i < currentNumOfChildren; i++) {
+        
+        if ((i + 1) < currentNumOfChildren) {
+            children[i] = children[i + 1];
         }
+    }
+    currentNumOfChildren--;   
+}
 
-        void Insert() {
+void TreeNode::InOrderTraversal() {
+    
+}
 
-        }
-
-        void FindValue() {
-
-
-        }
-
-        void RemoveValue() {
-
-            
-        }
-
-        void InorderTraversal() {
-
-        }
-
-        void PreOrderTraversal() {
+void TreeNode::PreOrderTraversal() {
 
 
-        }
+}
 
-        void PostOrderTraversal() {
+void TreeNode::PostOrderTraversal() {
 
-        }
+}
 
-        void PrintTree() {
+void TreeNode::PrintTree() {
 
-        }
+}
 
-};
 
 
 /*
