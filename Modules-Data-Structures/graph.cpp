@@ -79,17 +79,12 @@ void Graph::Get_Edges() {
 
 void Graph::DFS(Vertex starting_vertex, Vertex target_vertex, Vertex *visited) {
 
-    // Implement
-    if (visited == ) {
-
-    }
-
-    visited
+    // Implement Code
 }
 
 void Graph::BFS(Vertex starting_vertex, Vertex target_vertex) {
 
-    // Implement
+    // Implement Code
     Vertex *path;
 }
 

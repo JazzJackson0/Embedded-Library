@@ -37,22 +37,24 @@ void TreeNode::RemoveChild(int elementToRemove) {
     currentNumOfChildren--;   
 }
 
-void TreeNode::InOrderTraversal() {
+void TreeNode::InOrderTraversal(TreeNode *tNode) {
+    if (tNode == NULL) { return; }
     
+    // Implement Code
 }
 
-void TreeNode::PreOrderTraversal() {
+void TreeNode::PreOrderTraversal(TreeNode *tNode) {
+    if (tNode == NULL) { return; }
 
-
+    // Implement Code
 }
 
-void TreeNode::PostOrderTraversal() {
-
+void TreeNode::PostOrderTraversal(TreeNode *tNode) {
+    if (tNode == NULL) { return; }
+    
+    // Implement Code
 }
 
-void TreeNode::PrintTree() {
-
-}
 
 
 

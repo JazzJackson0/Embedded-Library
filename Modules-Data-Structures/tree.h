@@ -18,13 +18,11 @@ class TreeNode {
 
         void RemoveChild(int elementToRemove);
 
-        void InOrderTraversal();
+        void InOrderTraversal(TreeNode *tNode);
 
-        void PreOrderTraversal();
+        void PreOrderTraversal(TreeNode *tNode);
 
-        void PostOrderTraversal();
-
-        void PrintTree();
+        void PostOrderTraversal(TreeNode *tNode);
 
 };
 

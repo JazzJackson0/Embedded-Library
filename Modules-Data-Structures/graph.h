@@ -51,9 +51,9 @@ class Graph {
 
         void Get_Edges();
 
-        void DFS();
+        void DFS(Vertex starting_vertex, Vertex target_vertex, Vertex *visited);
 
-        void BFS();
+        void BFS(Vertex starting_vertex, Vertex target_vertex);
 
 };
 

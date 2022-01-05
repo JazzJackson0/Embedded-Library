@@ -7,8 +7,6 @@ double testMatrix[3][3] = {
 	{1.0, 13.5, 0.0}
 };
 
-void Matrix_Display(double matrix[3][3]);
-
 int main(void) {
 	
 	Matrix_Display(testMatrix);
