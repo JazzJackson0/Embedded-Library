@@ -1,7 +1,39 @@
 #include "gtest/gtest.h"
 #include "queue_Priority.h"
 
-TEST(TestCaseName, TestName) {
-  EXPECT_EQ(1, 1);
-  EXPECT_TRUE(true);
+class PriorityQueueTest : public ::testing::Test {
+
+  protected:
+    
+    PriorityQueueTest() {
+      // Test Set-Up
+    }
+
+    ~PriorityQueueTest() {
+      // Test Tear Down
+    }
+};
+
+TEST(PriorityQueueTest, EnqueueTest) {
+  
+}
+
+TEST(PriorityQueueTest, DequeueTest) {
+  
+}
+
+TEST(PriorityQueueTest, GetSizeTest) {
+  
+}
+
+TEST(PriorityQueueTest, isEmptyTest) {
+  
+}
+
+TEST(PriorityQueueTest, isFullTest) {
+  
+}
+
+TEST(PriorityQueueTest, PeekTest) {
+  
 }

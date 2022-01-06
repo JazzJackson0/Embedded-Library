@@ -1,7 +1,23 @@
 #include "gtest/gtest.h"
 #include "linkedList_Doubly.h"
 
-TEST(TestCaseName, TestName) {
-  EXPECT_EQ(1, 1);
-  EXPECT_TRUE(true);
+class DoublyLinkedListTest : public ::testing::Test {
+
+  protected:
+    
+    DoublyLinkedListTest() {
+      // Test Set-Up
+    }
+
+    ~DoublyLinkedListTest() {
+      // Test Tear Down
+    }
+};
+
+TEST(DoublyLinkedListTest, InsertNodeTest) {
+  
+}
+
+TEST(DoublyLinkedListTest, RemoveNodeTest) {
+  
 }

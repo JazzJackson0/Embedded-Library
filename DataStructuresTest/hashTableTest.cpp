@@ -1,7 +1,27 @@
 #include "gtest/gtest.h"
 #include "hashTable.h"
 
-TEST(TestCaseName, TestName) {
-  EXPECT_EQ(1, 1);
-  EXPECT_TRUE(true);
+class HashTableTest : public ::testing::Test {
+
+  protected:
+    
+    HashTableTest() {
+      // Test Set-Up
+    }
+
+    ~HashTableTest() {
+      // Test Tear Down
+    }
+};
+
+TEST(HashTableTest, InsertElementTest) {
+  
+}
+
+TEST(HashTableTest, FindElementTest) {
+  
+}
+
+TEST(HashTableTest, RemoveElementTest) {
+  
 }

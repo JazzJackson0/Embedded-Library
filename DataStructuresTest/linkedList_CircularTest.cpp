@@ -1,7 +1,39 @@
 #include "gtest/gtest.h"
 #include "linkedList_Circular.h"
 
-TEST(TestCaseName, TestName) {
-  EXPECT_EQ(1, 1);
-  EXPECT_TRUE(true);
+class CircularLinkedListTest : public ::testing::Test {
+
+  protected:
+    
+    CircularLinkedListTest() {
+      // Test Set-Up
+    }
+
+    ~CircularLinkedListTest() {
+      // Test Tear Down
+    }
+};
+
+TEST(CircularLinkedListTest, InsertNodeTest) {
+  
+}
+
+//-------------------------------------------------------------------------------
+
+
+class CircularDoublyLinkedListTest : public ::testing::Test {
+
+  protected:
+    
+    CircularDoublyLinkedListTest() {
+      // Test Set-Up
+    }
+
+    ~CircularDoublyLinkedListTest() {
+      // Test Tear Down
+    }
+};
+
+TEST(CircularDoublyLinkedListTest, InsertNodeTest) {
+  
 }

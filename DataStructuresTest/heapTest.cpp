@@ -1,7 +1,27 @@
 #include "gtest/gtest.h"
 #include "heap.h"
 
-TEST(TestCaseName, TestName) {
-  EXPECT_EQ(1, 1);
-  EXPECT_TRUE(true);
+class HeapTest : public ::testing::Test {
+
+  protected:
+    
+    HeapTest() {
+      // Test Set-Up
+    }
+
+    ~HeapTest() {
+      // Test Tear Down
+    }
+};
+
+TEST(HeapTest, HeapPushTest) {
+  
+}
+
+TEST(HeapTest, HeapPopTest) {
+  
+}
+
+TEST(HeapTest, HeapReplaceTest) {
+  
 }

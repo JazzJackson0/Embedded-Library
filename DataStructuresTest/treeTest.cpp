@@ -1,7 +1,43 @@
 #include "gtest/gtest.h"
 #include "tree.h"
 
-TEST(TestCaseName, TestName) {
-  EXPECT_EQ(1, 1);
-  EXPECT_TRUE(true);
+class TreeTest : public ::testing::Test {
+
+  protected:
+    
+    TreeTest() {
+      // Test Set-Up
+    }
+
+    ~TreeTest() {
+      // Test Tear Down
+    }
+};
+
+TEST(TreeTest, GetDataTest) {
+  
+}
+
+TEST(TreeTest, AddChildTest) {
+  
+}
+
+TEST(TreeTest, FindChildTest) {
+  
+}
+
+TEST(TreeTest, RemoveChildTest) {
+  
+}
+
+TEST(TreeTest, InOrderTraversalTest) {
+  
+}
+
+TEST(TreeTest,  PreOrderTraversalTest) {
+  
+}
+
+TEST(TreeTest, PostOrderTraversalTest) {
+  
 }

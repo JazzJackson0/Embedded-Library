@@ -1,7 +1,23 @@
 #include "gtest/gtest.h"
 #include "queue_Circular.h"
 
-TEST(TestCaseName, TestName) {
-  EXPECT_EQ(1, 1);
-  EXPECT_TRUE(true);
+class CircularQueueTest : public ::testing::Test {
+
+  protected:
+    
+    CircularQueueTest() {
+      // Test Set-Up
+    }
+
+    ~CircularQueueTest() {
+      // Test Tear Down
+    }
+};
+
+TEST(CircularQueueTest, EnqueueTest) {
+  
+}
+
+TEST(CircularQueueTest, DequeueTest) {
+  
 }

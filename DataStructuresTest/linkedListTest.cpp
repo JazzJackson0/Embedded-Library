@@ -1,7 +1,47 @@
 #include "gtest/gtest.h"
 #include "linkedList.h"
 
-TEST(TestCaseName, TestName) {
-  EXPECT_EQ(1, 1);
-  EXPECT_TRUE(true);
+class LinkedListTest : public ::testing::Test {
+
+  protected:
+    
+    LinkedListTest() {
+      // Test Set-Up
+    }
+
+    ~LinkedListTest() {
+      // Test Tear Down
+    }
+};
+
+TEST(LinkedListTest, Set_HeadTest) {
+  
+}
+
+TEST(LinkedListTest, InsertNodeTest) {
+  
+}
+
+TEST(LinkedListTest, RemoveNodeTest) {
+  
+}
+
+TEST(LinkedListTest, FindNodeTest) {
+  
+}
+
+TEST(LinkedListTest, Get_NodeAtIndexTest) {
+  
+}
+
+TEST(LinkedListTest, Get_LastIndexOfTest) {
+  
+}
+
+TEST(LinkedListTest, HasNextTest) {
+  
+}
+
+TEST(LinkedListTest, ToStringTest) {
+  
 }

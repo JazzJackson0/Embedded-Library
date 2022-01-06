@@ -1,7 +1,24 @@
 #include "gtest/gtest.h"
 #include "tree.h"
 
-TEST(TestCaseName, TestName) {
-  EXPECT_EQ(1, 1);
-  EXPECT_TRUE(true);
+class MaxHeapTest : public ::testing::Test {
+
+  protected:
+    
+    MaxHeapTest() {
+      // Test Set-Up
+    }
+
+    ~MaxHeapTest() {
+      // Test Tear Down
+    }
+};
+
+TEST(MaxHeapTest, HeapifyUpTest) {
+  
 }
+
+TEST(MaxHeapTest, HeapifyDownTest) {
+  
+}
+
