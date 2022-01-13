@@ -24,13 +24,12 @@ int MaxHeap::Get_LargestChildIndex(int index) {
             return Get_RightChildIndex(index);
         }
     }
-    return;
+    return NULL;
 }
 
 
-MaxHeap::MaxHeap(int aHeapSize) {
+MaxHeap::MaxHeap(int aHeapSize): Heap(aHeapSize) {
 
-    Heap(aHeapSize);
 }
 
 

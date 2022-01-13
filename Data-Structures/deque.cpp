@@ -2,8 +2,8 @@
 #include "deque.h"
 
 
-Deque::Deque(int capacity) {
-    Queue(capacity);
+Deque::Deque(int capacity): Queue(capacity) {
+
 }
 
 void Deque::EnqueueFront(int data) {

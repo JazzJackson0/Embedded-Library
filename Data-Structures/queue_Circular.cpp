@@ -2,8 +2,7 @@
 #include "queue_Circular.h"
 
 
-CircularQueue::CircularQueue(int capacity) {
-    Queue(capacity);
+CircularQueue::CircularQueue(int capacity): Queue(capacity) {
     queueFrontIndex = -1;
     queueRearIndex = -1;
 }

@@ -5,6 +5,7 @@ typedef struct element {
     int data_value1;
     int data_value2;
     int key;
+    bool empty = true;
 }Element;
 
 class HashTable {

@@ -16,7 +16,7 @@ int HashTable::Hash(int key, int collision) {
 
 HashTable::HashTable(int size) {
     tableSize = size;
-    table = (Element*) calloc(tableSize, sizeof(Element));
+    table = (Element*) malloc(tableSize * sizeof(Element));
 }
 
 int HashTable::Insert_Element(int key, int value1, int value2) {
@@ -24,11 +24,12 @@ int HashTable::Insert_Element(int key, int value1, int value2) {
     elem.key = key;
     elem.data_value1 = value1;
     elem.data_value2 = value2;
+    elem.empty = false;
 
     int index = Hash(key, 0);
 
     //There's space to input element OR Overwriting element
-    if (!(table[index]) || table[index].key == elem.key) {
+    if (table[index].empty || table[index].key == elem.key) {
         
         table[index] = elem;
         return 1;
@@ -40,7 +41,7 @@ int HashTable::Insert_Element(int key, int value1, int value2) {
         int index = Hash(key, collision_count);
 
         //There's space to input element OR Overwriting element
-        if (!(table[index]) || table[index].key == elem.key) {
+        if (table[index].empty || table[index].key == elem.key) {
             
             table[index] = elem;
             return 1;
@@ -52,9 +53,10 @@ int HashTable::Insert_Element(int key, int value1, int value2) {
 
 Element HashTable::Find_Element(int key) {
     int index = Hash(key, 0);
+    Element emptyElement;
 
     //Nothing there
-    if (!(table[index])) { throw "No Data Matching this Key"; }
+    if (table[index].empty) { throw "No Data Matching this Key"; }
 
     //Match
     if (table[index].key == key) { return table[index]; }
@@ -66,27 +68,28 @@ Element HashTable::Find_Element(int key) {
         int index = Hash(key, collision_count);
 
         //Nothing there
-        if (!(table[index])) { throw "No Data Matching this Key"; }
+        if (table[index].empty) { throw "No Data Matching this Key"; }
 
         //Match
         if (table[index].key == key) { return table[index]; }
         
         collision_count++;
     }
-    return nullptr;
+    return emptyElement;
 
 
 }  
 
 int HashTable::Remove_Element(int key) {
     int index = Hash(key, 0);
+    Element emptyElement;
 
     //Nothing there
-    if (!(table[index])) { throw "No Data Matching this Key"; }
+    if (table[index].empty) { throw "No Data Matching this Key"; }
 
     //Match
     if (table[index].key == key) { 
-        table[index] = 0; 
+        table[index] = emptyElement; 
         return 1;
     }
 
@@ -97,11 +100,11 @@ int HashTable::Remove_Element(int key) {
         int index = Hash(key, collision_count);
 
         //Nothing there
-        if (!(table[index])) { throw "No Data Matching this Key"; }
+        if (table[index].empty) { throw "No Data Matching this Key"; }
 
         //Match
         if (table[index].key == key) { 
-            table[index] = 0;
+            table[index] = emptyElement;
             return 1;
         }
         

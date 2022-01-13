@@ -3,11 +3,7 @@
 #include <cstdlib>
 using std::string;
 
-typedef struct node {
-    int data;
-    Node *nextNode = NULL;
-    Node *previousNode = NULL;
-}Node;
+typedef struct node Node;
 
 class LinkedList {
     protected:
@@ -15,7 +11,9 @@ class LinkedList {
         int currentSize;
 
     public:
-    
+
+        LinkedList();
+        
         LinkedList(Node *aHead);
 
         int Get_Size();
@@ -41,3 +39,8 @@ class LinkedList {
 
 };
 
+struct node {
+    int data;
+    Node *nextNode = NULL;
+    Node *previousNode = NULL;
+};

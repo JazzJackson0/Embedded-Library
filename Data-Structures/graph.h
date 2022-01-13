@@ -5,11 +5,7 @@ typedef struct edge {
     int vertex_id;
     int edge_weight;
 }Edge;
-//--------------------------------------------------------------------------
-typedef struct hub {
-    Vertex *vertices;
-    int vertexNum;
-}VertexHub;
+
 //--------------------------------------------------------------------------
 class Vertex {
     private:
@@ -20,7 +16,7 @@ class Vertex {
     public:
         Vertex(int newData);
 
-        int Get_Data() { return data; }
+        int Get_Data();
 
         void Add_Edge(Vertex new_vertex, int weight);
 
@@ -28,8 +24,15 @@ class Vertex {
 
         void Set_HubIndex(int index);
 
-        int Get_HubIndex() { return hub_index; }
+        int Get_HubIndex();
 };
+
+
+//--------------------------------------------------------------------------
+typedef struct hub {
+    Vertex *vertices;
+    int vertexNum;
+}VertexHub;
 
 //----------------------------------------------------------------------------
 
@@ -41,7 +44,7 @@ class Graph {
 
         Graph(bool state);
 
-        bool isDirected() { return directed; }
+        bool isDirected();
 
         void Add_Vertex(Vertex new_vertex);
 

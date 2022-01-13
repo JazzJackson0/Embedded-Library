@@ -1,6 +1,8 @@
 #include <iostream>
 #include "linkedList_Doubly.h"
 
+DoublyLinkedList::DoublyLinkedList(Node* node): LinkedList(node) {
+}
 
 int DoublyLinkedList::InsertNode(Node* node, int index) {
     

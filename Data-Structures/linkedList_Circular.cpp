@@ -2,6 +2,9 @@
 #include "linkedList_Circular.h"
 
 
+CircularLinkedList::CircularLinkedList(Node* node): LinkedList(node) {
+}
+
 int CircularLinkedList::InsertNode(Node* node, int index) {
     
     if (index > currentSize || index < 0) { throw "Index Out of Range"; }
@@ -44,7 +47,13 @@ int CircularLinkedList::InsertNode(Node* node, int index) {
 }
 
 
+
+
+
 //---------------------------------------------------------------------------------------
+
+CircularDoublyLinkedList::CircularDoublyLinkedList(Node* node): DoublyLinkedList(node) {
+}
 
 int CircularDoublyLinkedList::InsertNode(Node* node, int index) {
     

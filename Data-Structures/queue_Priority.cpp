@@ -1,8 +1,8 @@
 #include <iostream>
 #include "queue_Priority.h"
 
-PriorityQueue::PriorityQueue(int size) {
-    Heap(size);
+PriorityQueue::PriorityQueue(int size): MinHeap(size) {
+
 }
 
 void PriorityQueue::Enqueue(int data) {

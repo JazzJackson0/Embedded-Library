@@ -78,7 +78,7 @@ int Heap::HeapPop() {
         return min_value;
     }
 
-    return;
+    return NULL;
 }
 
 void Heap::HeapReplace(int newValue) {

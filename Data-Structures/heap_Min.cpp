@@ -25,16 +25,15 @@ int MinHeap::Get_SmallestChildIndex(int index) {
         }
     }
 
-    return;
+    return NULL;
 }
 
 MinHeap::MinHeap() {
 
 }
 
-MinHeap::MinHeap(int aHeapSize) {
+MinHeap::MinHeap(int aHeapSize): Heap(aHeapSize) {
 
-    Heap(aHeapSize);
 }
 
 
