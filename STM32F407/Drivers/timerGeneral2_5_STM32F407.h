@@ -9,98 +9,20 @@ uint8_t GeneralTimer2_5_Start(uint8_t timerNum, uint16_t prescaler, uint16_t tim
 void GeneralTimer2_5_PWM_Start(uint8_t timerNum, uint8_t captCompNum, uint16_t prescaler, uint16_t time, float dutycycle);
 void GeneralTimer2_5_PWM_Update(uint8_t timerNum, uint8_t captCompNum, uint16_t time, float dutycycle);
 
-#define CLOCK 0x40023800
-#define APB1 0x40
-#define TIM2 0x40000000
-#define TIM3 0x40000400
-#define TIM4 0x40000800
-#define TIM5 0x40000C00
 
 //CLOCK
+#define CLOCK 0x40023800
+#define APB1 0x40
 #define ADDR_TIM2_5_CLOCK ( (TIM2_5_CLOCK*) ((CLOCK) + APB1) )
 
-//TIMER 2
-#define ADDR_TIM2_CONTROL1 ( (TIM2_5_CONTROL1*) ((TIM2) + 0x00) )
-#define ADDR_TIM2_CONTROL2 ( (TIM2_5_CONTROL2*) ((TIM2) + 0x04) )
-#define ADDR_TIM2_SLAVEMODE_CONTROL ( (TIM2_5_SLAVEMODE_CONTROL*) ((TIM2) + 0x08) )
-#define ADDR_TIM2_DMAINTERRUPT_ENABLE ( (TIM2_5_DMAINTERRUPT_ENABLE*) ((TIM2) + 0x0C) )
-#define ADDR_TIM2_STATUS ( (TIM2_5_STATUS*) ((TIM2) + 0x10) )
-#define ADDR_TIM2_EVENTGEN ( (TIM2_5_EVENTGEN*) ((TIM2) + 0x14) )
-#define ADDR_TIM2_CAPTURECOMP_MODE1 ( (TIM2_5_CAPTURECOMP_MODE1*) ((TIM2) + 0x18) )
-#define ADDR_TIM2_CAPTURECOMP_MODE2 ( (TIM2_5_CAPTURECOMP_MODE2*) ((TIM2) + 0x1C) )
-#define ADDR_TIM2_CAPTURECOMP_ENABLE ( (TIM2_5_CAPTURECOMP_ENABLE*) ((TIM2) + 0x20) )
-#define ADDR_TIM2_COUNTER ( (TIM2_5_COUNTER*) ((TIM2) + 0x24) )
-#define ADDR_TIM2_PRESCALER ( (TIM2_5_PRESCALER*) ((TIM2) + 0x28) )
-#define ADDR_TIM2_AUTORELOAD ( (TIM2_5_AUTORELOAD*) ((TIM2) + 0x2C) )
-#define ADDR_TIM2_CAPTURECOMP1 ( (TIM2_5_CAPTURECOMPx*) ((TIM2) + 0x34) )
-#define ADDR_TIM2_CAPTURECOMP2 ( (TIM2_5_CAPTURECOMPx*) ((TIM2) + 0x38) )
-#define ADDR_TIM2_CAPTURECOMP3 ( (TIM2_5_CAPTURECOMPx*) ((TIM2) + 0x3C) )
-#define ADDR_TIM2_CAPTURECOMP4 ( (TIM2_5_CAPTURECOMPx*) ((TIM2) + 0x40) )
-#define ADDR_TIM2_DMA_CONTROL ( (TIM2_5_DMA_CONTROL*) ((TIM2) + 0x48) )
-#define ADDR_TIM2_DMA_FULLTXADDRESS ( (TIM2_5_DMA_FULLTXADDRESS*) ((TIM2) + 0x4C) )
-#define ADDR_TIM2_OPTION ( (TIM2_OPTION*) ((TIM2) + 0x50) )
+//TIMERS
+typedef struct _general_timer_2_5 GEN_TIMER_2_5x;
+#define TIM_GEN_2_5_BASE 0x40000000
+#define ADDR_TIM2 ( (GEN_TIMER_2_5x*) ((TIM_GEN_2_5_BASE) + 0x000) )
+#define ADDR_TIM3 ( (GEN_TIMER_2_5x*) ((TIM_GEN_2_5_BASE) + 0x400) )
+#define ADDR_TIM4 ( (GEN_TIMER_2_5x*) ((TIM_GEN_2_5_BASE) + 0x800) )
+#define ADDR_TIM5 ( (GEN_TIMER_2_5x*) ((TIM_GEN_2_5_BASE) + 0xC00) )
 
-
-//TIMER 3
-#define ADDR_TIM3_CONTROL1 ( (TIM2_5_CONTROL1*) ((TIM3) + 0x00) )
-#define ADDR_TIM3_CONTROL2 ( (TIM2_5_CONTROL2*) ((TIM3) + 0x04) )
-#define ADDR_TIM3_SLAVEMODE_CONTROL ( (TIM2_5_SLAVEMODE_CONTROL*) ((TIM3) + 0x08) )
-#define ADDR_TIM3_DMAINTERRUPT_ENABLE ( (TIM2_5_DMAINTERRUPT_ENABLE*) ((TIM3) + 0x0C) )
-#define ADDR_TIM3_STATUS ( (TIM2_5_STATUS*) ((TIM3) + 0x10) )
-#define ADDR_TIM3_EVENTGEN ( (TIM2_5_EVENTGEN*) ((TIM3) + 0x14) )
-#define ADDR_TIM3_CAPTURECOMP_MODE1 ( (TIM2_5_CAPTURECOMP_MODE1*) ((TIM3) + 0x18) )
-#define ADDR_TIM3_CAPTURECOMP_MODE2 ( (TIM2_5_CAPTURECOMP_MODE2*) ((TIM3) + 0x1C) )
-#define ADDR_TIM3_CAPTURECOMP_ENABLE ( (TIM2_5_CAPTURECOMP_ENABLE*) ((TIM3) + 0x20) )
-#define ADDR_TIM3_COUNTER ( (TIM2_5_COUNTER*) ((TIM3) + 0x24) )
-#define ADDR_TIM3_PRESCALER ( (TIM2_5_PRESCALER*) ((TIM3) + 0x28) )
-#define ADDR_TIM3_AUTORELOAD ( (TIM2_5_AUTORELOAD*) ((TIM3) + 0x2C) )
-#define ADDR_TIM3_CAPTURECOMP1 ( (TIM2_5_CAPTURECOMPx*) ((TIM3) + 0x34) )
-#define ADDR_TIM3_CAPTURECOMP2 ( (TIM2_5_CAPTURECOMPx*) ((TIM3) + 0x38) )
-#define ADDR_TIM3_CAPTURECOMP3 ( (TIM2_5_CAPTURECOMPx*) ((TIM3) + 0x3C) )
-#define ADDR_TIM3_CAPTURECOMP4 ( (TIM2_5_CAPTURECOMPx*) ((TIM3) + 0x40) )
-#define ADDR_TIM3_DMA_CONTROL ( (TIM2_5_DMA_CONTROL*) ((TIM3) + 0x48) )
-#define ADDR_TIM3_DMA_FULLTXADDRESS ( (TIM2_5_DMA_FULLTXADDRESS*) ((TIM3) + 0x4C) )
-
-//TIMER 4
-#define ADDR_TIM4_CONTROL1 ( (TIM2_5_CONTROL1*) ((TIM4) + 0x00) )
-#define ADDR_TIM4_CONTROL2 ( (TIM2_5_CONTROL2*) ((TIM4) + 0x04) )
-#define ADDR_TIM4_SLAVEMODE_CONTROL ( (TIM2_5_SLAVEMODE_CONTROL*) ((TIM4) + 0x08) )
-#define ADDR_TIM4_DMAINTERRUPT_ENABLE ( (TIM2_5_DMAINTERRUPT_ENABLE*) ((TIM4) + 0x0C) )
-#define ADDR_TIM4_STATUS ( (TIM2_5_STATUS*) ((TIM4) + 0x10) )
-#define ADDR_TIM4_EVENTGEN ( (TIM2_5_EVENTGEN*) ((TIM4) + 0x14) )
-#define ADDR_TIM4_CAPTURECOMP_MODE1 ( (TIM2_5_CAPTURECOMP_MODE1*) ((TIM4) + 0x18) )
-#define ADDR_TIM4_CAPTURECOMP_MODE2 ( (TIM2_5_CAPTURECOMP_MODE2*) ((TIM4) + 0x1C) )
-#define ADDR_TIM4_CAPTURECOMP_ENABLE ( (TIM2_5_CAPTURECOMP_ENABLE*) ((TIM4) + 0x20) )
-#define ADDR_TIM4_COUNTER ( (TIM2_5_COUNTER*) ((TIM4) + 0x24) )
-#define ADDR_TIM4_PRESCALER ( (TIM2_5_PRESCALER*) ((TIM4) + 0x28) )
-#define ADDR_TIM4_AUTORELOAD ( (TIM2_5_AUTORELOAD*) ((TIM4) + 0x2C) )
-#define ADDR_TIM4_CAPTURECOMP1 ( (TIM2_5_CAPTURECOMPx*) ((TIM4) + 0x34) )
-#define ADDR_TIM4_CAPTURECOMP2 ( (TIM2_5_CAPTURECOMPx*) ((TIM4) + 0x38) )
-#define ADDR_TIM4_CAPTURECOMP3 ( (TIM2_5_CAPTURECOMPx*) ((TIM4) + 0x3C) )
-#define ADDR_TIM4_CAPTURECOMP4 ( (TIM2_5_CAPTURECOMPx*) ((TIM4) + 0x40) )
-#define ADDR_TIM4_DMA_CONTROL ( (TIM2_5_DMA_CONTROL*) ((TIM4) + 0x48) )
-#define ADDR_TIM4_DMA_FULLTXADDRESS ( (TIM2_5_DMA_FULLTXADDRESS*) ((TIM4) + 0x4C) )
-
-//TIMER 5
-#define ADDR_TIM5_CONTROL1 ( (TIM2_5_CONTROL1*) ((TIM5) + 0x00) )
-#define ADDR_TIM5_CONTROL2 ( (TIM2_5_CONTROL2*) ((TIM5) + 0x04) )
-#define ADDR_TIM5_SLAVEMODE_CONTROL ( (TIM2_5_SLAVEMODE_CONTROL*) ((TIM5) + 0x08) )
-#define ADDR_TIM5_DMAINTERRUPT_ENABLE ( (TIM2_5_DMAINTERRUPT_ENABLE*) ((TIM5) + 0x0C) )
-#define ADDR_TIM5_STATUS ( (TIM2_5_STATUS*) ((TIM5) + 0x10) )
-#define ADDR_TIM5_EVENTGEN ( (TIM2_5_EVENTGEN*) ((TIM5) + 0x14) )
-#define ADDR_TIM5_CAPTURECOMP_MODE1 ( (TIM2_5_CAPTURECOMP_MODE1*) ((TIM5) + 0x18) )
-#define ADDR_TIM5_CAPTURECOMP_MODE2 ( (TIM2_5_CAPTURECOMP_MODE2*) ((TIM5) + 0x1C) )
-#define ADDR_TIM5_CAPTURECOMP_ENABLE ( (TIM2_5_CAPTURECOMP_ENABLE*) ((TIM5) + 0x20) )
-#define ADDR_TIM5_COUNTER ( (TIM2_5_COUNTER*) ((TIM5) + 0x24) )
-#define ADDR_TIM5_PRESCALER ( (TIM2_5_PRESCALER*) ((TIM5) + 0x28) )
-#define ADDR_TIM5_AUTORELOAD ( (TIM2_5_AUTORELOAD*) ((TIM5) + 0x2C) )
-#define ADDR_TIM5_CAPTURECOMP1 ( (TIM2_5_CAPTURECOMPx*) ((TIM5) + 0x34) )
-#define ADDR_TIM5_CAPTURECOMP2 ( (TIM2_5_CAPTURECOMPx*) ((TIM5) + 0x38) )
-#define ADDR_TIM5_CAPTURECOMP3 ( (TIM2_5_CAPTURECOMPx*) ((TIM5) + 0x3C) )
-#define ADDR_TIM5_CAPTURECOMP4 ( (TIM2_5_CAPTURECOMPx*) ((TIM5) + 0x40) )
-#define ADDR_TIM5_DMA_CONTROL ( (TIM2_5_DMA_CONTROL*) ((TIM5) + 0x48) )
-#define ADDR_TIM5_DMA_FULLTXADDRESS ( (TIM2_5_DMA_FULLTXADDRESS*) ((TIM5) + 0x4C) )
-#define ADDR_TIM5_OPTION ( (TIM5_OPTION*) ((TIM5) + 0x50) )
 
 //TIM2_5_CONTROL1
 /*Alignment Mode*/
@@ -181,6 +103,10 @@ void GeneralTimer2_5_PWM_Update(uint8_t timerNum, uint8_t captCompNum, uint16_t 
 #define CAPTURE_EVERY_4EVENTS 0x02
 #define CAPTURE_EVERY_8EVENTS 0x03
 
+// Registers----------------------------------------------------------------------
+typedef struct {
+	const uint32_t reserved:32;
+}GENERAL_TIMER_2_5_RESERVED;
 
 typedef struct {
 	volatile uint32_t tim2_StartTick:1;
@@ -382,16 +308,44 @@ typedef struct {
 	volatile uint16_t rw_DMABurstAccessRegister:16;
 }TIM2_5_DMA_FULLTXADDRESS;
 
-typedef struct {
-	const uint16_t reserved0:10;
-	volatile uint16_t rw_InternalTrig1Remap:2; //No Macros For This
-	const uint16_t reserved1:4;
-}TIM2_OPTION;
+typedef union {
+	struct {
+		const uint16_t reserved0:10;
+		volatile uint16_t rw_InternalTrig1Remap:2; //No Macros For This
+		const uint16_t reserved1:4;
+	}TIM2Option;
 
-typedef struct {
-	const uint16_t reserved0:6;
-	volatile uint16_t rw_TimerInput4Remap:2; //No Macros For This
-	const uint16_t reserved1:8;
-}TIM5_OPTION;
+	struct {
+		const uint16_t reserved0:6;
+		volatile uint16_t rw_TimerInput4Remap:2; //No Macros For This
+		const uint16_t reserved1:8;
+	}TIM5Option;
+}TIM2_5_OPTION;
+
+
+struct _general_timer_2_5 {
+	TIM2_5_CONTROL1 ControlReg1; // 0x00
+	TIM2_5_CONTROL2 ControlReg2; // 0x04
+	TIM2_5_SLAVEMODE_CONTROL SlaveModeControlReg; // 0x08
+	TIM2_5_DMAINTERRUPT_ENABLE DMAInterruptEnableReg; // 0x0C
+	TIM2_5_STATUS StatusReg; // 0x10
+	TIM2_5_EVENTGEN EventGenReg; // 0x14
+	TIM2_5_CAPTURECOMP_MODE1 CaptureCompModeReg1; // 0x18
+	TIM2_5_CAPTURECOMP_MODE2 CaptureCompModeReg2; // 0x1C
+	TIM2_5_CAPTURECOMP_ENABLE CaptureCompEnableReg; // 0x20
+	TIM2_5_COUNTER CounterReg; // 0x24
+	TIM2_5_PRESCALER PrescalerReg; // 0x28
+	TIM2_5_AUTORELOAD AutoReloadReg; // 0x2C
+	GENERAL_TIMER_2_5_RESERVED reserved0; // 0x30
+	TIM2_5_CAPTURECOMPx CaptureComp1Reg; // 0x34
+	TIM2_5_CAPTURECOMPx CaptureComp2Reg; // 0x38
+	TIM2_5_CAPTURECOMPx CaptureComp3Reg; // 0x3C
+	TIM2_5_CAPTURECOMPx CaptureComp4Reg; // 0x40
+	GENERAL_TIMER_2_5_RESERVED reserved1; // 0x44
+	TIM2_5_DMA_CONTROL DMAControlReg; // 0x48
+	TIM2_5_DMA_FULLTXADDRESS DMAFullTXAddressReg; // 0x4C
+	TIM2_5_OPTION OptionReg; //0x50 
+};
+
 
 #endif

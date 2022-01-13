@@ -13,52 +13,18 @@ uint8_t I2C_Receive(uint8_t i2cNumber);
 uint8_t I2C_Transmit(uint8_t i2cNumber, uint8_t data);
 void I2C_Stop(uint8_t i2cNumber);
 
-
+//CLOCK
 #define CLOCK 0x40023800
 #define APB1 0x40
-#define I2C1 0x40005400
-#define I2C2 0x40005800
-#define I2C3 0x40005C00
-
-//CLOCK
 #define ADDR_I2C_CLOCK ( (I2C_CLOCK*) ((CLOCK) + APB1) )
 
-//I2C 1
-#define ADDR_I2C1_CONTROL1 ( (I2C_CONTROL1*) ((I2C1) + 0x00) )
-#define ADDR_I2C1_CONTROL2 ( (I2C_CONTROL2*) ((I2C1) + 0x04) )
-#define ADDR_I2C1_OWNADDRESS1 ( (I2C_OWNADDRESS1*) ((I2C1) + 0x08) )
-#define ADDR_I2C1_OWNADDRESS2 ( (I2C_OWNADDRESS2*) ((I2C1) + 0x0C) )
-#define ADDR_I2C1_DATA ( (I2C_DATA*) ((I2C1) + 0x10) )
-#define ADDR_I2C1_STATUS1 ( (I2C_STATUS1*) ((I2C1) + 0x14) )
-#define ADDR_I2C1_STATUS2 ( (I2C_STATUS2*) ((I2C1) + 0x18) )
-#define ADDR_I2C1_CLOCKCONTROL ( (I2C_CLOCKCONTROL*) ((I2C1) + 0x1C) )
-#define ADDR_I2C1_RISETIME ( (I2C_RISETIME*) ((I2C1) + 0x20) )
-#define ADDR_I2C1_NOISEFILTER ( (I2C_NOISEFILTER*) ((I2C1) + 0x24) )
+//I2Cx
+typedef struct _i2c I2Cx;
+#define I2C_BASE 0x40005000
+#define ADDR_I2C1 ( (I2Cx*) ((I2C_BASE) + 0x400) )
+#define ADDR_I2C2 ( (I2Cx*) ((I2C_BASE) + 0x800) )
+#define ADDR_I2C3 ( (I2Cx*) ((I2C_BASE) + 0xC00) )
 
-
-//I2C 2
-#define ADDR_I2C2_CONTROL1 ( (I2C_CONTROL1*) ((I2C2) + 0x00) )
-#define ADDR_I2C2_CONTROL2 ( (I2C_CONTROL2*) ((I2C2) + 0x04) )
-#define ADDR_I2C2_OWNADDRESS1 ( (I2C_OWNADDRESS1*) ((I2C2) + 0x08) )
-#define ADDR_I2C2_OWNADDRESS2 ( (I2C_OWNADDRESS2*) ((I2C2) + 0x0C) )
-#define ADDR_I2C2_DATA ( (I2C_DATA*) ((I2C2) + 0x10) )
-#define ADDR_I2C2_STATUS1 ( (I2C_STATUS1*) ((I2C2) + 0x14) )
-#define ADDR_I2C2_STATUS2 ( (I2C_STATUS2*) ((I2C2) + 0x18) )
-#define ADDR_I2C2_CLOCKCONTROL ( (I2C_CLOCKCONTROL*) ((I2C2) + 0x1C) )
-#define ADDR_I2C2_RISETIME ( (I2C_RISETIME*) ((I2C2) + 0x20) )
-#define ADDR_I2C2_NOISEFILTER ( (I2C_NOISEFILTER*) ((I2C2) + 0x24) )
-
-//I2C 3
-#define ADDR_I2C3_CONTROL1 ( (I2C_CONTROL1*) ((I2C3) + 0x00) )
-#define ADDR_I2C3_CONTROL2 ( (I2C_CONTROL2*) ((I2C3) + 0x04) )
-#define ADDR_I2C3_OWNADDRESS1 ( (I2C_OWNADDRESS1*) ((I2C3) + 0x08) )
-#define ADDR_I2C3_OWNADDRESS2 ( (I2C_OWNADDRESS2*) ((I2C3) + 0x0C) )
-#define ADDR_I2C3_DATA ( (I2C_DATA*) ((I2C3) + 0x10) )
-#define ADDR_I2C3_STATUS1 ( (I2C_STATUS1*) ((I2C3) + 0x14) )
-#define ADDR_I2C3_STATUS2 ( (I2C_STATUS2*) ((I2C3) + 0x18) )
-#define ADDR_I2C3_CLOCKCONTROL ( (I2C_CLOCKCONTROL*) ((I2C3) + 0x1C) )
-#define ADDR_I2C3_RISETIME ( (I2C_RISETIME*) ((I2C3) + 0x20) )
-#define ADDR_I2C3_NOISEFILTER ( (I2C_NOISEFILTER*) ((I2C3) + 0x24) )
 
 //I2C_CONTROL1
 /*SMBus Type*/
@@ -191,6 +157,20 @@ typedef struct {
 	volatile uint16_t disable_AnalogNoiseFilter:1;
 	const uint16_t reserved:11;
 }I2C_NOISEFILTER;
+
+
+struct _i2c {
+	I2C_CONTROL1 ControlReg1; //0x00
+	I2C_CONTROL2 ControlReg2; //0x04
+	I2C_OWNADDRESS1 OwnAddressReg1; //0x08
+	I2C_OWNADDRESS2 OwnAddressReg2; //0x0C
+	I2C_DATA DataReg; //0x10
+	I2C_STATUS1 StatusReg1; //0x14
+	I2C_STATUS2 StatusReg2; //0x18
+	I2C_CLOCKCONTROL ClockControlReg; //0x1C
+	I2C_RISETIME RiseTimeReg; //0x20
+	I2C_NOISEFILTER NoiseFilterReg; //0x24
+};
 
 
 #endif

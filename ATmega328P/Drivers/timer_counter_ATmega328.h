@@ -1,16 +1,6 @@
 //ATmega328/P Driver
 #ifndef TIMER_COUNTER_H_
 #define TIMER_COUNTER_H_
-#include <stdint.h>
-
-typedef enum _ClockSpeed E_ClockSpeed;
-
-void Timer_Start(uint8_t timerID, E_ClockSpeed clockSpeed, uint16_t time);
-uint8_t OneShotTimer_Start(uint8_t timerID, E_ClockSpeed clockSpeed, uint16_t time);
-void PWM_Init(uint8_t timerID, E_ClockSpeed clockSpeed, uint16_t time, float dutyCycle);
-void PWM_Update(uint8_t timerID, uint16_t time, float dutyCycle);
-uint16_t Stop_Timer(uint8_t timerID);
-
 /*TIMER Pins ---------------------------		
 		+ Timer/Counter0 External Counter (Input): PC4
 		+ Timer/Counter0 Output Compare Match A (Output): PD6
@@ -31,44 +21,32 @@ TIM1 = 16-Bit Timer/Counter. With PWM Capability
 TIM2 = 8-Bit Timer/Counter. With PWM Capability AND Asynchronous Operation 
 */
 
-//Powered by AVR Clock Control Unit
+#include <stdint.h>
+
+typedef enum _ClockSpeed E_ClockSpeed;
+
+//DECLARATIONS
+void Timer_Start(uint8_t timerID, E_ClockSpeed clockSpeed, uint16_t time);
+uint8_t OneShotTimer_Start(uint8_t timerID, E_ClockSpeed clockSpeed, uint16_t time);
+void PWM_Init(uint8_t timerID, E_ClockSpeed clockSpeed, uint16_t time, float dutyCycle);
+void PWM_Update(uint8_t timerID, uint16_t time, float dutyCycle);
+uint16_t Stop_Timer(uint8_t timerID);
+
+
+//TIMER (Powered by AVR Clock Control Unit)
+typedef struct _timer0_2 TIMER0_2;
+typedef struct _timer1 TIMER1;
+typedef struct _interrupt_masks INT_MASK;
+typedef struct _interrupt_flags INT_FLAG;
 #define ATMEGA_BASEADDRESS 0x0000
-
-#define ADDR_GENERAL_TIM_CONTROL ( (GENERAL_TIM_CONTROL*) ((ATMEGA_BASEADDRESS) + 0x23) )//0,1,2
+//--------
 #define ADDR_POWER_REDUCTION_TIM ( (POWER_REDUCTION_TIM*) ((ATMEGA_BASEADDRESS) + 0x64) ) //Found in Power Management Section
-//TIM0
-#define ADDR_TIM0_CONTROLA ( (TIMx_CONTROLA*) ((ATMEGA_BASEADDRESS) + 0x24) )
-#define ADDR_TIM0_CONTROLB ( (TIM0_2_CONTROLB*) ((ATMEGA_BASEADDRESS) + 0x25) )
-#define ADDR_TIM0_INTERRUPT_MASK ( (TIM0_2_INTERRUPT_MASK*) ((ATMEGA_BASEADDRESS) + 0x6E) )
-#define ADDR_TIM0_COUNTERVALUE ( (TIM0_2_COUNTERVALUE*) ((ATMEGA_BASEADDRESS) + 0x26) )
-#define ADDR_TIM0_OUTPUTCOMPARE_A ( (TIM0_2_OUTPUTCOMPARE_A*) ((ATMEGA_BASEADDRESS) + 0x27) )
-#define ADDR_TIM0_OUTPUTCOMPARE_B ( (TIM0_2_OUTPUTCOMPARE_B*) ((ATMEGA_BASEADDRESS) + 0x28) )
-#define ADDR_TIM0_INTERRUPT_FLAGS ( (TIM0_2_INTERRUPT_FLAGS*) ((ATMEGA_BASEADDRESS) + 0x15) )
-
-//TIM1
-#define ADDR_TIM1_CONTROLA ( (TIMx_CONTROLA*) ((ATMEGA_BASEADDRESS) + 0x80) )
-#define ADDR_TIM1_CONTROLB ( (TIM1_CONTROLB*) ((ATMEGA_BASEADDRESS) + 0x81) )
-#define ADDR_TIM1_CONTROLC ( (TIM1_CONTROLC*) ((ATMEGA_BASEADDRESS) + 0x82) )
-#define ADDR_TIM1_COUNTERVALUE_LOW ( (TIM1_COUNTERVALUE_LOW*) ((ATMEGA_BASEADDRESS) + 0x84) )
-#define ADDR_TIM1_COUNTERVALUE_HIGH ( (TIM1_COUNTERVALUE_HIGH*) ((ATMEGA_BASEADDRESS) + 0x85) )
-#define ADDR_TIM1_INPUPTCAPTURE_LOW ( (TIM1_INPUPTCAPTURE_LOW*) ((ATMEGA_BASEADDRESS) + 0x86) )
-#define ADDR_TIM1_INPUPTCAPTURE_HIGH ( (TIM1_INPUPTCAPTURE_HIGH*) ((ATMEGA_BASEADDRESS) + 0x87) )
-#define ADDR_TIM1_OUTPUTCOMPARE_A_LOW ( (TIM1_OUTPUTCOMPARE_A_LOW*) ((ATMEGA_BASEADDRESS) + 0x88) )
-#define ADDR_TIM1_OUTPUTCOMPARE_A_HIGH ( (TIM1_OUTPUTCOMPARE_A_HIGH*) ((ATMEGA_BASEADDRESS) + 0x89) )
-#define ADDR_TIM1_OUTPUTCOMPARE_B_LOW ( (TIM1_OUTPUTCOMPARE_B_LOW*) ((ATMEGA_BASEADDRESS) + 0x8A) )
-#define ADDR_TIM1_OUTPUTCOMPARE_B_HIGH ( (TIM1_OUTPUTCOMPARE_B_HIGH*) ((ATMEGA_BASEADDRESS) + 0x8B) )
-#define ADDR_TIM1_INTERRUPT_MASK ( (TIM1_INTERRUPT_MASK*) ((ATMEGA_BASEADDRESS) + 0x6F) )
-#define ADDR_TIM1_INTERRUPT_FLAGS ( (TIM1_INTERRUPT_FLAGS*) ((ATMEGA_BASEADDRESS) + 0x16) )
-
-//TIM2
-#define ADDR_TIM2_CONTROLA ( (TIMx_CONTROLA*) ((ATMEGA_BASEADDRESS) + 0xB0) )
-#define ADDR_TIM2_CONTROLB ( (TIM0_2_CONTROLB*) ((ATMEGA_BASEADDRESS) + 0xB1) )
-#define ADDR_TIM2_COUNTERVALUE ( (TIM0_2_COUNTERVALUE*) ((ATMEGA_BASEADDRESS) + 0xB2) )
-#define ADDR_TIM2_OUTPUTCOMPARE_A ( (TIM0_2_OUTPUTCOMPARE_A*) ((ATMEGA_BASEADDRESS) + 0xB3) )
-#define ADDR_TIM2_OUTPUTCOMPARE_B ( (TIM0_2_OUTPUTCOMPARE_B*) ((ATMEGA_BASEADDRESS) + 0xB4) )
-#define ADDR_TIM2_INTERRUPT_MASK ( (TIM0_2_INTERRUPT_MASK*) ((ATMEGA_BASEADDRESS) + 0x70) )
-#define ADDR_TIM2_INTERRUPT_FLAGS ( (TIM0_2_INTERRUPT_FLAGS*) ((ATMEGA_BASEADDRESS) + 0x17) )
-#define ADDR_TIM2_ASYNCHRONOUS_STATUS ( (TIM2_ASYNCHRONOUS_STATUS*) ((ATMEGA_BASEADDRESS) + 0xB6) )
+#define ADDR_GENERAL_TIM_CONTROL ( (GENERAL_TIM_CONTROL*) ((ATMEGA_BASEADDRESS) + 0x23) )//0,1,2
+#define ADDR_TIM0 ( (TIMER0_2*) ((ATMEGA_BASEADDRESS) + 0x24) )
+#define ADDR_TIM1 ( (TIMER1*) ((ATMEGA_BASEADDRESS) + 0x80) )
+#define ADDR_TIM2 ( (TIMER0_2*) ((ATMEGA_BASEADDRESS) + 0xB0) )
+#define ADDR_INT_MASK ( (INT_MASK*) ((ATMEGA_BASEADDRESS) + 0x6E) )
+#define ADDR_INT_FLAG ( (INT_FLAG*) ((ATMEGA_BASEADDRESS) + 0x35) )
 
 
 //TIMx_CONTROLA
@@ -164,6 +142,10 @@ typedef struct {
 }POWER_REDUCTION_TIM;
 
 typedef struct {
+	const uint8_t reserved:8;
+}TIMER_RESERVED;
+
+typedef struct {
 	volatile uint8_t reset_Tim0AndTim1Prescaler:1;
 	volatile uint8_t reset_Tim2Prescaler:1;
 	const uint8_t reserved:5;
@@ -204,43 +186,43 @@ typedef struct {
 }TIM0_2_COUNTERVALUE;
 
 typedef struct {
-	volatile uint8_t rw_CounterValueLowByte:8;
+	volatile uint8_t rw_CounterValue:8;
 }TIM1_COUNTERVALUE_LOW;
 
 typedef struct {
-	volatile uint8_t rw_CounterValueHighByte:8;
+	volatile uint8_t rw_CounterValue:8;
 }TIM1_COUNTERVALUE_HIGH;
 
 typedef struct {
-	volatile uint8_t rw_OutputCompareRegAValue:8;
+	volatile uint8_t rw_OutputCompareValue:8;
 }TIM0_2_OUTPUTCOMPARE_A;
 
 typedef struct {
-	volatile uint8_t rw_OutputCompareRegBValue:8;
+	volatile uint8_t rw_OutputCompareValue:8;
 }TIM0_2_OUTPUTCOMPARE_B;
 
 typedef struct {
-	volatile uint8_t rw_InputCaptValueLowByte:8;
+	volatile uint8_t rw_InputCaptValue:8;
 }TIM1_INPUPTCAPTURE_LOW;
 
 typedef struct {
-	volatile uint8_t rw_InputCaptValueHighByte:8;
+	volatile uint8_t rw_InputCaptValue:8;
 }TIM1_INPUPTCAPTURE_HIGH;
 
 typedef struct {
-	volatile uint8_t rw_OutputCompAValueLowByte:8;
+	volatile uint8_t rw_OutputCompAValue:8;
 }TIM1_OUTPUTCOMPARE_A_LOW;
 
 typedef struct {
-	volatile uint8_t rw_OutputCompAValueHighByte:8;
+	volatile uint8_t rw_OutputCompAValue:8;
 }TIM1_OUTPUTCOMPARE_A_HIGH;
 
 typedef struct {
-	volatile uint8_t rw_OutputCompBValueLowByte:8;
+	volatile uint8_t rw_OutputCompBValue:8;
 }TIM1_OUTPUTCOMPARE_B_LOW;
 
 typedef struct {
-	volatile uint8_t rw_OutputCompBValueHighByte:8;
+	volatile uint8_t rw_OutputCompBValue:8;
 }TIM1_OUTPUTCOMPARE_B_HIGH;
 
 typedef struct {
@@ -285,5 +267,43 @@ typedef struct {
 	volatile uint8_t enable_ExternalClockInput:1;
 	const uint8_t reserved:1;
 }TIM2_ASYNCHRONOUS_STATUS;
+
+
+struct _timer0_2 {
+	TIMx_CONTROLA ControlAReg; // Tim0: 0x24 | Tim2: 0xB0
+	TIM0_2_CONTROLB ControlBReg; // Tim0: 0x25 | Tim2: 0xB1
+	TIM0_2_COUNTERVALUE CounterValueReg; // Tim0: 0x26 | Tim2: 0xB2
+	TIM0_2_OUTPUTCOMPARE_A OutputCompareAReg; // Tim0: 0x27 | Tim2: 0xB3
+	TIM0_2_OUTPUTCOMPARE_B OutputCompareBReg; // Tim0: 0x28	| Tim2: 0xB4
+	TIMER_RESERVED reserved; // Tim2: 0xB5
+	TIM2_ASYNCHRONOUS_STATUS Tim2_AsyncStatusReg; // Tim2: 0xB6
+};
+
+struct _timer1 {
+	TIMx_CONTROLA ControlAReg; // 0x80
+	TIM1_CONTROLB ControlBReg; // 0x81
+	TIM1_CONTROLC ControlCReg; // 0x82
+	TIMER_RESERVED reserved; // 0x83
+	TIM1_COUNTERVALUE_LOW CounterValueLowReg; // 0x84
+	TIM1_COUNTERVALUE_HIGH CounterValueHighReg; // 0x85
+	TIM1_INPUPTCAPTURE_LOW InputCaptureLowReg; // 0x86
+	TIM1_INPUPTCAPTURE_HIGH InputCaptureHighReg; // 0x87
+	TIM1_OUTPUTCOMPARE_A_LOW OutputCompareALowReg; // 0x88
+	TIM1_OUTPUTCOMPARE_A_HIGH OutputCompareAHighReg; // 0x89
+	TIM1_OUTPUTCOMPARE_B_LOW OutputCompareBLowReg; // 0x8A
+	TIM1_OUTPUTCOMPARE_B_HIGH OutputCompareBHighReg; // 0x8B
+};
+
+struct _interrupt_masks {
+	TIM0_2_INTERRUPT_MASK Tim0InterruptMaskReg; // 0x6E
+	TIM1_INTERRUPT_MASK Tim1InterruptMaskReg; // 0x6F
+	TIM0_2_INTERRUPT_MASK Tim2InterruptMaskReg; // 0x70
+};
+
+struct _interrupt_flags {
+	TIM0_2_INTERRUPT_FLAGS Tim0InterruptFlagsReg; // 0x35
+	TIM1_INTERRUPT_FLAGS Tim1InterruptFlagsReg; // 0x36
+	TIM0_2_INTERRUPT_FLAGS Tim2InterruptFlagsReg; // 0x37
+};
 
 #endif

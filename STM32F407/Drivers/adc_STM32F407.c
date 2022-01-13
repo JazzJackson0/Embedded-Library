@@ -5,78 +5,74 @@
 //Static Prototypes------------------------------------------------------------
 static void ADC_PinInit(uint8_t adcNumber);
 static void ADCClockSelect(uint8_t adcNumber);
-static void Set_ChannelSamplePeriod(E_Channel adcChannel, E_SamplePeriod cycles);
+static ADCx* Get_ADC(char adcNum);
 
 //Global Variables-------------------------------------------------------
 ADC_CLOCK *const ADCClock = ADDR_ADC_CLOCK;
 //ADC
-ADC_STATUS *const adcStat = ADDR_ADC_STATUS;
-ADC_CONTROL1 *const adcControl1 = ADDR_ADC_CONTROL1;
-ADC_CONTROL2 *const adcControl2 = ADDR_ADC_CONTROL2;
-ADC_COMMON_CONTROL *const adcCommonControl = ADDR_ADC_COMMON_CONTROL;
-ADC_SAMPLETIME1 *const adcSampleTim1 = ADDR_ADC_SAMPLETIME1;
-ADC_SAMPLETIME2 *const adcSampleTim2 = ADDR_ADC_SAMPLETIME2;
-ADC_REGULAR_SEQUENCE1 *const adcRegSeq1 = ADDR_ADC_REGULAR_SEQUENCE1;
-ADC_REGULAR_SEQUENCE2 *const adcRegSeq2 = ADDR_ADC_REGULAR_SEQUENCE2;
-ADC_REGULAR_SEQUENCE3 *const adcRegSeq3 = ADDR_ADC_REGULAR_SEQUENCE3;
-ADC_REGULAR_DATA *const adcRegData = ADDR_ADC_REGULAR_DATA;
+CommonADCRegisters *const CommonRegs = ADDR_COMMON_ADC_REG;
+ADCx *const ADC1 = ADDR_ADC1;
+ADCx *const ADC2 = ADDR_ADC2;
+ADCx *const ADC3 = ADDR_ADC3;
 
 
-void ADCRegularChannel_Init(E_Channel adcChannel, uint8_t conversionOrderNum, E_SamplePeriod cycles) {
+void ADCRegularChannel_Init(uint8_t adcNumber, E_Channel adcChannel, uint8_t conversionOrderNum, E_SamplePeriod cycles) {
 	
+	ADCx *const ADC = Get_ADC(adcNumber);
+
 	//Set-up Channel for Analog signal.
-	adcControl2->enable_ADC = 0;
+	ADC->ControlReg2.enable_ADC = 0;
 	Set_ChannelSamplePeriod(adcChannel, cycles);
 	
 	switch (conversionOrderNum) {
 		
 		case 1 :
-			adcRegSeq3->rw_1stRegSequenceConversion = adcChannel;
+			ADC->RegularSequenceReg3.rw_1stRegSequenceConversion = adcChannel;
 			break;
 		case 2 :
-			adcRegSeq3->rw_2ndRegSequenceConversion = adcChannel;
+			ADC->RegularSequenceReg3.rw_2ndRegSequenceConversion = adcChannel;
 			break;
 		case 3 :
-			adcRegSeq3->rw_3rdRegSequenceConversion = adcChannel;
+			ADC->RegularSequenceReg3.rw_3rdRegSequenceConversion = adcChannel;
 			break;
 		case 4 :
-			adcRegSeq3->rw_4thRegSequenceConversion = adcChannel;
+			ADC->RegularSequenceReg3.rw_4thRegSequenceConversion = adcChannel;
 			break;
 		case 5 :
-			adcRegSeq3->rw_5thRegSequenceConversion = adcChannel;
+			ADC->RegularSequenceReg3.rw_5thRegSequenceConversion = adcChannel;
 			break;
 		case 6 :
-			adcRegSeq3->rw_6thRegSequenceConversion = adcChannel;
+			ADC->RegularSequenceReg3.rw_6thRegSequenceConversion = adcChannel;
 			break;
 		case 7 :
-			adcRegSeq2->rw_7thRegSequenceConversion = adcChannel;
+			ADC->RegularSequenceReg2.rw_7thRegSequenceConversion = adcChannel;
 			break;
 		case 8 :
-			adcRegSeq2->rw_8thRegSequenceConversion = adcChannel;
+			ADC->RegularSequenceReg2.rw_8thRegSequenceConversion = adcChannel;
 			break;
 		case 9 :
-			adcRegSeq2->rw_9thRegSequenceConversion = adcChannel;
+			ADC->RegularSequenceReg2.rw_9thRegSequenceConversion = adcChannel;
 			break;
 		case 10 :
-			adcRegSeq2->rw_10thRegSequenceConversion = adcChannel;
+			ADC->RegularSequenceReg2.rw_10thRegSequenceConversion = adcChannel;
 			break;
 		case 11 :
-			adcRegSeq2->rw_11thRegSequenceConversion = adcChannel;
+			ADC->RegularSequenceReg2.rw_11thRegSequenceConversion = adcChannel;
 			break;
 		case 12 :
-			adcRegSeq2->rw_12thRegSequenceConversion = adcChannel;
+			ADC->RegularSequenceReg2.rw_12thRegSequenceConversion = adcChannel;
 			break;
 		case 13 :
-			adcRegSeq1->rw_13thRegSequenceConversion = adcChannel;
+			ADC->RegularSequenceReg1.rw_13thRegSequenceConversion = adcChannel;
 			break;
 		case 14 :
-			adcRegSeq1->rw_14thRegSequenceConversion = adcChannel;
+			ADC->RegularSequenceReg1.rw_14thRegSequenceConversion = adcChannel;
 			break;
 		case 15 :
-			adcRegSeq1->rw_15thRegSequenceConversion = adcChannel;
+			ADC->RegularSequenceReg1.rw_15thRegSequenceConversion = adcChannel;
 			break;
 		case 16 :
-			adcRegSeq1->rw_16thRegSequenceConversion = adcChannel;
+			ADC->RegularSequenceReg1.rw_16thRegSequenceConversion = adcChannel;
 			break;
 	}
 }
@@ -86,20 +82,21 @@ void ADC_Init(uint8_t adcNumber, E_Resolution resolution, E_ConvertLen singleCon
 	
 	ADC_PinInit(adcNumber);
 	ADCClockSelect(adcNumber);
+	ADCx *const ADC = Get_ADC(adcNumber);;
 	
-	adcControl1->rw_Resolution = resolution;
-	adcControl2->singleConvert0_continuousConvert1 = singleContinuous;
-	adcRegSeq1->rw_NumOfConversionsInRegSequence = numOfConversions;
-	
-	adcControl2->enable_ADC = 1; 
+	ADC->ControlReg1.rw_Resolution = resolution;
+	ADC->ControlReg2.singleConvert0_continuousConvert1 = singleContinuous;
+	ADC->RegularSequenceReg1.rw_NumOfConversionsInRegSequence = numOfConversions;
+	ADC->ControlReg2.enable_ADC = 1; 
 }
 
 
-int16_t ADC_ReadRegularChannel(void) {
+int16_t ADC_ReadRegularChannel(uint8_t adcNumber) {
 	
-	adcControl2->start_RegChannelConversion = 1;
-	while (adcStat->regChannelEndOfConversion == 0);	
-	return adcRegData->read_RegularConversionDataResult;
+	ADCx *const ADC = Get_ADC(adcNumber);
+	ADC->ControlReg2.start_RegChannelConversion = 1;
+	while (ADC->StatusReg.regChannelEndOfConversion == 0);	
+	return ADC->RegularDataReg.read_RegularConversionDataResult;
 }
 
 /**
@@ -182,70 +179,22 @@ static void ADCClockSelect(uint8_t adcNumber) {
 			ADCClock->adc3_StartTick = 1;
 			break;
 	}
-}	
+}
 
-static void Set_ChannelSamplePeriod(E_Channel adcChannel, E_SamplePeriod cycles) {
-	
-	switch (adcChannel) {
-		
-		case 0 :
-			adcSampleTim2->rw_Channel0SamplePeriod = cycles;
-			break;
-		case 1 :
-			adcSampleTim2->rw_Channel1SamplePeriod = cycles;
-			break;
-		case 2 :
-			adcSampleTim2->rw_Channel2SamplePeriod = cycles;
-			break;
-		case 3 :
-			adcSampleTim2->rw_Channel3SamplePeriod = cycles;
-			break;
-		case 4 :
-			adcSampleTim2->rw_Channel4SamplePeriod = cycles;
-			break;
-		case 5 :
-			adcSampleTim2->rw_Channel5SamplePeriod = cycles;
-			break;
-		case 6 :
-			adcSampleTim2->rw_Channel6SamplePeriod = cycles;
-			break;
-		case 7 :
-			adcSampleTim2->rw_Channel7SamplePeriod = cycles;
-			break;
-		case 8 :
-			adcSampleTim2->rw_Channel8SamplePeriod = cycles;
-			break;
-		case 9 :
-			adcSampleTim2->rw_Channel9SamplePeriod = cycles;
-			break;
-		case 10 :
-			adcSampleTim1->rw_Channel10SamplePeriod = cycles;
-			break;
-		case 11 :
-			adcSampleTim1->rw_Channel11SamplePeriod = cycles;
-			break;
-		case 12 :
-			adcSampleTim1->rw_Channel12SamplePeriod = cycles;
-			break;
-		case 13 :
-			adcSampleTim1->rw_Channel13SamplePeriod = cycles;
-			break;
-		case 14 :
-			adcSampleTim1->rw_Channel14SamplePeriod = cycles;
-			break;
-		case 15 :
-			adcSampleTim1->rw_Channel15SamplePeriod = cycles;
-			break;
-		case 16 :
-			adcSampleTim1->rw_Channel16SamplePeriod = cycles;
-			break;
-		case 17 :
-			adcSampleTim1->rw_Channel17SamplePeriod = cycles;
-			break;
-		case 18 :
-			adcSampleTim1->rw_Channel18SamplePeriod = cycles;
-			break;
+static ADCx* Get_ADC(char adcNum) {
+
+	switch(adcNum) {
+
+		case 1:
+			return ADC1;
+		case 2:
+			return ADC2;
+		case 3:
+			return ADC3;
+		default:
+			return;
 	}
 }
+
 		
 

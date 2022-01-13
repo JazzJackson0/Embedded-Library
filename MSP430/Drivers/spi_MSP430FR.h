@@ -10,44 +10,17 @@ typedef enum _BitOrder E_BitOrder;
 typedef enum _Phase E_Phase;
 typedef enum _Polarity E_Polarity;
 
+//DECLARATIONS
 void SPI_ClockSetup(char* spiNumber, E_SPIClockSource clockSrc, uint16_t clockDivide, E_Phase phase, E_Polarity polarity);
 void SPI_Init(char* spiNumber, E_SPIMode mode, E_BitOrder bitOrder, uint8_t dataSize);
 uint8_t SPI_Transmit_and_Receive(char* spiNumber, uint8_t data);
-uint8_t SPI_Receive(char* spiNumber);
 
-#define SPI_A0 0x05C0  //These Base Addresses can be used by UART as well??
-#define SPI_A1 0x05E0 //These Base Addresses can be used by UART as well??
-#define SPI_B0 0x00 //WHERE IS THIS ADDRESS??? 
-
-//SPI_A0
-#define ADDR_SPI_A0_CONTROL ( (SPI_CONTROL*) ((SPI_A0) + 0x00) )
-#define ADDR_SPI_A0_BITRATE_CONTROL ( (SPI_BITRATE_CONTROL*) ((SPI_A0) + 0x06) )
-#define ADDR_SPI_A0_STATUS ( (SPI_STATUS*) ((SPI_A0) + 0x0A) )
-#define ADDR_SPI_A0_RECEIVE_BUFFER ( (SPI_RECEIVE_BUFFER*) ((SPI_A0) + 0x0C) )
-#define ADDR_SPI_A0_TRANSMIT_BUFFER ( (SPI_TRANSMIT_BUFFER*) ((SPI_A0) + 0x0E) )
-#define ADDR_SPI_A0_INTERRUPT_ENABLE ( (SPI_INTERRUPT_ENABLE*) ((SPI_A0) + 0x1A) )
-#define ADDR_SPI_A0_INTERRUPT_FLAG ( (SPI_INTERRUPT_FLAG*) ((SPI_A0) + 0x1C) )
-#define ADDR_SPI_A0_INTERRUPT_VECTOR ( (SPI_INTERRUPT_VECTOR*) ((SPI_A0) + 0x1E) )
-
-//SPI_A1
-#define ADDR_SPI_A1_CONTROL ( (SPI_CONTROL*) ((SPI_A1) + 0x00) )
-#define ADDR_SPI_A1_BITRATE_CONTROL ( (SPI_BITRATE_CONTROL*) ((SPI_A1) + 0x06) )
-#define ADDR_SPI_A1_STATUS ( (SPI_STATUS*) ((SPI_A1) + 0x0A) )
-#define ADDR_SPI_A1_RECEIVE_BUFFER ( (SPI_RECEIVE_BUFFER*) ((SPI_A1) + 0x0C) )
-#define ADDR_SPI_A1_TRANSMIT_BUFFER ( (SPI_TRANSMIT_BUFFER*) ((SPI_A1) + 0x0E) )
-#define ADDR_SPI_A1_INTERRUPT_ENABLE ( (SPI_INTERRUPT_ENABLE*) ((SPI_A1) + 0x1A) )
-#define ADDR_SPI_A1_INTERRUPT_FLAG ( (SPI_INTERRUPT_FLAG*) ((SPI_A1) + 0x1C) )
-#define ADDR_SPI_A1_INTERRUPT_VECTOR ( (SPI_INTERRUPT_VECTOR*) ((SPI_A1) + 0x1E) )
-
-//SPI_B0 (NOT CORRECT ADDRESSES. THIS IS CURRENTLY JUST A COPY OF A1)
-#define ADDR_SPI_B0_CONTROL ( (SPI_CONTROL*) ((SPI_B0) + 0x00) )
-#define ADDR_SPI_B0_BITRATE_CONTROL ( (SPI_BITRATE_CONTROL*) ((SPI_B0) + 0x06) )
-#define ADDR_SPI_B0_STATUS ( (SPI_STATUS*) ((SPI_B0) + 0x0A) )
-#define ADDR_SPI_B0_RECEIVE_BUFFER ( (SPI_RECEIVE_BUFFER*) ((SPI_B0) + 0x0C) )
-#define ADDR_SPI_B0_TRANSMIT_BUFFER ( (SPI_TRANSMIT_BUFFER*) ((SPI_B0) + 0x0E) )
-#define ADDR_SPI_B0_INTERRUPT_ENABLE ( (SPI_INTERRUPT_ENABLE*) ((SPI_B0) + 0x1A) )
-#define ADDR_SPI_B0_INTERRUPT_FLAG ( (SPI_INTERRUPT_FLAG*) ((SPI_B0) + 0x1C) )
-#define ADDR_SPI_B0_INTERRUPT_VECTOR ( (SPI_INTERRUPT_VECTOR*) ((SPI_B0) + 0x1E) )
+//SPI
+typedef struct _spi SPIx;
+#define SPI_BASE 0x0500
+#define ADDR_SPI_A0 ( (SPIx*) ((SPI_BASE) + 0xC0) ) // Base Addresses shared with UART
+#define ADDR_SPI_A1 ( (SPIx*) ((SPI_BASE) + 0xE0) ) // Base Addresses shared with UART
+#define ADDR_SPI_B0 ( (SPIx*) ((SPI_BASE) + 0x00) ) // WHERE IS THIS ADDRESS??? 
 
 /*Synchronous Mode Type*/
 #define SPI_3PIN 0x00
@@ -84,6 +57,10 @@ enum _Polarity {
 };
 
 //Registers------------------------------------------------------------------
+typedef struct {
+	const uint16_t reserved:16;
+}SPI_RESERVED;
+
 typedef struct {
 	volatile uint16_t enable_SoftwareReset:1;
 	volatile uint16_t ssPinForArbitration0_ssPinForSlaveEnable1:1;
@@ -136,5 +113,24 @@ typedef struct {
 typedef struct {
 	volatile uint16_t read_HighestPriorityInterruptPending:16;
 }SPI_INTERRUPT_VECTOR;
+
+struct _spi {
+	SPI_CONTROL ControlReg; // 0x00
+	SPI_RESERVED reserved0; // 0x02
+	SPI_RESERVED reserved1; // 0x04
+	SPI_BITRATE_CONTROL BitRateControlReg; // 0x06
+	SPI_RESERVED reserved2; // 0x08
+	SPI_STATUS StatusReg; // 0x0A
+	SPI_RECEIVE_BUFFER RXBufferReg; // 0x0C
+	SPI_TRANSMIT_BUFFER TXBufferReg; // 0x0E
+	SPI_RESERVED reserved3; // 0x10
+	SPI_RESERVED reserved4; // 0x12
+	SPI_RESERVED reserved5; // 0x14
+	SPI_RESERVED reserved6; // 0x16
+	SPI_RESERVED reserved7; // 0x18
+	SPI_INTERRUPT_ENABLE InterruptEnableReg; // 0x1A
+	SPI_INTERRUPT_FLAG InterruptFlagReg; // 0x1C
+	SPI_INTERRUPT_VECTOR InterruptVectorReg; // 0x1E
+};
 
 #endif

@@ -8,16 +8,8 @@ static void I2C_PinInit(void);
 
 //Global Variables-------------------------------------------------------
 //I2C B0
-I2C_CONTROL_WORD0 *const I2CControlWord0 = ADDR_I2C_CONTROL_WORD0;
-I2C_CONTROL_WORD1 *const I2CControlWord1 = ADDR_I2C_CONTROL_WORD1;
-I2C_BITRATE_CONTROL_WORD *const I2CBitControlWord = ADDR_I2C_BITRATE_CONTROL_WORD;
-I2C_STATUS_WORD *const I2CStatWord = ADDR_I2C_STATUS_WORD;
-I2C_RECEIVE_BUFFER *const I2CRX = ADDR_I2C_RECEIVE_BUFFER;
-I2C_TRANSMIT_BUFFER *const I2CTX = ADDR_I2C_TRANSMIT_BUFFER;
-I2C_SLAVE_ADDRESS *const I2CSlaveAddrss = ADDR_I2C_SLAVE_ADDRESS; 
-I2C_OWN_ADDRESS0 *const I2COwnAddrss = ADDR_I2C_OWN_ADDRESS0;
-I2C_INTERRUPT_ENABLE *const I2CIntEnable = ADDR_I2C_INTERRUPT_ENABLE;
-I2C_INTERRUPT_FLAG *const I2CIntFlag = ADDR_I2C_INTERRUPT_FLAG;
+I2Cx *const I2C_x = ADDR_I2C;
+
 
 /**
 - CLOCK SPEED: According to '3.2 Clock System Operation'
@@ -29,66 +21,74 @@ I2C_INTERRUPT_FLAG *const I2CIntFlag = ADDR_I2C_INTERRUPT_FLAG;
 		+ SMCLK & MCLK = 125KHz
 **/
 void I2C_Init(E_I2CClockSource clockSrc, uint16_t clockDivide, E_I2CMode mode, E_AddressSize ownSize) {
+
+	I2Cx *const I2C = I2C_x;
+	if ( I2C->ControlWord0Reg.enable_SoftwareReset != 1 ) 
+		I2C->ControlWord0Reg.enable_SoftwareReset = 1;
 	
-	if ( I2CControlWord0->enable_SoftwareReset != 1 ) I2CControlWord0->enable_SoftwareReset = 1;
+	I2C->ControlWord0Reg.select_ClockSource = clockSrc;
+	I2C->BitRateControlWordReg.rw_BitClockPrescaler = clockDivide;
 	
-	I2CControlWord0->select_ClockSource = clockSrc;
-	I2CBitControlWord->rw_BitClockPrescaler = clockDivide;
+	I2C->ControlWord1Reg.rw_AutoStopConditionType = NONE;
+	I2C->ControlWord0Reg.enable_SynchronousMode = 1;
+	I2C->ControlWord0Reg.rw_SynchronousModeType = I2C_MODE;
+	I2C->InterruptEnableReg.enable_NACKInterrupt = 1;
 	
-	I2CControlWord1->rw_AutoStopConditionType = NONE;
-	I2CControlWord0->enable_SynchronousMode = 1;
-	I2CControlWord0->rw_SynchronousModeType = I2C_MODE;
-	I2CIntEnable->enable_NACKInterrupt = 1;
-	
-	I2CControlWord0->slaveMode0_masterMode1 = mode;
-	I2CControlWord0->ownAddrss7Bit0_ownAddrss10Bit1 = ownSize;
+	I2C->ControlWord0Reg.slaveMode0_masterMode1 = mode;
+	I2C->ControlWord0Reg.ownAddrss7Bit0_ownAddrss10Bit1 = ownSize;
 	
 	I2C_PinInit();
-	I2CControlWord0->enable_SoftwareReset = 0; // Releases module for operation
+	I2C->ControlWord0Reg.enable_SoftwareReset = 0; // Releases module for operation
 }
 
 void I2C_SetSlaveAddress(uint16_t slaveAddrs, E_AddressSize slaveSize) {
 	
-	I2CSlaveAddrss->rw_SlaveAddress = slaveAddrs;
-	I2CControlWord0->slaveAddrss7Bit0_slaveAddrss10Bit1 = slaveSize;
+	I2Cx *const I2C = I2C_x;
+	I2C->SlaveAddressReg.rw_SlaveAddress = slaveAddrs;
+	I2C->ControlWord0Reg.slaveAddrss7Bit0_slaveAddrss10Bit1 = slaveSize;
 }
 
 void Start_RX_Mode(void) {
 	
-	I2CControlWord0->receiver0_transmitter1 = 0;
-	while (I2CStatWord->busBusy == 1);
-	I2CControlWord0->send_StartCondition = 1;
+	I2Cx *const I2C = I2C_x;
+	I2C->ControlWord0Reg.receiver0_transmitter1 = 0;
+	while (I2C->StatusWordReg.busBusy == 1);
+	I2C->ControlWord0Reg.send_StartCondition = 1;
 }
 
 void Start_TX_Mode(void) {
 	
-	I2CControlWord0->receiver0_transmitter1 = 1;
-	while (I2CStatWord->busBusy == 1);
-	I2CControlWord0->send_StartCondition = 1;
+	I2Cx *const I2C = I2C_x;
+	I2C->ControlWord0Reg.receiver0_transmitter1 = 1;
+	while (I2C->StatusWordReg.busBusy == 1);
+	I2C->ControlWord0Reg.send_StartCondition = 1;
 }
 
 uint8_t I2C_Receive(void) {
 	
-	while (I2CStatWord->busBusy == 1);
+	I2Cx *const I2C = I2C_x;
+	while (I2C->StatusWordReg.busBusy == 1);
 			
-	I2CControlWord0->send_ACK = 1;
-	return I2CRX->read_DataReceived;
+	I2C->ControlWord0Reg.send_ACK = 1;
+	return I2C->RXBufferReg.read_DataReceived;
 }
 
 uint8_t I2C_Transmit(uint8_t data) {
 	
-	while (I2CStatWord->busBusy == 1);
+	I2Cx *const I2C = I2C_x;
+	while (I2C->StatusWordReg.busBusy == 1);
 
-	I2CTX->rw_DataToTransmit = data;
+	I2C->TXBufferReg.rw_DataToTransmit = data;
 	
-	if (I2CIntFlag->nACKInterruptOccurred == 1) return 0;
+	if (I2C->InterruptFlagReg.nACKInterruptOccurred == 1) return 0;
 	
 	else return 1;
 }
 
 void I2C_Stop(void) {
 	
-	I2CControlWord0->send_StopCondition = 1;
+	I2Cx *const I2C = I2C_x;
+	I2C->ControlWord0Reg.send_StopCondition = 1;
 }
 
 //Helper Functions--------------------------------------------------------------------------------------------------------
@@ -101,9 +101,7 @@ I2C Pins ---------------------------------
 		------------------------------------
 **/
 static void I2C_PinInit(void) {
-	
-	//Turn Off Watchdog Timer
-	Watchdog_Off();
+
 	//SCK
 	Pin_Init('1', 7, NONE, SECONDARY_F, NO_PULL);
 	//SDA

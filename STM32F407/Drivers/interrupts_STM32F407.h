@@ -1,7 +1,6 @@
 //STM32F407 Driver
 #ifndef INTERRUPTS_H_
 #define INTERRUPTS_H_
-
 /*Interrupt Pins ---------------------------
 		+ No Alternate Function Assignments Needed
 			(Just use the Registers)
@@ -11,17 +10,7 @@
 //Do Interrupts Even Need a Clock Source? There is Nothing in APB2
 //#define CLOCK 0x40023800
 //#define APB2 0x44
-#define EXTI 0x40013C00
-
 //#define INTERRUPT_CLOCK ( (INTERRUPT_CLOCK*) ((CLOCK) + APB2) )
-
-#define ADDR_INTERRUPT_MASK ( (INTERRUPT_MASK*) ((EXTI) + 0x00) )
-#define ADDR_INTERRUPT_EVENTMASK ( (INTERRUPT_EVENTMASK*) ((EXTI) + 0x04) )
-#define ADDR_INTERRUPT_RISING_TRIGGER_SELECTION ( (INTERRUPT_RISING_TRIGGER_SELECTION*) ((EXTI) + 0x08) )
-#define ADDR_INTERRUPT_FALLING_TRIGGER_SELECTION ( (INTERRUPT_FALLING_TRIGGER_SELECTION*) ((EXTI) + 0x0C) )
-#define ADDR_SOFTWARE_INTERRUPT_EVENT ( (SOFTWARE_INTERRUPT_EVENT*) ((EXTI) + 0x10) )
-#define ADDR_PENDING ( (PENDING*) ((EXTI) + 0x14) )
-
 /*
 typedef struct {
 	volatile uint32_t :1;
@@ -29,7 +18,15 @@ typedef struct {
 }INTERRUPT_CLOCK;
 */
 
+//INTERRUPTS
+typedef struct _exti EXTIx;
+#define EXTI_BASE 0x40013C00
+#define ADDR_EXTI ( (EXTIx*) (EXTI_BASE) )
 
+
+
+
+//Registers----------------------------------------------------------------------
 typedef struct {
 	volatile uint32_t unmask_Line0InterruptRequest:1;
 	volatile uint32_t unmask_Line1InterruptRequest:1;
@@ -197,5 +194,14 @@ typedef struct {
 	const uint32_t reserved:9;
 }PENDING;
 
+
+struct _exti {
+	INTERRUPT_MASK MaskReg; // 0x00
+	INTERRUPT_EVENTMASK EventMaskReg; // 0x04
+	INTERRUPT_RISING_TRIGGER_SELECTION RisingTrigSelectReg; // 0x08
+	INTERRUPT_FALLING_TRIGGER_SELECTION FallingTrigSelectReg; // 0x0C
+	SOFTWARE_INTERRUPT_EVENT SoftwareInterruptEventReg; // 0x10
+	PENDING PendingReg; // 0x14
+};
 
 #endif

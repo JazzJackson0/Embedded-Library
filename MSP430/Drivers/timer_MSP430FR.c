@@ -1,36 +1,20 @@
 #include <stdint.h>
-#include <stddef.h>
 //#include <stdio.h>
 #include "timer_MSP430FR.h"
 #include "digital_io_MSP430FR.h"
 
 //Static Prototypes--------------------------------------------------------------
 static void PWM_PinInit(char* timerID);
-static TIM_A_CONTROL* Get_TimAControlReg(char* timerNum);
-static TIMx_COUNTER* Get_CounterReg(char* timerNum);
-static TIM_A_CAPTURECOMP_CONTROLx* Get_TimACaptCompReg(char* timerNum);
-static TIMx_CAPTURECOMPx* Get_CaptComp0Reg(char* timerNum);
-static TIMx_CAPTURECOMPx* Get_CaptComp1Reg(char* timerNum);
+static TIMERAx* Get_TimerA(char* timerID);
 
 //Global Variables------------------------------------------------------------------
-//TIMER A0
-TIM_A_CONTROL *const TimControl_A0 = ADDR_TIM_A0_CONTROL;
-TIMx_COUNTER *const TimCount_A0 = ADDR_TIM_A0_COUNTER;
-TIM_A_CAPTURECOMP_CONTROLx *const TimCaptCompControl_A0 = ADDR_TIM_A0_CAPTURECOMP_CONTROL0;
-TIMx_CAPTURECOMPx *const TimCaptComp0_A0 = ADDR_TIM_A0_CAPTURECOMP0;
-TIMx_CAPTURECOMPx *const TimCaptComp1_A0 = ADDR_TIM_A0_CAPTURECOMP1;
-//TIMER A1
-TIM_A_CONTROL *const TimControl_A1 = ADDR_TIM_A1_CONTROL;
-TIMx_COUNTER *const TimCount_A1 = ADDR_TIM_A1_COUNTER;
-TIM_A_CAPTURECOMP_CONTROLx *const TimCaptCompControl_A1 = ADDR_TIM_A1_CAPTURECOMP_CONTROL0;
-TIMx_CAPTURECOMPx *const TimCaptComp0_A1 = ADDR_TIM_A1_CAPTURECOMP0;
-TIMx_CAPTURECOMPx *const TimCaptComp1_A1 = ADDR_TIM_A1_CAPTURECOMP1;
-//TIMER B0
-TIM_B_CONTROL *const TimControl_B0 = ADDR_TIM_B_CONTROL;
-TIMx_COUNTER *const TimCount_B0 = ADDR_TIM_B_COUNTER;
-TIM_B_CAPTURECOMP_CONTROLx *const TimCaptCompControl_B0 = ADDR_TIM_B_CAPTURECOMP_CONTROL0;
-TIMx_CAPTURECOMPx *const TimCaptComp0_B0 = ADDR_TIM_B_CAPTURECOMP0;
-TIMx_CAPTURECOMPx *const TimCaptComp1_B0 = ADDR_TIM_B_CAPTURECOMP1;
+//TIMER
+TIMERAx *const Tim_A0 = ADDR_TIM_A0;
+TIMERAx *const Tim_A1 = ADDR_TIM_A1;
+TIMERAx *const Tim_A2 = ADDR_TIM_A2;
+TIMERAx *const Tim_A3 = ADDR_TIM_A3;
+TIMERBx *const Tim_B0 = ADDR_TIM_B0;
+
 
 /**
 - CLOCK SPEED: According to '3.2 Clock System Operation'
@@ -45,29 +29,33 @@ void Timer_Start(char* timerID, E_TimerPrescaler prescale, uint32_t time) {
 	
 	if (timerID == "B0") { 
 
+		TIMERBx *const TIMER = Tim_B0;
+
 		PWM_PinInit(timerID);
-		TimControl_B0->select_ClockSource = TIM_SM_CLOCK;
+		TIMER->ControlReg.select_ClockSource = TIM_SM_CLOCK;
 
-		TimCount_B0->rw_TimerCountValue = 0x00;
-		TimControl_B0->rw_InputClockDivider = prescale;
-		TimCaptComp0_B0->rw_CaptureCompareValue = time;
+		TIMER->CounterReg.rw_TimerCountValue = 0x00;
+		TIMER->ControlReg.rw_InputClockDivider = prescale;
+		TIMER->CaptureCompReg0.rw_CaptureCompareValue = time;
 
-		TimControl_B0->rw_TimerMode = UP_MODE; //Start the timer.
+		TIMER->ControlReg.rw_TimerMode = UP_MODE; //Start the timer.
 	}
 	
 	else { 
-	
+		
+		TIMERAx *const TIMER = Get_TimerA(timerID);
+
 		TIM_A_CONTROL *const TimControl = Get_TimAControlReg(timerID); 
 		TIMx_CAPTURECOMPx *const TimCaptComp0 = Get_CaptComp0Reg(timerID);
 
 		PWM_PinInit(timerID);
-		TimControl->select_ClockSource = TIM_SM_CLOCK;
+		TIMER->ControlReg.select_ClockSource = TIM_SM_CLOCK;
 		
-		TimControl->clearTimerCounter = 1;
-		TimControl->rw_InputClockDivider = prescale;
-		TimCaptComp0->rw_CaptureCompareValue = time;
+		TIMER->ControlReg.clearTimerCounter = 1;
+		TIMER->ControlReg.rw_InputClockDivider = prescale;
+		TIMER->CaptureCompReg0.rw_CaptureCompareValue = time;
 		
-		TimControl->rw_TimerMode = UP_MODE; //Start the timer.
+		TIMER->ControlReg.rw_TimerMode = UP_MODE; //Start the timer.
 	}
 }
 
@@ -76,63 +64,68 @@ void PWM_Start(char* timerID, E_TimerPrescaler prescale, uint32_t time, float du
 	
 	if (timerID == "B0") { 
 		
-		PWM_PinInit(timerID);
-		TimControl_B0->select_ClockSource = TIM_SM_CLOCK;
-		
-		TimCount_B0->rw_TimerCountValue = 0x00;
-		TimControl_B0->rw_InputClockDivider = prescale;
+		TIMERBx *const TIMER = Tim_B0;
 
-		TimCaptCompControl_B0->compareMode0_captureMode1 = 0;
-		TimCaptCompControl_B0->rw_CaptureMode = CAPTURE_ON_RISE;
-		TimCaptCompControl_B0->rw_OutputMode = SET_RESET;
+		PWM_PinInit(timerID);
+		TIMER->ControlReg.select_ClockSource = TIM_SM_CLOCK;
+		
+		TIMER->CounterReg.rw_TimerCountValue = 0x00;
+		TIMER->ControlReg.rw_InputClockDivider = prescale;
+
+		TIMER->CaptureCompControlReg1.compareMode0_captureMode1 = 0;
+		TIMER->CaptureCompControlReg1.rw_CaptureMode = CAPTURE_ON_RISE;
+		TIMER->CaptureCompControlReg1.rw_OutputMode = TOGGLE; //CHECK TOGGLE IN DATASHEET!!!!!!!!
+		TIMER->CaptureCompControlReg0.compareMode0_captureMode1 = 0;
+		TIMER->CaptureCompControlReg0.rw_CaptureMode = CAPTURE_ON_FALL; //CHECK THIS IN DATASHEET!!!!!!!!
+		TIMER->CaptureCompControlReg0.rw_OutputMode = SET_RESET;
+		
 		
 		//WHAT PIN IS THE MODULATED OUTPUT ON???????????????????
-		TimCaptComp1_B0->rw_CaptureCompareValue = (dutyCycle * time); //Output HIGH until this value.
-		TimCaptComp0_B0->rw_CaptureCompareValue = time; //Output LOW until this value.
+		TIMER->CaptureCompReg1.rw_CaptureCompareValue = (dutyCycle * time); //Output HIGH until this value.
+		TIMER->CaptureCompReg0.rw_CaptureCompareValue = time; //Output LOW until this value.
 		
-		TimControl_B0->rw_TimerMode = UP_MODE; //Start the timer.
+		TIMER->ControlReg.rw_TimerMode = UP_MODE; //Start the timer.
 	}
 	
 	else { 
 		
-		TIM_A_CONTROL *const TimControl = Get_TimAControlReg(timerID);
-		TIM_A_CAPTURECOMP_CONTROLx *const TimCaptCompControl = Get_TimACaptCompReg(timerID); 
-		TIMx_CAPTURECOMPx *const TimCaptComp0 = Get_CaptComp0Reg(timerID);
-		TIMx_CAPTURECOMPx *const TimCaptComp1 = Get_CaptComp1Reg(timerID);
+		TIMERAx *const TIMER = Get_TimerA(timerID);
 		
 		PWM_PinInit(timerID);
-		TimControl->select_ClockSource = TIM_SM_CLOCK;
+		TIMER->ControlReg.select_ClockSource = TIM_SM_CLOCK;
 		
-		TimControl->clearTimerCounter = 1;
-		TimControl->rw_InputClockDivider = prescale;
+		TIMER->ControlReg.clearTimerCounter = 1;
+		TIMER->ControlReg.rw_InputClockDivider = prescale;
 
-		TimCaptCompControl->compareMode0_captureMode1 = 0;
-		TimCaptCompControl->rw_CaptureMode = CAPTURE_ON_RISE;
-		TimCaptCompControl->rw_OutputMode = SET_RESET;
+		TIMER->CaptureCompControlReg1.compareMode0_captureMode1 = 0;
+		TIMER->CaptureCompControlReg1.rw_CaptureMode = CAPTURE_ON_RISE;
+		TIMER->CaptureCompControlReg1.rw_OutputMode = TOGGLE; //CHECK TOGGLE IN DATASHEET!!!!!!!!
+		TIMER->CaptureCompControlReg0.compareMode0_captureMode1 = 0;
+		TIMER->CaptureCompControlReg0.rw_CaptureMode = CAPTURE_ON_FALL; //CHECK THIS IN DATASHEET!!!!!!!!
+		TIMER->CaptureCompControlReg0.rw_OutputMode = SET_RESET;
 		
 		//WHAT PIN IS THE MODULATED OUTPUT ON???????????????????
-		TimCaptComp1->rw_CaptureCompareValue = (dutyCycle * time); //Output HIGH until this value.
-		TimCaptComp0->rw_CaptureCompareValue = time; //Output LOW until this value.
+		TIMER->CaptureCompReg1.rw_CaptureCompareValue = (dutyCycle * time); //Output HIGH until this value.
+		TIMER->CaptureCompReg0.rw_CaptureCompareValue = time; //Output LOW until this value.
 		
-		TimControl->rw_TimerMode = UP_MODE; //Start the timer.
+		TIMER->ControlReg.rw_TimerMode = UP_MODE; //Start the timer.
 	}
 }
 
 void PWM_Update(char* timerID, uint32_t time, float dutycycle) {
 
 	if (timerID == "B0") { 
-	
-		TimCaptComp1_B0->rw_CaptureCompareValue = (dutycycle * time);
-		TimControl_B0->rw_TimerMode = UP_MODE; //Start the timer.
+		TIMERBx *const TIMER = Tim_B0;
+		
+		TIMER->CaptureCompReg1.rw_CaptureCompareValue = (dutycycle * time);
+		TIMER->ControlReg.rw_TimerMode = UP_MODE; //Start the timer.
 	}
 	
 	else { 
-		
-		TIM_A_CONTROL *const TimControl = Get_TimAControlReg(timerID); 
-		TIMx_CAPTURECOMPx *const TimCaptComp1 = Get_CaptComp1Reg(timerID);
+		TIMERAx *const TIMER = Get_TimerA(timerID);
 	
-		TimCaptComp1->rw_CaptureCompareValue = (dutycycle * time);
-		TimControl->rw_TimerMode = UP_MODE; //Start the timer.
+		TIMER->CaptureCompReg1.rw_CaptureCompareValue = (dutycycle * time);
+		TIMER->ControlReg.rw_TimerMode = UP_MODE; //Start the timer.
 	}
 }
 
@@ -169,8 +162,6 @@ void PWM_Update(char* timerID, uint32_t time, float dutycycle) {
 		+ TimerB0 CaptureCompare 6-B: P2-0 	[(Primary Function)-(Direction Pin: 0/1)]
 		------------------------------------*/
 static void PWM_PinInit(char* timerID) {
-	
-	Watchdog_Off();
 
 	if (timerID == "A0") {
 		
@@ -191,41 +182,12 @@ static void PWM_PinInit(char* timerID) {
 	}
 }
 
-static TIM_A_CONTROL* Get_TimAControlReg(char* timerNum) {
-	
-	if (timerNum == "A0") { return TimControl_A0; }
-	if (timerNum == "A1") { return TimControl_A1; }
-	return NULL;
-}
+static TIMERAx* Get_TimerA(char* timerID) {
 
-static TIMx_COUNTER* Get_CounterReg(char* timerNum) {
-	
-	if (timerNum == "A0") { return TimCount_A0; }
-	if (timerNum == "A1") { return TimCount_A1; }
-	if (timerNum == "B0") { return TimCount_B0; }
-	return NULL;
-}
-
-static TIM_A_CAPTURECOMP_CONTROLx* Get_TimACaptCompReg(char* timerNum) {
-	
-	if (timerNum == "A0") { return TimCaptCompControl_A0; }
-	if (timerNum == "A1") { return TimCaptCompControl_A1; }
-	return NULL;
-}
-
-static TIMx_CAPTURECOMPx* Get_CaptComp0Reg(char* timerNum) {
-	
-	if (timerNum == "A0") { return TimCaptComp0_A0; }
-	if (timerNum == "A1") { return TimCaptComp0_A1; }
-	if (timerNum == "B0") { return TimCaptComp0_B0; }
-	return NULL;
-}
-
-static TIMx_CAPTURECOMPx* Get_CaptComp1Reg(char* timerNum) {
-	
-	if (timerNum == "A0") { return TimCaptComp1_A0; }
-	if (timerNum == "A1") { return TimCaptComp1_A1; }
-	if (timerNum == "B0") { return TimCaptComp1_B0; }
-	return NULL;
+	if (timerID == "A0") { return Tim_A0; }
+	else if (timerID == "A1") { return Tim_A1; }
+	else if (timerID == "A2") { return Tim_A2; }
+	else if (timerID == "A3") { return Tim_A3; }
+	return;
 }
 

@@ -14,21 +14,17 @@ typedef enum _USARTPolarity E_USARTPolarity;
 typedef enum _Parity E_Parity;
 typedef enum _USARTMode E_USARTMode;
 
+//DECLARATIONS
 void USART_Init(E_USARTMode mode, E_Parity parity, E_USARTPolarity polarity, uint8_t dataSize, uint8_t numOfStopBits);
 uint8_t USART_Receive(void);
 void USART_Transmit(uint8_t data);
 
-
-//Powered by AVR Clock Control Unit
+//USART (Powered by AVR Clock Control Unit)
+typedef struct _usart USARTx;
 #define ATMEGA_BASEADDRESS 0x0000
-
 #define ADDR_POWER_REDUCTION_USART ( (POWER_REDUCTION_USART*) ((ATMEGA_BASEADDRESS) + 0x64) ) //Found in Power Management Section
-#define ADDR_USART_IO_DATA ( (USART_IO_DATA*) ((ATMEGA_BASEADDRESS) + 0xC6) )
-#define ADDR_USART_CONTROL_STATUS_A ( (USART_CONTROL_STATUS_A*) ((ATMEGA_BASEADDRESS) + 0xC0) )
-#define ADDR_USART_CONTROL_STATUS_B ( (USART_CONTROL_STATUS_B*) ((ATMEGA_BASEADDRESS) + 0xC1) )
-#define ADDR_USART_CONTROL_STATUS_C ( (USART_CONTROL_STATUS_C*) ((ATMEGA_BASEADDRESS) + 0xC2) )
-#define ADDR_USART_BAUDRATE_LOW ( (USART_BAUDRATE_LOW*) ((ATMEGA_BASEADDRESS) + 0xC4) )
-#define ADDR_USART_BAUDRATE_HIGH ( (USART_BAUDRATE_HIGH*) ((ATMEGA_BASEADDRESS) + 0xC5) )
+#define ADDR_USART ( (USARTx*) ((ATMEGA_BASEADDRESS) + 0xC0) )
+
 
 
 /*Clock Speeds & Baud Rates for USART_BAUDRATE LOW & HIGH Calculations*/
@@ -102,6 +98,10 @@ typedef struct {
 }POWER_REDUCTION_USART;
 
 typedef struct {
+	const uint8_t reserved:8;
+}USART_RESERVED;
+
+typedef struct {
 	volatile uint8_t dataReceived_dataToSend:8;
 }USART_IO_DATA;
 
@@ -143,5 +143,16 @@ typedef struct {
 	volatile uint8_t rw_BaudRateHigh:4;
 	const uint8_t reserved:4;
 }USART_BAUDRATE_HIGH;
+
+
+struct _usart {
+	USART_CONTROL_STATUS_A StatusAReg; // 0xC0
+	USART_CONTROL_STATUS_B StatusBReg; // 0xC1
+	USART_CONTROL_STATUS_C StatusCReg; // 0xC2
+	USART_RESERVED reserved; // 0xC3
+	USART_BAUDRATE_LOW BaudRateLowReg; // 0xC4
+	USART_BAUDRATE_HIGH BaudRateHighReg; // 0xC5
+	USART_IO_DATA IODataReg; // 0xC6
+};
 
 #endif

@@ -4,34 +4,20 @@
 
 #include <stdint.h>
 
+//DECLARATIONS
 void DAC_Init(uint8_t dacNum);
 int16_t DAC_Out(uint8_t dacNum, int16_t digitalData);
 
-
+//CLOCK
 #define CLOCK 0x40023800
 #define APB1 0x40
-#define DAC 0x40007400
-
-//CLOCK
 #define ADDR_DAC_CLOCK ( (DAC_CLOCK*) ((CLOCK) + APB1) )
 
-#define ADDR_DAC_CONTROL ( (DAC_CONTROL*) ((DAC) + 0x00) )
-#define ADDR_DAC_SOFTWARE_TRIGGER ( (DAC_SOFTWARE_TRIGGER*) ((DAC) + 0x04) )
-//ch1
-#define ADDR_DAC_CH1_12BIT_RIGHTALIGNED_DATAHOLD ( (DAC_CHx_12BIT_RIGHTALIGNED_DATAHOLD*) ((DAC) + 0x08) )
-#define ADDR_DAC_CH1_12BIT_LEFTALIGNED_DATAHOLD ( (DAC_CHx_12BIT_LEFTALIGNED_DATAHOLD*) ((DAC) + 0x0C) )
-#define ADDR_DAC_CH1_8BIT_RIGHTALIGNED_DATAHOLD ( (DAC_CHx_8BIT_RIGHTALIGNED_DATAHOLD*) ((DAC) + 0x10) )
-#define ADDR_DAC_CH1_DATA_OUTPUT ( (DAC_CH1_DATA_OUTPUT*) ((DAC) + 0x2C) )
-//ch2
-#define ADDR_DAC_CH2_12BIT_RIGHTALIGNED_DATAHOLD ( (DAC_CHx_12BIT_RIGHTALIGNED_DATAHOLD*) ((DAC) + 0x14) )
-#define ADDR_DAC_CH2_12BIT_LEFTALIGNED_DATAHOLD ( (DAC_CHx_12BIT_LEFTALIGNED_DATAHOLD*) ((DAC) + 0x18) )
-#define ADDR_DAC_CH2_8BIT_RIGHTALIGNED_DATAHOLD ( (DAC_CHx_8BIT_RIGHTALIGNED_DATAHOLD*) ((DAC) + 0x1C) )
-#define ADDR_DAC_CH2_DATA_OUTPUT ( (DAC_CH2_DATA_OUTPUT*) ((DAC) + 0x30) )
+//DACx
+typedef struct _dac DACx;
+#define DAC_BASE 0x40007400
+#define ADDR_DAC ( (DACx*) (DAC_BASE) )
 
-#define ADDR_DAC_DUAL_12BIT_RIGHTALIGNED_DATAHOLD ( (DAC_DUAL_12BIT_RIGHTALIGNED_DATAHOLD*) ((DAC) + 0x20) )
-#define ADDR_DAC_DUAL_12BIT_LEFTALIGNED_DATAHOLD ( (DAC_DUAL_12BIT_LEFTALIGNED_DATAHOLD*) ((DAC) + 0x24) )
-#define ADDR_DAC_DUAL_8BIT_RIGHTALIGNED_DATAHOLD ( (DAC_DUAL_8BIT_RIGHTALIGNED_DATAHOLD*) ((DAC) + 0x28) )
-#define ADDR_DAC_STATUS ( (DAC_STATUS*) ((DAC) + 0x34) )
 
 //DAC_CONTROL Register
 /*DAC Trigger Type*/
@@ -101,43 +87,43 @@ typedef struct {
 
 
 typedef struct {
-	volatile uint32_t rw_RightAlignedData12Bit:12;
+	volatile uint32_t rw_Data12Bit:12;
 	const uint32_t reserved:20;
 }DAC_CHx_12BIT_RIGHTALIGNED_DATAHOLD;
 
 
 typedef struct {
 	const uint32_t reserved0:4;
-	volatile uint32_t rw_LeftAlignedData12Bit:12;
+	volatile uint32_t rw_12Bit:12;
 	const uint32_t reserved1:16;
 }DAC_CHx_12BIT_LEFTALIGNED_DATAHOLD;
 
 
 typedef struct {
-	volatile uint32_t rw_RightAlignedData8Bit:8;
+	volatile uint32_t rw_Data8Bit:8;
 	const uint32_t reserved:24;
 }DAC_CHx_8BIT_RIGHTALIGNED_DATAHOLD;
 
 
 typedef struct {
-	volatile uint32_t rw_Channel1RightAlignedData12Bit:12;
+	volatile uint32_t rw_Channel1Data12Bit:12;
 	const uint32_t reserved0:4;
-	volatile uint32_t rw_Channel2RightAlignedData12Bit:12;
+	volatile uint32_t rw_Channel2Data12Bit:12;
 	const uint32_t reserved1:4;
 }DAC_DUAL_12BIT_RIGHTALIGNED_DATAHOLD;
 
 
 typedef struct {
 	const uint32_t reserved0:4;
-	volatile uint32_t rw_Channel1LeftAlignedData12Bit:12;
+	volatile uint32_t rw_Channel1Data12Bit:12;
 	const uint32_t reserved1:4;
-	volatile uint32_t rw_Channel2LefttAlignedData12Bit:12;
+	volatile uint32_t rw_Channel2Data12Bit:12;
 }DAC_DUAL_12BIT_LEFTALIGNED_DATAHOLD;
 
 
 typedef struct {
-	volatile uint32_t rw_Channel1RightAlignedData8Bit:8;
-	volatile uint32_t rw_Channel2RightAlignedData8Bit:8;
+	volatile uint32_t rw_Channel1Data8Bit:8;
+	volatile uint32_t rw_Channel2Data8Bit:8;
 	const uint32_t reserved:16;
 }DAC_DUAL_8BIT_RIGHTALIGNED_DATAHOLD;
 
@@ -161,6 +147,24 @@ typedef struct {
 	volatile uint32_t channel2UnderrunOccurred:1;
 	const uint32_t reserved2:2;
 }DAC_STATUS;
+
+
+struct _dac {
+	DAC_CONTROL ControlReg; // 0x00
+	DAC_SOFTWARE_TRIGGER SoftwareTrigReg; // 0x04
+	DAC_CHx_12BIT_RIGHTALIGNED_DATAHOLD Ch1_12BitRightAlignDatHoldReg; // 0x08
+	DAC_CHx_12BIT_LEFTALIGNED_DATAHOLD Ch1_12BitLefttAlignDatHoldReg; // 0x0C
+	DAC_CHx_8BIT_RIGHTALIGNED_DATAHOLD Ch1_8BitRightAlignDatHoldReg; // 0x10
+	DAC_CHx_12BIT_RIGHTALIGNED_DATAHOLD Ch2_12BitRightAlignDatHoldReg; // 0x14
+	DAC_CHx_12BIT_LEFTALIGNED_DATAHOLD Ch2_12BitLefttAlignDatHoldReg; // 0x18
+	DAC_CHx_8BIT_RIGHTALIGNED_DATAHOLD Ch2_8BitRightAlignDatHoldReg; // 0x1C
+	DAC_DUAL_12BIT_RIGHTALIGNED_DATAHOLD Dual_12BitRightAlignDatHoldReg; // 0x20
+	DAC_DUAL_12BIT_LEFTALIGNED_DATAHOLD Dual_12BitLefttAlignDatHoldReg; // 0x24
+	DAC_DUAL_8BIT_RIGHTALIGNED_DATAHOLD Dual_8BitRightAlignDatHoldReg; // 0x28
+	DAC_CH1_DATA_OUTPUT Ch1_DataOutputReg; // 0x2C
+	DAC_CH2_DATA_OUTPUT Ch2_DataOutputReg; // 0x30
+	DAC_STATUS StatusReg; // 0x34
+};
 
 
 #endif

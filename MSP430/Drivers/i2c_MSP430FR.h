@@ -17,25 +17,11 @@ uint8_t I2C_Receive(void);
 uint8_t I2C_Transmit(uint8_t data);
 void I2C_Stop(void);
 
-#define I2C 0x0640
+//I2C
+typedef struct _i2c I2Cx;
+#define I2C_BASE 0x0640
+#define ADDR_I2C ( (I2Cx*) ((I2C_BASE) + 0x00) )
 
-#define ADDR_I2C_CONTROL_WORD0 ( (I2C_CONTROL_WORD0*) ((I2C) + 0x00) )
-#define ADDR_I2C_CONTROL_WORD1 ( (I2C_CONTROL_WORD1*) ((I2C) + 0x02) )
-#define ADDR_I2C_BITRATE_CONTROL_WORD ( (I2C_BITRATE_CONTROL_WORD*) ((I2C) + 0x06) )
-#define ADDR_I2C_STATUS_WORD ( (I2C_STATUS_WORD*) ((I2C) + 0x08) )
-#define ADDR_I2C_BYTE_COUNTER_THRESHOLD ( (I2C_BYTE_COUNTER_THRESHOLD*) ((I2C) + 0x0A) )
-#define ADDR_I2C_RECEIVE_BUFFER ( (I2C_RECEIVE_BUFFER*) ((I2C) + 0x0C) )
-#define ADDR_I2C_TRANSMIT_BUFFER ( (I2C_TRANSMIT_BUFFER*) ((I2C) + 0x0E) )
-#define ADDR_I2C_OWN_ADDRESS0 ( (I2C_OWN_ADDRESS0*) ((I2C) + 0x14) )
-#define ADDR_I2C_OWN_ADDRESS1 ( (I2C_OWN_ADDRESS1*) ((I2C) + 0x16) )
-#define ADDR_I2C_OWN_ADDRESS2 ( (I2C_OWN_ADDRESS2*) ((I2C) + 0x18) )
-#define ADDR_I2C_OWN_ADDRESS3 ( (I2C_OWN_ADDRESS3*) ((I2C) + 0x1A) )
-#define ADDR_I2C_RECEIVED_ADDRESS ( (I2C_RECEIVED_ADDRESS*) ((I2C) + 0x1C) )
-#define ADDR_I2C_ADDRESS_MASK ( (I2C_ADDRESS_MASK*) ((I2C) + 0x1E) )
-#define ADDR_I2C_SLAVE_ADDRESS ( (I2C_SLAVE_ADDRESS*) ((I2C) + 0x20) )
-#define ADDR_I2C_INTERRUPT_ENABLE ( (I2C_INTERRUPT_ENABLE*) ((I2C) + 0x2A) )
-#define ADDR_I2C_INTERRUPT_FLAG ( (I2C_INTERRUPT_FLAG*) ((I2C) + 0x2C) )
-#define ADDR_I2C_INTERRUPT_VECTOR ( (I2C_INTERRUPT_VECTOR*) ((I2C) + 0x2E) )
 
 //I2C_CONTROL_WORD0 Register
 /*Synchronous Mode Type*/
@@ -83,6 +69,10 @@ enum _AddressSize {
 };
 
 //Registers------------------------------------------------------------------
+typedef struct {
+	const uint16_t reserved:16;
+}I2C_RESERVED;
+
 typedef struct {
 	volatile uint16_t enable_SoftwareReset:1;
 	volatile uint16_t send_StartCondition:1;
@@ -219,5 +209,31 @@ typedef struct {
 typedef struct {
 	volatile uint16_t read_HighestPriorityInterruptPending:16;
 }I2C_INTERRUPT_VECTOR;
+
+struct _i2c {
+	I2C_CONTROL_WORD0 ControlWord0Reg; // 0x00
+	I2C_CONTROL_WORD1 ControlWord1Reg; // 0x02
+	I2C_RESERVED reserved0; // 0x04
+	I2C_BITRATE_CONTROL_WORD BitRateControlWordReg; // 0x06
+	I2C_STATUS_WORD StatusWordReg; // 0x08
+	I2C_BYTE_COUNTER_THRESHOLD ByteCounterThreshReg; // 0x0A
+	I2C_RECEIVE_BUFFER RXBufferReg; // 0x0C
+	I2C_TRANSMIT_BUFFER TXBufferReg; // 0x0E
+	I2C_RESERVED reserved1; // 0x10
+	I2C_RESERVED reserved2; // 0x12
+	I2C_OWN_ADDRESS0 OwnAddressReg0; // 0x14
+	I2C_OWN_ADDRESS1 OwnAddressReg1; // 0x16
+	I2C_OWN_ADDRESS2 OwnAddressReg2; // 0x18
+	I2C_OWN_ADDRESS3 OwnAddressReg3; // 0x1A
+	I2C_RECEIVED_ADDRESS ReceivedAddressReg; // 0x1C
+	I2C_ADDRESS_MASK AddressMaskReg; // 0x1E
+	I2C_SLAVE_ADDRESS SlaveAddressReg; // 0x20
+	I2C_RESERVED reserved3; // 0x22
+	I2C_RESERVED reserved4; // 0x24
+	I2C_RESERVED reserved5; // 0x28
+	I2C_INTERRUPT_ENABLE InterruptEnableReg; // 0x2A
+	I2C_INTERRUPT_FLAG InterruptFlagReg; // 0x2C
+	I2C_INTERRUPT_VECTOR InterruptVectorReg; // 0x2E
+};
 
 #endif

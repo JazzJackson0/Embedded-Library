@@ -16,49 +16,20 @@ void SPI_Init(uint8_t spiNumber, E_Mode mode, E_BitOrder bitOrder, uint8_t dataS
 uint8_t SPI_Receive(uint8_t spiNumber);
 uint8_t SPI_Transmit(uint8_t spiNumber, uint8_t data);
 
+
+//CLOCK
 #define CLOCK 0x40023800
 #define APB2 0x44
 #define APB1 0x40
-#define SPI1 0x40013000
-#define SPI2_I2S2 0x40003800
-#define SPI3_I2S3 0x40003C00
-
-//CLOCK
 #define ADDR_SPI_CLOCK_1 ( (SPI_CLOCK_1*) ((CLOCK) + APB2) )
 #define ADDR_SPI_CLOCK_2_3 ( (SPI_CLOCK_2_3*) ((CLOCK) + APB1) )
 
-//SPI 1
-#define ADDR_SPI1_CONTROL1 ( (SPI_CONTROL1*) ((SPI1) + 0x00) )
-#define ADDR_SPI1_CONTROL2 ( (SPI_CONTROL2*) ((SPI1) + 0x04) )
-#define ADDR_SPI1_STATUS ( (SPI_STATUS*) ((SPI1) + 0x08) )
-#define ADDR_SPI1_DATA ( (SPI_DATA*) ((SPI1) + 0x0C) )
-#define ADDR_SPI1_CRC_POLYNOMIAL ( (SPI_CRC_POLYNOMIAL*) ((SPI1) + 0x10) )
-#define ADDR_SPI1_RX_CRC ( (SPI_RX_CRC*) ((SPI1) + 0x14) )
-#define ADDR_SPI1_TX_CRC ( (SPI_TX_CRC*) ((SPI1) + 0x18) )
-#define ADDR_SPI1_I2S_CONFIG ( (SPI_I2S_CONFIG*) ((SPI1) + 0x1C) )
-#define ADDR_SPI1_I2S_PRESCALER ( (SPI_I2S_PRESCALER*) ((SPI1) + 0x20) )
-
-//SPI 2 / I2S 2
-#define ADDR_SPI2_CONTROL1 ( (SPI_CONTROL1*) ((SPI2_I2S2) + 0x00) )
-#define ADDR_SPI2_CONTROL2 ( (SPI_CONTROL2*) ((SPI2_I2S2) + 0x04) )
-#define ADDR_SPI2_STATUS ( (SPI_STATUS*) ((SPI2_I2S2) + 0x08) )
-#define ADDR_SPI2_DATA ( (SPI_DATA*) ((SPI2_I2S2) + 0x0C) )
-#define ADDR_SPI2_CRC_POLYNOMIAL ( (SPI_CRC_POLYNOMIAL*) ((SPI2_I2S2) + 0x10) )
-#define ADDR_SPI2_RX_CRC ( (SPI_RX_CRC*) ((SPI2_I2S2) + 0x14) )
-#define ADDR_SPI2_TX_CRC ( (SPI_TX_CRC*) ((SPI2_I2S2) + 0x18) )
-#define ADDR_SPI2_I2S_CONFIG ( (SPI_I2S_CONFIG*) ((SPI2_I2S2) + 0x1C) )
-#define ADDR_SPI2_I2S_PRESCALER ( (SPI_I2S_PRESCALER*) ((SPI2_I2S2) + 0x20) )
-
-//SPI 3 / I2S 3
-#define ADDR_SPI3_CONTROL1 ( (SPI_CONTROL1*) ((SPI3_I2S3) + 0x00) )
-#define ADDR_SPI3_CONTROL2 ( (SPI_CONTROL2*) ((SPI3_I2S3) + 0x04) )
-#define ADDR_SPI3_STATUS ( (SPI_STATUS*) ((SPI3_I2S3) + 0x08) )
-#define ADDR_SPI3_DATA ( (SPI_DATA*) ((SPI3_I2S3) + 0x0C) )
-#define ADDR_SPI3_CRC_POLYNOMIAL ( (SPI_CRC_POLYNOMIAL*) ((SPI3_I2S3) + 0x10) )
-#define ADDR_SPI3_RX_CRC ( (SPI_RX_CRC*) ((SPI3_I2S3) + 0x14) )
-#define ADDR_SPI3_TX_CRC ( (SPI_TX_CRC*) ((SPI3_I2S3) + 0x18) )
-#define ADDR_SPI3_I2S_CONFIG ( (SPI_I2S_CONFIG*) ((SPI3_I2S3) + 0x1C) )
-#define ADDR_SPI3_I2S_PRESCALER ( (SPI_I2S_PRESCALER*) ((SPI3_I2S3) + 0x20) )
+//SPIx
+typedef struct _spi SPIx;
+#define SPI_BASE 0x40013000
+#define ADDR_SPI1 ( (SPIx*) ((SPI_BASE) + 0x000) )
+#define ADDR_SPI2 ( (SPIx*) ((SPI_BASE) + 0x800) ) // And IS2
+#define ADDR_SPI3 ( (SPIx*) ((SPI_BASE) + 0xC00) ) // And IS3
 
 
 //SPI_I2S_CONFIG Register
@@ -206,5 +177,17 @@ typedef struct {
 	volatile uint16_t enable_MasterClockOutput:1;
 	const uint16_t reserved:6;
 }SPI_I2S_PRESCALER;
+
+struct _spi {
+	SPI_CONTROL1 ControlReg1; // 0x00
+	SPI_CONTROL2 ControlReg2; // 0x04
+	SPI_STATUS StatusReg; // 0x08
+	SPI_DATA DataReg; // 0x0C
+	SPI_CRC_POLYNOMIAL CRCPolynomialReg; // 0x10
+	SPI_RX_CRC RXCRCReg; // 0x14
+	SPI_TX_CRC TXCRCReg; // 0x18
+	SPI_I2S_CONFIG I2SConfigReg; // 0x1C
+	SPI_I2S_PRESCALER I2SPrescalerReg; // 0x20
+};
 
 #endif

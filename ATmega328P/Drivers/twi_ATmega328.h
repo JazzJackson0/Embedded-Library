@@ -13,22 +13,20 @@
 typedef enum _TWIClockDivide E_TWIClockDivide;
 typedef enum _Read_Write E_Read_Write;
 
+//DECLARATIONS
 void TWI_Init(E_TWIClockDivide clockDivider, uint8_t bitRatekHz);
 uint8_t TWIMasterStart(uint8_t slaveAddress, E_Read_Write readWrite);
 uint8_t TWIMaster_Transmit(uint8_t data);
 uint8_t TWIMaster_Receive(void);
 void TWI_Stop(void);
 
-//Powered by AVR Clock Control Unit
-#define ATMEGA_BASEADDRESS 0x0000
 
+//TWI (Powered by AVR Clock Control Unit)
+typedef struct _twi TWIx;
+#define ATMEGA_BASEADDRESS 0x0000
 #define ADDR_POWER_REDUCTION_TWI ( (POWER_REDUCTION_TWI*) ((ATMEGA_BASEADDRESS) + 0x64) ) //Found in Power Management Section
-#define ADDR_TWI_BITRATE ( (TWI_BITRATE*) ((ATMEGA_BASEADDRESS) + 0xB8) )
-#define ADDR_TWI_STATUS ( (TWI_STATUS*) ((ATMEGA_BASEADDRESS) + 0xB9) )
-#define ADDR_TWI_OWN_SLAVE_ADDRESS ( (TWI_OWN_SLAVE_ADDRESS*) ((ATMEGA_BASEADDRESS) + 0xBA) )
-#define ADDR_TWI_DATA ( (TWI_DATA*) ((ATMEGA_BASEADDRESS) + 0xBB) )
-#define ADDR_TWI_CONTROL ( (TWI_CONTROL*) ((ATMEGA_BASEADDRESS) + 0xBC) )
-#define ADDR_TWI_OWN_SLAVE_ADDRESS_MASK ( (TWI_OWN_SLAVE_ADDRESS_MASK*) ((ATMEGA_BASEADDRESS) + 0xBD) )
+#define ADDR_TWI ( (TWIx*) ((ATMEGA_BASEADDRESS) + 0xB8) )
+
 
 /*Status Codes: Master Transmitter*/
 #define START_CONDITION_TRANSMITTED 0x08
@@ -127,6 +125,16 @@ typedef struct {
 	volatile uint8_t mask_Bit5:1;
 	volatile uint8_t mask_Bit6:1;
 }TWI_OWN_SLAVE_ADDRESS_MASK;
+
+
+struct _twi {
+	TWI_BITRATE BitRateReg; // 0xB8
+	TWI_STATUS StatusReg; // 0xB9
+	TWI_OWN_SLAVE_ADDRESS OwnSlaveAddressReg; // 0xBA
+	TWI_DATA DataReg; // 0xBB
+	TWI_CONTROL ControlReg; // 0xBC
+	TWI_OWN_SLAVE_ADDRESS_MASK OwnSlaveAddressMaskReg; // 0xBD
+};
 
 #endif
 

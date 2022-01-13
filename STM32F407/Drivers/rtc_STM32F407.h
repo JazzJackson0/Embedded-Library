@@ -1,7 +1,6 @@
 //STM32F407 Driver
 #ifndef RTC_H_
 #define RTC_H_
-
 /*RTC Pins ---------------------------
 		These are 'Additional Functions' not 'Alternate Functions'
 		Meaning: Functions are directly selected/enabled through peripheral registers.
@@ -25,48 +24,10 @@ void Set_DateAlarm(uint8_t day, uint8_t dateWeek);
 void Get_Time(void);
 void Get_Date(void);
 
-#define RTC 0x40002800
-
-#define ADDR_RTC_TIME ( (RTC_TIME*) ((RTC) + 0x00) )
-#define ADDR_RTC_DATE ( (RTC_DATE*) ((RTC) + 0x04) )
-#define ADDR_RTC_CONTROL ( (RTC_CONTROL*) ((RTC) + 0x08) )
-#define ADDR_RTC_INITIALIZATION_AND_STATUS ( (RTC_INITIALIZATION_AND_STATUS*) ((RTC) + 0x0C) )
-#define ADDR_RTC_PRESCALER ( (RTC_PRESCALER*) ((RTC) + 0x10) )
-#define ADDR_RTC_WAKEUP_TIMER ( (RTC_WAKEUP_TIMER*) ((RTC) + 0x14) )
-#define ADDR_RTC_CALIBRATION1 ( (RTC_CALIBRATION1*) ((RTC) + 0x18) )
-#define ADDR_RTC_ALARM_A ( (RTC_ALARM_A*) ((RTC) + 0x1C) )
-#define ADDR_RTC_ALARM_B ( (RTC_ALARM_B*) ((RTC) + 0x20) )
-#define ADDR_RTC_WRITE_PROTECTION ( (RTC_WRITE_PROTECTION*) ((RTC) + 0x24) )
-#define ADDR_RTC_SUB_SECOND ( (RTC_SUB_SECOND*) ((RTC) + 0x28) )
-#define ADDR_RTC_SHIFT_CONTROL ( (RTC_SHIFT_CONTROL*) ((RTC) + 0x2C) )
-#define ADDR_RTC_TIMESTAMP_TIME ( (RTC_TIMESTAMP_TIME*) ((RTC) + 0x30) )
-#define ADDR_RTC_TIMESTAMP_DATE ( (RTC_TIMESTAMP_DATE*) ((RTC) + 0x34) )
-#define ADDR_RTC_TIMESTAMP_SUBSECOND ( (RTC_TIMESTAMP_SUBSECOND*) ((RTC) + 0x38) )
-#define ADDR_RTC_CALIBRATION2 ( (RTC_CALIBRATION2*) ((RTC) + 0x3C) )
-#define ADDR_RTC_TAMPER_AND_ALTFUNC_CONFIG ( (RTC_TAMPER_AND_ALTFUNC_CONFIG*) ((RTC) + 0x40) )
-#define ADDR_RTC_ALARM_A_SUBSECOND ( (RTC_ALARM_A_SUBSECOND*) ((RTC) + 0x44) )
-#define ADDR_RTC_ALARM_B_SUBSECOND ( (RTC_ALARM_B_SUBSECOND*) ((RTC) + 0x48) )
-#define ADDR_RTC_BACKUP_1 ( (RTC_BACKUPS*) ((RTC) + 0x50) )
-#define ADDR_RTC_BACKUP_2 ( (RTC_BACKUPS*) ((RTC) + 0x54) )
-#define ADDR_RTC_BACKUP_3 ( (RTC_BACKUPS*) ((RTC) + 0x58) )
-#define ADDR_RTC_BACKUP_4 ( (RTC_BACKUPS*) ((RTC) + 0x5C) )
-#define ADDR_RTC_BACKUP_5 ( (RTC_BACKUPS*) ((RTC) + 0x60) )
-#define ADDR_RTC_BACKUP_6 ( (RTC_BACKUPS*) ((RTC) + 0x64) )
-#define ADDR_RTC_BACKUP_7 ( (RTC_BACKUPS*) ((RTC) + 0x68) )
-#define ADDR_RTC_BACKUP_8 ( (RTC_BACKUPS*) ((RTC) + 0x6C) )
-#define ADDR_RTC_BACKUP_9 ( (RTC_BACKUPS*) ((RTC) + 0x70) )
-#define ADDR_RTC_BACKUP_10 ( (RTC_BACKUPS*) ((RTC) + 0x74) )
-#define ADDR_RTC_BACKUP_11 ( (RTC_BACKUPS*) ((RTC) + 0x78) )
-#define ADDR_RTC_BACKUP_12 ( (RTC_BACKUPS*) ((RTC) + 0x7C) )
-#define ADDR_RTC_BACKUP_13 ( (RTC_BACKUPS*) ((RTC) + 0x80) )
-#define ADDR_RTC_BACKUP_14 ( (RTC_BACKUPS*) ((RTC) + 0x84) )
-#define ADDR_RTC_BACKUP_15 ( (RTC_BACKUPS*) ((RTC) + 0x88) )
-#define ADDR_RTC_BACKUP_16 ( (RTC_BACKUPS*) ((RTC) + 0x8C) )
-#define ADDR_RTC_BACKUP_17 ( (RTC_BACKUPS*) ((RTC) + 0x90) )
-#define ADDR_RTC_BACKUP_18 ( (RTC_BACKUPS*) ((RTC) + 0x94) )
-#define ADDR_RTC_BACKUP_19 ( (RTC_BACKUPS*) ((RTC) + 0x98) )
-#define ADDR_RTC_BACKUP_20 ( (RTC_BACKUPS*) ((RTC) + 0x9C) )
-
+//RTC
+typedef struct _rtc RTCx;
+#define RTC_BASE 0x40002800
+#define ADDR_RTC ( (RTCx*) (RTC_BASE) )
 
 //Unused Enums----------------------------------------------------------------------
 /*
@@ -104,6 +65,10 @@ typedef enum {
 #define ALARM_B 0x02
 #define WAKEUP 0x03
 
+// Registers----------------------------------------------------------------------------
+typedef struct {
+	const uint32_t reserved:32;
+}RTC_RESERVED;
 
 typedef struct {
 	volatile uint32_t rw_SecondUnits:4;
@@ -317,6 +282,49 @@ typedef struct {
 typedef struct {
 	volatile uint32_t rw_BackupRegister:32;
 }RTC_BACKUPS;
+
+struct _rtc {
+	RTC_TIME TimeReg; // 0x00
+	RTC_DATE DateReg; // 0x04
+	RTC_CONTROL ControlReg; // 0x08
+	RTC_INITIALIZATION_AND_STATUS InitAndStatusReg; // 0x0C
+	RTC_PRESCALER PrescalerReg; // 0x10
+	RTC_WAKEUP_TIMER WakeupTimerReg; // 0x14
+	RTC_CALIBRATION1 Calibration1Reg; // 0x18
+	RTC_ALARM_A AlarmAReg; // 0x1C
+	RTC_ALARM_B AlarmBReg; // 0x20
+	RTC_WRITE_PROTECTION WriteProtectionReg; // 0x24
+	RTC_SUB_SECOND SubSecondReg; // 0x28
+	RTC_SHIFT_CONTROL ShiftControlReg; // 0x2C
+	RTC_TIMESTAMP_TIME TimestampTimeReg; // 0x30
+	RTC_TIMESTAMP_DATE TimestampDateReg; // 0x34
+	RTC_TIMESTAMP_SUBSECOND TimestampSubSecondReg; // 0x38
+	RTC_CALIBRATION2 Calibration2Reg; // 0x3C
+	RTC_TAMPER_AND_ALTFUNC_CONFIG TamperAndAltFuncConfigReg; // 0x40
+	RTC_ALARM_A_SUBSECOND AlarmASubSecReg; // 0x44
+	RTC_ALARM_B_SUBSECOND AlarmBSubSecReg; // 0x48
+	RTC_RESERVED reserved; // 0x4C
+	RTC_BACKUPS BackupReg1; // 0x50
+	RTC_BACKUPS BackupReg2; // 0x54
+	RTC_BACKUPS BackupReg3; // 0x58
+	RTC_BACKUPS BackupReg4; // 0x5C
+	RTC_BACKUPS BackupReg5; // 0x60
+	RTC_BACKUPS BackupReg6; // 0x64
+	RTC_BACKUPS BackupReg7; // 0x68
+	RTC_BACKUPS BackupReg8; // 0x6C
+	RTC_BACKUPS BackupReg9; // 0x70
+	RTC_BACKUPS BackupReg10; // 0x74
+	RTC_BACKUPS BackupReg11; // 0x78
+	RTC_BACKUPS BackupReg12; // 0x7C
+	RTC_BACKUPS BackupReg13; // 0x80
+	RTC_BACKUPS BackupReg14; // 0x84
+	RTC_BACKUPS BackupReg15; // 0x88
+	RTC_BACKUPS BackupReg16; // 0x8C
+	RTC_BACKUPS BackupReg17; // 0x90
+	RTC_BACKUPS BackupReg18; // 0x94
+	RTC_BACKUPS BackupReg19; // 0x98
+	RTC_BACKUPS BackupReg20; // 0x9C
+};
 
 
 #endif

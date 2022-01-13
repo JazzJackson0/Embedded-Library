@@ -14,36 +14,11 @@ void UART_Init(char* uartNum, uint8_t numOfStopBits, uint8_t dataSize, E_Parity 
 uint8_t UART_Receive(char* uartNum);
 void UART_Transmit(char* uartNum, uint8_t data);
 
-#define UART0 0x05C0  //These Base Addresses can be used by SPI as well
-#define UART1 0x05E0 //These Base Addresses can be used by SPI as well
-
-//UART0
-#define ADDR_UART0_CONTROL_WORD0 ( (UART_CONTROL_WORD0*) ((UART0) + 0x00) )
-#define ADDR_UART0_CONTROL_WORD1 ( (UART_CONTROL_WORD1*) ((UART0) + 0x02) )
-#define ADDR_UART0_BAUDRATE_CONTROL_WORD ( (UART_BAUDRATE_CONTROL_WORD*) ((UART0) + 0x06) )
-#define ADDR_UART0_MODULATION_CONTROL_WORD ( (UART_MODULATION_CONTROL_WORD*) ((UART0) + 0x08) )
-#define ADDR_UART0_STATUS ( (UART_STATUS*) ((UART0) + 0x0A) )
-#define ADDR_UART0_RECEIVE_BUFFER ( (UART_RECEIVE_BUFFER*) ((UART0) + 0x0C) )
-#define ADDR_UART0_TRANSMIT_BUFFER ( (UART_TRANSMIT_BUFFER*) ((UART0) + 0x0E) )
-#define ADDR_UART0_AUTO_BAUDRATE_CONTROL ( (UART_AUTO_BAUDRATE_CONTROL*) ((UART0) + 0x10) )
-#define ADDR_UART0_IRDA_CONTROL_WORD ( (UART_IRDA_CONTROL_WORD*) ((UART0) + 0x12) )
-#define ADDR_UART0_INTERRUPT_ENABLE ( (UART_INTERRUPT_ENABLE*) ((UART0) + 0x1A) )
-#define ADDR_UART0_INTERRUPT_FLAG ( (UART_INTERRUPT_FLAG*) ((UART0) + 0x1C) )
-#define ADDR_UART0_INTERRUPT_VECTOR ( (UART_INTERRUPT_VECTOR*) ((UART0) + 0x1E) )
-
-//UART1
-#define ADDR_UART1_CONTROL_WORD0 ( (UART_CONTROL_WORD0*) ((UART1) + 0x00) )
-#define ADDR_UART1_CONTROL_WORD1 ( (UART_CONTROL_WORD1*) ((UART1) + 0x02) )
-#define ADDR_UART1_BAUDRATE_CONTROL_WORD ( (UART_BAUDRATE_CONTROL_WORD*) ((UART1) + 0x06) )
-#define ADDR_UART1_MODULATION_CONTROL_WORD ( (UART_MODULATION_CONTROL_WORD*) ((UART1) + 0x08) )
-#define ADDR_UART1_STATUS ( (UART_STATUS*) ((UART1) + 0x0A) )
-#define ADDR_UART1_RECEIVE_BUFFER ( (UART_RECEIVE_BUFFER*) ((UART1) + 0x0C) )
-#define ADDR_UART1_TRANSMIT_BUFFER ( (UART_TRANSMIT_BUFFER*) ((UART1) + 0x0E) )
-#define ADDR_UART1_AUTO_BAUDRATE_CONTROL ( (UART_AUTO_BAUDRATE_CONTROL*) ((UART1) + 0x10) )
-#define ADDR_UART1_IRDA_CONTROL_WORD ( (UART_IRDA_CONTROL_WORD*) ((UART1) + 0x12) )
-#define ADDR_UART1_INTERRUPT_ENABLE ( (UART_INTERRUPT_ENABLE*) ((UART1) + 0x1A) )
-#define ADDR_UART1_INTERRUPT_FLAG ( (UART_INTERRUPT_FLAG*) ((UART1) + 0x1C) )
-#define ADDR_UART1_INTERRUPT_VECTOR ( (UART_INTERRUPT_VECTOR*) ((UART1) + 0x1E) )
+//UART
+typedef struct _uart UARTx;
+#define UART_BASE 0x0500
+#define ADDR_UART0 ( (UARTx*) ((UART_BASE) + 0xC0) ) // Base Addresses shared with SPI
+#define ADDR_UART1 ( (UARTx*) ((UART_BASE) + 0xE0) ) // Base Addresses shared with SPI
 
 //UART_CONTROL_WORD0 Register
 /*Asynchronous Mode Type*/
@@ -87,6 +62,10 @@ enum _UARTClockSource {
 };
 
 //Registers------------------------------------------------------------------
+typedef struct {
+	const uint16_t reserved:16;
+}UART_RESERVED;
+
 typedef struct {
 	volatile uint16_t enable_SoftwareReset:1;
 	volatile uint16_t transmit_Break:1;
@@ -179,5 +158,24 @@ typedef struct {
 typedef struct {
 	volatile uint16_t read_HighestPriorityInterruptPending:1;
 }UART_INTERRUPT_VECTOR;
+
+struct _uart {
+	UART_CONTROL_WORD0 ControlWord0Reg; // 0x00
+	UART_CONTROL_WORD1 ControlWord1Reg; // 0x02
+	UART_RESERVED reserved0; // 0x04
+	UART_BAUDRATE_CONTROL_WORD BaudRateControlWordReg; // 0x06
+	UART_MODULATION_CONTROL_WORD ModulationControlWordReg; // 0x08
+	UART_STATUS StatusReg; // 0x0A
+	UART_RECEIVE_BUFFER RXBufferReg; // 0x0C
+	UART_TRANSMIT_BUFFER TXBufferReg; // 0x0E
+	UART_AUTO_BAUDRATE_CONTROL BaudRateControlReg; // 0x10
+	UART_IRDA_CONTROL_WORD IRDAControlReg; // 0x12
+	UART_RESERVED reserved1; // 0x14
+	UART_RESERVED reserved2; // 0x16
+	UART_RESERVED reserved3; // 0x18
+	UART_INTERRUPT_ENABLE InterruptEnableReg; // 0x1A
+	UART_INTERRUPT_FLAG InterruptFlagReg; // 0x1C
+	UART_INTERRUPT_VECTOR InterruptVectorReg; // 0x1E
+};
 
 #endif

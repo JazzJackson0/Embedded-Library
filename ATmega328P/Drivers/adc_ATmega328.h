@@ -1,7 +1,6 @@
 //ATmega328/P Driver
 #ifndef ADC_H_
 #define ADC_H_
-
 /*ADC Pins ---------------------------
 
 		+ ADC Input Channel 0 (ADC0): PC0
@@ -18,26 +17,23 @@
 		------------------------------------*/
 
 #include <stdint.h>
-//Powered by AVR Clock Control Unit
+
 
 typedef enum _Channel E_Channel;
 typedef enum _ADCClockDivide E_ADCClockDivide;
 typedef enum _AutoTrigSrc E_AutoTrigSrc;
 
+//DECLARATIONS
 void ADC_Init_and_Start(E_Channel channel, E_ADCClockDivide clockDivide, E_AutoTrigSrc autoTrigSrc);
 int16_t ADC_Read(void);
 
-#define ATMEGA_BASEADDRESS 0x0000
 
+//ADC (Powered by AVR Clock Control Unit)
+typedef struct _adc ADCx;
+#define ATMEGA_BASEADDRESS 0x0000
 #define ADDR_POWER_REDUCTION_ADC ( (POWER_REDUCTION_ADC*) ((ATMEGA_BASEADDRESS) + 0x64) ) //Found in Power Management Section (Clear ADC Bit)
-#define ADDR_ADC_MUTEX_SELECT ( (ADC_MUTEX_SELECT*) ((ATMEGA_BASEADDRESS) + 0x7C) )
-#define ADDR_ADC_CONTROL_STATUS_A ( (ADC_CONTROL_STATUS_A*) ((ATMEGA_BASEADDRESS) + 0x7A) )
-#define ADDR_ADC_DATA_LOW_RIGHT ( (ADC_DATA_LOW_RIGHT*) ((ATMEGA_BASEADDRESS) + 0x78) )
-#define ADDR_ADC_DATA_HIGH_RIGHT ( (ADC_DATA_HIGH_RIGHT*) ((ATMEGA_BASEADDRESS) + 0x79) )
-#define ADDR_ADC_DATA_LOW_LEFT ( (ADC_DATA_LOW_LEFT*) ((ATMEGA_BASEADDRESS) + 0x78) )
-#define ADDR_ADC_DATA_HIGH_LEFT ( (ADC_DATA_HIGH_LEFT*) ((ATMEGA_BASEADDRESS) + 0x79) )
-#define ADDR_ADC_CONTROL_STATUS_B ( (ADC_CONTROL_STATUS_B*) ((ATMEGA_BASEADDRESS) + 0x7B) )
-#define ADDR_ADC_DIGITAL_INPUT_DISABLE ( (ADC_DIGITAL_INPUT_DISABLE*) ((ATMEGA_BASEADDRESS) + 0x7E) )
+#define ADDR_ADC ( ( ADCx*) ((ATMEGA_BASEADDRESS) + 0x00) )
+
 
 /*Analog Voltage References*/
 #define INTERNAL_VREF_OFF 0x00
@@ -83,6 +79,10 @@ enum _AutoTrigSrc {
 
 //Registers------------------------------------------------------------------
 typedef struct {
+	const uint8_t reserved:8;
+}ADC_RESERVED;
+
+typedef struct {
 	volatile uint8_t adcOn0_adcOff1:1;
 	const uint8_t reserved:7;
 }POWER_REDUCTION_ADC;
@@ -103,23 +103,27 @@ typedef struct {
 	volatile uint8_t enable_ADC:1;
 }ADC_CONTROL_STATUS_A;
 
-typedef struct {
-	volatile uint8_t read_ADCConversionResultLow:8;
-}ADC_DATA_LOW_RIGHT;
+typedef union {
+	struct {
+		volatile uint8_t read_ADCConversionResult:8;
+	}LeftAdjust;
 
-typedef struct {
-	const uint8_t reserved:6;
-	volatile uint8_t read_ADCConversionResultHigh:2;
-}ADC_DATA_HIGH_RIGHT;
+	struct {
+		const uint8_t reserved:6;
+		volatile uint8_t read_ADCConversionResult:2;
+	}RightAdjust;
+}ADC_DATA_HIGH;
 
-typedef struct {
-	const uint8_t reserved:6;
-	volatile uint8_t read_ADCConversionResultLow:2;
-}ADC_DATA_LOW_LEFT;
+typedef union {
+	struct {
+		const uint8_t reserved:6;
+		volatile uint8_t read_ADCConversionResult:2;
+	}LeftAdjust;
 
-typedef struct {
-	volatile uint8_t read_ADCConversionResultHigh:8;
-}ADC_DATA_HIGH_LEFT;
+	struct {
+		volatile uint8_t read_ADCConversionResult:8;
+	}RightAdjust;
+}ADC_DATA_LOW;
 
 typedef struct {
 	volatile uint8_t rw_AutoTriggerSource:3;
@@ -138,5 +142,16 @@ typedef struct {
 	volatile uint8_t disableInput_Pin6:1;
 	volatile uint8_t disableInput_Pin7:1;
 }ADC_DIGITAL_INPUT_DISABLE;
+
+
+struct _adc {
+	ADC_DATA_LOW DataLowReg; // 0x78
+	ADC_DATA_HIGH DataHighReg; // 0x79
+	ADC_CONTROL_STATUS_A ControlStatusAReg; // 0x7A
+	ADC_CONTROL_STATUS_B ControlStatusBReg; // 0x7B
+	ADC_MUTEX_SELECT MutexSelectReg; // 0x7C
+	ADC_RESERVED reserved; // 0x7D
+	ADC_DIGITAL_INPUT_DISABLE DigitalInputDisableReg; // 0x7E
+};
 
 #endif

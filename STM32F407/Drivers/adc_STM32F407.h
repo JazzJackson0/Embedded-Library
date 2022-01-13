@@ -10,42 +10,25 @@ typedef enum _Channel E_Resolution;
 typedef enum _Resolution E_ConvertLen;
 typedef enum _ConversionNum E_ConversionNum;
 
-void ADCRegularChannel_Init(E_Channel adcChannel, uint8_t conversionOrderNum, E_SamplePeriod cycles);
+void ADCRegularChannel_Init(uint8_t adcNumber, E_Channel adcChannel, uint8_t conversionOrderNum, E_SamplePeriod cycles);
 void ADC_Init(uint8_t adcNumber, E_Resolution resolution, E_ConvertLen singleContinuous, E_ConversionNum numOfConversions);
-int16_t ADC_ReadRegularChannel(void);
+int16_t ADC_ReadRegularChannel(uint8_t adcNumber);
 float Decibel_Out(uint16_t analogVolt);
 
+//CLOCK
 #define CLOCK 0x40023800
 #define APB2 0x44
-#define ADC1_2_3 0x40012000
-#define ADCx ADC1_2_3
-
-//CLOCK
 #define ADDR_ADC_CLOCK ( (ADC_CLOCK*) ((CLOCK) + APB2) )
 
-#define ADDR_ADC_STATUS ( (ADC_STATUS*) ((ADCx) + 0x00) )
-#define ADDR_ADC_CONTROL1 ( (ADC_CONTROL1*) ((ADCx) + 0x04) )
-#define ADDR_ADC_CONTROL2 ( (ADC_CONTROL2*) ((ADCx) + 0x08) )
-#define ADDR_ADC_SAMPLETIME1 ( (ADC_SAMPLETIME1*) ((ADCx) + 0x0C) )
-#define ADDR_ADC_SAMPLETIME2 ( (ADC_SAMPLETIME2*) ((ADCx) + 0x10) )
-#define ADDR_ADC_INJECTED_CHANNEL_DATA_OFFSET_1 ( (ADC_INJECTED_CHANNEL_DATA_OFFSET*) ((ADCx) + 0x14) )
-#define ADDR_ADC_INJECTED_CHANNEL_DATA_OFFSET_2 ( (ADC_INJECTED_CHANNEL_DATA_OFFSET*) ((ADCx) + 0x18) )
-#define ADDR_ADC_INJECTED_CHANNEL_DATA_OFFSET_3 ( (ADC_INJECTED_CHANNEL_DATA_OFFSET*) ((ADCx) + 0x1C) )
-#define ADDR_ADC_INJECTED_CHANNEL_DATA_OFFSET_4 ( (ADC_INJECTED_CHANNEL_DATA_OFFSET*) ((ADCx) + 0x20) )
-#define ADDR_ADC_WATCHDOG_HIGHER_THRESHOLD ( (ADC_WATCHDOG_HIGHER_THRESHOLD*) ((ADCx) + 0x24) )
-#define ADDR_ADC_WATCHDOG_LOWER_THRESHOLD ( (ADC_WATCHDOG_LOWER_THRESHOLD*) ((ADCx) + 0x28) )
-#define ADDR_ADC_REGULAR_SEQUENCE1 ( (ADC_REGULAR_SEQUENCE1*) ((ADCx) + 0x2C) )
-#define ADDR_ADC_REGULAR_SEQUENCE2 ( (ADC_REGULAR_SEQUENCE2*) ((ADCx) + 0x30) )
-#define ADDR_ADC_REGULAR_SEQUENCE3 ( (ADC_REGULAR_SEQUENCE3*) ((ADCx) + 0x34) )
-#define ADDR_ADC_INJECTED_SEQUENCE ( (ADC_INJECTED_SEQUENCE*) ((ADCx) + 0x38) )
-#define ADDR_ADC_INJECTED_DATA_1 ( (ADC_INJECTED_DATA*) ((ADCx) + 0x3C) )
-#define ADDR_ADC_INJECTED_DATA_2 ( (ADC_INJECTED_DATA*) ((ADCx) + 0x40) )
-#define ADDR_ADC_INJECTED_DATA_3 ( (ADC_INJECTED_DATA*) ((ADCx) + 0x44) )
-#define ADDR_ADC_INJECTED_DATA_4 ( (ADC_INJECTED_DATA*) ((ADCx) + 0x48) )
-#define ADDR_ADC_REGULAR_DATA ( (ADC_REGULAR_DATA*) ((ADCx) + 0x4C) )
-#define ADDR_ADC_COMMON_STATUS ( (ADC_COMMON_STATUS*) ((ADCx) + 0x300) )
-#define ADDR_ADC_COMMON_CONTROL ( (ADC_COMMON_CONTROL*) ((ADCx) + 0x304) )
-#define ADDR_ADC_COMMON_REGDATA_DUAL_AND_TRIPPLE_NODES ( (ADC_COMMON_REGDATA_DUAL_AND_TRIPPLE_NODES*) ((ADCx) + 0x308) )
+//ADCx
+typedef struct _adc ADCx;
+typedef struct _adcCommon CommonADCRegisters;
+#define ADC_BASE 0x40012000
+#define ADDR_ADC1 ( (ADCx*) ((ADC_BASE) + 0x000) )
+#define ADDR_ADC2 ( (ADCx*) ((ADC_BASE) + 0x100) )
+#define ADDR_ADC3 ( (ADCx*) ((ADC_BASE) + 0x200) )
+#define ADDR_COMMON_ADC_REG ( (CommonADCRegisters*) ((ADC_BASE) + 0x300) )
+
 
 //For ADC_CONTROL2
 /*Injected Group External Events*/
@@ -420,6 +403,39 @@ typedef struct {
 	volatile uint32_t read_DataItem1:16;
 	volatile uint32_t read_DataItem2:16;
 }ADC_COMMON_REGDATA_DUAL_AND_TRIPPLE_NODES;
+
+
+
+struct _adc {
+
+	ADC_STATUS StatusReg; // 0x00
+	ADC_CONTROL1 ControlReg1; // 0x04
+	ADC_CONTROL2 ControlReg2; // 0x08
+	ADC_SAMPLETIME1 SampleTimeReg1; // 0x0C
+	ADC_SAMPLETIME2 SampleTimeReg2; // 0x10
+	ADC_INJECTED_CHANNEL_DATA_OFFSET InjChannelDataOffsetReg1; // 0x14
+	ADC_INJECTED_CHANNEL_DATA_OFFSET InjChannelDataOffsetReg2; // 0x18
+	ADC_INJECTED_CHANNEL_DATA_OFFSET InjChannelDataOffsetReg3; // 0x1C
+	ADC_INJECTED_CHANNEL_DATA_OFFSET InjChannelDataOffsetReg4; // 0x20
+	ADC_WATCHDOG_HIGHER_THRESHOLD WatchDogHighThreshReg; // 0x24
+	ADC_WATCHDOG_LOWER_THRESHOLD WatchDogLowThreshReg; // 0x28
+	ADC_REGULAR_SEQUENCE1 RegularSequenceReg1; // 0x2C
+	ADC_REGULAR_SEQUENCE2 RegularSequenceReg2; // 0x30
+	ADC_REGULAR_SEQUENCE3 RegularSequenceReg3; // 0x34
+	ADC_INJECTED_SEQUENCE InjectedSeqReg; // 0x38
+	ADC_INJECTED_DATA InjectedDataReg1; // 0x3C
+	ADC_INJECTED_DATA InjectedDataReg2; // 0x40
+	ADC_INJECTED_DATA InjectedDataReg3; // 0x44
+	ADC_INJECTED_DATA InjectedDataReg4; // 0x48
+	ADC_REGULAR_DATA RegularDataReg; // 0x4C
+};
+
+struct _adcCommon {
+	ADC_COMMON_STATUS CommonStatusReg; // 0x300
+	ADC_COMMON_CONTROL CommonControlReg; // 0x304
+	ADC_COMMON_REGDATA_DUAL_AND_TRIPPLE_NODES CommonRegularDataDualTrippleNodeReg; // 0x308
+};
+
 
 
 #endif

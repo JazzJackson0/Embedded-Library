@@ -1,136 +1,33 @@
 //MSP430FR59xx Driver
 #ifndef RTC_H_
 #define RTC_H_
-#include <stdint.h>
-
-void RTC_Init(void);
-void Set_Time(uint8_t hour, uint8_t minute, uint8_t second);
-void Set_Date(uint8_t day, uint8_t month, uint8_t weekday, uint8_t yearCentury, uint8_t yearTens, uint8_t yearUnits);
-void Set_TimeAlarm(uint8_t hour, uint8_t minute);
-void Set_DateAlarm(uint8_t weekday, uint8_t monthDay);
-void Get_Time(void);
-void Get_Date(void);
-
-
 //x69 Series only uses RTC B
 
 /*RTC Pins ----------------------------------
 		+ RTC Clock Calibration Output: P1-0 	[(Secondary Function)-(Direction Pin: 1)]
 		------------------------------------*/
 
+#include <stdint.h>
+
+//DECLARATIONS
+void RTC_Init(char rtcID);
+void Set_Time(char rtcID, uint8_t hour, uint8_t minute, uint8_t second);
+//Get yearCentury, yearTens, and yearUnits to be 1 number that you split
+void Set_Date(char rtcID, uint8_t day, uint8_t month, uint8_t weekday, uint8_t yearCentury, uint8_t yearTens, uint8_t yearUnits);
+void Set_TimeAlarm(char rtcID, uint8_t hour, uint8_t minute);
+void Set_DateAlarm(char rtcID, uint8_t weekday, uint8_t monthDay);
+void Get_Time(char rtcID);
+void Get_Date(char rtcID);
+
+//RTC
+typedef struct _rtcB RTCB;
+typedef struct _rtcC RTCC;
+#define RTC_BASE 0x0400
+#define ADDR_RTCB ( (RTCB*) ((RTC_BASE) + 0xA0) )
+#define ADDR_RTCC ( (RTCC*) ((RTC_BASE) + 0x00) ) // GET RTC_C ADDRESS
 /*RTC_B only supports Calendar Mode, not Counter Mode*/
-/*RTC_C supports Calendar Mode and Counter Mode, as well as offset calibration, and temperature compensation.*/
-
-#define RTC_B 0x04A0
-//#define RTC_C 0x
-
-//RTC B
-#define ADDR_RTCB_CONTROL0 ( (RTC_CONTROL0*) ((RTC_B) + 0x00) ) //RTC_C_CONTROL_LOW Register Corresponds with this.
-
-#define ADDR_RTCB_CONTROL1 ( (RTC_CONTROL1*) ((RTC_B) + 0x01) )
-#define ADDR_RTCB_CONTROL2 ( (RTC_CONTROL2*) ((RTC_B) + 0x02) )
-#define ADDR_RTCB_CONTROL3 ( (RTC_CONTROL3*) ((RTC_B) + 0x03) )
-
-#define ADDR_RTCB_SECONDS_HEX ( (RTC_SECONDS_HEX*) ((RTC_B) + 0x10) )
-#define ADDR_RTCB_SECONDS_BCD ( (RTC_SECONDS_BCD*) ((RTC_B) + 0x10) )
-#define ADDR_RTCB_MINUTES_HEX ( (RTC_MINUTES_HEX*) ((RTC_B) + 0x11) )
-#define ADDR_RTCB_MINUTES_BCD ( (RTC_MINUTES_BCD*) ((RTC_B) + 0x11) )
-#define ADDR_RTCB_HOURS_HEX ( (RTC_HOURS_HEX*) ((RTC_B) + 0x12) )
-#define ADDR_RTCB_HOURS_BCD ( (RTC_HOURS_BCD*) ((RTC_B) + 0x12) )
-#define ADDR_RTCB_DAYOFWEEK ( (RTC_DAYOFWEEK*) ((RTC_B) + 0x13) )
-#define ADDR_RTCB_DAYOFMONTH_HEX ( (RTC_DAYOFMONTH_HEX*) ((RTC_B) + 0x14) )
-#define ADDR_RTCB_DAYOFMONTH_BCD ( (RTC_DAYOFMONTH_BCD*) ((RTC_B) + 0x14) )
-#define ADDR_RTCB_MONTH_HEX ( (RTC_MONTH_HEX*) ((RTC_B) + 0x15) )
-#define ADDR_RTCB_MONTH_BCD ( (RTC_MONTH_BCD*) ((RTC_B) + 0x15) )
-#define ADDR_RTCB_YEAR_HEX ( (RTC_YEAR_HEX*) ((RTC_B) + 016x) )
-#define ADDR_RTCB_YEAR_BCD ( (RTC_YEAR_BCD*) ((RTC_B) + 0x16) )
-#define ADDR_RTCB_MINUTESALARM_HEX ( (RTC_MINUTESALARM_HEX*) ((RTC_B) + 0x18) )
-#define ADDR_RTCB_MINUTESALARM_BCD ( (RTC_MINUTESALARM_BCD*) ((RTC_B) + 0x18) )
-#define ADDR_RTCB_HOURSALARM_HEX ( (RTC_HOURSALARM_HEX*) ((RTC_B) + 0x19) )
-#define ADDR_RTCB_HOURSALARM_BCD ( (RTC_HOURSALARM_BCD*) ((RTC_B) + 0x19) )
-#define ADDR_RTCB_DAYOFWEEK_ALARM ( (RTC_DAYOFWEEK_ALARM*) ((RTC_B) + 0x1A) )
-#define ADDR_RTCB_DAYOFMONTH_ALARM_HEX ( (RTC_DAYOFMONTH_ALARM_HEX*) ((RTC_B) + 0x1B) )
-#define ADDR_RTCB_DAYOFMONTH_ALARM_BCD ( (RTC_DAYOFMONTH_ALARM_BCD*) ((RTC_B) + 0x1B) )
-
-#define ADDR_RTCB_PRESCALE_TIMER0_CONTROL ( (RTC_PRESCALE_TIMER0_CONTROL*) ((RTC_B) + 0x08) )
-#define ADDR_RTCB_PRESCALE_TIMER1_CONTROL ( (RTC_PRESCALE_TIMER1_CONTROL*) ((RTC_B) + 0x0A) )
-
-#define ADDR_RTCB_PRESCALE_TIMER0_COUNTER ( (RTC_PRESCALE_TIMER0_COUNTER*) ((RTC_B) + 0x0C) )
-#define ADDR_RTCB_PRESCALE_TIMER1_COUNTER ( (RTC_PRESCALE_TIMER1_COUNTER*) ((RTC_B) + 0x0D) )
-#define ADDR_RTCB_INTERRUPT_VECTOR ( (RTC_INTERRUPT_VECTOR*) ((RTC_B) + 0x0E) )
-#define ADDR_RTCB_BINARY_TO_BCD ( (RTC_BINARY_TO_BCD*) ((RTC_B) + 0x1C) )
-#define ADDR_RTCB_BCD_TO_BINARY ( (RTC_BCD_TO_BINARY*) ((RTC_B) + 0x1E) )
-
-
-
-//RTC C
-#define ADDR_RTC_CONTROL0 ( (RTC_CONTROL0*) ((RTC_C) + 0x00) ) //RTC_C_CONTROL_LOW Register Corresponds with this.
-
-#define ADDR_RTC_CONTROL0_HIGH ( (RTC_CONTROL0_HIGH*) ((RTC_C) + 0x01) )
-#define ADDR_RTC_C_CONTROL1 ( (RTC_C_CONTROL1*) ((RTC_C) + 0x02) )
-#define ADDR_RTC_C_CONTROL3 ( (RTC_C_CONTROL3*) ((RTC_C) + 0x03) )
-#define ADDR_RTC_OFFSET_CALIBRATION ( (RTC_OFFSET_CALIBRATION*) ((RTC_C) + 0x04) )
-#define ADDR_RTC_TEMP_COMP ( (RTC_TEMP_COMP*) ((RTC_C) + 0x06) )
-#define ADDR_RTC_COUNTER1 ( (RTC_COUNTER1*) ((RTC_C) + 0x10) )
-#define ADDR_RTC_COUNTER2 ( (RTC_COUNTER2*) ((RTC_C) + 0x11) )
-#define ADDR_RTC_COUNTER3 ( (RTC_COUNTER3*) ((RTC_C) + 0x12) )
-#define ADDR_RTC_COUNTER4 ( (RTC_COUNTER4*) ((RTC_C) + 0x13) )
-
-#define ADDR_RTCC_SECONDS_HEX ( (RTC_SECONDS_HEX*) ((RTC_C) + 0x10) )
-#define ADDR_RTCC_SECONDS_BCD ( (RTC_SECONDS_BCD*) ((RTC_C) + 0x10) )
-#define ADDR_RTCC_MINUTES_HEX ( (RTC_MINUTES_HEX*) ((RTC_C) + 0x11) )
-#define ADDR_RTCC_MINUTES_BCD ( (RTC_MINUTES_BCD*) ((RTC_C) + 0x11) )
-#define ADDR_RTCC_HOURS_HEX ( (RTC_HOURS_HEX*) ((RTC_C) + 0x12) )
-#define ADDR_RTCC_HOURS_BCD ( (RTC_HOURS_BCD*) ((RTC_C) + 0x12) )
-#define ADDR_RTCC_DAYOFWEEK ( (RTC_DAYOFWEEK*) ((RTC_C) + 0x13) )
-#define ADDR_RTCC_DAYOFMONTH_HEX ( (RTC_DAYOFMONTH_HEX*) ((RTC_C) + 0x14) )
-#define ADDR_RTCC_DAYOFMONTH_BCD ( (RTC_DAYOFMONTH_BCD*) ((RTC_C) + 0x14) )
-#define ADDR_RTCC_MONTH_HEX ( (RTC_MONTH_HEX*) ((RTC_C) + 0x15) )
-#define ADDR_RTCC_MONTH_BCD ( (RTC_MONTH_BCD*) ((RTC_C) + 0x15) )
-#define ADDR_RTCC_YEAR_HEX ( (RTC_YEAR_HEX*) ((RTC_C) + 016x) )
-#define ADDR_RTCC_YEAR_BCD ( (RTC_YEAR_BCD*) ((RTC_C) + 0x16) )
-#define ADDR_RTCC_MINUTESALARM_HEX ( (RTC_MINUTESALARM_HEX*) ((RTC_C) + 0x18) )
-#define ADDR_RTCC_MINUTESALARM_BCD ( (RTC_MINUTESALARM_BCD*) ((RTC_C) + 0x18) )
-#define ADDR_RTCC_HOURSALARM_HEX ( (RTC_HOURSALARM_HEX*) ((RTC_C) + 0x19) )
-#define ADDR_RTCC_HOURSALARM_BCD ( (RTC_HOURSALARM_BCD*) ((RTC_C) + 0x19) )
-#define ADDR_RTCC_DAYOFWEEK_ALARM ( (RTC_DAYOFWEEK_ALARM*) ((RTC_C) + 0x1A) )
-#define ADDR_RTCC_DAYOFMONTH_ALARM_HEX ( (RTC_DAYOFMONTH_ALARM_HEX*) ((RTC_C) + 0x1B) )
-#define ADDR_RTCC_DAYOFMONTH_ALARM_BCD ( (RTC_DAYOFMONTH_ALARM_BCD*) ((RTC_C) + 0x1B) )
-
-#define ADDR_RTCC_PRESCALE_TIMER0_CONTROL ( (RTC_PRESCALE_TIMER0_CONTROL*) ((RTC_C) + 0x08) )
-#define ADDR_RTCC_PRESCALE_TIMER1_CONTROL ( (RTC_PRESCALE_TIMER1_CONTROL*) ((RTC_C) + 0x0A) )
-
-#define ADDR_RTCC_PRESCALE_TIMER0_COUNTER ( (RTC_PRESCALE_TIMER0_COUNTER*) ((RTC_C) + 0x0C) )
-#define ADDR_RTCC_PRESCALE_TIMER1_COUNTER ( (RTC_PRESCALE_TIMER1_COUNTER*) ((RTC_C) + 0x0D) )
-#define ADDR_RTCC_INTERRUPT_VECTOR ( (RTC_INTERRUPT_VECTOR*) ((RTC_C) + 0x0E) )
-#define ADDR_RTCC_BINARY_TO_BCD ( (RTC_BINARY_TO_BCD*) ((RTC_C) + 0x1C) )
-#define ADDR_RTCC_BCD_TO_BINARY ( (RTC_BCD_TO_BINARY*) ((RTC_C) + 0x1E) )
-
-#define ADDR_RTC_SECONDS_HEX_BKUP0 ( (RTC_SECONDS_HEX_BKUP*) ((RTC_C) + 0x30) )
-#define ADDR_RTC_SECONDS_BCD_BKUP0 ( (RTC_SECONDS_BCD_BKUP*) ((RTC_C) + 0x30) )
-#define ADDR_RTC_MINUTES_HEX_BKUP0 ( (RTC_MINUTES_HEX_BKUP*) ((RTC_C) + 0x31) )
-#define ADDR_RTC_MINUTES_BCD_BKUP0 ( (RTC_MINUTES_BCD_BKUP*) ((RTC_C) + 0x31) )
-#define ADDR_RTC_HOURS_HEX_BKUP0 ( (RTC_HOURS_HEX_BKUP*) ((RTC_C) + 0x32) )
-#define ADDR_RTC_HOURS_BCD_BKUP0 ( (RTC_HOURS_BCD_BKUP*) ((RTC_C) + 0x32) )
-#define ADDR_RTC_DAYOFMONTH_HEX_BKUP0 ( (RTC_DAYOFMONTH_HEX_BKUP*) ((RTC_C) + 0x33) )
-#define ADDR_RTC_DAYOFMONTH_BCD_BKUP0 ( (RTC_DAYOFMONTH_BCD_BKUP*) ((RTC_C) + 0x33) )
-#define ADDR_RTC_MONTH_HEX_BKUP0 ( (RTC_MONTH_HEX_BKUP*) ((RTC_C) + 0x34) )
-#define ADDR_RTC_MONTH_BCD_BKUP0 ( (RTC_MONTH_BCD_BKUP*) ((RTC_C) + 0x34) )
-#define ADDR_RTC_YEAR_HEX_BKUP0 ( (RTC_YEAR_HEX_BKUP*) ((RTC_C) + 0x36) )
-#define ADDR_RTC_YEAR_BCD_BKUP0 ( (RTC_YEAR_BCD_BKUP*) ((RTC_C) + 0x36) )
-
-#define ADDR_RTC_MINUTESALARM_HEX_BKUP ( (RTC_MINUTESALARM_HEX_BKUP*) ((RTC_C) + 0x00) ) //Offset Not 0x00 LOOK FOR THESE
-#define ADDR_RTC_MINUTESALARM_BCD_BKUP ( (RTC_MINUTESALARM_BCD_BKUP*) ((RTC_C) + 0x00) ) //Offset Not 0x00 LOOK FOR THESE
-#define ADDR_RTC_HOURSALARM_HEX_BKUP ( (RTC_HOURSALARM_HEX_BKUP*) ((RTC_C) + 0x00) ) //Offset Not 0x00 LOOK FOR THESE
-#define ADDR_RTC_HOURSALARM_BCD_BKUP ( (RTC_HOURSALARM_BCD_BKUP*) ((RTC_C) + 0x00) ) //Offset Not 0x00 LOOK FOR THESE
-#define ADDR_RTC_DAYOFWEEK_ALARM_BKUP ( (RTC_DAYOFWEEK_ALARM_BKUP*) ((RTC_C) + 0x00) ) //Offset Not 0x00 LOOK FOR THESE
-#define ADDR_RTC_DAYOFMONTH_ALARM_HEX_BKUP ( (RTC_DAYOFMONTH_ALARM_HEX_BKUP*) ((RTC_C) + 0x00) ) //Offset Not 0x00 LOOK FOR THESE
-#define ADDR_RTC_DAYOFMONTH_ALARM_BCD_BKUP ( (RTC_DAYOFMONTH_ALARM_BCD_BKUP*) ((RTC_C) + 0x00) ) //Offset Not 0x00 LOOK FOR THESE
-
-#define ADDR_RTC_TIME_CAPTURECONTROL0 ( (RTC_TIME_CAPTURECONTROL0*) ((RTC_C) + 0x20) )
-#define ADDR_RTC_TIME_CAPTURECONTROL1 ( (RTC_TIME_CAPTURECONTROL1*) ((RTC_C) + 0x21) )
-#define ADDR_RTC_DETECTPIN_CONTROL0 ( (RTC_DETECTPIN_CONTROL*) ((RTC_C) + 0x22) )
-#define ADDR_RTC_DETECTPIN_CONTROL1 ( (RTC_DETECTPIN_CONTROL*) ((RTC_C) + 0x23) )
+/*RTC_C supports Calendar Mode and Counter Mode, 
+as well as offset calibration, and temperature compensation.*/
 
 
 //RTC_CONTROL1 Register
@@ -179,6 +76,11 @@ void Get_Date(void);
 /*Clock Source*/
 #define CRYSTAL_OSC_32KHZ 0x00
 #define OUTPUT_FROM_TIMER0 0x03
+
+
+typedef struct {
+	const uint16_t reserved:16;
+}RTC_RESERVED;
 
 
 /*RTC_B AND RTC_C
@@ -252,123 +154,197 @@ typedef struct {
 	volatile uint16_t downCalibration0_upCalibration:1;
 }RTC_TEMP_COMP;
 
-typedef struct {
-	volatile uint8_t rw_Counter1Value:8;
-}RTC_COUNTER1;
-
-typedef struct {
-	volatile uint8_t rw_Counter2Value:8;
-}RTC_COUNTER2;
-
-typedef struct {
-	volatile uint8_t rw_Counter3Value:8;
-}RTC_COUNTER3;
-
-typedef struct {
-	volatile uint8_t rw_Counter4Value:8;
-}RTC_COUNTER4;
-
 
 /*RTC_B AND RTC_C
 --------------------------------------------------*/
-typedef struct {
-	volatile uint8_t rw_Seconds:6;
-	const uint8_t reserved:2;
-}RTC_SECONDS_HEX;
+typedef union {
+	struct {
+		volatile uint8_t rw_Seconds:6;
+		const uint8_t reserved:2;
+	}HEX;
 
-typedef struct {
-	volatile uint8_t rw_SecondsLowDigit:4;
-	volatile uint8_t rw_SecondsHighDigit:3;
-	const uint8_t reserved:1;
-}RTC_SECONDS_BCD;
+	struct {
+		volatile uint8_t rw_SecondsLowDigit:4;
+		volatile uint8_t rw_SecondsHighDigit:3;
+		const uint8_t reserved:1;
+	}BCD;
+}RTC_SECONDS;
 
-typedef struct {
-	volatile uint8_t rw_Minutes:6;
-	const uint8_t reserved:2;
-}RTC_MINUTES_HEX;
+typedef union {
+	struct {
+		volatile uint8_t rw_Minutes:6;
+		const uint8_t reserved:2;
+	}HEX;
 
-typedef struct {
-	volatile uint8_t rw_MinutesLowDigit:4;
-	volatile uint8_t rw_MinutesHighDigit:3;
-	const uint8_t reserved:1;
-}RTC_MINUTES_BCD;
+	struct {
+		volatile uint8_t rw_MinutesLowDigit:4;
+		volatile uint8_t rw_MinutesHighDigit:3;
+		const uint8_t reserved:1;
+	}BCD;
+}RTC_MINUTES;
 
-typedef struct {
-	volatile uint8_t rw_Hours:5;
-	const uint8_t reserved:3;
-}RTC_HOURS_HEX;
+typedef union {
+	struct {
+		volatile uint8_t rw_Hours:5;
+		const uint8_t reserved:3;
+	}HEX;
 
-typedef struct {
-	volatile uint8_t rw_HoursLowDigit:4;
-	volatile uint8_t rw_HoursHighDigit:2;
-	const uint8_t reserved:2;
-}RTC_HOURS_BCD;
+	struct {
+		volatile uint8_t rw_HoursLowDigit:4;
+		volatile uint8_t rw_HoursHighDigit:2;
+		const uint8_t reserved:2;
+	}BCD;
+}RTC_HOURS;
+
 
 typedef struct {
 	volatile uint8_t rw_DayOfWeek:3;
 	const uint8_t reserved:5;
 }RTC_DAYOFWEEK;
 
-typedef struct {
-	volatile uint8_t rw_DayOfMonth:5;
-	const uint8_t reserved:3;
-}RTC_DAYOFMONTH_HEX;
 
-typedef struct {
-	volatile uint8_t rw_DayOfMonthLowDigit:4;
-	volatile uint8_t rw_DayOfMonthHighDigit:2;
-	const uint8_t reserved:2;
-}RTC_DAYOFMONTH_BCD;
+typedef union {
+	union {
+		struct {
+			volatile uint8_t rw_Seconds:6;
+			const uint8_t reserved:2;
+		}HEX;
 
-typedef struct {
-	volatile uint8_t rw_Months:4;
-	const uint8_t reserved:4;
-}RTC_MONTH_HEX;
+		struct {
+			volatile uint8_t rw_SecondsLowDigit:4;
+			volatile uint8_t rw_SecondsHighDigit:3;
+			const uint8_t reserved:1;
+		}BCD;
+	}Seconds;
 
-typedef struct {
-	volatile uint8_t rw_MonthsLowDigit:4;
-	volatile uint8_t rw_MonthsHighDigit:1;
-	const uint8_t reserved:3;
-}RTC_MONTH_BCD;
+	struct {
+		volatile uint8_t rw_CounterValue:8;
+	}Counter1;
+}RTC_SECONDS_OR_COUNT;
 
-typedef struct {
-	volatile uint16_t rw_YearLowByte:8;
-	volatile uint16_t rw_YearHighByte:4;
-	const uint16_t reserved:4;
-}RTC_YEAR_HEX;
 
-typedef struct {
-	volatile uint16_t rw_YearLowestDigit:4;
-	volatile uint16_t rw_Decade:4;
-	volatile uint16_t rw_CenturyLowDigit:4;
-	volatile uint16_t rw_CenturyHighDigit:3;
-	const uint16_t reserved:1;
-}RTC_YEAR_BCD;
+typedef union {
+	union {
+		struct {
+			volatile uint8_t rw_Minutes:6;
+			const uint8_t reserved:2;
+		}HEX;
 
-typedef struct {
-	volatile uint8_t rw_Minutes:6;
-	const uint8_t reserved:1;
-	volatile uint8_t enable_MinutesAlarm:1;
-}RTC_MINUTESALARM_HEX;
+		struct {
+			volatile uint8_t rw_MinutesLowDigit:4;
+			volatile uint8_t rw_MinutesHighDigit:3;
+			const uint8_t reserved:1;
+		}BCD;
+	}Minutes;
 
-typedef struct {
-	volatile uint8_t rw_MinutesLowDigit:4;
-	volatile uint8_t rw_MinutesHighDigit:3;
-	volatile uint8_t enable_MinutesAlarm:1;
-}RTC_MINUTESALARM_BCD;
+	struct {
+		volatile uint8_t rw_CounterValue:8;
+	}Counter2;
+}RTC_MINUTES_OR_COUNT;
 
-typedef struct {
-	volatile uint8_t rw_Hours:5;
-	const uint8_t reserved:2;
-	volatile uint8_t enable_HoursAlarm:1;
-}RTC_HOURSALARM_HEX;
 
-typedef struct {
-	volatile uint8_t rw_HoursLowDigit:4;
-	volatile uint8_t rw_HoursHighDigit:2;
-	const uint8_t reserved:1;
-	volatile uint8_t enable_HoursAlarm:1;
-}RTC_HOURSALARM_BCD;
+typedef union {
+	union {
+		struct {
+			volatile uint8_t rw_Hours:5;
+			const uint8_t reserved:3;
+		}HEX;
+
+		struct {
+			volatile uint8_t rw_HoursLowDigit:4;
+			volatile uint8_t rw_HoursHighDigit:2;
+			const uint8_t reserved:2;
+		}BCD;
+	}Hours;
+
+	struct {
+		volatile uint8_t rw_CounterValue:8;
+	}Counter3;
+}RTC_HOURS_OR_COUNT;
+
+
+typedef union {
+	struct {
+		volatile uint8_t rw_DayOfWeek:3;
+		const uint8_t reserved:5;
+	}DayOfWeek;
+
+	struct {
+		volatile uint8_t rw_CounterValue:8;
+	}Counter4;
+}RTC_DAYOFWEEK_OR_COUNT;
+
+
+typedef union {
+	struct {
+		volatile uint8_t rw_DayOfMonth:5;
+		const uint8_t reserved:3;
+	}HEX;
+
+	struct {
+		volatile uint8_t rw_DayOfMonthLowDigit:4;
+		volatile uint8_t rw_DayOfMonthHighDigit:2;
+		const uint8_t reserved:2;
+	}BCD;
+}RTC_DAYOFMONTH;
+
+typedef union {
+	struct {
+		volatile uint8_t rw_Months:4;
+		const uint8_t reserved:4;
+	}HEX;
+
+	struct {
+		volatile uint8_t rw_MonthsLowDigit:4;
+		volatile uint8_t rw_MonthsHighDigit:1;
+		const uint8_t reserved:3;
+	}BCD;
+}RTC_MONTH;
+
+typedef union {
+	struct {
+		volatile uint16_t rw_YearLowByte:8;
+		volatile uint16_t rw_YearHighByte:4;
+		const uint16_t reserved:4;
+	}HEX;
+
+	struct {
+		volatile uint16_t rw_YearLowestDigit:4;
+		volatile uint16_t rw_Decade:4;
+		volatile uint16_t rw_CenturyLowDigit:4;
+		volatile uint16_t rw_CenturyHighDigit:3;
+		const uint16_t reserved:1;
+	}BCD;
+}RTC_YEAR;
+
+typedef union {
+	struct {
+		volatile uint8_t rw_Minutes:6;
+		const uint8_t reserved:1;
+		volatile uint8_t enable_MinutesAlarm:1;
+	}HEX;
+
+	struct {
+		volatile uint8_t rw_MinutesLowDigit:4;
+		volatile uint8_t rw_MinutesHighDigit:3;
+		volatile uint8_t enable_MinutesAlarm:1;
+	}BCD;
+}RTC_MINUTESALARM;
+
+typedef union {
+	struct {
+		volatile uint8_t rw_Hours:5;
+		const uint8_t reserved:2;
+		volatile uint8_t enable_HoursAlarm:1;
+	}HEX;
+
+	struct {
+		volatile uint8_t rw_HoursLowDigit:4;
+		volatile uint8_t rw_HoursHighDigit:2;
+		const uint8_t reserved:1;
+		volatile uint8_t enable_HoursAlarm:1;
+	}BCD;
+}RTC_HOURSALARM;
 
 typedef struct {
 	volatile uint8_t rw_DayOfWeek:3;
@@ -376,18 +352,20 @@ typedef struct {
 	volatile uint8_t enable_DayOfWeekAlarm:1;
 }RTC_DAYOFWEEK_ALARM;
 
-typedef struct {
-	volatile uint8_t rw_DayOfMonth:5;
-	const uint8_t reserved:2;
-	volatile uint8_t enable_DayOfMonthAlarm:1;
-}RTC_DAYOFMONTH_ALARM_HEX;
+typedef union {
+	struct {
+		volatile uint8_t rw_DayOfMonth:5;
+		const uint8_t reserved:2;
+		volatile uint8_t enable_DayOfMonthAlarm:1;
+	}HEX;
 
-typedef struct {
-	volatile uint8_t rw_DayOfMonthLowDigit:4;
-	volatile uint8_t rw_DayOfMonthHighDigit:2;
-	const uint8_t reserved:1;
-	volatile uint8_t enable_DayOfMonthAlarm:1;
-}RTC_DAYOFMONTH_ALARM_BCD;
+	struct {
+		volatile uint8_t rw_DayOfMonthLowDigit:4;
+		volatile uint8_t rw_DayOfMonthHighDigit:2;
+		const uint8_t reserved:1;
+		volatile uint8_t enable_DayOfMonthAlarm:1;
+	}BCD;
+}RTC_DAYOFMONTH_ALARM;
 
 /*RTC_PRESCALE_TIMER0_CONTROL Registers for RTC_B
 --------------------------------------------------*/
@@ -452,76 +430,7 @@ typedef struct {
 	volatile uint16_t write16BitBCDNum_read12BitBinaryConversion:16;
 }RTC_BCD_TO_BINARY;
 
-/*RTC_C Backup Registers
---------------------------------------------------*/
-typedef struct {
-	volatile uint8_t rw_Seconds:6;
-	const uint8_t reserved:2;
-}RTC_SECONDS_HEX_BKUP;
 
-typedef struct {
-	volatile uint8_t rw_SecondsLowDigit:4;
-	volatile uint8_t rw_SecondsHighDigit:3;
-	const uint8_t reserved:1;
-}RTC_SECONDS_BCD_BKUP;
-
-typedef struct {
-	volatile uint8_t rw_Minutes:6;
-	const uint8_t reserved:2;
-}RTC_MINUTES_HEX_BKUP;
-
-typedef struct {
-	volatile uint8_t rw_MinutesLowDigit:4;
-	volatile uint8_t rw_MinutesHighDigit:3;
-	const uint8_t reserved:1;
-}RTC_MINUTES_BCD_BKUP;
-
-typedef struct {
-	volatile uint8_t rw_Hours:5;
-	const uint8_t reserved:3;
-}RTC_HOURS_HEX_BKUP;
-
-typedef struct {
-	volatile uint8_t rw_HoursLowDigit:4;
-	volatile uint8_t rw_HoursHighDigit:2;
-	const uint8_t reserved:2;
-}RTC_HOURS_BCD_BKUP;
-
-typedef struct {
-	volatile uint8_t rw_DayOfMonth:5;
-	const uint8_t reserved:3;
-}RTC_DAYOFMONTH_HEX_BKUP;
-
-typedef struct {
-	volatile uint8_t rw_DayOfMonthLowDigit:4;
-	volatile uint8_t rw_DayOfMonthHighDigit:2;
-	const uint8_t reserved:2;
-}RTC_DAYOFMONTH_BCD_BKUP;
-
-typedef struct {
-	volatile uint8_t rw_Months:4;
-	const uint8_t reserved:4;
-}RTC_MONTH_HEX_BKUP;
-
-typedef struct {
-	volatile uint8_t rw_MonthsLowDigit:4;
-	volatile uint8_t rw_MonthsHighDigit:1;
-	const uint8_t reserved:3;
-}RTC_MONTH_BCD_BKUP;
-
-typedef struct {
-	volatile uint16_t rw_YearLowByte:8;
-	volatile uint16_t rw_YearHighByte:4;
-	const uint16_t reserved:4;
-}RTC_YEAR_HEX_BKUP;
-
-typedef struct {
-	volatile uint16_t rw_YearLowestDigit:4;
-	volatile uint16_t rw_Decade:4;
-	volatile uint16_t rw_CenturyLowDigit:4;
-	volatile uint16_t rw_CenturyHighDigit:3;
-	const uint16_t reserved:1;
-}RTC_YEAR_BCD_BKUP;
 
 
 /*RTC_C More Control Registers
@@ -548,5 +457,83 @@ typedef struct {
 	volatile uint8_t outputLow0_outputHigh1:1;
 	const uint8_t reserved1:1;
 }RTC_DETECTPIN_CONTROL;
+
+struct _rtcB {
+	RTC_CONTROL0 ControlReg0; // 0x00
+	RTC_CONTROL1 ControlReg1; // 0x01
+	RTC_CONTROL2 ControlReg2; // 0x02
+	RTC_CONTROL3 ControlReg3; // 0x03
+	RTC_RESERVED reserved0; // 0x04
+	RTC_RESERVED reserved1; // 0x06
+	RTC_PRESCALE_TIMER0_CONTROL PrescaleTimer0ControlReg; // 0x08
+	RTC_PRESCALE_TIMER1_CONTROL PrescaleTimer1ControlReg; // 0x0A
+	RTC_PRESCALE_TIMER0_COUNTER PrescaleTimer0CounterReg; // 0x0C
+	RTC_PRESCALE_TIMER1_COUNTER PrescaleTimer1CounterReg; // 0x0D
+	RTC_INTERRUPT_VECTOR InterruptVectorReg; // 0x0E
+	RTC_SECONDS SecondsReg; // 0x10
+	RTC_MINUTES MinutesReg; // 0x11
+	RTC_HOURS HoursReg; // 0x12
+	RTC_DAYOFWEEK DayOfWeekReg; // 0x13
+	RTC_DAYOFMONTH DayOfMonthReg; // 0x14
+	RTC_MONTH MonthReg; // 0x15
+	RTC_YEAR YearReg; // 0x16
+	RTC_MINUTESALARM MinutesAlarmReg; // 0x18
+	RTC_HOURSALARM HoursAlarmReg; // 0x19
+	RTC_DAYOFWEEK_ALARM DayOfWeekAlarmReg; // 0x1A
+	RTC_DAYOFMONTH_ALARM DayOfMonthAlarmReg; // 0x1B
+	RTC_BINARY_TO_BCD BinaryToBDCReg; // 0x1C
+	RTC_BCD_TO_BINARY BCDToBinaryReg; // 0x1E
+};
+
+struct _rtcC {
+	RTC_CONTROL0 ControlReg0; // 0x00
+	RTC_CONTROL0_HIGH ControlHighReg0; // 0x01
+	RTC_C_CONTROL1 ControlReg1; // 0x02
+	RTC_C_CONTROL3 ControlReg3; // 0x03
+	RTC_OFFSET_CALIBRATION OffsetCalibrationReg; // 0x04
+	RTC_TEMP_COMP TempCompReg; // 0x06
+	RTC_PRESCALE_TIMER1_CONTROL PrescaleTimer1ControlReg; // 0x08
+	RTC_PRESCALE_TIMER0_CONTROL PrescaleTimer0ControlReg; // 0x0A
+	RTC_PRESCALE_TIMER0_COUNTER PrescaleTimer0CounterReg; // 0x0C
+	RTC_PRESCALE_TIMER1_COUNTER PrescaleTimer1CounterReg; // 0x0D
+	RTC_INTERRUPT_VECTOR InterruptVectorReg; // 0x0E
+	RTC_SECONDS_OR_COUNT SecondsRegOrCountReg1; // 0x10
+	RTC_MINUTES_OR_COUNT MinutesRegOrCountReg2; // 0x11
+	RTC_HOURS_OR_COUNT HoursRegOrCountReg3; // 0x12
+	RTC_DAYOFWEEK_OR_COUNT DayOfWeekRegOrCountReg4; // 0x13
+	RTC_DAYOFMONTH DayOfMonthReg; // 0x14
+	RTC_MONTH MonthReg; // 0x15
+	RTC_YEAR YearReg; // 0x16
+	RTC_MINUTESALARM MinutesAlarmReg; // 0x18
+	RTC_HOURSALARM HoursAlarmReg; // 0x19
+	RTC_DAYOFWEEK_ALARM DayOfWeekAlarmReg; // 0x1A
+	RTC_DAYOFMONTH_ALARM DayOfMonthAlarmReg; // 0x1B
+	RTC_BINARY_TO_BCD BinaryToBDCReg; // 0x1C
+	RTC_BCD_TO_BINARY BCDToBinaryReg; // 0x1E
+	RTC_TIME_CAPTURECONTROL0 CaptureControl0Reg; // 0x20
+	RTC_TIME_CAPTURECONTROL1 CaptureControl1Reg; // 0x21
+	RTC_DETECTPIN_CONTROL DetectPiinControlReg0; // 0x22
+	RTC_DETECTPIN_CONTROL DetectPiinControlReg1; // 0x23
+	RTC_RESERVED reserved0; // 0x24
+	RTC_RESERVED reserved1; // 0x26
+	RTC_RESERVED reserved2; // 0x28
+	RTC_RESERVED reserved3; // 0x2A
+	RTC_RESERVED reserved4; // 0x2C
+	RTC_RESERVED reserved5; // 0x2E
+	RTC_SECONDS SecondsBackupReg0; // 0x30
+	RTC_MINUTES MinutesBackupReg0; // 0x31
+	RTC_HOURS HoursBackupReg0; // 0x32
+	RTC_DAYOFMONTH DayOfMonthBackupReg0; // 0x33
+	RTC_MONTH MonthBackupReg0; // 0x34
+	const uint8_t reserved6:8; // 0x35
+	RTC_YEAR YearBackupReg0; // 0x36
+	RTC_SECONDS SecondsBackupReg1; // 0x38
+	RTC_MINUTES MinutesBackupReg1; // 0x39
+	RTC_HOURS HoursBackupReg1; // 0x3A
+	RTC_DAYOFMONTH DayOfMonthBackupReg1; // 0x3B
+	RTC_MONTH MonthBackupReg1; // 0x3C
+	const uint8_t reserved7:8; // 0x3D
+	RTC_YEAR YearBackupReg1; // 0x3E
+};
 
 #endif

@@ -4,60 +4,19 @@
 //x69 Series only uses Channels 0, 1, 2
 #include <stdint.h>
 
-void DMA_Init(void);
+//DECLARATIONS
+void DMA_Init(uint8_t dmaNum);
 
-#define DMA_GENERAL_CONTROL 0x0500
-#define DMA_CH0 0x0510
-#define DMA_CH1 0x0520
-#define DMA_CH2 0x0530
+//DMA
+typedef struct _dma_ctrl DMA_CTRL;
+typedef struct _dma DMAx;
+#define DMA_BASE 0x0500
+//-----------
+#define ADDR_DMA_CTRL ( (DMA_CTRL*) ((DMA_BASE) + 0x00) )
+#define ADDR_DMA_CH0 ( (DMAx*) ((DMA_BASE) + 0x10) )
+#define ADDR_DMA_CH1 ( (DMAx*) ((DMA_BASE) + 0x20) )
+#define ADDR_DMA_CH2 ( (DMAx*) ((DMA_BASE) + 0x30) )
 
-#define ADDR_DMA_CONTROL0 ( (DMA_CONTROL0*) ((DMA_GENERAL_CONTROL) + 0x00) )
-#define ADDR_DMA_CONTROL1 ( (DMA_CONTROL1*) ((DMA_GENERAL_CONTROL) + 0x02) )
-#define ADDR_DMA_CONTROL2 ( (DMA_CONTROL2*) ((DMA_GENERAL_CONTROL) + 0x04) )
-#define ADDR_DMA_CONTROL3 ( (DMA_CONTROL3*) ((DMA_GENERAL_CONTROL) + 0x06) )
-#define ADDR_DMA_CONTROL4 ( (DMA_CONTROL4*) ((DMA_GENERAL_CONTROL) + 0x08) )
-
-#define ADDR_DMA_CH0_CONTROL ( (DMA_CHx_CONTROL*) ((DMA_CH0) + 0x00) )
-#define ADDR_DMA_CH0_SOURCE_ADDRS ( (DMA_CHx_SOURCE_ADDRS*) ((DMA_CH0) + 0x02) )
-#define ADDR_DMA_CH0_DESTINATION_ADDRS ( (DMA_CHx_DESTINATION_ADDRS*) ((DMA_CH0) + 0x06) )
-#define ADDR_DMA_CH0_SIZE_ADDRS ( (DMA_CHx_SIZE_ADDRS*) ((DMA_CH0) + 0x0A) )
-
-#define ADDR_DMA_CH1_CONTROL ( (DMA_CHx_CONTROL*) ((DMA_CH1) + 0x00) )
-#define ADDR_DMA_CH1_SOURCE_ADDRS ( (DMA_CHx_SOURCE_ADDRS*) ((DMA_CH1) + 0x02) )
-#define ADDR_DMA_CH1_DESTINATION_ADDRS ( (DMA_CHx_DESTINATION_ADDRS*) ((DMA_CH1) + 0x06) )
-#define ADDR_DMA_CH1_SIZE_ADDRS ( (DMA_CHx_SIZE_ADDRS*) ((DMA_CH1) + 0x0A) )
-
-#define ADDR_DMA_CH2_CONTROL ( (DMA_CHx_CONTROL*) ((DMA_CH2) + 0x00) )
-#define ADDR_DMA_CH2_SOURCE_ADDRS ( (DMA_CHx_SOURCE_ADDRS*) ((DMA_CH2) + 0x02) )
-#define ADDR_DMA_CH2_DESTINATION_ADDRS ( (DMA_CHx_DESTINATION_ADDRS*) ((DMA_CH2) + 0x06) )
-#define ADDR_DMA_CH2_SIZE_ADDRS ( (DMA_CHx_SIZE_ADDRS*) ((DMA_CH2) + 0x0A) )
-
-#define ADDR_DMA_CH3_CONTROL ( (DMA_CHx_CONTROL*) (() + 0x00) )
-#define ADDR_DMA_CH3_SOURCE_ADDRS ( (DMA_CHx_SOURCE_ADDRS*) (() + 0x02) )
-#define ADDR_DMA_CH3_DESTINATION_ADDRS ( (DMA_CHx_DESTINATION_ADDRS*) (() + 0x06) )
-#define ADDR_DMA_CH3_SIZE_ADDRS ( (DMA_CHx_SIZE_ADDRS*) (() + 0x0A) )
-
-#define ADDR_DMA_CH4_CONTROL ( (DMA_CHx_CONTROL*) (() + 0x00) )
-#define ADDR_DMA_CH4_SOURCE_ADDRS ( (DMA_CHx_SOURCE_ADDRS*) (() + 0x02) )
-#define ADDR_DMA_CH4_DESTINATION_ADDRS ( (DMA_CHx_DESTINATION_ADDRS*) (() + 0x06) )
-#define ADDR_DMA_CH4_SIZE_ADDRS ( (DMA_CHx_SIZE_ADDRS*) (() + 0x0A) )
-
-#define ADDR_DMA_CH5_CONTROL ( (DMA_CHx_CONTROL*) (() + 0x00) )
-#define ADDR_DMA_CH5_SOURCE_ADDRS ( (DMA_CHx_SOURCE_ADDRS*) (() + 0x02) )
-#define ADDR_DMA_CH5_DESTINATION_ADDRS ( (DMA_CHx_DESTINATION_ADDRS*) (() + 0x06) )
-#define ADDR_DMA_CH5_SIZE_ADDRS ( (DMA_CHx_SIZE_ADDRS*) (() + 0x0A) )
-
-#define ADDR_DMA_CH6_CONTROL ( (DMA_CHx_CONTROL*) (() + 0x00) )
-#define ADDR_DMA_CH6_SOURCE_ADDRS ( (DMA_CHx_SOURCE_ADDRS*) (() + 0x02) )
-#define ADDR_DMA_CH6_DESTINATION_ADDRS ( (DMA_CHx_DESTINATION_ADDRS*) (() + 0x06) )
-#define ADDR_DMA_CH6_SIZE_ADDRS ( (DMA_CHx_SIZE_ADDRS*) (() + 0x0A) )
-
-#define ADDR_DMA_CH7_CONTROL ( (DMA_CHx_CONTROL*) (() + 0x00) )
-#define ADDR_DMA_CH7_SOURCE_ADDRS ( (DMA_CHx_SOURCE_ADDRS*) (() + 0x02) )
-#define ADDR_DMA_CH7_DESTINATION_ADDRS ( (DMA_CHx_DESTINATION_ADDRS*) (() + 0x06) )
-#define ADDR_DMA_CH7_SIZE_ADDRS ( (DMA_CHx_SIZE_ADDRS*) (() + 0x0A) )
-
-#define ADDR_DMA_INTERRUPT_VECTOR ( (DMA_INTERRUPT_VECTOR*) ((DMA_GENERAL_CONTROL) + 0x0E) )
 
 //DMA_CHANNELx_CONTROL Register
 /*Decrement Increment*/
@@ -106,6 +65,13 @@ void DMA_Init(void);
 #define DMAxTRIG29 0x1D;
 #define DMAxTRIG30 0x1E;
 #define DMAxTRIG31 0x1F;
+
+
+//Register-------------------------------------------------------------------------
+typedef struct {
+	const uint16_t reserved:16;
+}DMA_RESERVED;
+
 
 typedef struct {
 	volatile uint16_t rw_DMA0TransferTriggerSelect:5;
@@ -174,5 +140,24 @@ typedef struct {
 typedef struct {
 	volatile uint16_t read_HighestPriorityInterruptPending:16;
 }DMA_INTERRUPT_VECTOR;
+
+struct _dma_ctrl {
+	DMA_CONTROL0 ControlReg0; // 0x00
+	DMA_CONTROL1 ControlReg1; // 0x02
+	DMA_CONTROL2 ControlReg2; // 0x04
+	DMA_CONTROL3 ControlReg3; // 0x06
+	DMA_CONTROL4 ControlReg4; // 0x08
+};
+
+struct _dma {
+	DMA_CHx_CONTROL ChannelControlReg; // 0x00
+	DMA_CHx_SOURCE_ADDRS ChannelSourceAddressReg; // 0x02
+	DMA_RESERVED reserved0; // 0x04
+	DMA_CHx_DESTINATION_ADDRS ChannelDestinationAddressReg; // 0x06
+	DMA_RESERVED reserved1; // 0x08
+	DMA_CHx_SIZE_ADDRS ChannelSizeAddressReg; // 0x0A
+	DMA_RESERVED reserved2; // 0x0C
+	DMA_INTERRUPT_VECTOR InterruptVectorReg; // 0x0E
+};
 
 #endif

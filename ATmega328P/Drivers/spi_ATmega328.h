@@ -17,18 +17,16 @@ typedef enum _BitOrder E_BitOrder;
 typedef enum _Phase E_Phase;
 typedef enum _SPIPolarity E_SPIPolarity;
 
+//DECLARATIONS
 void SPI_ClockSetup(E_ClockDivider clockDiv, E_Phase phase, E_SPIPolarity polarity);
 void SPI_Init(E_SPIMode mode, E_BitOrder bitOrder);
 uint8_t SPI_Transmit_and_Receive(uint8_t data);
-uint8_t SPI_Receive(void);
 
-//Powered by AVR Clock Control Unit
+//SPI (Powered by AVR Clock Control Unit)
+typedef struct _spi SPIx;
 #define ATMEGA_BASEADDRESS 0x0000
-
 #define ADDR_POWER_REDUCTION_SPI ( (POWER_REDUCTION_SPI*) ((ATMEGA_BASEADDRESS) + 0x64) ) //Found in Power Management Section
-#define ADDR_SPI_CONTROL ( (SPI_CONTROL*) ((ATMEGA_BASEADDRESS) + 0x4C) )
-#define ADDR_SPI_STATUS ( (SPI_STATUS*) ((ATMEGA_BASEADDRESS) + 0x4D) )
-#define ADDR_SPI_DATA ( (SPI_DATA*) ((ATMEGA_BASEADDRESS) + 0x4E) )
+#define ADDR_SPI ( ( SPIx*) ((ATMEGA_BASEADDRESS) + 0x4C) )
 
 //Enums----------------------------------------------------------------------
 //SPI_CONTROL Register
@@ -87,5 +85,11 @@ typedef struct {
 typedef struct {
 	volatile uint8_t readData_writeData:8;
 }SPI_DATA;
+
+struct _spi {
+	SPI_CONTROL ControlReg; // 0x4C
+	SPI_STATUS StatusReg; // 0x4D
+	SPI_DATA DataReg; // 0x4E
+};
 
 #endif

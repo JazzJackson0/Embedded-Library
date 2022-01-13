@@ -9,58 +9,17 @@ uint8_t AdvancedTimer_Start(uint8_t timerNum, uint16_t prescaler, uint16_t time)
 void AdvancedPWM_Start(uint8_t timerNum, uint8_t captCompNum, uint16_t prescaler, uint16_t time, float dutycycle);
 void AdvancedPWM_Update(uint8_t timerNum, uint8_t captCompNum, uint16_t time, float dutycycle);
 
+//CLOCK
 #define CLOCK 0x40023800
 #define APB2 0x44
-#define TIM1 0x40010000
-#define TIM8 0x40010400
-
-//CLOCK
 #define ADDR_TIM1_8_CLOCK ( (TIM1_8_CLOCK*) ((CLOCK) + APB2) )
 
-//TIMER 1
-#define ADDR_TIM1_CONTROL1 ( (TIM1_A8_CONTROL1*) ((TIM1) + 0x00) )
-#define ADDR_TIM1_CONTROL2 ( (TIM1_A8_CONTROL2*) ((TIM1) + 0x04) )
-#define ADDR_TIM1_SLAVEMODE_CONTROL ( (TIM1_A8_SLAVEMODE_CONTROL*) ((TIM1) + 0x08) )
-#define ADDR_TIM1_DMAINTERRUPT_ENABLE ( (TIM1_A8_DMAINTERRUPT_ENABLE*) ((TIM1) + 0x0C) )
-#define ADDR_TIM1_STATUS ( (TIM1_A8_STATUS*) ((TIM1) + 0x10) )
-#define ADDR_TIM1_EVENTGEN ( (TIM1_A8_EVENTGEN*) ((TIM1) + 0x14) )
-#define ADDR_TIM1_CAPTURECOMP_MODE1 ( (TIM1_A8_CAPTURECOMP_MODE1*) ((TIM1) + 0x18) )
-#define ADDR_TIM1_CAPTURECOMP_MODE2 ( (TIM1_A8_CAPTURECOMP_MODE2*) ((TIM1) + 0x1C) )
-#define ADDR_TIM1_CAPTURECOMP_ENABLE ( (TIM1_A8_CAPTURECOMP_ENABLE*) ((TIM1) + 0x20) )
-#define ADDR_TIM1_COUNTER ( (TIM1_A8_COUNTER*) ((TIM1) + 0x24) )
-#define ADDR_TIM1_PRESCALER ( (TIM1_A8_PRESCALER*) ((TIM1) + 0x28) )
-#define ADDR_TIM1_AUTORELOAD ( (TIM1_A8_AUTORELOAD*) ((TIM1) + 0x2C) )
-#define ADDR_TIM1_REPETITION_COUNTER ( (REPETITION_COUNTER*) ((TIM1) + 0x30) )
-#define ADDR_TIM1_CAPTURECOMP1 ( (TIM1_A8_CAPTURECOMPx*) ((TIM1) + 0x34) )
-#define ADDR_TIM1_CAPTURECOMP2 ( (TIM1_A8_CAPTURECOMPx*) ((TIM1) + 0x38) )
-#define ADDR_TIM1_CAPTURECOMP3 ( (TIM1_A8_CAPTURECOMPx*) ((TIM1) + 0x3C) )
-#define ADDR_TIM1_CAPTURECOMP4 ( (TIM1_A8_CAPTURECOMPx*) ((TIM1) + 0x40) )
-#define ADDR_TIM1_BREAK_AND_DATETIME ( (BREAK_AND_DATETIME*) ((TIM1) + 0x44) )
-#define ADDR_TIM1_DMA_CONTROL ( (TIM1_A8_DMA_CONTROL*) ((TIM1) + 0x48) )
-#define ADDR_TIM1_DMA_FULLTXADDRESS ( (TIM1_A8_DMA_FULLTXADDRESS*) ((TIM1) + 0x4C) )
+//TIMERS
+typedef struct _advanced_timer ADVANCED_TIMERx;
+#define TIM1_BASE 0x40010000
+#define ADDR_TIM1 ( (ADVANCED_TIMERx*) ((TIM1_BASE) + 0x000) )
+#define ADDR_TIM8 ( (ADVANCED_TIMERx*) ((TIM1_BASE) + 0x400) )
 
-
-//TIMER 8
-#define ADDR_TIM8_CONTROL1 ( (TIM1_A8_CONTROL1*) ((TIM8) + 0x00) )
-#define ADDR_TIM8_CONTROL2 ( (TIM1_A8_CONTROL2*) ((TIM8) + 0x04) )
-#define ADDR_TIM8_SLAVEMODE_CONTROL ( (TIM1_A8_SLAVEMODE_CONTROL*) ((TIM8) + 0x08) )
-#define ADDR_TIM8_DMAINTERRUPT_ENABLE ( (TIM1_A8_DMAINTERRUPT_ENABLE*) ((TIM8) + 0x0C) )
-#define ADDR_TIM8_STATUS ( (TIM1_A8_STATUS*) ((TIM8) + 0x10) )
-#define ADDR_TIM8_EVENTGEN ( (TIM1_A8_EVENTGEN*) ((TIM8) + 0x14) )
-#define ADDR_TIM8_CAPTURECOMP_MODE1 ( (TIM1_A8_CAPTURECOMP_MODE1*) ((TIM8) + 0x18) )
-#define ADDR_TIM8_CAPTURECOMP_MODE2 ( (TIM1_A8_CAPTURECOMP_MODE2*) ((TIM8) + 0x1C) )
-#define ADDR_TIM8_CAPTURECOMP_ENABLE ( (TIM1_A8_CAPTURECOMP_ENABLE*) ((TIM8) + 0x20) )
-#define ADDR_TIM8_COUNTER ( (TIM1_A8_COUNTER*) ((TIM8) + 0x24) )
-#define ADDR_TIM8_PRESCALER ( (TIM1_A8_PRESCALER*) ((TIM8) + 0x28) )
-#define ADDR_TIM8_AUTORELOAD ( (TIM1_A8_AUTORELOAD*) ((TIM8) + 0x2C) )
-#define ADDR_TIM8_REPETITION_COUNTER ( (REPETITION_COUNTER*) ((TIM8) + 0x30) )
-#define ADDR_TIM8_CAPTURECOMP1 ( (TIM1_A8_CAPTURECOMPx*) ((TIM8) + 0x34) )
-#define ADDR_TIM8_CAPTURECOMP2 ( (TIM1_A8_CAPTURECOMPx*) ((TIM8) + 0x38) )
-#define ADDR_TIM8_CAPTURECOMP3 ( (TIM1_A8_CAPTURECOMPx*) ((TIM8) + 0x3C) )
-#define ADDR_TIM8_CAPTURECOMP4 ( (TIM1_A8_CAPTURECOMPx*) ((TIM8) + 0x40) )
-#define ADDR_TIM8_BREAK_AND_DATETIME ( (BREAK_AND_DATETIME*) ((TIM8) + 0x44) )
-#define ADDR_TIM8_DMA_CONTROL ( (TIM1_A8_DMA_CONTROL*) ((TIM8) + 0x48) )
-#define ADDR_TIM8_DMA_FULLTXADDRESS ( (TIM1_A8_DMA_FULLTXADDRESS*) ((TIM8) + 0x4C) )
 
 //TIM1_A8_CONTROL1
 /*Alignment Mode*/
@@ -142,7 +101,7 @@ void AdvancedPWM_Update(uint8_t timerNum, uint8_t captCompNum, uint16_t time, fl
 #define CAPTURE_EVERY_8EVENTS 0x03
 
 
-
+//Registers------------------------------------------------------------------------
 typedef struct {
 	volatile uint32_t tim1_StartTick:1;
 	volatile uint32_t tim8_StartTick:1;
@@ -345,5 +304,28 @@ typedef struct {
 typedef struct {
 	volatile uint32_t rw_DMABurstAccessRegister:32;
 }TIM1_A8_DMA_FULLTXADDRESS;
+
+struct _advanced_timer {
+	TIM1_A8_CONTROL1 ControlReg1; // 0x00
+	TIM1_A8_CONTROL2 ControlReg2; // 0x04
+	TIM1_A8_SLAVEMODE_CONTROL SlaveModeControlReg; // 0x08
+	TIM1_A8_DMAINTERRUPT_ENABLE DMAInterruptEnableReg; // 0x0C
+	TIM1_A8_STATUS StatusReg; // 0x10
+	TIM1_A8_EVENTGEN EventGenReg; // 0x14
+	TIM1_A8_CAPTURECOMP_MODE1 CaptureCompModeReg1; // 0x18
+	TIM1_A8_CAPTURECOMP_MODE2 CaptureCompModeReg2; // 0x1C
+	TIM1_A8_CAPTURECOMP_ENABLE CaptureCompEnableReg; // 0x20
+	TIM1_A8_COUNTER CounterReg; // 0x24
+	TIM1_A8_PRESCALER PrescalerReg; // 0x28
+	TIM1_A8_AUTORELOAD AutoReloadReg; // 0x2C
+	REPETITION_COUNTER CounterReg; // 0x30
+	TIM1_A8_CAPTURECOMPx CaptureComp1Reg; // 0x34
+	TIM1_A8_CAPTURECOMPx CaptureComp2Reg; // 0x38
+	TIM1_A8_CAPTURECOMPx CaptureComp3Reg; // 0x3C
+	TIM1_A8_CAPTURECOMPx CaptureComp4Reg; // 0x40
+	BREAK_AND_DATETIME BreakAndDateTimeReg; // 0x44
+	TIM1_A8_DMA_CONTROL DMAControlReg; // 0x48
+	TIM1_A8_DMA_FULLTXADDRESS DMAFullTXAddressReg; // 0x4C
+};
 
 #endif

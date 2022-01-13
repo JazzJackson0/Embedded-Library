@@ -1,35 +1,20 @@
 #include <stdint.h>
-#include <stddef.h>
 #include "spi_STM32F407.h"
 #include "gpio_STM32F407.h"
 
 //Static Prototypes---------------------------------------------
 static void SPI_PinInit(uint8_t spiNumber);
 static void SPIClockSelect(uint8_t spiNumber);
-static SPI_CONTROL1* Set_Control1Register(uint8_t spiNumber);
-static SPI_CONTROL2* Set_Control2Register(uint8_t spiNumber);
-static SPI_STATUS* Set_StatusRegister(uint8_t spiNumber);
-static SPI_DATA* Set_DataRegister(uint8_t spiNumber);
+static SPIx* Get_SPI(uint8_t spiNum);
 
 //Global Variables------------------------------------------------
 //Clock
 SPI_CLOCK_1 *const SPIClock = ADDR_SPI_CLOCK_1;
 SPI_CLOCK_2_3 *const SPIClock2_3 = ADDR_SPI_CLOCK_2_3;
-//For SPI 1
-SPI_CONTROL1 *const SPIControl1_1 = ADDR_SPI1_CONTROL1;
-SPI_CONTROL2 *const SPIControl2_1 = ADDR_SPI1_CONTROL2; 
-SPI_STATUS *const SPIStatus_1 = ADDR_SPI1_STATUS; 
-SPI_DATA *const SPIData_1 = ADDR_SPI1_DATA; 
-//For SPI 2
-SPI_CONTROL1 *const SPIControl1_2 = ADDR_SPI2_CONTROL1;
-SPI_CONTROL2 *const SPIControl2_2 = ADDR_SPI2_CONTROL2; 
-SPI_STATUS *const SPIStatus_2 = ADDR_SPI2_STATUS; 
-SPI_DATA *const SPIData_2 = ADDR_SPI2_DATA; 
-//For SPI 3
-SPI_CONTROL1 *const SPIControl1_3 = ADDR_SPI3_CONTROL1;
-SPI_CONTROL2 *const SPIControl2_3 = ADDR_SPI3_CONTROL2; 
-SPI_STATUS *const SPIStatus_3 = ADDR_SPI3_STATUS; 
-SPI_DATA *const SPIData_3 = ADDR_SPI3_DATA; 
+//SPI
+SPIx *const SPI1 = ADDR_SPI1;
+SPIx *const SPI2 = ADDR_SPI2; 
+SPIx *const SPI3 = ADDR_SPI3; 
 
 
 /**
@@ -40,66 +25,53 @@ SPI Clock:
 **/
 void SPI_ClockSetup(uint8_t spiNumber, E_Phase phase, E_Polarity polarity, E_Prescaler prescaler) {
 	
-	SPI_CONTROL1 *const SPIControl1 = Set_Control1Register(spiNumber);
-	
-	SPIControl1->enable_SPI = 0;
-	SPIControl1->trans1ClockPhase0_trans2ClockPhase1 = 0;
-	SPIControl1->clockPolarityLow0_clockPolarityHigh1 = 0;
-	SPIControl1->rw_BaudRate = CLOCK_DIV_4;
+	SPIx *const SPI = Get_SPI(spiNumber);
+	SPI->ControlReg1.enable_SPI = 0;
+	SPI->ControlReg1.trans1ClockPhase0_trans2ClockPhase1 = 0;
+	SPI->ControlReg1.clockPolarityLow0_clockPolarityHigh1 = 0;
+	SPI->ControlReg1.rw_BaudRate = CLOCK_DIV_4;
 }
 
 
 void SPI_Init(uint8_t spiNumber, E_Mode mode, E_BitOrder bitOrder, uint8_t dataSize) {
 	
-	SPI_CONTROL1 *const SPIControl1 = Set_Control1Register(spiNumber);
-	SPI_CONTROL2 *const SPIControl2 = Set_Control2Register(spiNumber); 
-	
+	SPIx *const SPI = Get_SPI(spiNumber);
 	SPI_PinInit(spiNumber);
 	SPIClockSelect(spiNumber);
 	
-	SPIControl1->enable_SPI = 0;
-	SPIControl1->slaveMode0_masterMode1 = 1;
-	SPIControl1->msbFirst0_lsbFirst1 = 0;
+	SPI->ControlReg1.enable_SPI = 0;
+	SPI->ControlReg1.slaveMode0_masterMode1 = 1;
+	SPI->ControlReg1.msbFirst0_lsbFirst1 = 0;
 	
 	switch (dataSize) {
-		
 		case 8 :
-			SPIControl1->dataFrame8Bit0_dataFrame16Bit1 = 0;
+			SPI->ControlReg1.dataFrame8Bit0_dataFrame16Bit1 = 0;
 			break;
 		case 16 :
-			SPIControl1->dataFrame8Bit0_dataFrame16Bit1 = 1;
+			SPI->ControlReg1.dataFrame8Bit0_dataFrame16Bit1 = 1;
 			break;
 	}
 	
 	//Hardware NSS
-	SPIControl2->enable_HardwareSlaveSelectAsOutput = 1;
-	
+	SPI->ControlReg2.enable_HardwareSlaveSelectAsOutput = 1;
 	//Software NSS
-	/* SPIControl1->enable_SoftwareSlaveSelect = 1; 
-	SPIControl1->softwareNSSLow0_softwareNSSHigh1 = 0; 
+	/* SPI->ControlReg1.enable_SoftwareSlaveSelect = 1; 
+	SPI->ControlReg1.softwareNSSLow0_softwareNSSHigh1 = 0; 
 	*/
-	
-	SPIControl1->enable_SPI = 1;
+	SPI->ControlReg1.enable_SPI = 1;
 }
 
-
 uint8_t SPI_Receive(uint8_t spiNumber) {
-	
-	SPI_STATUS *const SPIStatus = Set_StatusRegister(spiNumber); 
-	SPI_DATA *const SPIData = Set_DataRegister(spiNumber); 
-	
-	while (SPIStatus->dataReadyToRead != 1);
-	return SPIData->rw_Data;
+	SPIx *const SPI = Get_SPI(spiNumber);
+	while (SPI->StatusReg.dataReadyToRead != 1);
+	return SPI->DataReg.rw_Data;
 } 
 
 
 uint8_t SPI_Transmit(uint8_t spiNumber, uint8_t data) {
-
-	SPI_STATUS *const SPIStatus = Set_StatusRegister(spiNumber); 
-	SPI_DATA *const SPIData = Set_DataRegister(spiNumber); 
-	
-	while(SPIStatus->transferRegisterOpen != 1);
-	SPIData->rw_Data = data;
+	SPIx *const SPI = Get_SPI(spiNumber);
+	while(SPI->StatusReg.transferRegisterOpen != 1);
+	SPI->DataReg.rw_Data = data;
 	return 1;
 } 
 
@@ -164,7 +136,6 @@ static void SPI_PinInit(uint8_t spiNumber) {
 static void SPIClockSelect(uint8_t spiNumber) {
 	
 	switch(spiNumber) {
-		
 		case 1 :
 			SPIClock->spi1_StartTick = 1;
 			break;
@@ -177,62 +148,16 @@ static void SPIClockSelect(uint8_t spiNumber) {
 	}
 }
 
-static SPI_CONTROL1* Set_Control1Register(uint8_t spiNumber) {
-	
-	switch(spiNumber) {
-		
-		case 1 :
-			return SPIControl1_1;
-		case 2 :
-			return SPIControl1_2;
-		case 3 :
-			return SPIControl1_3;
-		default :
-			return NULL;
-	}
-}
+static SPIx* Get_SPI(uint8_t spiNum) {
 
-static SPI_CONTROL2* Set_Control2Register(uint8_t spiNumber) {
-	
-	switch(spiNumber) {
-		
-		case 1 :
-			return SPIControl2_1;
-		case 2 :
-			return SPIControl2_2;
-		case 3 :
-			return SPIControl2_3;
-		default :
-			return NULL;
-	}
-}
-
-static SPI_STATUS* Set_StatusRegister(uint8_t spiNumber) {
-	
-	switch(spiNumber) {
-		
-		case 1 :
-			return SPIStatus_1;
-		case 2 :
-			return SPIStatus_2;
-		case 3 :
-			return SPIStatus_3;
-		default :
-			return NULL;
-	}
-}
-
-static SPI_DATA* Set_DataRegister(uint8_t spiNumber) {
-	
-	switch(spiNumber) {
-		
-		case 1 :
-			return SPIData_1;
-		case 2 :
-			return SPIData_2;
-		case 3 :
-			return SPIData_3;
-		default :
-			return NULL;
+	switch(spiNum) {
+		case 1:
+			return SPI1;
+		case 2:
+			return SPI2;
+		case 3:
+			return SPI3;
+		default:
+			return;
 	}
 }
