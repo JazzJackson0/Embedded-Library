@@ -1,9 +1,17 @@
 #pragma once
-#include "../Modules-Logic/complex_nums.h"
+#include "../Logic/complex_nums.h"
 
 typedef struct k K_Values;
 
-//Functions
+//DECLARATIONS
+/**
+ * @brief 
+ * 
+ * @param sample_frequency 
+ * @param resolution 
+ * @param sample_values 
+ * @return ** K_Values* 
+ */
 K_Values* radix2_FFT(int sample_frequency, int resolution, complexNum *sample_values);
 
 //Structs

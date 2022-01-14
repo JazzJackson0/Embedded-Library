@@ -23,26 +23,7 @@ USARTx *const UART4 = ADDR_UART4;
 USARTx *const UART5 = ADDR_UART5;
 USARTx *const USART6 = ADDR_USART6;
 
-/**
 
-Parameters:
-	BaudRate -  
-	OverSampleRate - 
-	
-- Default System Clock (fclk) = HSI 16MHz w/ No prescales or PLL
-		+ USART 1 & 6 fclk = APB2 High Speed Bus (84MHz MAX Freq)
-		+ USART/UART 2,3,4 & 5 fclk = APB1 Low Speed Bus (42MHz MAX Freq)
-		
-    - Calculating Baudrate:
-		+ (Desired BaudRate) = fclk / (OverSampleRate * USARTDIV)
-		+ Equation to Use: USARTDIV = fclk / (OverSampleRate * (Desired BaudRate))
-    
-	-  Getting a 9600 Baud Rate 
-		+ USARTDIV = 104.1875
-		+ Mantissa = 104
-		+ Fraction = .1875 * (Oversampling Rate [16 in this case]) = 3
-
-**/
 void USART_BaudRate_and_OverSample(uint8_t usartNumber, uint32_t baudRate, uint8_t overSampleRate) {
 	
 	USARTx *const USART = Get_USART(usartNumber);
@@ -61,15 +42,6 @@ void USART_BaudRate_and_OverSample(uint8_t usartNumber, uint32_t baudRate, uint8
 	USART->BaudRateReg.usartDividerFraction = (usartDividerFraction - USART->BaudRateReg.usartDividerMantissa) * overSampleRate; //Ex: (1.456 - 1) = 0.456 -> 0.456 * OverSampRate
 }
 
-
-/**
-Parameters: 
-	usartNumber - 
-	ParityType -  
-	DataBitSize -
-	StopBitSize -
-
-**/
 void USART_Init(uint8_t usartNumber, E_Parity parityType, uint8_t dataBitSize, float stopBitSize){
 	
 	USARTClockSelect(usartNumber);

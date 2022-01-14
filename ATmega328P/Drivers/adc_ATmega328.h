@@ -18,13 +18,29 @@
 
 #include <stdint.h>
 
-
 typedef enum _Channel E_Channel;
 typedef enum _ADCClockDivide E_ADCClockDivide;
 typedef enum _AutoTrigSrc E_AutoTrigSrc;
 
 //DECLARATIONS
+/**
+ * @brief Initialize and Start the ADC Conversion process.
+ * 			
+ * 			- Arduino Uno Clock Speed Info
+ *				+ ATmega defaults to 8MHz RC Prescaled to 1MHz.
+ *				+ Arduino Uno Board overrides ATmega and defaults 
+ *				  to 16MHz external xtal oscillator. 
+ * @param channel 
+ * @param clockDivide 
+ * @param autoTrigSrc 
+ * @return ** void 
+ */
 void ADC_Init_and_Start(E_Channel channel, E_ADCClockDivide clockDivide, E_AutoTrigSrc autoTrigSrc);
+/**
+ * @brief 
+ * 
+ * @return ** int16_t 
+ */
 int16_t ADC_Read(void);
 
 

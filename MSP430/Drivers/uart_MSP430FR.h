@@ -9,9 +9,49 @@ typedef enum _UARTBitOrder E_UARTBitOrder;
 typedef enum _UARTClockSource E_UARTClockSource;
 
 //DECLARATIONS
+/**
+ * @brief 
+ * 
+ * 			MSP430FR CLOCK SPEED: According to '3.2 Clock System Operation'
+ *				+ MCLK & SMCLK = DCOCLK
+ *				+ Then they are divided by 8
+ *				-----------------------------
+ *					- DCOCLK = 1MHz
+ *					- SMCLK & MCLK = 1 MHz / 8
+ *					- SMCLK & MCLK = 125KHz
+ * 
+ * @param uartNum 
+ * @param clocksrc 
+ * @param baudRate 
+ * @param overSampleRate 
+ * @return ** void 
+ */
 void USART_BaudRate_and_OverSample(char* uartNum, E_UARTClockSource clocksrc, uint32_t baudRate, uint8_t overSampleRate);
+/**
+ * @brief 
+ * 
+ * @param uartNum 
+ * @param numOfStopBits 
+ * @param dataSize 
+ * @param parityType 
+ * @param bitorder 
+ * @return ** void 
+ */
 void UART_Init(char* uartNum, uint8_t numOfStopBits, uint8_t dataSize, E_Parity parityType, E_UARTBitOrder bitorder);
+/**
+ * @brief 
+ * 
+ * @param uartNum 
+ * @return ** uint8_t 
+ */
 uint8_t UART_Receive(char* uartNum);
+/**
+ * @brief 
+ * 
+ * @param uartNum 
+ * @param data 
+ * @return ** void 
+ */
 void UART_Transmit(char* uartNum, uint8_t data);
 
 //UART

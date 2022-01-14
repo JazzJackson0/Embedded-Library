@@ -14,20 +14,6 @@ BASIC_TIMx *const TIM6 = ADDR_TIM6;
 BASIC_TIMx *const TIM7 = ADDR_TIM7;
 
 
-/*  
-	Prescaler Example: 
-		Clock Speed / Presclaler = Number of Hz per Second
-
-	Time Example: 
-		00:00 -------------> Time (Auto Reload)
-				  RESET
-		00:00 -------------> Time (Auto Reload)
-				  ETC...
-				  
-	Example:
-		Let (Clock Speed / Prescaler) = 1000Hz/Sec
-		If Time = 1000Hz, then Time = 1 sec	
-*/
 uint8_t BasicTimer_Start(uint8_t timerNum, uint16_t prescaler, uint16_t time) {
 	Activate_Clock(timerNum);
 	BASIC_TIMx *const TIMER = Get_Timer(timerNum);

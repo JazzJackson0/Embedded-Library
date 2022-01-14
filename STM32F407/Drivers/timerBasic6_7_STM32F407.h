@@ -8,7 +8,33 @@
 #include <stdint.h>
 
 //DECLARATIONS
+/**
+ * @brief 
+ * 			Prescaler Example: 
+ *				- Clock Speed / Presclaler = Number of Hz per Second
+ *			
+ *			Time Example: 
+ *				- 00:00 -------> Time (Auto Reload)
+ *						RESET
+ *				- 00:00 -------> Time (Auto Reload)
+ *						ETC...				
+ *			Example:
+ *				- Let (Clock Speed / Prescaler) = 1000Hz/Sec
+ *				- If Time = 1000Hz, then Time = 1 sec
+ * @param timerNum 
+ * @param prescaler 
+ * @param time 
+ * @return ** uint8_t 
+ */
 uint8_t BasicTimer_Start(uint8_t timerNum, uint16_t prescaler, uint16_t time);
+/**
+ * @brief 
+ * 
+ * @param timerNum 
+ * @param prescaler 
+ * @param time 
+ * @return ** uint8_t 
+ */
 uint8_t BasicOneShotTimer_Start(uint8_t timerNum, uint16_t prescaler, uint16_t time);
 
 //CLOCK

@@ -8,10 +8,50 @@ typedef enum _PinModes E_PinModes;
 typedef enum _OutSpeeds E_OutSpeeds;
 typedef enum _PullUpDown E_PullUpDown;
 
+//DECLARATIONS
+/**
+ * @brief 
+ * 
+ * @param port 
+ * @param pinNum 
+ * @param modeType 
+ * @return ** void 
+ */
 void Pin_Init(char port, uint8_t pinNum, E_PinModes modeType);
+/**
+ * @brief 
+ * 
+ * @param port 
+ * @param pinNum 
+ * @return ** uint8_t 
+ */
 uint8_t Pin_GetInput(char port, uint8_t pinNum);
+/**
+ * @brief 
+ * 
+ * @param port 
+ * @param pinNum 
+ * @param pinState 
+ * @return ** void 
+ */
 void Pin_Out(char port, uint8_t pinNum, uint8_t pinState);
+/**
+ * @brief 
+ * 
+ * @param port 
+ * @param pinNum 
+ * @param speed 
+ * @return ** void 
+ */
 void Pin_OutputSpeed(char port, uint8_t pinNum, E_OutSpeeds speed);
+/**
+ * @brief 
+ * 
+ * @param port 
+ * @param pinNum 
+ * @param upDown 
+ * @return ** void 
+ */
 void Pin_PullUp_PullDown(char port, uint8_t pinNum, E_PullUpDown upDown);
 
 //CLOCK

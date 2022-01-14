@@ -34,7 +34,15 @@ void msDelay(int delay) {
 	}
 }
 
-
+/*
+ * 			TO-DO
+ * 			-----
+ *  - Remove old register struct references. Make more device agnostic.
+ *
+ *  - Test Code
+ *  
+ *  - 
+ *  */
 
 
 

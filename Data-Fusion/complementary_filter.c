@@ -1,11 +1,7 @@
 #include "complementary_filter.h"
 #include "../Flight-Control/State-Estimator/sensordata_convert.h"
 
-/*
-Parameters
-Ax - Az: Rotation angles obtained from acceleration
-Gx - Gz: Rotation angles obtained from angular velocity
-*/
+
 filteredAngles* complementary_filter(filteredAngles* angles, RotationAngles* rotations, float gyroWeight, float accelWeight) {
 
     // Ensure weights add up to 1!!

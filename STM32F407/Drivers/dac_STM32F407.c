@@ -19,9 +19,6 @@ void DAC_Init(uint8_t dacNum){
 }
 
 
-/**
-Sends Analog voltage value out to pin & also returns the value
-**/
 int16_t DAC_Out(uint8_t dacNum, int16_t digitalData) {
 	
 	switch (dacNum) {

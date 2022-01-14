@@ -14,20 +14,7 @@ TIM1_8_CLOCK *const Adv1_8Clock = ADDR_TIM1_8_CLOCK;
 ADVANCED_TIMERx *const TIM1 = ADDR_TIM1;
 ADVANCED_TIMERx *const TIM8 = ADDR_TIM8;
 
-/*  
-	Prescaler Example: 
-		Clock Speed / Presclaler = Number of Hz per Second
 
-	Time Example: 
-		00:00 -------------> Time (Auto Reload)
-				  RESET
-		00:00 -------------> Time (Auto Reload)
-				  ETC...
-				  
-	Example:
-		Let (Clock Speed / Prescaler) = 1000Hz/Sec
-		If Time = 1000Hz, then Time = 1 sec	
-*/
 uint8_t AdvancedTimer_Start(uint8_t timerNum, uint16_t prescaler, uint16_t time) {
 	
 	Activate_Clock(timerNum);

@@ -4,8 +4,26 @@
 
 #include <stdint.h>
 
+//DECLARATIONS
+/**
+ * @brief 
+ * 
+ * @return ** void 
+ */
 void LCD_Init(void);
+/**
+ * @brief 
+ * 
+ * @param instruct 
+ * @return ** void 
+ */
 void LCD_Instruct(uint8_t instruct);
+/**
+ * @brief 
+ * 
+ * @param data 
+ * @return ** void 
+ */
 void LCD_Display(uint16_t data);
 
 

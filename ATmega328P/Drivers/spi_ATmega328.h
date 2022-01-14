@@ -18,8 +18,29 @@ typedef enum _Phase E_Phase;
 typedef enum _SPIPolarity E_SPIPolarity;
 
 //DECLARATIONS
+/**
+ * @brief 
+ * 
+ * @param clockDiv 
+ * @param phase 
+ * @param polarity 
+ * @return ** void 
+ */
 void SPI_ClockSetup(E_ClockDivider clockDiv, E_Phase phase, E_SPIPolarity polarity);
+/**
+ * @brief 
+ * 
+ * @param mode 
+ * @param bitOrder 
+ * @return ** void 
+ */
 void SPI_Init(E_SPIMode mode, E_BitOrder bitOrder);
+/**
+ * @brief 
+ * 
+ * @param data 
+ * @return ** uint8_t 
+ */
 uint8_t SPI_Transmit_and_Receive(uint8_t data);
 
 //SPI (Powered by AVR Clock Control Unit)

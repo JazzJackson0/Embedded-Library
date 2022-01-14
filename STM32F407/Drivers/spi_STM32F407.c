@@ -17,12 +17,6 @@ SPIx *const SPI2 = ADDR_SPI2;
 SPIx *const SPI3 = ADDR_SPI3; 
 
 
-/**
-
-SPI Clock:
-        SPI1 Clock = PCLK2 (AKA: APB2 84 MHz)
-        Baud Rate = PCLK2 / 2 = 42 MHz
-**/
 void SPI_ClockSetup(uint8_t spiNumber, E_Phase phase, E_Polarity polarity, E_Prescaler prescaler) {
 	
 	SPIx *const SPI = Get_SPI(spiNumber);

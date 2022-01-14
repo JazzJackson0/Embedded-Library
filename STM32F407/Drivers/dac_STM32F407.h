@@ -5,7 +5,20 @@
 #include <stdint.h>
 
 //DECLARATIONS
+/**
+ * @brief 
+ * 
+ * @param dacNum 
+ * @return ** void 
+ */
 void DAC_Init(uint8_t dacNum);
+/**
+ * @brief Sends Analog voltage value out to pin & also returns the value
+ * 
+ * @param dacNum 
+ * @param digitalData 
+ * @return ** int16_t 
+ */
 int16_t DAC_Out(uint8_t dacNum, int16_t digitalData);
 
 //CLOCK

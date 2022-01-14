@@ -4,12 +4,66 @@
 #include <stdbool.h>
 typedef struct pid PIDController;
 
+//DECLARATIONS
+/**
+ * @brief 
+ * 
+ * @return ** PIDController* 
+ */
 PIDController* PID_Init(void);
+/**
+ * @brief 
+ * 
+ * @param PID 
+ * @param set_point 
+ * @param current_measurement 
+ * @return ** PIDController* 
+ */
 PIDController* PID_Update(PIDController *PID, double set_point, double current_measurement);
+/**
+ * @brief 
+ * 
+ * @param PID 
+ * @param kp 
+ * @param ki 
+ * @param kd 
+ * @return ** void 
+ */
 void Set_Tuning_Parameters(PIDController *PID, double kp, double ki, double kd);
+/**
+ * @brief 
+ * 
+ * @param PID 
+ * @param new_sample_time 
+ * @return ** void 
+ */
 void Set_Sample_Time(PIDController *PID, int new_sample_time);
+/**
+ * @brief 
+ * 
+ * @param PID 
+ * @param min 
+ * @param max 
+ * @return ** void 
+ */
 void Set_Output_Limits(PIDController *PID, double min, double max);
+/**
+ * @brief Set PID to Manual Mode or AUtomatic Mode
+ * 			Manual Mode: 
+ * 			Automatic Mode: 
+ * 
+ * @param PID 
+ * @param mode 
+ * @return ** void 
+ */
 void Set_PIDMode(PIDController *PID, int mode);
+/**
+ * @brief 
+ * 
+ * @param PID 
+ * @param direction 
+ * @return ** void 
+ */
 void Set_ControllerDirection(PIDController *PID, int direction);
 
 /*Controller Mode*/

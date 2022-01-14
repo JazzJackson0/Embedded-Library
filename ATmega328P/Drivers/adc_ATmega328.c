@@ -8,11 +8,7 @@
 POWER_REDUCTION_ADC *const ADCPower = ADDR_POWER_REDUCTION_ADC;
 ADCx *const ADC = ADDR_ADC;
 
-/**
-- Arduino Uno Clock Speed
-		+ATmega defaults to 8MHz RC Prescaled to 1MHz
-		+Arduino Uno Board overrides ATmega and defaults to 16MHz external xtal oscillator 
-**/
+
 void ADC_Init_and_Start(E_Channel channel, E_ADCClockDivide clockDivide, E_AutoTrigSrc autoTrigSrc) {
 	
 	ADCPower->adcOn0_adcOff1 = 0;

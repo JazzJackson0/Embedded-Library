@@ -11,9 +11,43 @@ typedef enum _Mode E_Mode;
 typedef enum _BitOrder E_BitOrder;
 
 //DECLARATIONS
+/**
+ * @brief 
+ * 			SPI Clock:
+ *				- SPI1 Clock = PCLK2 (AKA: APB2 84 MHz)
+ *				- Baud Rate = PCLK2 / 2 = 42 MHz
+ * 
+ * @param spiNumber 
+ * @param phase 
+ * @param polarity 
+ * @param prescaler 
+ * @return ** void 
+ */
 void SPI_ClockSetup(uint8_t spiNumber, E_Phase phase, E_Polarity polarity, E_Prescaler prescaler);
+/**
+ * @brief 
+ * 
+ * @param spiNumber 
+ * @param mode 
+ * @param bitOrder 
+ * @param dataSize 
+ * @return ** void 
+ */
 void SPI_Init(uint8_t spiNumber, E_Mode mode, E_BitOrder bitOrder, uint8_t dataSize);
+/**
+ * @brief 
+ * 
+ * @param spiNumber 
+ * @return ** uint8_t 
+ */
 uint8_t SPI_Receive(uint8_t spiNumber);
+/**
+ * @brief 
+ * 
+ * @param spiNumber 
+ * @param data 
+ * @return ** uint8_t 
+ */
 uint8_t SPI_Transmit(uint8_t spiNumber, uint8_t data);
 
 

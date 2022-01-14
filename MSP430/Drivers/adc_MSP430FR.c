@@ -13,15 +13,6 @@ MEM_CTRL_ACCESSx *const MEM_CTRL_x = ADDR_MEM_CTRL;
 MEM_ACCESSx *const MEM_x = ADDR_MEM;
 
 
-/**
-- CLOCK SPEED: According to '3.2 Clock System Operation'
-		+ MCLK & SMCLK = DCOCLK
-		+ Then they are divided by 8
-		+-----------------------------
-		+ DCOCLK = 1MHz
-		+ SMCLK & MCLK = 1 MHz / 8
-		+ SMCLK & MCLK = 125KHz
-**/
 void ADC_SetClockSpeed(E_ADCClockSource clockSource, E_ClockDivider clockDivide, E_ADCPreDivider preDivide) {
 	
 	ADCx *const ADC = ADC_x;

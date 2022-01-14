@@ -8,6 +8,10 @@ class MaxHeap : public Heap {
 
     public:
 
+        /**
+         * @brief 
+         * 
+         */
         MaxHeap(int aHeapSize);
 
         /**

@@ -15,8 +15,29 @@ typedef enum _Parity E_Parity;
 typedef enum _USARTMode E_USARTMode;
 
 //DECLARATIONS
+/**
+ * @brief 
+ * 
+ * @param mode 
+ * @param parity 
+ * @param polarity 
+ * @param dataSize 
+ * @param numOfStopBits 
+ * @return ** void 
+ */
 void USART_Init(E_USARTMode mode, E_Parity parity, E_USARTPolarity polarity, uint8_t dataSize, uint8_t numOfStopBits);
+/**
+ * @brief 
+ * 
+ * @return *** uint8_t 
+ */
 uint8_t USART_Receive(void);
+/**
+ * @brief 
+ * 
+ * @param data 
+ * @return ** void 
+ */
 void USART_Transmit(uint8_t data);
 
 //USART (Powered by AVR Clock Control Unit)

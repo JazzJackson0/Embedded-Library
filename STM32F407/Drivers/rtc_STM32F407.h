@@ -16,12 +16,61 @@
 #include <stdint.h>
 
 //DECLARATIONS
+/**
+ * @brief 
+ * 
+ * @return ** void 
+ */
 void RTC_Init(void);
+/**
+ * @brief 
+ * 
+ * @param hour 
+ * @param minute 
+ * @param second 
+ * @param amPm 
+ * @return ** void 
+ */
 void Set_Time(uint8_t hour, uint8_t minute, uint8_t second, uint8_t amPm);
+/**
+ * @brief 
+ * 
+ * @param day 
+ * @param month 
+ * @param year 
+ * @param weekday 
+ * @return ** void 
+ */
 void Set_Date(uint8_t day, uint8_t month, uint8_t year, uint8_t weekday);
+/**
+ * @brief 
+ * 
+ * @param hour 
+ * @param minute 
+ * @param second 
+ * @param amPm 
+ * @return ** void 
+ */
 void Set_TimeAlarm(uint8_t hour, uint8_t minute, uint8_t second, uint8_t amPm);
+/**
+ * @brief 
+ * 
+ * @param day 
+ * @param dateWeek 
+ * @return ** void 
+ */
 void Set_DateAlarm(uint8_t day, uint8_t dateWeek);
+/**
+ * @brief 
+ * 
+ * @return ** void 
+ */
 void Get_Time(void);
+/**
+ * @brief 
+ * 
+ * @return ** void 
+ */
 void Get_Date(void);
 
 //RTC

@@ -5,6 +5,12 @@
 #include <stdint.h>
 
 //DECLARATIONS
+/**
+ * @brief 
+ * 
+ * @param dmaNum 
+ * @return ** void 
+ */
 void DMA_Init(uint8_t dmaNum);
 
 //DMA

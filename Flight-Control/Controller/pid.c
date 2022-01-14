@@ -89,11 +89,6 @@ void Set_Output_Limits(PIDController *PID, double min, double max) {
 	else if (PID->Integrator < PID->min_output) PID->Integrator = PID->min_output;
 }
 
-/*
-Manual Mode
-OR
-Automatic Mode
-*/
 void Set_PIDMode(PIDController *PID, int mode) { 
 	
 	bool newAutoMode = (mode == AUTOMATIC);

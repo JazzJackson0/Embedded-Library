@@ -20,20 +20,6 @@ GEN_TIMER_9_14x *const TIM13 = ADDR_TIM13;
 GEN_TIMER_9_14x *const TIM14 = ADDR_TIM14;
 
 
-/*  
-	Prescaler Example: 
-		Clock Speed / Presclaler = Number of Hz per Second
-
-	Time Example: 
-		00:00 -------------> Time (Auto Reload)
-				  RESET
-		00:00 -------------> Time (Auto Reload)
-				  ETC...
-				  
-	Example:
-		Let (Clock Speed / Prescaler) = 1000Hz/Sec
-		If Time = 1000Hz, then Time = 1 sec	
-*/
 uint8_t GeneralTimer9_14_Start(uint8_t timerNum, uint16_t prescaler, uint16_t time) {
 	
 	Activate_Clock(timerNum);

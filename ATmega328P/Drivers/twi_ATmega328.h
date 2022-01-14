@@ -14,10 +14,43 @@ typedef enum _TWIClockDivide E_TWIClockDivide;
 typedef enum _Read_Write E_Read_Write;
 
 //DECLARATIONS
+/**
+ * @brief 
+ * 		- Arduino Uno Clock Speed Info
+ *			+ ATmega defaults to 8MHz RC Prescaled to 1MHz
+ *			+ Arduino Uno Board overrides ATmega and defaults to 16MHz external xtal oscillator
+ * 
+ * @param clockDivider 
+ * @param bitRatekHz (In KHz) Ex: 500 for 500KHz
+ * @return ** void 
+ */
 void TWI_Init(E_TWIClockDivide clockDivider, uint8_t bitRatekHz);
+/**
+ * @brief 
+ * 
+ * @param slaveAddress 
+ * @param readWrite 
+ * @return ** uint8_t 
+ */
 uint8_t TWIMasterStart(uint8_t slaveAddress, E_Read_Write readWrite);
+/**
+ * @brief 
+ * 
+ * @param data 
+ * @return ** uint8_t 
+ */
 uint8_t TWIMaster_Transmit(uint8_t data);
+/**
+ * @brief 
+ * 
+ * @return ** uint8_t 
+ */
 uint8_t TWIMaster_Receive(void);
+/**
+ * @brief 
+ * 
+ * @return ** void 
+ */
 void TWI_Stop(void);
 
 

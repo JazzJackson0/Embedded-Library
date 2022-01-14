@@ -6,18 +6,47 @@ class Heap {
         int currentSize;
         int *heap;
 
+        /**
+         * @brief 
+         * 
+         * @param index 
+         * @return ** int 
+         */
         int Get_ParentIndex(int index);
 
+        /**
+         * @brief 
+         * 
+         * @param index 
+         * @return ** int 
+         */
         int Get_LeftChildIndex(int index);
 
+        /**
+         * @brief 
+         * 
+         * @param index 
+         * @return ** int 
+         */
         int Get_RightChildIndex(int index);
 
+        /**
+         * @brief 
+         * 
+         * @param index 
+         * @return true 
+         * @return false 
+         */
         bool hasChild(int index);
     
     public:
 
         Heap();
         
+        /**
+         * @brief 
+         * 
+         */
         Heap(int aHeapSize);
 
         /**
@@ -44,8 +73,18 @@ class Heap {
          */
         void HeapReplace(int newValue);
 
+        /**
+         * @brief 
+         * 
+         * @return ** void 
+         */
         void HeapifyUp(); //To be implemented in derrived classes
 
+        /**
+         * @brief 
+         * 
+         * @return ** void 
+         */
         void HeapifyDown(); //To be implemented in derrived classes
 
 

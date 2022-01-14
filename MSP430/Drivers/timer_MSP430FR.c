@@ -16,15 +16,6 @@ TIMERAx *const Tim_A3 = ADDR_TIM_A3;
 TIMERBx *const Tim_B0 = ADDR_TIM_B0;
 
 
-/**
-- CLOCK SPEED: According to '3.2 Clock System Operation'
-		+ MCLK & SMCLK = DCOCLK
-		+ Then they are divided by 8
-		+-----------------------------
-		+ DCOCLK = 1MHz
-		+ SMCLK & MCLK = 1 MHz / 8
-		+ SMCLK & MCLK = 125KHz
-**/
 void Timer_Start(char* timerID, E_TimerPrescaler prescale, uint32_t time) {
 	
 	if (timerID == "B0") { 

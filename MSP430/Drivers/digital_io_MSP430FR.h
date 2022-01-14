@@ -10,8 +10,33 @@ typedef enum _FunctionType E_FunctionType;
 typedef enum _PullUpDown E_PullUpDown;
 
  //DECLARATIONS
+/**
+ * @brief 
+ * 
+ * @param port 
+ * @param pinNum 
+ * @param direction 
+ * @param function 
+ * @param pUppDwn 
+ * @return ** void 
+ */
 void Pin_Init(char port, uint8_t pinNum, E_PinType direction, E_FunctionType function, E_PullUpDown pUppDwn);
+/**
+ * @brief 
+ * 
+ * @param port 
+ * @param pinNum 
+ * @return ** uint8_t 
+ */
 uint8_t Pin_GetInput(char port, uint8_t pinNum);
+/**
+ * @brief 
+ * 
+ * @param port 
+ * @param pinNum 
+ * @param pinState 
+ * @return ** void 
+ */
 void Pin_Out(char port, uint8_t pinNum, uint8_t pinState);
 
 //IO PORTS

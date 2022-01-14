@@ -16,22 +16,7 @@ I2Cx *const I2C1 = ADDR_I2C1;
 I2Cx *const I2C2 = ADDR_I2C2;
 I2Cx *const I2C3 = ADDR_I2C3;
 
-/**
-Parameters:
-	- i2cNumber - 
-	- apbClockFreqMHz - Ex: 8 for 8MHz Clock
-	- desiredI2CFrequencykHz - (in KHz) Ex: 100 for 100KHz SCLK
 
-
-Clock Control Clock Value Calculation
-		+ SCL FREQ GOAL: 100KHz = 10,000 ns(p)
-			
-			+ Peripheral Clock Frequency: 8MHz = 125 ns(p)
-			+ [Clock Value * 125 ns(p) = 10,000 ns(p)]
-			+ Clock Value = 10,000 / 125 ns(p)
-			+ Clock Value = 80 (i.e. 0x50) 
-
-**/
 void I2C_Init(uint8_t i2cNumber, uint8_t apbClockFreqMHz, uint8_t desiredI2CFrequencykHz) {
 	I2Cx *const I2C = Get_I2C(i2cNumber);
 	I2CClockSelect(i2cNumber);
@@ -147,8 +132,11 @@ static I2Cx* Get_I2C(uint8_t i2cNum) {
 }
 
 /**
-kHz to nano-second Period
-**/
+ * @brief kHz to nano-second Period
+ * 
+ * @param kHzVal 
+ * @return ** uint64_t 
+ */
 static uint64_t kHz_to_nsP(uint64_t kHzVal) {
 	
 	return (uint64_t) 1000000000 / (kHzVal * 1000); 

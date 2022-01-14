@@ -2,25 +2,6 @@
 #include <stdlib.h>
 #include "motormix_algo.h"
 
-
-
-/**
-									Motor Mixing Algorithm
-									----------------------
-
-Motor (Front Right)		=	[1/4]Thrust Command		+	Yaw Command		+	Pitch Command	+	Roll Command
-
-
-Motor (Front Left)		=	[1/4]Thrust Command		-	Yaw Command		+	Pitch Command	-	Roll Command
-
-
-Motor (Back Right)		=	[1/4]Thrust Command		-	Yaw Command		-	Pitch Command	+	Roll Command
-
-
-Motor (Back Left)		=	[1/4]Thrust Command		+	Yaw Command		-	Pitch Command	-	Roll Command
-
-**/
-
 _4Motors* Motor_Mix(double thrustPID, double yawPID, double pitchPID, double rollPID) {
 	
 	_4Motors *Motor = malloc(sizeof(_4Motors));

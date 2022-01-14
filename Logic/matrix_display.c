@@ -1,16 +1,5 @@
 #include <stdio.h>
-//#include "matrix_display.h"
-
-double testMatrix[3][3] = { 
-	{0.45, 694.8, 97.3},
-	{46.7, 92.6, 0},
-	{1.0, 13.5, 0.0}
-};
-
-int main(void) {
-	
-	Matrix_Display(testMatrix);
-}
+#include "matrix_display.h"
 
 
 void Matrix_Display(double matrix[3][3]) {

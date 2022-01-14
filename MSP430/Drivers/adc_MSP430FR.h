@@ -16,9 +16,48 @@ typedef enum _DiffSignal_ConvChannel E_DiffSignal_ConvChannel;
 typedef enum _ConversionMemory E_ConversionMemory;
 
 //DECLARATIONS
+/**
+ * @brief 
+ * 			- CLOCK SPEED: According to '3.2 Clock System Operation'
+ *				+ MCLK & SMCLK = DCOCLK
+ *				+ Then they are divided by 8
+ *				+-----------------------------
+ *					+ DCOCLK = 1MHz
+ *					+ SMCLK & MCLK = 1 MHz / 8
+ *					+ SMCLK & MCLK = 125KHz
+ * 
+ * @param clockSource 
+ * @param clockDivide 
+ * @param preDivide 
+ * @return ** void 
+ */
 void ADC_SetClockSpeed(E_ADCClockSource clockSource, E_ClockDivider clockDivide, E_ADCPreDivider preDivide);
+/**
+ * @brief 
+ * 
+ * @param conversionChannel 
+ * @param diffSigChannel 
+ * @param memAddress 
+ * @return ** void 
+ */
 void ADC_ConversionChannelSetup(E_ConversionChannel conversionChannel, E_DiffSignal_ConvChannel diffSigChannel, E_ConversionMemory memAddress);
+/**
+ * @brief 
+ * 
+ * @param dataFormat 
+ * @param resolution 
+ * @param cycles 
+ * @param numOfConversions 
+ * @param memAddress 
+ * @return ** void 
+ */
 void ADC_Init(E_DataFormat dataFormat, E_Resolution resolution, E_SamplePeriod cycles, E_ConversionNum numOfConversions, E_ConversionMemory memAddress);
+/**
+ * @brief 
+ * 
+ * @param memAddress 
+ * @return ** int16_t 
+ */
 int16_t ADC_Read(E_ConversionMemory memAddress);
 
 //ADC

@@ -10,9 +10,43 @@ typedef enum _Channel E_Resolution;
 typedef enum _Resolution E_ConvertLen;
 typedef enum _ConversionNum E_ConversionNum;
 
+//DECLARATIONS
+/**
+ * @brief 
+ * 
+ * @param adcNumber 
+ * @param adcChannel 
+ * @param conversionOrderNum 
+ * @param cycles 
+ * @return ** void 
+ */
 void ADCRegularChannel_Init(uint8_t adcNumber, E_Channel adcChannel, uint8_t conversionOrderNum, E_SamplePeriod cycles);
+/**
+ * @brief 
+ * 
+ * @param adcNumber 
+ * @param resolution 
+ * @param singleContinuous 
+ * @param numOfConversions 
+ * @return ** void 
+ */
 void ADC_Init(uint8_t adcNumber, E_Resolution resolution, E_ConvertLen singleContinuous, E_ConversionNum numOfConversions);
+/**
+ * @brief 
+ * 
+ * @param adcNumber 
+ * @return ** int16_t 
+ */
 int16_t ADC_ReadRegularChannel(uint8_t adcNumber);
+/**
+ * @brief 
+ * 			dB(mW): power relative to 1 milliwatt. 
+ *			In audio and telephony, dBm is typically referenced relative to a 600 Ω impedance, 
+ *			which corresponds to a voltage level of 0.775 volts or 775 millivolts/
+ * 
+ * @param analogVolt 
+ * @return ** float 
+ */
 float Decibel_Out(uint16_t analogVolt);
 
 //CLOCK

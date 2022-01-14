@@ -102,3 +102,14 @@ static void LCD_SendNum(int num) {
 	msDelay(1);
 	lcdCntrl->chipDisable = 1;
 }
+
+
+/*
+ * 			TO-DO
+ * 			-----
+ *  - Test Code
+ *
+ *  - 
+ *  
+ *  - 
+ *  */

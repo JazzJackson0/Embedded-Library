@@ -10,6 +10,10 @@ class MinHeap : public Heap {
 
         MinHeap();
 
+        /**
+         * @brief 
+         * 
+         */
         MinHeap(int aHeapSize);
 
         /**

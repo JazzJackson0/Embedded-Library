@@ -7,10 +7,51 @@
 typedef enum _ReadWrite E_ReadWrite;
 
 //DECLARATIONS
+/**
+ * @brief 
+ * 			Clock Control Clock Value Calculation:
+ *				+ SCL FREQ GOAL: 100KHz = 10,000 ns(p)
+ *					- Peripheral Clock Frequency: 8MHz = 125 ns(p)
+ *					- [Clock Value * 125 ns(p) = 10,000 ns(p)]
+ *					- Clock Value = 10,000 / 125 ns(p)
+ *					- Clock Value = 80 (i.e. 0x50) 
+ * 
+ * @param i2cNumber 
+ * @param apbClockFreqMHz Ex: 8 for 8MHz Clock
+ * @param desiredI2CFrequencykHz (in KHz) Ex: 100 for 100KHz SCLK
+ * @return ** void 
+ */
 void I2C_Init(uint8_t i2cNumber, uint8_t apbClockFreqMHz, uint8_t desiredI2CFrequencykHz);
+/**
+ * @brief 
+ * 
+ * @param i2cNumber 
+ * @param slaveAddress 
+ * @param readWrite 
+ * @return ** uint8_t 
+ */
 uint8_t I2C_StartMaster_SendAddress(uint8_t i2cNumber, uint8_t slaveAddress, E_ReadWrite readWrite);
+/**
+ * @brief 
+ * 
+ * @param i2cNumber 
+ * @return ** uint8_t 
+ */
 uint8_t I2C_Receive(uint8_t i2cNumber);
+/**
+ * @brief 
+ * 
+ * @param i2cNumber 
+ * @param data 
+ * @return ** uint8_t 
+ */
 uint8_t I2C_Transmit(uint8_t i2cNumber, uint8_t data);
+/**
+ * @brief 
+ * 
+ * @param i2cNumber 
+ * @return ** void 
+ */
 void I2C_Stop(uint8_t i2cNumber);
 
 //CLOCK

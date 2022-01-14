@@ -26,10 +26,49 @@ TIM2 = 8-Bit Timer/Counter. With PWM Capability AND Asynchronous Operation
 typedef enum _ClockSpeed E_ClockSpeed;
 
 //DECLARATIONS
+/**
+ * @brief 
+ * 
+ * @param timerID 
+ * @param clockSpeed 
+ * @param time 
+ * @return ** void 
+ */
 void Timer_Start(uint8_t timerID, E_ClockSpeed clockSpeed, uint16_t time);
+/**
+ * @brief 
+ * 
+ * @param timerID 
+ * @param clockSpeed 
+ * @param time 
+ * @return ** uint8_t 
+ */
 uint8_t OneShotTimer_Start(uint8_t timerID, E_ClockSpeed clockSpeed, uint16_t time);
+/**
+ * @brief 
+ * 
+ * @param timerID 
+ * @param clockSpeed 
+ * @param time 
+ * @param dutyCycle 
+ * @return ** void 
+ */
 void PWM_Init(uint8_t timerID, E_ClockSpeed clockSpeed, uint16_t time, float dutyCycle);
+/**
+ * @brief 
+ * 
+ * @param timerID 
+ * @param time 
+ * @param dutyCycle 
+ * @return ** void 
+ */
 void PWM_Update(uint8_t timerID, uint16_t time, float dutyCycle);
+/**
+ * @brief 
+ * 
+ * @param timerID 
+ * @return ** uint16_t 
+ */
 uint16_t Stop_Timer(uint8_t timerID);
 
 

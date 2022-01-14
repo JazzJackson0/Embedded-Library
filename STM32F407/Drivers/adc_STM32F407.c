@@ -99,11 +99,6 @@ int16_t ADC_ReadRegularChannel(uint8_t adcNumber) {
 	return ADC->RegularDataReg.read_RegularConversionDataResult;
 }
 
-/**
-dB(mW) – power relative to 1 milliwatt. In audio and telephony, 
-dBm is typically referenced relative to a 600 Ω impedance, 
-which corresponds to a voltage level of 0.775 volts or 775 millivolts
-**/
 float Decibel_Out(uint16_t analogVolt) {
 	
 	return analogVolt * 0.775;

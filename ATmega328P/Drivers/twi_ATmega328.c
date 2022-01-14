@@ -12,15 +12,6 @@ POWER_REDUCTION_TWI *const TWIPower = ADDR_POWER_REDUCTION_TWI;
 TWIx *const TWI = ADDR_TWI;
 
 
-/**
-- Arduino Uno Clock Speed
-	+ATmega defaults to 8MHz RC Prescaled to 1MHz
-	+Arduino Uno Board overrides ATmega and defaults to 16MHz external xtal oscillator
-	
-Parameters:
-	clockDivider -
-	bitRate - (In KHz) Ex: 500 for 500KHz
-**/
 void TWI_Init(E_TWIClockDivide clockDivider, uint8_t bitRatekHz) {
 	
 	TWIPower->twiOn0_twiOff1 = 0;

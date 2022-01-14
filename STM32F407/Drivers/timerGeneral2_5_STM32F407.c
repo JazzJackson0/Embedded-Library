@@ -16,21 +16,6 @@ GEN_TIMER_2_5x *const TIM3 = ADDR_TIM3;
 GEN_TIMER_2_5x *const TIM4 = ADDR_TIM4;
 GEN_TIMER_2_5x *const TIM5 = ADDR_TIM5;
 
-
-/**  
-	Prescaler Example: 
-		Clock Speed / Presclaler = Number of Hz per Second
-
-	Time Example: 
-		00:00 -------------> Time (Auto Reload)
-				  RESET
-		00:00 -------------> Time (Auto Reload)
-				  ETC...
-				  
-	Example:
-		Let (Clock Speed / Prescaler) = 1000Hz/Sec
-		If the parameter time = 1000(Hz), then Time = 1 sec	
-**/
 uint8_t GeneralTimer2_5_Start(uint8_t timerNum, uint16_t prescaler, uint16_t time) {
 	
 	Activate_Clock(timerNum);

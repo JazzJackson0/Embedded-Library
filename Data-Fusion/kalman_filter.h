@@ -1,9 +1,15 @@
 #pragma once
-#include "../Modules-Logic/matrix_math.h"
+#include "../Logic/matrix_math.h"
 
 typedef struct kalman KalmanFilter;
 
-//Functions
+//DECLARATIONS
+/**
+ * @brief 
+ * 
+ * @param k_filter 
+ * @return ** KalmanFilter* 
+ */
 KalmanFilter* kalman_filter(KalmanFilter *k_filter);
 
 //Structs

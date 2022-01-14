@@ -6,9 +6,51 @@
 
 typedef enum _Parity E_Parity;
 
+//DECLARATIONS
+/**
+ * @brief 
+ * 			- Default System Clock (fclk) = HSI 16MHz w/ No prescales or PLL
+ *				+ USART 1 & 6 fclk = APB2 High Speed Bus (84MHz MAX Freq)
+ *				+ USART/UART 2,3,4 & 5 fclk = APB1 Low Speed Bus (42MHz MAX Freq)
+ *				
+ *			- Calculating Baudrate:
+ *				+ (Desired BaudRate) = fclk / (OverSampleRate * USARTDIV)
+ *				+ Equation to Use: USARTDIV = fclk / (OverSampleRate * (Desired BaudRate))
+ *			
+ *				+  Example: Getting a 9600 Baud Rate 
+ *					- USARTDIV = 104.1875
+ *					- Mantissa = 104
+ *					- Fraction = .1875 * (Oversampling Rate [16 in this case]) = 3
+ * @param usartNumber 
+ * @param baudRate 
+ * @param overSampleRate 
+ * @return ** void 
+ */
 void USART_BaudRate_and_OverSample(uint8_t usartNumber, uint32_t baudRate, uint8_t overSampleRate);
+/**
+ * @brief 
+ * 
+ * @param usartNumber 
+ * @param parityType 
+ * @param dataBitSize 
+ * @param stopBitSize 
+ * @return ** void 
+ */
 void USART_Init(uint8_t usartNumber, E_Parity parityType, uint8_t dataBitSize, float stopBitSize);
+/**
+ * @brief 
+ * 
+ * @param usartNumber 
+ * @param data 
+ * @return ** uint8_t 
+ */
 uint8_t USART_Transmit(uint8_t usartNumber, uint8_t data);
+/**
+ * @brief 
+ * 
+ * @param usartNumber 
+ * @return ** uint8_t 
+ */
 uint8_t USART_Receive(uint8_t usartNumber);
 
 

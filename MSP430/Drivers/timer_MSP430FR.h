@@ -7,8 +7,40 @@
 typedef enum _TimerPrescaler E_TimerPrescaler;
 
 //DECLARATIONS
+/**
+ * @brief 
+ * 			- CLOCK SPEED: According to '3.2 Clock System Operation'
+ *				+ MCLK & SMCLK = DCOCLK
+ *				+ Then they are divided by 8
+ *				-----------------------------
+ *					- DCOCLK = 1MHz
+ *					- SMCLK & MCLK = 1 MHz / 8
+ *					- SMCLK & MCLK = 125KHz
+ * 
+ * @param timerID 
+ * @param prescale 
+ * @param time 
+ * @return ** void 
+ */
 void Timer_Start(char* timerID, E_TimerPrescaler prescale, uint32_t time);
+/**
+ * @brief 
+ * 
+ * @param timerID 
+ * @param prescale 
+ * @param time 
+ * @param dutyCycle 
+ * @return ** void 
+ */
 void PWM_Start(char* timerID, E_TimerPrescaler prescale, uint32_t time, float dutyCycle);
+/**
+ * @brief 
+ * 
+ * @param timerID 
+ * @param time 
+ * @param dutycycle 
+ * @return ** void 
+ */
 void PWM_Update(char* timerID, uint32_t time, float dutycycle);
 
 //TIMER

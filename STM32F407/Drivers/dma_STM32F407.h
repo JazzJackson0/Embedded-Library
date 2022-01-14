@@ -8,6 +8,12 @@
 #include <stdint.h>
 
 //DECLARATIONS
+/**
+ * @brief 
+ * 
+ * @param dmaNum 
+ * @return ** void 
+ */
 void DMA_Init(int dmaNum);
 
 //CLOCK

@@ -7,7 +7,7 @@ static DMAx* Get_DMA(uint8_t dmaNum);
 //Global Variables-------------------------------------------------------
 DMA_CLOCK *const DMAClock = ADDR_DMA_CLOCK;
 
-//DMA Stream 0
+//DMA
 DMAx *const DMA1 = ADDR_DMA1;
 DMAx *const DMA2 = ADDR_DMA2;
 

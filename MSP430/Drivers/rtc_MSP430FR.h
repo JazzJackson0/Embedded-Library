@@ -10,13 +10,68 @@
 #include <stdint.h>
 
 //DECLARATIONS
+/**
+ * @brief 
+ * 
+ * @param rtcID 
+ * @return ** void 
+ */
 void RTC_Init(char rtcID);
+/**
+ * @brief 
+ * 
+ * @param rtcID 
+ * @param hour 
+ * @param minute 
+ * @param second 
+ * @return ** void 
+ */
 void Set_Time(char rtcID, uint8_t hour, uint8_t minute, uint8_t second);
-//Get yearCentury, yearTens, and yearUnits to be 1 number that you split
+//Get yearCentury, yearTens, and yearUnits to be 1 number that you split!!!!!!!!!!!!!!!!!!!
+/**
+ * @brief 
+ * 
+ * @param rtcID 
+ * @param day 
+ * @param month 
+ * @param weekday 
+ * @param yearCentury 
+ * @param yearTens 
+ * @param yearUnits 
+ * @return ** void 
+ */
 void Set_Date(char rtcID, uint8_t day, uint8_t month, uint8_t weekday, uint8_t yearCentury, uint8_t yearTens, uint8_t yearUnits);
+/**
+ * @brief 
+ * 
+ * @param rtcID 
+ * @param hour 
+ * @param minute 
+ * @return ** void 
+ */
 void Set_TimeAlarm(char rtcID, uint8_t hour, uint8_t minute);
+/**
+ * @brief 
+ * 
+ * @param rtcID 
+ * @param weekday 
+ * @param monthDay 
+ * @return ** void 
+ */
 void Set_DateAlarm(char rtcID, uint8_t weekday, uint8_t monthDay);
+/**
+ * @brief 
+ * 
+ * @param rtcID 
+ * @return ** void 
+ */
 void Get_Time(char rtcID);
+/**
+ * @brief 
+ * 
+ * @param rtcID 
+ * @return ** void 
+ */
 void Get_Date(char rtcID);
 
 //RTC

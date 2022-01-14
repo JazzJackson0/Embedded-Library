@@ -13,19 +13,6 @@ SPIx *const SPI_A1 = ADDR_SPI_A1;
 SPIx *const SPI_B0 = ADDR_SPI_B0;
 
 
-/**
-- BIT CLOCK VALUE
-		fbitclock = (Clock Source)/(Value you Enter)
-			+ If (Value you Enter) = 0, fbitclock = (CLock Source)
-    
-	- CLOCK SPEED: According to '3.2 Clock System Operation'
-		+ MCLK & SMCLK = DCOCLK
-		+ Then they are divided by 8
-		+-----------------------------
-		+ DCOCLK = 1MHx
-		+ SMCLK & MCLK = 1 MHz / 8
-		+ SMCLK & MCLK = 125KHz
-**/
 void SPI_ClockSetup(char* spiNumber, E_SPIClockSource clockSrc, uint16_t clockDivide, E_Phase phase, E_Polarity polarity) {
 	
 	SPIx *const SPI = Get_SPI(spiNumber);
@@ -62,14 +49,7 @@ void SPI_Init(char* spiNumber, E_SPIMode mode, E_BitOrder bitOrder, uint8_t data
 	SPI->ControlReg.enable_SoftwareReset = 0; // Releases module for operation
 }
 
-/**
- * @brief 
- * 
- * 	- Notes to just receive, input 0x00 for data
- * @param spiNumber 
- * @param data 
- * @return ** uint8_t 
- */
+
 uint8_t SPI_Transmit_and_Receive(char* spiNumber, uint8_t data) {
 
 	SPIx *const SPI = Get_SPI(spiNumber);

@@ -98,3 +98,13 @@ float* IMU_Read(char* deviceName, uint8_t i2cNumber) {
 	
 	return NULL;
 }
+
+/*
+ * 			TO-DO
+ * 			-----
+ *  - Make more device agnostic
+ *
+ *  - Test Code
+ *  
+ *  - 
+ *  */

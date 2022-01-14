@@ -10,12 +10,78 @@ typedef union _Data Received_Data;
 typedef struct _filter Filter;
 
 //DECLARATIONS
+/**
+ * @brief 
+ * 			1Mbps Bit Rate Example:
+ *				+ Prescaler = 1
+ *				+ Num of Time Quanta = 16
+ *					+ Seg 1 = 13
+ *					+ Seg 2 = 2
+ *					+ Resync Jump Width = 1 (Always 1)
+ *					+ 13 + 2 + 1 = 16
+ *				+ Obtained from bittiming.can
+ * 
+ * @param canNum 
+ * @param baudRatePrescale 
+ * @param resyncJump 
+ * @param timeSeg1 
+ * @param timeSeg2 
+ * @return ** void 
+ */
 void CAN_SetBitTime(uint8_t canNum, uint8_t baudRatePrescale, uint8_t resyncJump, uint8_t timeSeg1, uint8_t timeSeg2);
+/**
+ * @brief 
+ * 
+ * @param canNum 
+ * @param filterInfo 
+ * @return ** void 
+ */
 void CAN_SetAcceptanceFilter(uint8_t canNum, Filter *filterInfo);
+/**
+ * @brief 
+ * 
+ * @param canNum 
+ * @param mailboxNum 
+ * @param standardID 
+ * @param numOfBytes 
+ * @return ** void 
+ */
 void CAN_SetTXMailbox(uint8_t canNum, uint8_t mailboxNum, uint64_t standardID, uint8_t numOfBytes);
+/**
+ * @brief 
+ * 
+ * @param canNum 
+ * @param mailboxNum 
+ * @param standardID 
+ * @param numOfBytes 
+ * @return ** void 
+ */
 void CAN_SetRXMailbox(uint8_t canNum, uint8_t mailboxNum, uint64_t standardID, uint8_t numOfBytes);
+/**
+ * @brief 
+ * 
+ * @param canNum 
+ * @return ** void 
+ */
 void CAN_Init_and_Start(uint8_t canNum);
+/**
+ * @brief 
+ * 
+ * @param canNum 
+ * @param mailboxNum 
+ * @param dataBuffer 
+ * @param numOfBytes 
+ * @return ** uint8_t 
+ */
 uint8_t CAN_Transmit(uint8_t canNum, uint8_t mailboxNum, uint8_t *dataBuffer, uint8_t numOfBytes);
+/**
+ * @brief 
+ * 
+ * @param canNum 
+ * @param mailboxNum 
+ * @param numOfBytes 
+ * @return ** Received_Data* 
+ */
 Received_Data* CAN_Receive(uint8_t canNum, uint8_t mailboxNum, uint8_t numOfBytes);
 
 //CLOCK

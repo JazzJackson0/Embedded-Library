@@ -9,12 +9,62 @@ typedef enum _I2CMode E_I2CMode;
 typedef enum _AddressSize E_AddressSize;
 
 //DECLARATIONS
+/**
+ * @brief 
+ * 
+ * 			- CLOCK SPEED: According to '3.2 Clock System Operation'
+ *				+ MCLK & SMCLK = DCOCLK
+ *				+ Then they are divided by 8
+ *				+-----------------------------
+ *					+ DCOCLK = 1MHx
+ *					+ SMCLK & MCLK = 1 MHz / 8
+ *					+ SMCLK & MCLK = 125KHz
+ * 
+ * @param clockSrc 
+ * @param clockDivide 
+ * @param mode 
+ * @param ownSize 
+ * @return ** void 
+ */
 void I2C_Init(E_I2CClockSource clockSrc, uint16_t clockDivide, E_I2CMode mode, E_AddressSize ownSize);
+/**
+ * @brief 
+ * 
+ * @param slaveAddrs 
+ * @param slaveSize 
+ * @return ** void 
+ */
 void I2C_SetSlaveAddress(uint16_t slaveAddrs, E_AddressSize slaveSize);
+/**
+ * @brief 
+ * 
+ * @return ** void 
+ */
 void Start_RX_Mode(void);
+/**
+ * @brief 
+ * 
+ * @return ** void 
+ */
 void Start_TX_Mode(void);
+/**
+ * @brief 
+ * 
+ * @return ** uint8_t 
+ */
 uint8_t I2C_Receive(void);
+/**
+ * @brief 
+ * 
+ * @param data 
+ * @return ** uint8_t 
+ */
 uint8_t I2C_Transmit(uint8_t data);
+/**
+ * @brief 
+ * 
+ * @return ** void 
+ */
 void I2C_Stop(void);
 
 //I2C

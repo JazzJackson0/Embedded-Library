@@ -11,15 +11,7 @@ static UARTx* Get_UART(char *uartNum);
 UARTx *const UART_A0 = ADDR_UART0;
 UARTx *const UART_A1 = ADDR_UART1;
 
-/**
-MSP430FR CLOCK SPEED: According to '3.2 Clock System Operation'
-		+ MCLK & SMCLK = DCOCLK
-		+ Then they are divided by 8
-		+-----------------------------
-		+ DCOCLK = 1MHz
-		+ SMCLK & MCLK = 1 MHz / 8
-		+ SMCLK & MCLK = 125KHz
-**/
+
 void USART_BaudRate_and_OverSample(char* uartNum, E_UARTClockSource clocksrc, uint32_t baudRate, uint8_t overSampleRate) {
 	
 	UARTx *const UART = Get_UART(uartNum);

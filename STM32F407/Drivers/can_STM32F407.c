@@ -22,18 +22,7 @@ CANx *const CAN2 = ADDR_CAN2;
 MAIL_FILTERSx *const CAN2MailFilters = ADDR_CAN2_MAIL_FILTERS;
 FILTER_BANKSx *const CAN2Bank = ADDR_CAN2_FILTERBANKS;
 
-/*
 
-For 1Mbps Bit Rate 
-        + Prescaler = 1
-        + Num of Time Quanta = 16
-            + Seg 1 = 13
-            + Seg 2 = 2
-            + Resync Jump Width = 1 (Always 1)
-            + 13 + 2 + 1 = 16
-		+ Obtained from bittiming.can
-
-*/
 void CAN_SetBitTime(uint8_t canNum, uint8_t baudRatePrescale, uint8_t resyncJump, 
 	uint8_t timeSeg1, uint8_t timeSeg2) {
 	

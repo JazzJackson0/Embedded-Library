@@ -3,12 +3,6 @@
 
 // Add 180 / pi
 
-/*
-Parameters
-double one - The angle of rotation in your corresponding matrix (X,Y or Z)
-double two - The angle of rotation in your corresponding matrix (X,Y or Z)
-double three - The angle of rotation in your corresponding matrix (X,Y or Z)
-*/
 EulerAngle* RotMat_to_EulerAngles(double one, double two, double three) {
 
     EulerAngle *euler;
@@ -28,12 +22,6 @@ EulerAngle* RotMat_to_EulerAngles(double one, double two, double three) {
 }
 
 
-/*
-Parameters
-double one - The angle of rotation in your corresponding matrix (X,Y or Z)
-double two - The angle of rotation in your corresponding matrix (X,Y or Z)
-double three - The angle of rotation in your corresponding matrix (X,Y or Z)
-*/
 EulerAngle* RotMat_to_TaitBryanAngles(double one, double two, double three) {
 
     EulerAngle *euler;

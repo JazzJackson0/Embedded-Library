@@ -7,9 +7,39 @@
 typedef enum _PinDirection E_PinDirection;
 
 //DECLARATIONS
+/**
+ * @brief 
+ * 
+ * @param port 
+ * @param pinNum 
+ * @param direction 
+ * @return ** void 
+ */
 void Pin_Init(char port, uint8_t pinNum, E_PinDirection direction);
+/**
+ * @brief 
+ * 
+ * @param port 
+ * @param pinNum 
+ * @return ** uint8_t 
+ */
 uint8_t Pin_GetInput(char port, uint8_t pinNum);
+/**
+ * @brief 
+ * 
+ * @param port 
+ * @param pinNum 
+ * @param pinState 
+ * @return ** void 
+ */
 void Pin_Out(char port, uint8_t pinNum, E_PinDirection pinState);
+/**
+ * @brief 
+ * 
+ * @param port 
+ * @param pinNum 
+ * @return ** void 
+ */
 void Pin_Toggle(char port, uint8_t pinNum);
 
 //IO_PORTS (Powered by AVR Clock Control Unit)

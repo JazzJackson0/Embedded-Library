@@ -1,7 +1,7 @@
 #include "iir.h"
 #include <stdlib.h>
 
-//Static Functions
+//Static Prototypes
 static iirFilter* iir_updateInput(iirFilter *filter, double newSample);
 
 

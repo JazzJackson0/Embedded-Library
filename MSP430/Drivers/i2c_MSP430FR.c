@@ -11,15 +11,6 @@ static void I2C_PinInit(void);
 I2Cx *const I2C_x = ADDR_I2C;
 
 
-/**
-- CLOCK SPEED: According to '3.2 Clock System Operation'
-		+ MCLK & SMCLK = DCOCLK
-		+ Then they are divided by 8
-		+-----------------------------
-		+ DCOCLK = 1MHx
-		+ SMCLK & MCLK = 1 MHz / 8
-		+ SMCLK & MCLK = 125KHz
-**/
 void I2C_Init(E_I2CClockSource clockSrc, uint16_t clockDivide, E_I2CMode mode, E_AddressSize ownSize) {
 
 	I2Cx *const I2C = I2C_x;

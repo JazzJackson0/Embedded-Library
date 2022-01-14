@@ -14,16 +14,48 @@ class Vertex {
         int currentEdgeSize;
         int hub_index;
     public:
+        /**
+         * @brief 
+         * 
+         */
         Vertex(int newData);
 
+        /**
+         * @brief 
+         * 
+         * @return ** int 
+         */
         int Get_Data();
 
+        /**
+         * @brief 
+         * 
+         * @param new_vertex 
+         * @param weight 
+         * @return ** void 
+         */
         void Add_Edge(Vertex new_vertex, int weight);
 
+        /**
+         * @brief 
+         * 
+         * @return ** void 
+         */
         void Get_Edges();
 
+        /**
+         * @brief 
+         * 
+         * @param index 
+         * @return ** void 
+         */
         void Set_HubIndex(int index);
 
+        /**
+         * @brief 
+         * 
+         * @return ** int 
+         */
         int Get_HubIndex();
 };
 
