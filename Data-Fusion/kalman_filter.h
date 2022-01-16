@@ -15,39 +15,30 @@ KalmanFilter* kalman_filter(KalmanFilter *k_filter);
 //Structs
 struct kalman {
     
-    // Fx
-    Matrix *state_trans_matrix;
-    Matrix *oldStateEstimate; 
-
-    // Bu
-    Matrix *input_matrix;
-    Matrix *input_vector; /* Incoming measurements */
+    Matrix *state_trans_matrix; //State Transition Matrix (F)
+    Matrix *updatedStateEstimate; // Initial State Est. Vector (x) & Updated State Estimate Vector (x+) 
+    Matrix *updatedCovariance; // Initial Covariance Matrix (P) & Updated Covariance Matrix (P+) 
     
-    // H
-    Matrix *measurement_matrix;
-
-    // Lw
-    Matrix *process_model_noise_matrix;
-    Matrix *process_model_noise_vector;
+    Matrix *input_matrix; //Input Matrix (B)
+    Matrix *input_vector; //Input Vector (u)  /* Incoming measurements */
     
-    // Mv
-    Matrix *measurement_model_noise_matrix;
-    Matrix *measurement_noise_vector;
+    Matrix *measurement_matrix; //Measurement Matrix (H)
 
-    Matrix *innovation;
-    Matrix *innovationCovariance;
-    Matrix *kalmanGainMatrix;
-
-    Matrix *expectedCovariance;
-    Matrix *expectedStateEstimate;
-
-    Matrix *updatedCovariance;
-    Matrix *updatedStateEstimate;
+    Matrix *process_model_noise_matrix; // Process Model Noise Matrix (L)
+    Matrix *process_model_noise_vector; // Process Model Noise Vector (w)
     
-    Matrix *autoCorrelatoinQ;
-    Matrix *autoCorrelatoinR;
+    Matrix *measurement_model_noise_matrix; // Measurement Model Noise Matrix (M)
+    Matrix *measurement_noise_vector; // Measurement Model Noise Vector (v)
 
-    Matrix *oldCovariance;
+    Matrix *innovation; // Innovation Matrix (y)
+    Matrix *innovationCovariance; // Innovation Covariance Matrix (S)
+    Matrix *kalmanGainMatrix; // Kalman Gain Matrix (K)
+
+    Matrix *expectedCovariance;  // Expected Covariance Matrix (P-)
+    Matrix *expectedStateEstimate; // Expected State Estimate Vector (x-)
+
+    Matrix *autoCorrelatoinQ; // Auto Correlation Matrix 1 (Q)
+    Matrix *autoCorrelatoinR; // Auto Correlation Matrix 2 (R)
 
     // This one might end up being temporary
     Matrix *sensorValues;

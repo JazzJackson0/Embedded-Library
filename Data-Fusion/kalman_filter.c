@@ -30,14 +30,14 @@ KalmanFilter* kalman_filter(KalmanFilter *k_filter) {
 //Helper Functions----------------------------------------------------------------------
 static Matrix* Get_ExpectedStateEstimate(KalmanFilter *k_filter) {
 
-    return Add_Matrices(Multiply_Matrices(k_filter->state_trans_matrix, k_filter->oldStateEstimate), 
+    return Add_Matrices(Multiply_Matrices(k_filter->state_trans_matrix, k_filter->updatedStateEstimate), 
         Multiply_Matrices(k_filter->input_matrix, k_filter->input_vector));
 }
 
 static Matrix* Get_ExpectedCovariace(KalmanFilter *k_filter) {
 
     return Add_Matrices(Multiply_Matrices(Multiply_Matrices(k_filter->state_trans_matrix, 
-        k_filter->oldCovariance), Get_MatrixTranspose(k_filter->state_trans_matrix)), 
+        k_filter->updatedCovariance), Get_MatrixTranspose(k_filter->state_trans_matrix)), 
             k_filter->autoCorrelatoinQ);
 }
 
@@ -89,7 +89,7 @@ static Matrix* Set_InitialCovariance(KalmanFilter *k_filter) {
  * 			-----
  *  - Add timestep loop to kalman filter
  *
- *  - Test Code
+ *  - Init Function
  *  
- *  - 
+ *  - Test Code
  *  */

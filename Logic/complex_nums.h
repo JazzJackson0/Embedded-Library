@@ -6,6 +6,8 @@ typedef struct c complexNum;
 /**
  * @brief 
  * 
+ * @param angle 
+ * @return ** complexNum*
  */
 complexNum* Get_SinusoidalBasis(double angle);
 /**
@@ -18,10 +20,21 @@ complexNum* Get_SinusoidalBasis(double angle);
  */
 complexNum* Set_Z(double angle, double magnitude_r, int n);
 
+/**
+ * @brief 
+ * 
+ * @param realValues 
+ * @param numOfValues 
+ * @return ** complexNum* 
+ */
+complexNum* ValuetoComplexNum(double *realValues, int numOfValues);
+
 
 // Structs
 struct c {
     double realPart;
     double imaginaryPart;
 };
+
+
 

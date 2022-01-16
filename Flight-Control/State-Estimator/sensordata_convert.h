@@ -1,7 +1,7 @@
 #ifndef SENSORDATA_CONVERT_H
 #define SENSORDATA_CONVERT_H
 
-typedef struct sensor_read Sensor_Reading;
+typedef struct _imu IMU_Data;
 typedef struct r_angles RotationAngles;
 
 //DECLARATIONS
@@ -21,20 +21,20 @@ typedef struct r_angles RotationAngles;
  * @param accelUnitType Unit type of the data accelerometer data being passed to the function
  * @param gyroUnitType Unit type of the data gyroscope data being passed to the function
  * @param data 
- * @return ** Sensor_Reading* 
+ * @return ** IMU_Data* 
  */
-Sensor_Reading* Get_Reading(char* accelUnitType, char* gyroUnitType, double *data);
+IMU_Data* Get_Reading(char* accelUnitType, char* gyroUnitType, double *data);
 /**
- * @brief 
+ * @brief Converts the msp^2 and dsp units to rotation angles.
  * 
  * @param reading 
  * @param sample_period 
  * @return ** RotationAngles* 
  */
-RotationAngles* Get_AngularRotations(Sensor_Reading *reading, float sample_period);
+RotationAngles* Get_AngularRotations(IMU_Data *reading, float sample_period);
 
 //Structs
-struct sensor_read{
+struct _imu{
 	double Ax_mps2;
 	double Ay_mps2;
 	double Az_mps2;

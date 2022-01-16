@@ -7,9 +7,10 @@ typedef struct fir firFilter;
  * @brief 
  * 
  * @param tapSize 
+ * @param coefficients
  * @return ** firFilter* 
  */
-firFilter* fir_Init(int tapSize);
+firFilter* fir_Init(int tapSize, double *coefficients);
 /**
  * @brief 
  * 

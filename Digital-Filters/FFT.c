@@ -11,14 +11,16 @@ static int get_closest_powerOf2(float benchmark);
 static int bitReverse(int num, unsigned int numOfBits);
 
 
-K_Values* radix2_FFT(int sample_frequency, int resolution, complexNum *sample_values) {
+K_Values* radix2_FFT(float sample_frequency, int resolution, double *sample_vals) {
 
+    complexNum *sample_values = ValuetoComplexNum(sample_vals, (int) sample_frequency);
     float x = ((float) sample_frequency / resolution);
     float benchmark = x * sample_frequency;
     int tapSize = get_closest_powerOf2(benchmark);
     int M_stages = log10(tapSize) / log10(2);
     int upperK_Index;
     K_Values *k_vals;
+    k_vals->numOfValues = (int) sample_frequency;
     complexNum Wn;
     complexNum *upperK;
     complexNum *lowerK;

@@ -3,9 +3,9 @@
 #include "sensordata_convert.h"
 //Sensor Dependent
 
-Sensor_Reading* Get_Reading(char* accelUnitType, char* gyroUnitType, double *data) {
+IMU_Data* Get_Reading(char* accelUnitType, char* gyroUnitType, double *data) {
 	
-	Sensor_Reading *imu_data;
+	IMU_Data *imu_data;
 	
 	if (accelUnitType == "G-UNIT") { //G-Force Units As Input
 		
@@ -40,7 +40,7 @@ Sensor_Reading* Get_Reading(char* accelUnitType, char* gyroUnitType, double *dat
 	return imu_data;
 }
 
-RotationAngles* Get_AngularRotations(Sensor_Reading *reading, float sample_period) {
+RotationAngles* Get_AngularRotations(IMU_Data *reading, float sample_period) {
 
 	RotationAngles *rotations;
 	rotations->Angle_Ax = _180_DIV_PI * atan( reading->Ax_mps2 / ( sqrt( (reading->Ay_mps2 * reading->Ay_mps2) + (reading->Az_mps2 * reading->Az_mps2) ) ) );

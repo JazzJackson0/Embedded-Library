@@ -12,7 +12,7 @@ const float drone_mass = 700; //g
 
 //Functions------------------------------------------------------------------------------------
 
-float Calculate_UpwardForce(uint8_t droneMass, uint8_t thrustRatio) {
+float Calculate_UpwardForce(float droneMass, uint8_t thrustRatio) {
 	
 	//Returns Newtons
 	return ((droneMass * thrustRatio) / 1000) * accel_grav; 

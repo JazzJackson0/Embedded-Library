@@ -1,16 +1,14 @@
 #include "matrix_math.h"
 
-
-
 Matrix* Add_Matrices(Matrix *m1, Matrix *m2) {
 
     Matrix *sum;
-    sum->matrix_rowNum = m1->matrix_rowNum;
-    sum->matrix_columnNum = m1->matrix_columnNum;
+    sum->rowNum = m1->rowNum;
+    sum->columnNum = m1->columnNum;
     
-    for (int m = 0; m < m1->matrix_rowNum; m++) {
+    for (int m = 0; m < m1->rowNum; m++) {
 
-        for (int n = 0; n < m1->matrix_columnNum; n++) {
+        for (int n = 0; n < m1->columnNum; n++) {
             sum->matrix[m][n] = m1->matrix[m][n] + m2->matrix[m][n];
         }
     }
@@ -21,12 +19,12 @@ Matrix* Add_Matrices(Matrix *m1, Matrix *m2) {
 Matrix* Subtract_Matrices(Matrix *m1, Matrix *m2) {
 
     Matrix *difference;
-    difference->matrix_rowNum = m1->matrix_rowNum;
-    difference->matrix_columnNum = m1->matrix_columnNum;
+    difference->rowNum = m1->rowNum;
+    difference->columnNum = m1->columnNum;
     
-    for (int m = 0; m < m1->matrix_rowNum; m++) {
+    for (int m = 0; m < m1->rowNum; m++) {
 
-        for (int n = 0; n < m1->matrix_columnNum; n++) {
+        for (int n = 0; n < m1->columnNum; n++) {
             difference->matrix[m][n] = m1->matrix[m][n] - m2->matrix[m][n];
         }
     }
@@ -37,14 +35,14 @@ Matrix* Subtract_Matrices(Matrix *m1, Matrix *m2) {
 Matrix* Multiply_Matrices(Matrix *m1, Matrix *m2) {
 
     Matrix *product;
-    product->matrix_rowNum = m1->matrix_rowNum;
-    product->matrix_columnNum = m2->matrix_columnNum;
+    product->rowNum = m1->rowNum;
+    product->columnNum = m2->columnNum;
 
-    for (int i = 0; i < m2->matrix_columnNum; i++) {
+    for (int i = 0; i < m2->columnNum; i++) {
 
-        for (int j = 0; j < m1->matrix_rowNum; j++) {
+        for (int j = 0; j < m1->rowNum; j++) {
             
-            for (int k = 0; k < m2->matrix_rowNum; k++) { //Elements
+            for (int k = 0; k < m2->rowNum; k++) { //Elements
                 
                 product->matrix[j][i] += m1->matrix[j][k] * m2->matrix[k][i];
             }
@@ -58,12 +56,12 @@ Matrix* Multiply_Matrices(Matrix *m1, Matrix *m2) {
 Matrix* Get_MatrixTranspose(Matrix *matrix) {
     
     Matrix *matrixT;
-    matrixT->matrix_rowNum = matrix->matrix_columnNum;
-    matrixT->matrix_columnNum = matrix->matrix_rowNum;
+    matrixT->rowNum = matrix->columnNum;
+    matrixT->columnNum = matrix->rowNum;
 
-    for (int i = 0; i < matrix->matrix_rowNum; i++) {
+    for (int i = 0; i < matrix->rowNum; i++) {
 
-        for (int j = 0; j < matrix->matrix_columnNum; j++) {
+        for (int j = 0; j < matrix->columnNum; j++) {
 
             matrixT->matrix[j][i] = matrix->matrix[i][j];
         }
@@ -77,9 +75,8 @@ Matrix* Get_MatrixInverse(Matrix *matrix) {
 
     //Not yet implemented
     Matrix *matrixI;
-    matrixI->matrix_rowNum = matrix->matrix_rowNum;
-    matrixI->matrix_columnNum = matrix->matrix_columnNum;
-    
+    matrixI->rowNum = matrix->rowNum;
+    matrixI->columnNum = matrix->columnNum;
 
     return matrixI;
 }

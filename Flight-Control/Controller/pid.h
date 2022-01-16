@@ -76,9 +76,9 @@ void Set_ControllerDirection(PIDController *PID, int direction);
 
 struct pid {
 	
-	int proportional_gain;
-	int integral_gain;
-	int derivative_gain;
+	double proportional_gain;
+	double integral_gain;
+	double derivative_gain;
 
 	double max_output;
 	double min_output;
@@ -99,7 +99,7 @@ struct pid {
 	double output_data;
 };
 
-#define PID_INIT { .proportional_gain = 0, .integral_gain = 0, .derivative_gain = 0,\
+#define PID_INIT { .proportional_gain = 0.0f, .integral_gain = 0.0f, .derivative_gain = 0.0f,\
 					.max_output = 0.0f, .min_output = 0.0f, .Integrator = 0.0f,\
 					.previous_error = 0.0f, .Differentiator = 0.0f, .previous_measurement = 0.0f,\
 					.current_measurement = 0.0f, .sample_time = 0.0f, .previous_time = 0.0f,\

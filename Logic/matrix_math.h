@@ -45,6 +45,6 @@ Matrix* Get_MatrixInverse(Matrix *matrix);
 
 struct matrix {
     double** matrix;
-    int matrix_rowNum;
-    int matrix_columnNum;
+    int rowNum;
+    int columnNum;
 };

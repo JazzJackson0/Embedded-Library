@@ -5,7 +5,8 @@
 static iirFilter* iir_updateInput(iirFilter *filter, double newSample);
 
 
-iirFilter* iir_Init(int feedBackNum, int feedForwardNum) {
+iirFilter* iir_Init(int feedBackNum, double *feedBack_coefs, 
+    int feedForwardNum, double *feedForward_coefs) {
 
     iirFilter *filter;
     filter->feedBackNum = feedBackNum;
@@ -18,6 +19,9 @@ iirFilter* iir_Init(int feedBackNum, int feedForwardNum) {
 
     filter->feedBack_coefs = calloc(feedBackNum, sizeof(double));
     filter->filteredOutputs = calloc(feedBackNum, sizeof(double));
+    
+    filter->feedBack_coefs = feedBack_coefs;
+    filter->feedForward_coefs = feedForward_coefs;
 
     return filter;
 }
@@ -43,8 +47,8 @@ iirFilter* IIRCalculator(iirFilter *filter, double newSample) {
         sum += (filter->feedBack_coefs[i] * filter->filteredOutputs[i]); 
     }
     
-    filter->filteredOutputs[filter->feedBackNum] = sum;
-    filter->feedBackNum++;
+    filter->filteredOutputs[filter->feedBackPosition] = sum;
+    filter->feedBackPosition++;
 
     return filter;
 }

@@ -12,7 +12,7 @@ typedef struct sampleData IDFT_sample_data;
  * @param samples_per_sec 
  * @return ** frequencyBin_data* 
  */
-frequencyBin_data* fourier_transform(float sample_values[], int const samples_per_sec);
+frequencyBin_data* fourier_transform(float *sample_values, int const samples_per_sec);
 /**
  * @brief 
  * 
@@ -20,7 +20,7 @@ frequencyBin_data* fourier_transform(float sample_values[], int const samples_pe
  * @param samples_per_sec 
  * @return ** IDFT_sample_data* 
  */
-IDFT_sample_data* IDFT(float frequency_values[], int const samples_per_sec);
+IDFT_sample_data* IDFT(float *frequency_values, int const samples_per_sec);
 
 //Structs
 struct binData {

@@ -48,7 +48,7 @@ PIDController* PID_Update(PIDController *PID, double set_point, double current_m
 
 void Set_Tuning_Parameters(PIDController *PID, double kp, double ki, double kd) {
 	
-	if (PID->proportional_gain < 0 || PID->integral_gain < 0 || PID->derivative_gain < 0) return;
+	if (PID->proportional_gain < 0.0 || PID->integral_gain < 0.0 || PID->derivative_gain < 0.0) return;
 	
 	double sample_time_in_secs = ((double) PID->sample_time) / 1000;
 	PID->proportional_gain = kp;

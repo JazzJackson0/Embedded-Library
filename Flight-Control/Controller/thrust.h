@@ -1,4 +1,5 @@
 #pragma once
+#include <stdint.h>
 
 //DECLARATIONS
 /**
@@ -21,22 +22,22 @@
  *              = 20.601N Upward Force
  * 
  * @param droneMass 
- * @param thrustRatio 
- * @return ** float 
+ * @param thrustRatio The "thrust" portion of the thrust-to-weight ratio
+ * @return ** float: Upward force in Newtons.
  */
-float Calculate_UpwardForce(uint8_t droneMass, uint8_t thrustRatio);
+float Calculate_UpwardForce(float droneMass, uint8_t thrustRatio);
 /**
  * @brief 
  * 
  * @param upwardForce 
  * @param numOfMotors 
- * @return ** float 
+ * @return ** float: Upward force for 1 motor in Newtons. 
  */
 float Calculate_UpwardForcePerMotor(float upwardForce, uint8_t numOfMotors);
 /**
  * @brief 
  * 
  * @param newtons 
- * @return ** float 
+ * @return ** float: Thrust in Grams. 
  */
 float ThrustNewtons_to_ThrustGrams(float newtons);

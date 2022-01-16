@@ -5,14 +5,15 @@
 static firFilter* fir_updateInput(firFilter *filter, double newSample);
 
 
-firFilter* fir_Init(int tapSize) {
+firFilter* fir_Init(int tapSize, double *coefficients) {
 
     firFilter *filter;
     filter->tapSize = tapSize;
     filter->currentPosition = 0;
     filter->sample_values = calloc(tapSize, sizeof(double));
-    filter->coefficients = calloc(tapSize, sizeof(double));
     filter->filteredOutputs = calloc(tapSize, sizeof(double));
+    filter->coefficients = calloc(tapSize, sizeof(double));
+    filter->coefficients = coefficients;
 
     return filter;
 }

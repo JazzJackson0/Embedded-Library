@@ -4,7 +4,7 @@
 #define PI 3.141592
 #define _1HZ (2 * PI)
 
-frequencyBin_data* fourier_transform(float sample_values[], int const samples_per_sec) {
+frequencyBin_data* fourier_transform(float *sample_values, int const samples_per_sec) {
 
     frequencyBin_data *frequency_bins = 0;
 
@@ -29,7 +29,7 @@ frequencyBin_data* fourier_transform(float sample_values[], int const samples_pe
     return frequency_bins;
 }
 
-IDFT_sample_data* IDFT(float frequency_values[], int const samples_per_sec) {
+IDFT_sample_data* IDFT(float *frequency_values, int const samples_per_sec) {
 
     IDFT_sample_data *sample_coefficients = 0;
 
