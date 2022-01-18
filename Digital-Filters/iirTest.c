@@ -25,14 +25,14 @@ int main(int argc, char *argv[]) {
 void iir_InitTest() {
     iir = iir_Init(2, fBack_coefs, 2, fForward_coefs);
     
-    assert(2, iir->feedBackNum);
-    assert(2, iir->feedForwardNum);
-    assert(0, iir->feedBackPosition);
-    assert(0, iir->feedForwardPosition);
-    assert(12.0, iir->feedBack_coefs[0]);
-    assert(20.0, iir->feedBack_coefs[1]);
-    assert(4.0, iir->feedForward_coefs[0]);
-    assert(4.9, iir->feedForward_coefs[1]);
+    assert(2 == iir->feedBackNum);
+    assert(2 == iir->feedForwardNum);
+    assert(0 == iir->feedBackPosition);
+    assert(0 == iir->feedForwardPosition);
+    assert(12.0 == iir->feedBack_coefs[0]);
+    assert(20.0 == iir->feedBack_coefs[1]);
+    assert(4.0 == iir->feedForward_coefs[0]);
+    assert(4.9 == iir->feedForward_coefs[1]);
     
     /* Pointers
     assert(0.0, iir->sample_values);
@@ -49,9 +49,9 @@ void IIRCalculatorTest() {
     iirFilter *iirNew;
     iirNew = IIRCalculator(iir, 35.0);
 
-    assert(0.0, iirNew->filteredOutputs[0]);
-    assert(1, iirNew->feedBackPosition);
-    assert(1, iirNew->feedForwardPosition);
+    assert(0.0 == iirNew->filteredOutputs[0]);
+    assert(1 == iirNew->feedBackPosition);
+    assert(1 == iirNew->feedForwardPosition);
 }
 
 /**
@@ -64,17 +64,17 @@ void IIRCalculatorTest2() {
     iirFilter *iirNew;
     iirNew = IIRCalculator(iir, 35.0);
 
-    assert(0.0, iirNew->filteredOutputs[0]);
-    assert(1, iirNew->feedBackPosition);
-    assert(1, iirNew->feedForwardPosition);
+    assert(0.0 == iirNew->filteredOutputs[0]);
+    assert(1 == iirNew->feedBackPosition);
+    assert(1 == iirNew->feedForwardPosition);
     iirNew = IIRCalculator(iirNew, 44.0);
 
-    assert(0.0, iirNew->filteredOutputs[1]);
-    assert(2, iirNew->feedBackPosition);
-    assert(2, iirNew->feedForwardPosition);
+    assert(0.0 == iirNew->filteredOutputs[1]);
+    assert(2 == iirNew->feedBackPosition);
+    assert(2 == iirNew->feedForwardPosition);
     iirNew = IIRCalculator(iirNew, 7.0);
 
-    assert(0.0, iirNew->filteredOutputs[0]);
-    assert(0, iirNew->feedBackPosition);
-    assert(0, iirNew->feedForwardPosition);
+    assert(0.0 == iirNew->filteredOutputs[0]);
+    assert(0 == iirNew->feedBackPosition);
+    assert(0 == iirNew->feedForwardPosition);
 }

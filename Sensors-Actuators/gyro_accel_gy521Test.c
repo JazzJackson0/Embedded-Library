@@ -1,5 +1,6 @@
 #include <assert.h>
 #include <stdlib.h>
+#include "gyro_accel_gy521.h"
 
 int IMU_ReadTest();
 

@@ -22,13 +22,13 @@ void complementary_filterTest() {
     filteredAngles *fAnglesResult = &f2;
     RotationAngles *rAngles;
 
-    assert(0.00, f1.Filtered_Angle_X);
-    assert(0.00, f1.Filtered_Angle_Y);
-    assert(0.00, f1.Filtered_Angle_Z);
+    assert(0.00 == f1.Filtered_Angle_X);
+    assert(0.00 == f1.Filtered_Angle_Y);
+    assert(0.00 == f1.Filtered_Angle_Z);
     
     fAnglesResult = complementary_filter(fAngles, rAngles, 0.80, 0.20);
     
-    assert(0.00, fAnglesResult->Filtered_Angle_X);
-    assert(0.00, fAnglesResult->Filtered_Angle_Y);
-    assert(0.00, fAnglesResult->Filtered_Angle_Z);
+    assert(0.00 == fAnglesResult->Filtered_Angle_X);
+    assert(0.00 == fAnglesResult->Filtered_Angle_Y);
+    assert(0.00 == fAnglesResult->Filtered_Angle_Z);
 }

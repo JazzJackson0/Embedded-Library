@@ -1,7 +1,13 @@
 #include "matrix_math.h"
+#include <stdlib.h>
+#include <stdio.h>
 
 Matrix* Add_Matrices(Matrix *m1, Matrix *m2) {
 
+    if (m1->columnNum != m2->columnNum && m1->rowNum != m2->rowNum) {
+        perror("Matrix dimensions do not match.");
+        exit(1);
+    }
     Matrix *sum;
     sum->rowNum = m1->rowNum;
     sum->columnNum = m1->columnNum;
@@ -18,6 +24,10 @@ Matrix* Add_Matrices(Matrix *m1, Matrix *m2) {
 
 Matrix* Subtract_Matrices(Matrix *m1, Matrix *m2) {
 
+    if (m1->columnNum != m2->columnNum && m1->rowNum != m2->rowNum) {
+        perror("Matrix dimensions do not match.");
+        exit(1);
+    }
     Matrix *difference;
     difference->rowNum = m1->rowNum;
     difference->columnNum = m1->columnNum;
@@ -34,6 +44,10 @@ Matrix* Subtract_Matrices(Matrix *m1, Matrix *m2) {
 
 Matrix* Multiply_Matrices(Matrix *m1, Matrix *m2) {
 
+    if (m1->columnNum != m2->rowNum) {
+        perror("Matrix dimensions do not match.");
+        exit(1);
+    }
     Matrix *product;
     product->rowNum = m1->rowNum;
     product->columnNum = m2->columnNum;
@@ -58,6 +72,8 @@ Matrix* Get_MatrixTranspose(Matrix *matrix) {
     Matrix *matrixT;
     matrixT->rowNum = matrix->columnNum;
     matrixT->columnNum = matrix->rowNum;
+
+    // YOU NEED TO HANDLE THE CASE OF A SINGLE VECTOR.
 
     for (int i = 0; i < matrix->rowNum; i++) {
 

@@ -23,10 +23,10 @@ int main(int argc, char *argv[]) {
  */
 void fir_InitTest() {
     fir = fir_Init(2, coefs);
-    assert(2, fir->tapSize);
-    assert(0, fir->currentPosition);
-    assert(5.0, fir->coefficients[0]);
-    assert(6.0, fir->coefficients[1]);
+    assert(2 == fir->tapSize);
+    assert(0 == fir->currentPosition);
+    assert(5.0 == fir->coefficients[0]);
+    assert(6.0 == fir->coefficients[1]);
     /* Pointers
     assert(2, fir->sample_values);
     assert(2, fir->filteredOutputs);*/
@@ -42,8 +42,8 @@ void FIRCalculatorTest() {
     firFilter *firNew;
     firNew = FIRCalculator(fir, 49.0);
 
-    assert(0.0, firNew->filteredOutputs[0]);
-    assert(1, firNew->currentPosition);
+    assert(0.0 == firNew->filteredOutputs[0]);
+    assert(1 == firNew->currentPosition);
 }
 
 /**
@@ -56,14 +56,14 @@ void FIRCalculatorTest2() {
     firFilter *firNew;
     firNew = FIRCalculator(fir, 49.0);
 
-    assert(0.0, firNew->filteredOutputs[0]);
-    assert(1, firNew->currentPosition);
+    assert(0.0 == firNew->filteredOutputs[0]);
+    assert(1 == firNew->currentPosition);
     firNew = FIRCalculator(firNew, 37.0);
 
-    assert(0.0, firNew->filteredOutputs[1]);
-    assert(2, firNew->currentPosition);
+    assert(0.0 == firNew->filteredOutputs[1]);
+    assert(2 == firNew->currentPosition);
     firNew = FIRCalculator(firNew, 23.0);
 
-    assert(0.0, firNew->filteredOutputs[0]);
-    assert(0, firNew->currentPosition);
+    assert(0.0 == firNew->filteredOutputs[0]);
+    assert(0 == firNew->currentPosition);
 }

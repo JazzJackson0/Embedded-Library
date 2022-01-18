@@ -121,13 +121,13 @@ void kalman_filterTest() {
     kf->autoCorrelatoinR->matrix = autoCorrelatoinR;
 
     kf = kalman_filter(kf);
-    assert(0.0, kf->updatedStateEstimate->matrix[0][0]);
-    assert(0.0, kf->updatedStateEstimate->matrix[0][1]);
+    assert(0.0 == kf->updatedStateEstimate->matrix[0][0]);
+    assert(0.0 == kf->updatedStateEstimate->matrix[0][1]);
 
-    assert(0.0, kf->updatedCovariance->matrix[0][0]);
-    assert(0.0, kf->updatedCovariance->matrix[0][1]);
-    assert(0.0, kf->updatedCovariance->matrix[1][0]);
-    assert(0.0, kf->updatedCovariance->matrix[1][1]);
+    assert(0.0 == kf->updatedCovariance->matrix[0][0]);
+    assert(0.0 == kf->updatedCovariance->matrix[0][1]);
+    assert(0.0 == kf->updatedCovariance->matrix[1][0]);
+    assert(0.0 == kf->updatedCovariance->matrix[1][1]);
 
 }
 

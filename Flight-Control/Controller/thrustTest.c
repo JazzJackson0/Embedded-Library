@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
  * @return ** void 
  */
 void Calculate_UpwardForceTest() {
-    assert(0.0, Calculate_UpwardForce(0.0, 2));
+    assert(0.0 == Calculate_UpwardForce(0.0, 2));
 }
 
 /**
@@ -29,7 +29,7 @@ void Calculate_UpwardForceTest() {
  * @return ** void 
  */
 void Calculate_UpwardForcePerMotorTest() {
-    assert(0.0, Calculate_UpwardForcePerMotor(0.0, 4));
+    assert(0.0 == Calculate_UpwardForcePerMotor(0.0, 4));
 }
 
 /**
@@ -38,5 +38,5 @@ void Calculate_UpwardForcePerMotorTest() {
  * @return ** void 
  */
 void ThrustNewtons_to_ThrustGramsTest() {
-    assert(0.0, ThrustNewtons_to_ThrustGrams(0.0));
+    assert(0.0 == ThrustNewtons_to_ThrustGrams(0.0));
 }

@@ -28,8 +28,8 @@ int main(int argc, char *argv[]) {
  */
 void Get_SinusoidalBasisTest() {
 
-    assert(cos(30.0), Get_SinusoidalBasis(30.0)->realPart);
-    assert(sin(30.0), Get_SinusoidalBasis(30.0)->imaginaryPart);
+    assert(cos(30.0) == Get_SinusoidalBasis(30.0)->realPart);
+    assert(sin(30.0) == Get_SinusoidalBasis(30.0)->imaginaryPart);
 }
 
 /**
@@ -41,8 +41,8 @@ void Get_SinusoidalBasisTest() {
  */
 void Set_ZTest_n0() {
 
-    assert(cos(30.0), Set_Z(30.0, 5.0, 0)->realPart);
-    assert(sin(30.0), Set_Z(30.0, 5.0, 0)->imaginaryPart);
+    assert(cos(30.0) == Set_Z(30.0, 5.0, 0)->realPart);
+    assert(sin(30.0) == Set_Z(30.0, 5.0, 0)->imaginaryPart);
 }
 
 /**
@@ -53,8 +53,8 @@ void Set_ZTest_n0() {
  */
 void Set_ZTest_n1() {
 
-    assert((cos(30.0) / 5.0), Set_Z(30.0, 5.0, 1)->realPart);
-    assert((sin(30.0) / 5.0), Set_Z(30.0, 5.0, 1)->imaginaryPart);
+    assert((cos(30.0) / 5.0) == Set_Z(30.0, 5.0, 1)->realPart);
+    assert((sin(30.0) / 5.0) == Set_Z(30.0, 5.0, 1)->imaginaryPart);
 }
 
 /**
@@ -65,8 +65,8 @@ void Set_ZTest_n1() {
  */
 void Set_ZTest_n2() {
 
-    assert((cos(30.0) / (5.0 * 5.0)), Set_Z(30.0, 5.0, 2)->realPart);
-    assert((sin(30.0) / (5.0 * 5.0)), Set_Z(30.0, 5.0, 2)->imaginaryPart);
+    assert((cos(30.0) / (5.0 * 5.0)) == Set_Z(30.0, 5.0, 2)->realPart);
+    assert((sin(30.0) / (5.0 * 5.0)) == Set_Z(30.0, 5.0, 2)->imaginaryPart);
 }
 
 /**
@@ -75,8 +75,9 @@ void Set_ZTest_n2() {
  * @return ** void 
  */
 void ValuetoComplexNumTest() {
+    
     double values[] = {3.7, 9.2};
     complexNum *cNum = ValuetoComplexNum(values, 2);
-    assert(3.7, cNum[0].realPart);
-    assert(9.2, cNum[1].realPart);
+    assert(3.7 == cNum[0].realPart);
+    assert(9.2 == cNum[1].realPart);
 }

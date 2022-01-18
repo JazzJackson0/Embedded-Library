@@ -44,10 +44,10 @@ void MultiplyQuaternionsTest() {
     q2.q2 = 0.0;
     q2.q3 = 0.0;
 
-    assert(0.0, MultiplyQuaternions(&q1, &q2)->q0);
-    assert(0.0, MultiplyQuaternions(&q1, &q2)->q1);
-    assert(0.0, MultiplyQuaternions(&q1, &q2)->q2);
-    assert(0.0, MultiplyQuaternions(&q1, &q2)->q3);
+    assert(0.0 == MultiplyQuaternions(&q1, &q2)->q0);
+    assert(0.0 == MultiplyQuaternions(&q1, &q2)->q1);
+    assert(0.0 == MultiplyQuaternions(&q1, &q2)->q2);
+    assert(0.0 == MultiplyQuaternions(&q1, &q2)->q3);
 }
 
 /**
@@ -66,10 +66,10 @@ void DivideQuaternionsTest() {
     q2.q2 = 0.0;
     q2.q3 = 0.0;
 
-    assert(0.0, DivideQuaternions(&q1, &q2)->q0);
-    assert(0.0, DivideQuaternions(&q1, &q2)->q1);
-    assert(0.0, DivideQuaternions(&q1, &q2)->q2);
-    assert(0.0, DivideQuaternions(&q1, &q2)->q3);
+    assert(0.0 == DivideQuaternions(&q1, &q2)->q0);
+    assert(0.0 == DivideQuaternions(&q1, &q2)->q1);
+    assert(0.0 == DivideQuaternions(&q1, &q2)->q2);
+    assert(0.0 == DivideQuaternions(&q1, &q2)->q3);
 }
 
 /**
@@ -89,10 +89,10 @@ void Rotate_VectorTest() {
     vector[2] = 0.0;
     vector[3] = 0.0;
 
-    assert(0.0, Rotate_Vector(vector, &q1));
-    assert(0.0, Rotate_Vector(vector, &q1));
-    assert(0.0, Rotate_Vector(vector, &q1));
-    assert(0.0, Rotate_Vector(vector, &q1));
+    assert(0.0 == Rotate_Vector(vector, &q1)->q0);
+    assert(0.0 == Rotate_Vector(vector, &q1)->q1);
+    assert(0.0 == Rotate_Vector(vector, &q1)->q2);
+    assert(0.0 == Rotate_Vector(vector, &q1)->q3);
 }
 
 void RotateByAngleTest() {
@@ -101,10 +101,10 @@ void RotateByAngleTest() {
     q1.q2 = 0.0;
     q1.q3 = 0.0;
 
-    assert(0.0, RotateByAngle(&q1, 0.0));
-    assert(0.0, RotateByAngle(&q1, 0.0));
-    assert(0.0, RotateByAngle(&q1, 0.0));
-    assert(0.0, RotateByAngle(&q1, 0.0));
+    assert(0.0 == RotateByAngle(&q1, 0.0)->q0);
+    assert(0.0 == RotateByAngle(&q1, 0.0)->q1);
+    assert(0.0 == RotateByAngle(&q1, 0.0)->q2);
+    assert(0.0 == RotateByAngle(&q1, 0.0)->q3);
 }
 
 /**
@@ -118,10 +118,10 @@ void NormalizeQuaternionTest() {
     q1.q2 = 0.0;
     q1.q3 = 0.0;
 
-    assert(0.0, NormalizeQuaternion(&q1));
-    assert(0.0, NormalizeQuaternion(&q1));
-    assert(0.0, NormalizeQuaternion(&q1));
-    assert(0.0, NormalizeQuaternion(&q1));
+    assert(0.0 == NormalizeQuaternion(&q1)->q0);
+    assert(0.0 == NormalizeQuaternion(&q1)->q1);
+    assert(0.0 == NormalizeQuaternion(&q1)->q2);
+    assert(0.0 == NormalizeQuaternion(&q1)->q3);
 }
 
 /**
@@ -136,9 +136,6 @@ void Get_QuaternionLengthTest() {
     q1.q3 = 0.0;
 
     assert(0.0, Get_QuaternionLength(&q1));
-    assert(0.0, Get_QuaternionLength(&q1));
-    assert(0.0, Get_QuaternionLength(&q1));
-    assert(0.0, Get_QuaternionLength(&q1));
 }
 
 /**
@@ -152,10 +149,10 @@ void Get_QuaternionInverseTest() {
     q1.q2 = 0.0;
     q1.q3 = 0.0;
 
-    assert(0.0, Get_QuaternionInverse(&q1)->q0);
-    assert(0.0, Get_QuaternionInverse(&q1)->q1);
-    assert(0.0, Get_QuaternionInverse(&q1)->q2);
-    assert(0.0, Get_QuaternionInverse(&q1)->q3);
+    assert(0.0 == Get_QuaternionInverse(&q1)->q0);
+    assert(0.0 == Get_QuaternionInverse(&q1)->q1);
+    assert(0.0 == Get_QuaternionInverse(&q1)->q2);
+    assert(0.0 == Get_QuaternionInverse(&q1)->q3);
 }
 
 /**
@@ -169,8 +166,8 @@ void Get_QuaternionConjugateTest() {
     q1.q2 = 0.0;
     q1.q3 = 0.0;
 
-    assert(0.0, Get_QuaternionConjugate(&q1)->q0);
-    assert(0.0, Get_QuaternionConjugate(&q1)->q1);
-    assert(0.0, Get_QuaternionConjugate(&q1)->q2);
-    assert(0.0, Get_QuaternionConjugate(&q1)->q3);
+    assert(0.0 == Get_QuaternionConjugate(&q1)->q0);
+    assert(0.0 == Get_QuaternionConjugate(&q1)->q1);
+    assert(0.0 == Get_QuaternionConjugate(&q1)->q2);
+    assert(0.0 == Get_QuaternionConjugate(&q1)->q3);
 }

@@ -1,5 +1,6 @@
 #include <assert.h>
 #include <stdlib.h>
+#include "lcd_1602A_STM32F407.h"
 
 void LCD_Init();
 void LCD_Instruct();

@@ -21,11 +21,11 @@ int main(int argc, char *argv[]) {
  */
 void fourier_transformTest() {
     frequencyBin_data *binData = fourier_transform(samples, 1);
-    assert(0.0, binData->amplitude);
-    assert(0.0, binData->realPart);
-    assert(0.0, binData->complexPart);
-    assert(0.0, binData->phase);
-    assert(0.0, binData->nyquist_magnitude);
+    assert(0.0 == binData->amplitude);
+    assert(0.0 == binData->realPart);
+    assert(0.0 == binData->complexPart);
+    assert(0.0 == binData->phase);
+    assert(0.0 == binData->nyquist_magnitude);
 }
 
 /**
@@ -35,6 +35,6 @@ void fourier_transformTest() {
  */
 void IDFTTest() {
     IDFT_sample_data *sampleData = IDFT(freq_vals, 1);
-    assert(0.0, sampleData->realPart);
-    assert(0.0, sampleData->complexPart);
+    assert(0.0 == sampleData->realPart);
+    assert(0.0 == sampleData->complexPart);
 }

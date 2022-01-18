@@ -1,5 +1,6 @@
 #include <assert.h>
 #include <stdlib.h>
+#include "ultrasonic_HCSRO4.h"
 
 void ultrasonicInitTest();
 void ultrasonicReadTest();

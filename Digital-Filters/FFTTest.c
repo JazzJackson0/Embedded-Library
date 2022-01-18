@@ -20,16 +20,32 @@ void radix2_FFTTest() {
 
     K_Values *k_vals = radix2_FFT(3.0, 3, values);
     
-    assert(0, k_vals->numOfValues);
-    assert(0.0, k_vals->upper[0]);
-    assert(0.0, k_vals->lower[0]);
-    assert(0.0, k_vals->upper[1]);
-    assert(0.0, k_vals->lower[1]);
-    assert(0.0, k_vals->upper[2]);
-    assert(0.0, k_vals->lower[2]);
-    assert(0.0, k_vals->upper[3]);
-    assert(0.0, k_vals->lower[3]);
-    assert(0.0, k_vals->upper[4]);
-    assert(0.0, k_vals->lower[4]);
+    assert(0 == k_vals->numOfValues);
+    assert(0.0 == k_vals[0].upper->realPart);
+    assert(0.0 == k_vals[0].upper->imaginaryPart);
+    assert(0.0 == k_vals[0].lower->realPart);
+    assert(0.0 == k_vals[0].lower->imaginaryPart);
+
+    assert(0.0 == k_vals[1].upper->realPart);
+    assert(0.0 == k_vals[1].upper->imaginaryPart);
+    assert(0.0 == k_vals[1].lower->realPart);
+    assert(0.0 == k_vals[1].lower->imaginaryPart);
+
+    assert(0.0 == k_vals[2].upper->realPart);
+    assert(0.0 == k_vals[2].upper->imaginaryPart);
+    assert(0.0 == k_vals[2].lower->realPart);
+    assert(0.0 == k_vals[2].lower->imaginaryPart);
+
+    assert(0.0 == k_vals[3].upper->realPart);
+    assert(0.0 == k_vals[3].upper->imaginaryPart);
+    assert(0.0 == k_vals[3].lower->realPart);
+    assert(0.0 == k_vals[3].lower->imaginaryPart);
+
+    assert(0.0 == k_vals[4].upper->realPart);
+    assert(0.0 == k_vals[4].upper->imaginaryPart);
+    assert(0.0 == k_vals[4].lower->realPart);
+    assert(0.0 == k_vals[4].lower->imaginaryPart);
+
+    
 
 }

@@ -32,13 +32,13 @@ void Get_ReadingTest_ConversionsNeeded() {
     reading[4] = 0.0;
     reading[5] = 0.0;
 
-    assert(0.0, Get_Reading("G-UNIT", "RPS", reading)->Ax_mps2);
-    assert(0.0, Get_Reading("G-UNIT", "RPS", reading)->Ay_mps2);
-    assert(0.0, Get_Reading("G-UNIT", "RPS", reading)->Ax_mps2);
+    assert(0.0 == Get_Reading("G-UNIT", "RPS", reading)->Ax_mps2);
+    assert(0.0 == Get_Reading("G-UNIT", "RPS", reading)->Ay_mps2);
+    assert(0.0 == Get_Reading("G-UNIT", "RPS", reading)->Ax_mps2);
 
-    assert(0.0, Get_Reading("G-UNIT", "RPS", reading)->Gx_dps);
-    assert(0.0, Get_Reading("G-UNIT", "RPS", reading)->Gy_dps);
-    assert(0.0, Get_Reading("G-UNIT", "RPS", reading)->Gx_dps);
+    assert(0.0 == Get_Reading("G-UNIT", "RPS", reading)->Gx_dps);
+    assert(0.0 == Get_Reading("G-UNIT", "RPS", reading)->Gy_dps);
+    assert(0.0 == Get_Reading("G-UNIT", "RPS", reading)->Gx_dps);
 }
 
 /**
@@ -58,13 +58,13 @@ void Get_ReadingTest_NoConversionsNeeded() {
     reading[4] = 0.0;
     reading[5] = 0.0;
 
-    assert(0.0, Get_Reading("MPS2", "DPS", reading)->Ax_mps2);
-    assert(0.0, Get_Reading("MPS2", "DPS", reading)->Ay_mps2);
-    assert(0.0, Get_Reading("MPS2", "DPS", reading)->Ax_mps2);
+    assert(0.0 == Get_Reading("MPS2", "DPS", reading)->Ax_mps2);
+    assert(0.0 == Get_Reading("MPS2", "DPS", reading)->Ay_mps2);
+    assert(0.0 == Get_Reading("MPS2", "DPS", reading)->Ax_mps2);
 
-    assert(0.0, Get_Reading("MPS2", "DPS", reading)->Gx_dps);
-    assert(0.0, Get_Reading("MPS2", "DPS", reading)->Gy_dps);
-    assert(0.0, Get_Reading("MPS2", "DPS", reading)->Gx_dps);
+    assert(0.0 == Get_Reading("MPS2", "DPS", reading)->Gx_dps);
+    assert(0.0 == Get_Reading("MPS2", "DPS", reading)->Gy_dps);
+    assert(0.0 == Get_Reading("MPS2", "DPS", reading)->Gx_dps);
 }
 
 /**
@@ -82,11 +82,11 @@ void Get_AngularRotationsTest() {
     imu.Gy_dps = 0.0;
     imu.Gx_dps = 0.0;
 
-    assert(0.0, Get_AngularRotations(&imu, 1.0)->Angle_Ax);
-    assert(0.0, Get_AngularRotations(&imu, 1.0)->Angle_Ay);
-    assert(0.0, Get_AngularRotations(&imu, 1.0)->Angle_Az);
+    assert(0.0 == Get_AngularRotations(&imu, 1.0)->Angle_Ax);
+    assert(0.0 == Get_AngularRotations(&imu, 1.0)->Angle_Ay);
+    assert(0.0 == Get_AngularRotations(&imu, 1.0)->Angle_Az);
 
-    assert(0.0, Get_AngularRotations(&imu, 1.0)->Angle_Gx);
-    assert(0.0, Get_AngularRotations(&imu, 1.0)->Angle_Gy);
-    assert(0.0, Get_AngularRotations(&imu, 1.0)->Angle_Gz);
+    assert(0.0 == Get_AngularRotations(&imu, 1.0)->Angle_Gx);
+    assert(0.0 == Get_AngularRotations(&imu, 1.0)->Angle_Gy);
+    assert(0.0 == Get_AngularRotations(&imu, 1.0)->Angle_Gz);
 }
