@@ -103,19 +103,16 @@ typedef struct _i2c I2Cx;
 //I2C_CONTROL_WORD0 Register
 /*Clock Source*/
 enum _I2CClockSource {
-	SLAVE_UCxCLK_I2C = 0x00,
-	MASTER_ACLK_I2C = 0x01,
+	SLAVE_UCxCLK_I2C = 0x00, MASTER_ACLK_I2C = 0x01,
 	MASTER_SMCLK_I2C = 0x02
 };
 
 enum _I2CMode {
-	I2C_SLAVE = 0,
-	I2C_MASTER = 1
+	I2C_SLAVE = 0, I2C_MASTER = 1
 };
 
 enum _AddressSize {
-	_7BIT_I2C = 0,
-	_10BIT_I2C = 1
+	_7BIT_I2C = 0, _10BIT_I2C = 1
 };
 
 //Registers------------------------------------------------------------------

@@ -31,7 +31,8 @@ typedef enum _ConversionMemory E_ConversionMemory;
  * @param preDivide 
  * @return ** void 
  */
-void ADC_SetClockSpeed(E_ADCClockSource clockSource, E_ClockDivider clockDivide, E_ADCPreDivider preDivide);
+void ADC_SetClockSpeed(E_ADCClockSource clockSource, E_ClockDivider clockDivide, 
+	E_ADCPreDivider preDivide);
 /**
  * @brief 
  * 
@@ -40,7 +41,8 @@ void ADC_SetClockSpeed(E_ADCClockSource clockSource, E_ClockDivider clockDivide,
  * @param memAddress 
  * @return ** void 
  */
-void ADC_ConversionChannelSetup(E_ConversionChannel conversionChannel, E_DiffSignal_ConvChannel diffSigChannel, E_ConversionMemory memAddress);
+void ADC_ConversionChannelSetup(E_ConversionChannel conversionChannel, 
+	E_DiffSignal_ConvChannel diffSigChannel, E_ConversionMemory memAddress);
 /**
  * @brief 
  * 
@@ -51,7 +53,8 @@ void ADC_ConversionChannelSetup(E_ConversionChannel conversionChannel, E_DiffSig
  * @param memAddress 
  * @return ** void 
  */
-void ADC_Init(E_DataFormat dataFormat, E_Resolution resolution, E_SamplePeriod cycles, E_ConversionNum numOfConversions, E_ConversionMemory memAddress);
+void ADC_Init(E_DataFormat dataFormat, E_Resolution resolution, 
+	E_SamplePeriod cycles, E_ConversionNum numOfConversions, E_ConversionMemory memAddress);
 /**
  * @brief 
  * 
@@ -99,159 +102,80 @@ typedef union mem_access MEM_ACCESSx;
 //Enums----------------------------------------------------------------------
 /*Clock Source*/
 enum _ADCClockSource {
-	ADC12OSC_MODOSC = 0x00,
-	ADC_A_CLOCK = 0x01,
-	ADC_M_CLOCK = 0x02,
+	ADC12OSC_MODOSC = 0x00, ADC_A_CLOCK = 0x01, ADC_M_CLOCK = 0x02,
 	ADC_SM_CLOCK = 0x03
 };
 	
 /*Clock Divider*/
 enum _ClockDivider {
-	ADC_DIV_1 = 0x00,
-	ADC_DIV_2 = 0x01,
-	ADC_DIV_3 = 0x02,
-	ADC_DIV_4 = 0x03,
-	ADC_DIV_5 = 0x04,
-	ADC_DIV_6 = 0x05,
-	ADC_DIV_7 = 0x06,
-	ADC_DIV_8 = 0x07
+	ADC_DIV_1 = 0x00, ADC_DIV_2 = 0x01, ADC_DIV_3 = 0x02,
+	ADC_DIV_4 = 0x03, ADC_DIV_5 = 0x04, ADC_DIV_6 = 0x05,
+	ADC_DIV_7 = 0x06, ADC_DIV_8 = 0x07
 };
 	
 /*Clock Pre-Divider*/
 enum _ADCPreDivider {
-	ADC_PRE_DIV_1 = 0x00,
-	ADC_PRE_DIV_4 = 0x01,
-	ADC_PRE_DIV_32 = 0x02,
-	ADC_PRE_DIV_64 = 0x03
+	ADC_PRE_DIV_1 = 0x00, ADC_PRE_DIV_4 = 0x01,
+	ADC_PRE_DIV_32 = 0x02, ADC_PRE_DIV_64 = 0x03
 };
 
 
 enum _DataFormat {
-	SIGNED = 1,
-	UNSIGNED = 0
+	SIGNED = 1, UNSIGNED = 0
 };
 
 //ADC_CONTROL2 Register
 /*Resolution*/
 enum _Resolution {
-	_8BIT_ADC = 0x00,
-	_10BIT_ADC = 0x01,
-	_12BIT_ADC = 0x02
+	_8BIT_ADC = 0x00, _10BIT_ADC = 0x01, _12BIT_ADC = 0x02
 };
 
 //ADC_CONTROL0 Register
 /*Sample Period Lengths*/
 enum _SamplePeriod {
-	CYCLE_4 = 0x00,
-	CYCLE_8 = 0x01,
-	CYCLE_16 = 0x02,
-	CYCLE_32 = 0x03,
-	CYCLE_64 = 0x04,
-	CYCLE_96 = 0x05,
-	CYCLE_128 = 0x06,
-	CYCLE_192 = 0x07,
-	CYCLE_256 = 0x08,
-	CYCLE_384 = 0x09,
-	CYCLE_512 = 0x0A
+	CYCLE_4 = 0x00, CYCLE_8 = 0x01, CYCLE_16 = 0x02,
+	CYCLE_32 = 0x03, CYCLE_64 = 0x04, CYCLE_96 = 0x05,
+	CYCLE_128 = 0x06, CYCLE_192 = 0x07, CYCLE_256 = 0x08,
+	CYCLE_384 = 0x09, CYCLE_512 = 0x0A
 };
 
 enum _ConversionNum {
-	CONTINUOUS = 1,
-	SINGLE = 0
+	CONTINUOUS = 1, SINGLE = 0
 };
 
 //ADC_CONVERSION_MEMORY_CONTROLx
 /*Input Channels for Non-Differential Input*/
 enum _ConversionChannel {
-	A0 = 0x00,
-	A1 = 0x01,
-	A2 = 0x02,
-	A3 = 0x03,
-	A4 = 0x04,
-	A5 = 0x05,
-	A6 = 0x06,
-	A7 = 0x07,
-	A8 = 0x08,
-	A9 = 0x09,
-	A10 = 0x0A,
-	A11 = 0x0B,
-	A12 = 0x0C,
-	A13 = 0x0D,
-	A14 = 0x0E,
-	A15 = 0x0F,
-	A16 = 0x10,
-	A17 = 0x11,
-	A18 = 0x12,
-	A19 = 0x13,
-	A20 = 0x14,
-	A21 = 0x15,
-	A22 = 0x16,
-	A23 = 0x17,
-	A24 = 0x18,
-	A25 = 0x19,
-	A26 = 0x1A,
-	A27 = 0x1B,
-	A28 = 0x1C,
-	A29 = 0x1D,
-	A30 = 0x1E,
-	A31 = 0x1F,
+	A0 = 0x00, A1 = 0x01, A2 = 0x02, A3 = 0x03,
+	A4 = 0x04, A5 = 0x05, A6 = 0x06, A7 = 0x07,
+	A8 = 0x08, A9 = 0x09, A10 = 0x0A, A11 = 0x0B,
+	A12 = 0x0C, A13 = 0x0D, A14 = 0x0E, A15 = 0x0F,
+	A16 = 0x10, A17 = 0x11, A18 = 0x12, A19 = 0x13,
+	A20 = 0x14, A21 = 0x15, A22 = 0x16, A23 = 0x17,
+	A24 = 0x18, A25 = 0x19, A26 = 0x1A, A27 = 0x1B,
+	A28 = 0x1C, A29 = 0x1D, A30 = 0x1E, A31 = 0x1F,
 	NO_CH = 0x20
 };
 
 /*Input Channels for Differential Signal Input*/
 enum _DiffSignal_ConvChannel {
-	A0POS_A1NEG = 0x00,
-	A2POS_A3NEG = 0x02,
-	A4POS_A5NEG = 0x04,
-	A6POS_A7NEG = 0x06,
-	A8POS_A9NEG = 0x08,
-	A10POS_A11NEG = 0x0A,
-	A12POS_A13NEG = 0x0C,
-	A14POS_A15NEG = 0x0E,
-	A16POS_A17NEG = 0x10,
-	A18POS_A19NEG = 0x12,
-	A20POS_A21NEG = 0x14,
-	A22POS_A23NEG = 0x16,
-	A24POS_A25NEG = 0x18,
-	A26POS_A27NEG = 0x1A,
-	A28POS_A29NEG = 0x1C,
-	A30POS_A31NEG = 0x1E,
-	NO_DIF_CH = 0x20
+	A0POS_A1NEG = 0x00, A2POS_A3NEG = 0x02, A4POS_A5NEG = 0x04,
+	A6POS_A7NEG = 0x06, A8POS_A9NEG = 0x08, A10POS_A11NEG = 0x0A,
+	A12POS_A13NEG = 0x0C, A14POS_A15NEG = 0x0E, A16POS_A17NEG = 0x10,
+	A18POS_A19NEG = 0x12, A20POS_A21NEG = 0x14, A22POS_A23NEG = 0x16,
+	A24POS_A25NEG = 0x18, A26POS_A27NEG = 0x1A, A28POS_A29NEG = 0x1C,
+	A30POS_A31NEG = 0x1E, NO_DIF_CH = 0x20
 };
 
 enum _ConversionMemory {
-	MEM0 = 0x0,
-	MEM1 = 0x1,
-	MEM2 = 0x2,
-	MEM3 = 0x3,
-	MEM4 = 0x4,
-	MEM5 = 0x5,
-	MEM6 = 0x6,
-	MEM7 = 0x7,
-	MEM8 = 0x8,
-	MEM9 = 0x9,
-	MEM10 = 0x0A,
-	MEM11 = 0x0B,
-	MEM12 = 0x0C,
-	MEM13 = 0x0D,
-	MEM14 = 0x0E,
-	MEM15 = 0x0F,
-	MEM16 = 0x10,
-	MEM17 = 0x11,
-	MEM18 = 0x12,
-	MEM19 = 0x13,
-	MEM20 = 0x14,
-	MEM21 = 0x15,
-	MEM22 = 0x16,
-	MEM23 = 0x17,
-	MEM24 = 0x18,
-	MEM25 = 0x19,
-	MEM26 = 0x1A,
-	MEM27 = 0x1B,
-	MEM28 = 0x1C,
-	MEM29 = 0x1D,
-	MEM30 = 0x1E,
-	MEM31 = 0x1F
+	MEM0 = 0x0, MEM1 = 0x1, MEM2 = 0x2, MEM3 = 0x3,
+	MEM4 = 0x4, MEM5 = 0x5, MEM6 = 0x6, MEM7 = 0x7,
+	MEM8 = 0x8, MEM9 = 0x9, MEM10 = 0x0A, MEM11 = 0x0B,
+	MEM12 = 0x0C, MEM13 = 0x0D, MEM14 = 0x0E, MEM15 = 0x0F,
+	MEM16 = 0x10, MEM17 = 0x11, MEM18 = 0x12, MEM19 = 0x13,
+	MEM20 = 0x14, MEM21 = 0x15, MEM22 = 0x16, MEM23 = 0x17,
+	MEM24 = 0x18, MEM25 = 0x19, MEM26 = 0x1A, MEM27 = 0x1B,
+	MEM28 = 0x1C, MEM29 = 0x1D, MEM30 = 0x1E, MEM31 = 0x1F
 };
 
 //Registers------------------------------------------------------------------

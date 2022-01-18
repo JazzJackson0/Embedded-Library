@@ -161,14 +161,9 @@ typedef struct _interrupt_flags INT_FLAG;
 //TIMx_CONTROLB
 /*Clock Source*/
 enum _ClockSpeed {
-	NO_CLOCK = 0x00,
-	FULL_CLOCK = 0x01,
-	_DIV_8 = 0x02,
-	_DIV_64 = 0x03,
-	_DIV_256 = 0x04,
-	_DIV_1024 = 0x05,
-	EXTERNALCLOCK_FALLEDGE = 0x06,
-	EXTERNALCLOCK_RISEEDGE = 0x07
+	NO_CLOCK = 0x00, FULL_CLOCK = 0x01, _DIV_8 = 0x02,
+	_DIV_64 = 0x03, _DIV_256 = 0x04, _DIV_1024 = 0x05,
+	EXTERNALCLOCK_FALLEDGE = 0x06, EXTERNALCLOCK_RISEEDGE = 0x07
 };
 
 //Registers----------------------------------------------------------------------------------------------

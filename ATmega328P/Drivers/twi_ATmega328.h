@@ -101,15 +101,12 @@ typedef struct _twi TWIx;
 //TWI_STATUS Register
 /*Prescaler Values*/
 enum _TWIClockDivide {
-	DIV_1 = 0x00,
-	DIV_4 = 0x01,
-	DIV_16 = 0x02,
-	DIV_64 = 0x03
+	DIV_1 = 0x00, DIV_4 = 0x01,
+	DIV_16 = 0x02, DIV_64 = 0x03
 };
 
 enum _Read_Write {
-	READ = 1,
-	WRITE = 0
+	READ = 1, WRITE = 0
 };
 
 //Registers------------------------------------------------------------------

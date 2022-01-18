@@ -69,29 +69,24 @@ typedef struct _spi SPIx;
 //SPI_CONTROL Register
 /*Clock Source*/
 enum _SPIClockSource {
-	SLAVE_UCxCLK_SPI = 0x00,
-	MASTER_ACLK_SPI = 0x01,
+	SLAVE_UCxCLK_SPI = 0x00, MASTER_ACLK_SPI = 0x01,
 	MASTER_SMCLK_SPI = 0x02
 };
 
 enum _SPIMode {
-	SPI_SLAVE = 0,
-	SPI_MASTER = 1
+	SPI_SLAVE = 0, SPI_MASTER = 1
 };
 
 enum _BitOrder {
-	MSB = 1,
-	LSB = 0
+	MSB = 1, LSB = 0
 };
 
 enum _Phase {
-	_1ST_EDGE = 1,
-	_2ND_EDGE = 0
+	_1ST_EDGE = 1, _2ND_EDGE = 0
 };
 
 enum _Polarity {
-	LOW_POL = 0,
-	HIGH_POL = 1
+	LOW_POL = 0, HIGH_POL = 1
 };
 
 //Registers------------------------------------------------------------------

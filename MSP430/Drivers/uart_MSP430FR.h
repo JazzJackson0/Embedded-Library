@@ -83,21 +83,18 @@ typedef struct _uart UARTx;
 
 //Enums----------------------------------------------------------------------
 enum _Parity {
-	EVEN_PARITY = 0,
-	ODD_PARITY = 1,
+	EVEN_PARITY = 0, ODD_PARITY = 1,
 	NO_PARITY = 2
 };
 
 enum _UARTBitOrder {
-	_MSB = 0,
-	_LSB = 1
+	_MSB = 0, _LSB = 1
 };
 
 //UART_CONTROL_WORD0 Register
 /*Clock Source*/
 enum _UARTClockSource {
-	U_CLOCK = 0x00,
-	A_CLOCK = 0x01,
+	U_CLOCK = 0x00, A_CLOCK = 0x01,
 	SM_CLOCK = 0x02
 };
 

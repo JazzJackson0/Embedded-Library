@@ -88,36 +88,28 @@ typedef struct _spi SPIx;
 
 //Enums----------------------------------------------------------------------
 enum _Phase {
-	_1ST_EDGE = 0,
-	_2ND_EDGE = 1
+	_1ST_EDGE = 0, _2ND_EDGE = 1
 };
 
 enum _Polarity {
-	LOW_POL = 0,
-	HIGH_POL = 1
+	LOW_POL = 0, HIGH_POL = 1
 };
 
 //SPI_CONTROL1 Register
 /*Baud Rate*/
 enum _Prescaler {
-	CLOCK_DIV_2 = 0x00,
-	CLOCK_DIV_4 = 0x01,
-	CLOCK_DIV_8 = 0x02,
-	CLOCK_DIV_16 = 0x03,
-	CLOCK_DIV_32 = 0x04,
-	CLOCK_DIV_64 = 0x05,
-	CLOCK_DIV_128 = 0x06,
-	CLOCK_DIV_256 = 0x07
+	CLOCK_DIV_2 = 0x00, CLOCK_DIV_4 = 0x01,
+	CLOCK_DIV_8 = 0x02, CLOCK_DIV_16 = 0x03,
+	CLOCK_DIV_32 = 0x04, CLOCK_DIV_64 = 0x05,
+	CLOCK_DIV_128 = 0x06, CLOCK_DIV_256 = 0x07
 };
 
 enum _Mode {
-	SLAVE = 0,
-	MASTER = 1
+	SLAVE = 0, MASTER = 1
 };
 
 enum _BitOrder {
-	MSB = 0,
-	LSB = 1
+	MSB = 0, LSB = 1
 };
 
 //Registers------------------------------------------------------------------

@@ -80,9 +80,7 @@ typedef struct _usart USARTx;
 
 //Enums----------------------------------------------------------------------
 enum _Parity {
-	EVEN_PARITY = 0,
-	ODD_PARITY = 1,
-	NO_PARITY = 2
+	EVEN_PARITY = 0, ODD_PARITY = 1, NO_PARITY = 2
 };
 
 //Registers------------------------------------------------------------------

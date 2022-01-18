@@ -36,9 +36,6 @@ void Timer_Start(char* timerID, E_TimerPrescaler prescale, uint32_t time) {
 		
 		TIMERAx *const TIMER = Get_TimerA(timerID);
 
-		TIM_A_CONTROL *const TimControl = Get_TimAControlReg(timerID); 
-		TIMx_CAPTURECOMPx *const TimCaptComp0 = Get_CaptComp0Reg(timerID);
-
 		PWM_PinInit(timerID);
 		TIMER->ControlReg.select_ClockSource = TIM_SM_CLOCK;
 		

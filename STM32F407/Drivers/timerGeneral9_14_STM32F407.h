@@ -35,7 +35,8 @@ uint8_t GeneralTimer9_14_Start(uint8_t timerNum, uint16_t prescaler, uint16_t ti
  * @param dutycycle 
  * @return ** void 
  */
-void GeneralTimer9_14_PWM_Start(uint8_t timerNum, uint8_t captCompNum, uint16_t prescaler, uint16_t time, float dutycycle);
+void GeneralTimer9_14_PWM_Start(uint8_t timerNum, uint8_t captCompNum, 
+	uint16_t prescaler, uint16_t time, float dutycycle);
 /**
  * @brief 
  * 
@@ -45,7 +46,8 @@ void GeneralTimer9_14_PWM_Start(uint8_t timerNum, uint8_t captCompNum, uint16_t 
  * @param dutycycle 
  * @return ** void 
  */
-void GeneralTimer9_14_PWM_Update(uint8_t timerNum, uint8_t captCompNum, uint16_t time, float dutycycle);
+void GeneralTimer9_14_PWM_Update(uint8_t timerNum, uint8_t captCompNum, 
+	uint16_t time, float dutycycle);
 
 
 //CLOCKS

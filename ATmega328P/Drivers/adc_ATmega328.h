@@ -60,37 +60,26 @@ typedef struct _adc ADCx;
 //ADC_MUTEX_SELECT Register
 /*Analog Channels*/
 enum _Channel {
-	ADC_0 = 0x00,
-	ADC_1 = 0x01,
-	ADC_2 = 0x02,
-	ADC_3 = 0x03,
-	ADC_4 = 0x04,
-	ADC_5 = 0x05
+	ADC_0 = 0x00, ADC_1 = 0x01, ADC_2 = 0x02,
+	ADC_3 = 0x03, ADC_4 = 0x04, ADC_5 = 0x05
 };
 
 //ADC_CONTROL_STATUS_A Register
 /*Prescaler Values*/
 enum _ADCClockDivide {
-	ADC_DIV_2 = 0x00,
-	ADC_DIV_4 = 0x02,
-	ADC_DIV_8 = 0x03,
-	ADC_DIV_16 = 0x04,
-	ADC_DIV_32 = 0x05,
-	ADC_DIV_64 = 0x06,
+	ADC_DIV_2 = 0x00, ADC_DIV_4 = 0x02,
+	ADC_DIV_8 = 0x03, ADC_DIV_16 = 0x04,
+	ADC_DIV_32 = 0x05, ADC_DIV_64 = 0x06,
 	ADC_DIV_128 = 0x07
 };
 
 //ADC_CONTROL_STATUS_B Register
 /*Auto Trigger Sources*/
 enum _AutoTrigSrc {
-	FREE_RUN = 0x01,
-	ANALOG_COMPARE = 0x02,
-	EXTI_REQUEST0 = 0x03,
-	TIMERCOUNTER0_COMP_MATCH_A = 0x04,
-	TIMERCOUNTER0_OVERFLOW = 0x05,
-	TIMERCOUNTER1_COMP_MATCH_B = 0x06,
-	TIMERCOUNTER1_OVERFLOW = 0x07,
-	TIMERCOUNTER1_CAPTURE_EVENT = 0x08
+	FREE_RUN = 0x01, ANALOG_COMPARE = 0x02,
+	EXTI_REQUEST0 = 0x03, TIMERCOUNTER0_COMP_MATCH_A = 0x04,
+	TIMERCOUNTER0_OVERFLOW = 0x05, TIMERCOUNTER1_COMP_MATCH_B = 0x06,
+	TIMERCOUNTER1_OVERFLOW = 0x07, TIMERCOUNTER1_CAPTURE_EVENT = 0x08
 };
 
 //Registers------------------------------------------------------------------

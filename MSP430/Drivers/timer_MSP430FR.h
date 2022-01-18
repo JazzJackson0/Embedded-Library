@@ -110,10 +110,8 @@ typedef struct _timerB TIMERBx;
 //TIM_x_CONTROL
 /*Input Clock Divider*/
 enum _TimerPrescaler {
-	DIV_1 = 0x00,
-	DIV_2 = 0x01,
-	DIV_4 = 0x02,
-	DIV_8 = 0x03
+	DIV_1 = 0x00, DIV_2 = 0x01,
+	DIV_4 = 0x02, DIV_8 = 0x03
 };
 
 //Registers---------------------------------------------------------------------------------

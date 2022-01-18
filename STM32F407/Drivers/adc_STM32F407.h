@@ -160,38 +160,22 @@ typedef struct _adcCommon CommonADCRegisters;
 //FOR ADC SEQUENCE Registers 1-3 (and Injected)
 /*Channels to be given a Conversion Order*/
 enum _Channel {
-	CH_0 = 0x00,
-	CH_1 = 0x01,
-	CH_2 = 0x02,
-	CH_3 = 0x03,
-	CH_4 = 0x04,
-	CH_5 = 0x05,
-	CH_6 = 0x06,
-	CH_7 = 0x07,
-	CH_8 = 0x08,
-	CH_9 = 0x09,
-	CH_10 = 0x0A,
-	CH_11 = 0x0B,
-	CH_12 = 0x0C,
-	CH_13 = 0x0D,
-	CH_14 = 0x0E,
-	CH_15 = 0x0F,
-	CH_16 = 0x10,
-	CH_17 = 0x11,
+	CH_0 = 0x00, CH_1 = 0x01, CH_2 = 0x02,
+	CH_3 = 0x03, CH_4 = 0x04, CH_5 = 0x05,
+	CH_6 = 0x06, CH_7 = 0x07, CH_8 = 0x08,
+	CH_9 = 0x09, CH_10 = 0x0A, CH_11 = 0x0B,
+	CH_12 = 0x0C, CH_13 = 0x0D, CH_14 = 0x0E,
+	CH_15 = 0x0F, CH_16 = 0x10, CH_17 = 0x11,
 	CH_18 = 0x12
 };
 
 //For ADC_SAMPLETIME Registers 1 & 2
 /*Channel Sample Periods*/
 enum _SamplePeriod {
-	_3_CYCLES = 0x00,
-	_15_CYCLES = 0x01,
-	_28_CYCLES = 0x02,
-	_56_CYCLES = 0x03,
-	_84_CYCLES = 0x04,
-	_112_CYCLES = 0x05,
-	_144_CYCLES = 0x06,
-	_480_CYCLES = 0x07
+	_3_CYCLES = 0x00, _15_CYCLES = 0x01,
+	_28_CYCLES = 0x02, _56_CYCLES = 0x03,
+	_84_CYCLES = 0x04, _112_CYCLES = 0x05,
+	_144_CYCLES = 0x06, _480_CYCLES = 0x07
 };
 
 //For ADC_CONTROL1
@@ -205,30 +189,21 @@ enum _Resolution {
 
 
 enum _ConvertLen {
-	SINGLE = 0,
-	CONTINUOUS = 1
+	SINGLE = 0, CONTINUOUS = 1
 };
 
 
 //FOR ADC SEQUENCE Registers (Reg and Injected)
 /*Reg Sequence Length (i.e. Num of Conversions)*/
 enum _ConversionNum {
-	_1_CONVERSION = 0x00,
-	_2_CONVERSIONS = 0x01,
-	_3_CONVERSIONS = 0x02,
-	_4_CONVERSIONS = 0x03,
-	_5_CONVERSIONS = 0x04,
-	_6_CONVERSIONS = 0x05,
-	_7_CONVERSIONS = 0x06,
-	_8_CONVERSIONS = 0x07,
-	_9_CONVERSIONS = 0x08,
-	_10_CONVERSIONS = 0x09,
-	_11_CONVERSIONS = 0x0A,
-	_12_CONVERSIONS = 0x0B,
-	_13_CONVERSIONS = 0x0C,
-	_14_CONVERSIONS = 0x0D,
-	_15_CONVERSIONS = 0x0E,
-	_16_CONVERSIONS = 0x0F
+	_1_CONVERSION = 0x00, _2_CONVERSIONS = 0x01,
+	_3_CONVERSIONS = 0x02, _4_CONVERSIONS = 0x03,
+	_5_CONVERSIONS = 0x04, _6_CONVERSIONS = 0x05,
+	_7_CONVERSIONS = 0x06, _8_CONVERSIONS = 0x07,
+	_9_CONVERSIONS = 0x08, _10_CONVERSIONS = 0x09,
+	_11_CONVERSIONS = 0x0A, _12_CONVERSIONS = 0x0B,
+	_13_CONVERSIONS = 0x0C, _14_CONVERSIONS = 0x0D,
+	_15_CONVERSIONS = 0x0E, _16_CONVERSIONS = 0x0F
 };
 
 //Registers------------------------------------------------------------------

@@ -93,22 +93,18 @@ typedef struct _usart USARTx;
 
 //Enums----------------------------------------------------------------------
 enum _USARTPolarity {
-	TX_ONRISE_RX_ONFALL = 0,
-	TX_ONFALL_RX_ONRISE = 1
+	TX_ONRISE_RX_ONFALL = 0, TX_ONFALL_RX_ONRISE = 1
 };
 
 //USART_CONTROL_STATUS_C
 /*Parity Modes*/
 enum _Parity {
-	EVEN_PAR = 0x02,
-	ODD_PAR = 0x03
+	EVEN_PAR = 0x02, ODD_PAR = 0x03
 };
 
 /*UART Mode Types*/
 enum _USARTMode {
-	ASYNC = 0x00,
-	SYNC = 0x01,
-	MASTER_SPI = 0x02
+	ASYNC = 0x00, SYNC = 0x01, MASTER_SPI = 0x02
 };
 
 //Registers------------------------------------------------------------------

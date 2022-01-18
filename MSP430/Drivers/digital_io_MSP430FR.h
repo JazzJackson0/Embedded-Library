@@ -40,27 +40,26 @@ uint8_t Pin_GetInput(char port, uint8_t pinNum);
 void Pin_Out(char port, uint8_t pinNum, uint8_t pinState);
 
 //IO PORTS
-typedef struct _odd_ports ODD_PORTSx;
-typedef struct _even_ports EVEN_PORTSx;
+typedef struct _ports PORTSx;
 typedef struct _int_vectors INTERRUPT_VECTORS;
 #define POWER_MANAGE 0x0120
 #define WATCHDG 0x15C
-#define INT_VECTORS_BASE 0x //	WHAT IS THE BASE ADDRESS FOR THIS???	
+#define INT_VECTORS_BASE 0x0 //	WHAT IS THE BASE ADDRESS FOR THIS???	
 #define PORT_BASES1_4 0x200 //Not actually sure which ports 0x200 covers
 #define PORT_BASESA_J 0x300 //Not actually sure which ports 0x300 covers
 //-----------------
-#define ADDR_PORT1 ( (ODD_PORTSx*) ((PORT_BASES1_4) + 0x00) )
-#define ADDR_PORT2 ( (EVEN_PORTSx*) ((PORT_BASES1_4) + 0x00) )
-#define ADDR_PORT3 ( (ODD_PORTSx*) ((PORT_BASES1_4) + 0x20) )
-#define ADDR_PORT4 ( (EVEN_PORTSx*) ((PORT_BASES1_4) + 0x20) )
-#define ADDR_PORTJ ( (EVEN_PORTSx*) ((PORT_BASESA_J) + 0x20) )
+#define ADDR_PORT1 ( (PORTSx*) ((PORT_BASES1_4) + 0x00) )
+#define ADDR_PORT2 ( (PORTSx*) ((PORT_BASES1_4) + 0x01) )
+#define ADDR_PORT3 ( (PORTSx*) ((PORT_BASES1_4) + 0x20) )
+#define ADDR_PORT4 ( (PORTSx*) ((PORT_BASES1_4) + 0x21) )
+#define ADDR_PORTJ ( (PORTSx*) ((PORT_BASESA_J) + 0x20) )
 /*
 #define ADDR_PORT5 ( (ODD_PORTSx*) ((PORT_BASES1_4) + 0x00) )
-#define ADDR_PORT6 ( (EVEN_PORTSx*) ((PORT_BASES1_4) + 0x00) )
+#define ADDR_PORT6 ( (EVEN_PORTSx*) ((PORT_BASES1_4) + 0x01) )
 #define ADDR_PORT7 ( (ODD_PORTSx*) ((PORT_BASES1_4) + 0x00) )
-#define ADDR_PORT8 ( (EVEN_PORTSx*) ((PORT_BASES1_4) + 0x00) )
+#define ADDR_PORT8 ( (EVEN_PORTSx*) ((PORT_BASES1_4) + 0x01) )
 #define ADDR_PORT9 ( (ODD_PORTSx*) ((PORT_BASES1_4) + 0x00) )
-#define ADDR_PORT10 ( (EVEN_PORTSx*) ((PORT_BASES1_4) + 0x00) )
+#define ADDR_PORT10 ( (EVEN_PORTSx*) ((PORT_BASES1_4) + 0x01) )
 #define ADDR_PORT11 ( (ODD_PORTSx*) ((PORT_BASES1_4) + 0x00) )
 #define ADDR_PORTA ( (EVEN_PORTSx*) ((PORT_BASES1_4) + 0x00) )
 #define ADDR_PORTB ( (EVEN_PORTSx*) ((PORT_BASES1_4) + 0x00) )
@@ -77,22 +76,16 @@ typedef struct _int_vectors INTERRUPT_VECTORS;
 
 //Enums----------------------------------------------------------------------
 enum _PinType {
-	IN = 0,
-	OUT = 1,
-	NONE = 0
+	IN = 0, OUT = 1, NONE = 0
 };
 
 enum _FunctionType {
-	PRIMARY_F = 1,
-	SECONDARY_F = 2,
-	TERTIARY_F = 3,
+	PRIMARY_F = 1, SECONDARY_F = 2, TERTIARY_F = 3,
 	NO_F = 4
 };
 
 enum _PullUpDown {
-	P_UP = 1,
-	P_DOWN = 2,
-	NO_PULL = 4
+	P_UP = 1, P_DOWN = 2, NO_PULL = 4
 };
 
 //Registers------------------------------------------------------------------
@@ -234,58 +227,42 @@ typedef struct {
 	volatile uint8_t p7_InterruptOccurred:1;
 }PORTx_INTERRUPT_FLAG;
 
+typedef struct {
+	IO_RESERVED reserved0; //Hex Size 0x02
+	IO_RESERVED reserved1; //Hex Size 0x02
+	IO_RESERVED reserved2; //...etc
+	IO_RESERVED reserved3; 
+	IO_RESERVED reserved4; 
+	IO_RESERVED reserved5;
+	IO_RESERVED reserved6; 
+	IO_RESERVED reserved7; 
+	IO_RESERVED reserved8; 
+}RESERVED_HEFTY;
 
-struct _odd_ports {
-	PORTx_INPUT InputReg; // 0x00
-	IO_RESERVED_8 reserved0; // 0x01
-	PORTx_OUTPUT OutputReg; // 0x02
-	IO_RESERVED_8 reserved1; // 0x03
-	PORTx_DIRECTION DirectionReg; // 0x04
-	IO_RESERVED_8 reserved2; // 0x05
-	PORTx_PULLUP_PULLDOWN PullUpPullDownReg; // 0x06
-	IO_RESERVED_8 reserved3; // 0x07
-	IO_RESERVED reserved4; // 0x08
-	PORTx_FUNCTION_SELECT0 FunctionSelect0Reg; // 0x0A
-	IO_RESERVED_8 reserved5; // 0x0B
-	IO_RESERVED reserved6; // 0x0C
-	PORTx_FUNCTION_SELECT1 FunctionSelect1Reg; // 0x0E
-	IO_RESERVED_8 reserved7; // 0x0F
-	IO_RESERVED reserved8; // 0x10
-	IO_RESERVED reserved9; // 0x12
-	IO_RESERVED reserved10; // 0x14
-	PORTx_FUNCTION_SELECT_COMPLEMENT FunctionSelectComplementReg; // 0x16
-	IO_RESERVED_8 reserved11; // 0x17
-	PORTx_INTERRUPT_EDGE_SELECT EdgeSelectReg; // 0x18
-	PORTx_INTERRUPT_ENABLE InterruptEnableReg; // 0x1A
-	PORTx_INTERRUPT_FLAG InterruptFlagReg; // 0x1C
+struct _ports {
+	PORTx_INPUT InputReg; // Odd Ports: 0x00 | Even Ports: 0x01
+	IO_RESERVED_8 reserved0; // 0x01 | 0x02
+	PORTx_OUTPUT OutputReg; // Odd Ports: 0x02 | Even Ports: 0x03
+	IO_RESERVED_8 reserved1; // 0x03 | 0x04
+	PORTx_DIRECTION DirectionReg; // Odd Ports: 0x04 | Even Ports: 0x05
+	IO_RESERVED_8 reserved2; // 0x05 | 0x06
+	PORTx_PULLUP_PULLDOWN PullUpPullDownReg; // Odd Ports: 0x06 | Even Ports: 0x07
+	IO_RESERVED_8 reserved3; // 0x07 | 0x08
+	IO_RESERVED reserved4; // 0x08 | 0x09
+	PORTx_FUNCTION_SELECT0 FunctionSelect0Reg; // Odd Ports: 0x0A | Even Ports: 0x0B
+	IO_RESERVED_8 reserved5; // 0x0B | 0x0C
+	PORTx_FUNCTION_SELECT1 FunctionSelect1Reg; // Odd Ports: 0x0C | Even Ports: 0xD
+	IO_RESERVED reserved6; // 0x0E | 0x0F
+	IO_RESERVED reserved7; // 0x10 | 0x11
+	IO_RESERVED reserved8; // 0x12 | 0x13
+	IO_RESERVED reserved9; // 0x14 | 0x15
+	PORTx_FUNCTION_SELECT_COMPLEMENT FunctionSelectComplementReg; // Odd Ports: 0x16 | Even Ports: 0x17
+	IO_RESERVED_8 reserved10; // 0x17 | 0x18
+	PORTx_INTERRUPT_EDGE_SELECT EdgeSelectReg; // Odd Ports: 0x18 | Even Ports: 0x19
+	PORTx_INTERRUPT_ENABLE InterruptEnableReg; // Odd Ports: 0x1A | Even Ports: 0x1B
+	PORTx_INTERRUPT_FLAG InterruptFlagReg; // Odd Ports: 0x1C | Even Ports: 0x1D
 };
 
-struct _even_ports {
-	IO_RESERVED_8 reserved0; // 0x00
-	PORTx_INPUT InputReg; // 0x01
-	IO_RESERVED_8 reserved1; // 0x02
-	PORTx_OUTPUT OutputReg; // 0x03
-	IO_RESERVED_8 reserved2; // 0x04
-	PORTx_DIRECTION DirectionReg; // 0x05
-	IO_RESERVED_8 reserved3; // 0x06
-	PORTx_PULLUP_PULLDOWN PullUpPullDownReg; // 0x07
-	IO_RESERVED reserved4; // 0x08
-	IO_RESERVED_8 reserved5; // 0x0A
-	PORTx_FUNCTION_SELECT0 FunctionSelect0Reg; // 0x0B
-	IO_RESERVED_8 reserved6; // 0x0C
-	PORTx_FUNCTION_SELECT1 FunctionSelect1Reg; // 0x0D
-	IO_RESERVED reserved7; // 0x0E
-	IO_RESERVED reserved7; // 0x10
-	IO_RESERVED reserved8; // 0x12
-	IO_RESERVED reserved9; // 0x14
-	IO_RESERVED_8 reserved10; // 0x16
-	PORTx_FUNCTION_SELECT_COMPLEMENT FunctionSelectComplementReg; // 0x17
-	IO_RESERVED_8 reserved11; // 0x18
-	PORTx_INTERRUPT_EDGE_SELECT EdgeSelectReg; // 0x19
-	IO_RESERVED_8 reserved12; // 0x1A
-	PORTx_INTERRUPT_ENABLE InterruptEnableReg; // 0x1B
-	PORTx_INTERRUPT_FLAG InterruptFlagReg; // 0x1C
-};
 
 struct _int_vectors {
 	PORTx_INTERRUPT_VECTOR Port1InterruptVectorReg; // 0x0E
@@ -307,16 +284,6 @@ struct _int_vectors {
 	PORTx_INTERRUPT_VECTOR Port9InterruptVectorReg; // 0x8E
 };
 
-typedef struct {
-	IO_RESERVED reserved0; //Hex Size 0x02
-	IO_RESERVED reserved1; //Hex Size 0x02
-	IO_RESERVED reserved2; //...etc
-	IO_RESERVED reserved3; 
-	IO_RESERVED reserved4; 
-	IO_RESERVED reserved5;
-	IO_RESERVED reserved6; 
-	IO_RESERVED reserved7; 
-	IO_RESERVED reserved8; 
-}RESERVED_HEFTY;
+
 
 #endif

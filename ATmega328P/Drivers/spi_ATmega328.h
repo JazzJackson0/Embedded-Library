@@ -53,30 +53,24 @@ typedef struct _spi SPIx;
 //SPI_CONTROL Register
 /*Clock Frequency*/
 enum _ClockDivider {
-	SPI_DIV_4 = 0x00,
-	SPI_DIV_16 = 0x01,
-	SPI_DIV_64 = 0x02,
-	SPI_DIV_128 = 0x03
+	SPI_DIV_4 = 0x00, SPI_DIV_16 = 0x01,
+	SPI_DIV_64 = 0x02, SPI_DIV_128 = 0x03
 };
 
 enum _SPIMode {
-	SLAVE = 0,
-	MASTER = 1
+	SLAVE = 0, MASTER = 1
 };
 
 enum _BitOrder {
-	MSB = 1,
-	LSB = 0
+	MSB = 1, LSB = 0
 };
 
 enum _Phase {
-	_1ST_EDGE = 0,
-	_2ND_EDGE = 1
+	_1ST_EDGE = 0, _2ND_EDGE = 1
 };
 
 enum _SPIPolarity {
-	LOW_POL = 0,
-	HIGH_POL = 1
+	LOW_POL = 0, HIGH_POL = 1
 };
 
 //Registers------------------------------------------------------------------

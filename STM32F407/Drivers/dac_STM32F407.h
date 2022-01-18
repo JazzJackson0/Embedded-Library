@@ -62,7 +62,7 @@ typedef struct _dac DACx;
 #define UNMASKBIT0_10_TRIANGLEAMP2047 0x0A
 #define UNMASKBIT0_11_TRIANGLEAMP4095 0x0B
 
-
+//Registers--------------------------------------------------------------------------
 typedef struct {
 	const uint32_t reserved0:29;
 	volatile uint32_t dac_StartTick:1;

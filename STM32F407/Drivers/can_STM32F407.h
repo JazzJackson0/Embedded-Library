@@ -145,14 +145,12 @@ union _Data {
 
 //CAN_FILTER_SCALE
 enum _FilterSize {
-	_16BIT_CAN = 0,
-	_32BIT_CAN = 1
+	_16BIT_CAN = 0, _32BIT_CAN = 1
 };
 
 //CAN_FILTER_MODE
 enum _FilterMode {
-	MASK_MODE = 0,
-	LIST_MODE = 1
+	MASK_MODE = 0, LIST_MODE = 1
 };
 
 

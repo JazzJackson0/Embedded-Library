@@ -77,43 +77,27 @@ typedef struct _gpio GPIOx;
 //GPIOx_MODE Register & GPIOx_ALTERNATE_FUNCT Registers
 /*Pin Modes & Alternate Functions*/
 enum _PinModes {
-	IN = 0x10,
-	OUT = 0x11,
-	ANALOG = 0x13,
+	IN = 0x10, OUT = 0x11, ANALOG = 0x13,
 	AF = 0x02, //DO NOT USE
-	AF0 = 0x00,
-	AF1 = 0x01,
-	AF2 = 0x02,
-	AF3 = 0x03,
-	AF4 = 0x04,
-	AF5 = 0x05,
-	AF6 = 0x06,
-	AF7 = 0x07,
-	AF8 = 0x08,
-	AF9 = 0x09,
-	AF10 = 0x0A,
-	AF11 = 0x0B,
-	AF12 = 0x0C,
-	AF13 = 0x0D,
-	AF14 = 0x0E,
+	AF0 = 0x00, AF1 = 0x01, AF2 = 0x02,
+	AF3 = 0x03, AF4 = 0x04, AF5 = 0x05,
+	AF6 = 0x06, AF7 = 0x07, AF8 = 0x08,
+	AF9 = 0x09, AF10 = 0x0A, AF11 = 0x0B,
+	AF12 = 0x0C, AF13 = 0x0D, AF14 = 0x0E,
 	AF15 = 0x0F
 };
 
 //GPIOx_OUTPUTSPEED Register
 /*Pin Out Speeds*/
 enum _OutSpeeds {
-	LOW = 0x00,
-	MED = 0x01,
-	HIGH = 0x02,
-	VERY_HIGH = 0x03
+	LOW = 0x00, MED = 0x01,
+	HIGH = 0x02, VERY_HIGH = 0x03
 };
 
 //GPIOx_PULLUP_PULLDOWN Register
 /*PullUP PullDown Settings*/
 enum _PullUpDown {
-	NONE = 0x00,
-	UP = 0x01,
-	DOWN = 0x02
+	NONE = 0x00, UP = 0x01, DOWN = 0x02
 };
 
 
