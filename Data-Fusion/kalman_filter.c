@@ -1,9 +1,8 @@
+#include <stdlib.h>
 #include "kalman_filter.h"
 #include "../Logic/matrix_math.h"
 
 //Static Prototypes
-static Matrix* Set_InitialCovariance(KalmanFilter *k_filter);
-
 static Matrix* Get_ExpectedStateEstimate(KalmanFilter *k_filter);
 static Matrix* Get_ExpectedCovariace(KalmanFilter *k_filter);
 static Matrix* Get_Innovation(KalmanFilter *k_filter, Matrix *sensorValues);
@@ -12,6 +11,69 @@ static Matrix* Get_KalmanGainMatrix(KalmanFilter *k_filter);
 static Matrix* Get_UpdatedStateEstimate(KalmanFilter *k_filter);
 static Matrix* Get_UpdatedCovariance(KalmanFilter *k_filter);
 
+KalmanFilter* KalmanInit(double* initialState, double* stateTransMatrix, double* inputMatrix, 
+    int stateVars_n, int inputs_p, int outputs_m) {
+    
+    KalmanFilter *kf = malloc(sizeof(KalmanFilter));
+
+    //State Transition Matrix (F)
+    kf->state_trans_matrix = MatrixInit(stateVars_n, stateVars_n);
+    // Initial State Est. Vector (x) & Updated State Estimate Vector (x+) 
+    kf->updatedStateEstimate = MatrixInit(stateVars_n, 1);
+    // Initial Covariance Matrix (P) & Updated Covariance Matrix (P+) 
+    kf->updatedCovariance = MatrixInit(stateVars_n, stateVars_n);
+    //Input Matrix (B)
+    kf->input_matrix = MatrixInit(stateVars_n, inputs_p);
+    //Input Vector (u)
+    kf->input_vector = MatrixInit(inputs_p, 1);
+    //Measurement Matrix (H)
+    kf->measurement_matrix = MatrixInit(outputs_m, stateVars_n);
+    // Process Model Noise Matrix (L)
+    kf->process_model_noise_matrix = MatrixInit(inputs_p, stateVars_n);
+    // Process Model Noise Vector (w)
+    kf->process_model_noise_vector = MatrixInit(stateVars_n, 1);
+    // Measurement Model Noise Matrix (M)
+    kf->measurement_model_noise_matrix = MatrixInit(stateVars_n, outputs_m);
+    // Measurement Model Noise Vector (v)
+    kf->measurement_noise_vector = MatrixInit(outputs_m, 1);
+    // Innovation Matrix (y)
+    kf->innovation = MatrixInit(stateVars_n, 1);
+    // Innovation Covariance Matrix (S)
+    kf->innovationCovariance = MatrixInit(outputs_m, outputs_m);
+    // Kalman Gain Matrix (K)
+    kf->kalmanGainMatrix =  MatrixInit(stateVars_n, outputs_m);
+    // Expected Covariance Matrix (P-)
+    kf->expectedCovariance = MatrixInit(stateVars_n, stateVars_n);
+    // Expected State Estimate Vector (x-)
+    kf->expectedStateEstimate = MatrixInit(stateVars_n, 1);
+    // Process Model Noise Auto Correlation Matrix (Q)
+    kf->autoCorrelatoinQ = MatrixInit(stateVars_n, stateVars_n);
+    // Measurement Model Noise Auto Correlation Matrix (R)
+    kf->autoCorrelatoinR = MatrixInit(outputs_m, outputs_m);
+
+    //Add values to Initial State vector, State Trans & Input Matrices
+    for (int i = 0; i < stateVars_n; i++) {
+
+        kf->updatedStateEstimate->matrix[i][0] = initialState[i];
+
+        for (int j = 0; j < stateVars_n; j++) {
+            kf->state_trans_matrix->matrix[i][j] = *(stateTransMatrix + (i * stateVars_n) + j);
+        }
+
+        for (int j = 0; j < inputs_p; j++) {
+            kf->input_matrix->matrix[i][j] = *(inputMatrix + (i * stateVars_n) + j);
+        }
+    }
+
+    //Initialize the Covariance Matrices (P, Q and R)
+    for (int i = 0; i < stateVars_n; i++) {
+
+        //INITIALIZE HERE.
+    }
+
+
+    return kf;
+}
 
 KalmanFilter* kalman_filter(KalmanFilter *k_filter) {
 
@@ -78,18 +140,14 @@ static Matrix* Get_UpdatedStateEstimate(KalmanFilter *k_filter) {
         Multiply_Matrices(k_filter->kalmanGainMatrix, k_filter->innovation));
 }
 
-static Matrix* Set_InitialCovariance(KalmanFilter *k_filter) {
-
-
-}
 
 
 /*
  * 			TO-DO
  * 			-----
- *  - Add timestep loop to kalman filter
+ *  - Initializa P, Q and R
  *
- *  - Init Function
+ *  - Add timestep loop to kalman filter 
  *  
  *  - Test Code
  *  */

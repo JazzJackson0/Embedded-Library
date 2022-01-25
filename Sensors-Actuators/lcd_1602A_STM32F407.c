@@ -5,19 +5,12 @@
 // Static Prototypes------------------------------------------------
 static void LCD_DataOut(int num);
 static void LCD_SendNum(int num);
+static void msDelay(int delay);
 
 // Global Variables------------------------------------------------
-LCD_Cntrl *const lcdCntrl = ADDR_LCD_CNTRL;
-LCD_Data_Out *const lcdData = ADDR_LCD_DATA;
+LCD_Cntrl *const LCDCtrl = ADDR_LCD_CNTRL;
+LCD_Data_Out *const LCDData = ADDR_LCD_DATA;
 
-
-static void msDelay(int delay) {
-	
-	for (; delay > 0; delay--) {
-
-		for (int i = 0; i < 3195; i++);
-	}
-}
 
 void LCD_Init(void) {
 	
@@ -38,40 +31,34 @@ void LCD_Init(void) {
 
 void LCD_Instruct(uint8_t instruct) {
 	
-	lcdCntrl->instructionMode = 1;
-	//lcdCntrl->write = 1; Pin being pulled to GND, so no need.
-	lcdData->data = instruct;
-	lcdCntrl->chipEnable = 1;
+	LCDCtrl->instructionMode = 1;
+	//LCDCtrl->write = 1; Pin being pulled to GND, so no need.
+	LCDData->data = instruct;
+	LCDCtrl->chipEnable = 1;
 	msDelay(0);
-	lcdCntrl->chipDisable = 1;
+	LCDCtrl->chipDisable = 1;
 }
 
 void LCD_Display(uint16_t data) {
 	
 	//char warning[] = "OOR";
 	data = (int) data;	
-	lcdCntrl->dataMode = 1;
+	LCDCtrl->dataMode = 1;
 	
 	if (data == 0) {
-
-		//lcdData->data = warning[0];
+		//LCDData->data = warning[0];
 		LCD_DataOut(0);
 	}
 
 	else { LCD_DataOut(data); }
-
 	//Add centimeter value.
 }
 
 // Helper Functions------------------------------------------------------------------------------------------
-
 static void LCD_DataOut(int num) {
 	
 	int stack[4];
-	if (num < 10) {
-
-		LCD_SendNum(num);
-	}
+	if (num < 10) { LCD_SendNum(num); }
 
 	else {
 		int stack_size = 0;
@@ -97,10 +84,14 @@ static void LCD_DataOut(int num) {
 static void LCD_SendNum(int num) {
 	
 	num = num + 48;
-	lcdData->data = num;
-	lcdCntrl->chipEnable = 1;
+	LCDData->data = num;
+	LCDCtrl->chipEnable = 1;
 	msDelay(1);
-	lcdCntrl->chipDisable = 1;
+	LCDCtrl->chipDisable = 1;
+}
+
+static void msDelay(int delay) {
+	for (; delay > 0; delay--) { for (int i = 0; i < 3195; i++); }
 }
 
 

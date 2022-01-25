@@ -19,9 +19,9 @@ iirFilter* iir_Init(int feedBackNum, double *feedBack_coefs,
  * 
  * @param filter 
  * @param newSample 
- * @return ** iirFilter* 
+ * @return ** void 
  */
-iirFilter* IIRCalculator(iirFilter *filter, double newSample);
+void IIRCalculator(iirFilter *filter, double newSample);
 
 //Structs
 struct iir {

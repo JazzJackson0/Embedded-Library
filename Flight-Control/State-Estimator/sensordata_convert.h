@@ -1,40 +1,81 @@
 #ifndef SENSORDATA_CONVERT_H
 #define SENSORDATA_CONVERT_H
 
-typedef struct _imu IMU_Data;
+typedef struct _sens Sensor_Reading;
 typedef struct r_angles RotationAngles;
 
 //DECLARATIONS
 /**
- * @brief Will convert Accelerometer units to Mps^2 if not already.
- *		  Will convert Gyroscope units to DPS if not already.
- *
- *		  Pre-Conditions: 
- *			+ Accelerometer Readings in g-units or mps^2
- *			+ Gyroscpe Readings in dps or rps
- *
- *		  Conversion Info:
- *			+ 1 (m/s)^2 = 0.10197162129779 g-unit (G-force).
- *			+ 1 dps is equal to 0.017448352875489 rps = radians per sec??????????????????????? 
- *				????????????????SHOHULD BE REVOLUTIONS/ROTATIONS PER SEC (AKA: HZ)
+ * @brief Updates a Sensor_Reading struct with 
+ * 			data converted from G-Force Units to mps^2
  * 
- * @param accelUnitType Unit type of the data accelerometer data being passed to the function
- * @param gyroUnitType Unit type of the data gyroscope data being passed to the function
- * @param data 
- * @return ** IMU_Data* 
+ * 
+ * @param sensReadings 
+ * @param x 
+ * @param y 
+ * @param z 
+ * @return ** void 
  */
-IMU_Data* Get_Reading(char* accelUnitType, char* gyroUnitType, double *data);
+void Convert_GUnitToMps2(Sensor_Reading* sensReadings, double x, double y, double z);
+
+/**
+ * @brief Updates a Sensor_Reading struct with 
+ * 			data converted from rotations-per-sec to degrees-per-sec
+ * 
+ * @param sensReadings 
+ * @param x 
+ * @param y 
+ * @param z 
+ * @return ** void 
+ */
+void Convert_RpsToDps(Sensor_Reading* sensReadings, double x, double y, double z);
+
+/**
+ * @brief Updates a Sensor_Reading struct with mps^2 data.
+ * 			Can be used if data is in mps^2 units and so does not need
+ * 			to be converted.
+ * 
+ * @param Readings 
+ * @param Ax 
+ * @param Ay 
+ * @param Az 
+ * @return ** void 
+ */
+void SensorReadingMpsUpdate(Sensor_Reading *Readings, double Ax, double Ay, double Az);
+
+/**
+ * @brief Updates a Sensor_Reading struct with dps data.
+ * 			Can be used if data is in dps units and so does not need
+ * 			to be converted.
+ * 
+ * @param Readings 
+ * @param Gx 
+ * @param Gy 
+ * @param Gz 
+ * @return ** void 
+ */
+void SensorReadingDpsUpdate(Sensor_Reading *Readings, double Gx, double Gy, double Gz);
+
+/**
+ * @brief Returns a zero-initialized RotationAngles struct
+ * 
+ * @return ** RotationAngles* 
+ */
+RotationAngles* RotationAnglesInit(void);
+
 /**
  * @brief Converts the msp^2 and dsp units to rotation angles.
  * 
- * @param reading 
+ * @param rotations
+ * @param readings 
  * @param sample_period 
- * @return ** RotationAngles* 
+ * @return ** void
  */
-RotationAngles* Get_AngularRotations(IMU_Data *reading, float sample_period);
+void Get_AngularRotations(RotationAngles *rotations, Sensor_Reading *readings, 
+	float sample_period);
 
 //Structs
-struct _imu{
+struct _sens{
 	double Ax_mps2;
 	double Ay_mps2;
 	double Az_mps2;

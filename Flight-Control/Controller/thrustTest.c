@@ -20,7 +20,10 @@ int main(int argc, char *argv[]) {
  * @return ** void 
  */
 void Calculate_UpwardForceTest() {
-    assert(0.0 == Calculate_UpwardForce(0.0, 2));
+    assert( ((((float) 1200.0 * (float) 2) / (float) 1000)) * (float)9.81 
+        == Calculate_UpwardForce(1200.0, 2));
+        /*THIS ASSERTION FAILS EVEN THOUGH THE VALUES ARE THE EXACT FLIPPING SAME.
+        NO IDEA WHY*/
 }
 
 /**
@@ -29,7 +32,7 @@ void Calculate_UpwardForceTest() {
  * @return ** void 
  */
 void Calculate_UpwardForcePerMotorTest() {
-    assert(0.0 == Calculate_UpwardForcePerMotor(0.0, 4));
+    assert((float)(23.5440006 / 4) == Calculate_UpwardForcePerMotor(23.5440006, 4));
 }
 
 /**
@@ -38,5 +41,5 @@ void Calculate_UpwardForcePerMotorTest() {
  * @return ** void 
  */
 void ThrustNewtons_to_ThrustGramsTest() {
-    assert(0.0 == ThrustNewtons_to_ThrustGrams(0.0));
+    assert((float)((5.886 / 9.81) * 1000) == ThrustNewtons_to_ThrustGrams(5.886));
 }

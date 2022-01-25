@@ -46,12 +46,12 @@ void iir_InitTest() {
  */
 void IIRCalculatorTest() {
     iir = iir_Init(2, fBack_coefs, 2, fForward_coefs); 
-    iirFilter *iirNew;
-    iirNew = IIRCalculator(iir, 35.0);
+    IIRCalculator(iir, 35.0);
 
-    assert(0.0 == iirNew->filteredOutputs[0]);
-    assert(1 == iirNew->feedBackPosition);
-    assert(1 == iirNew->feedForwardPosition);
+    assert((35.0 * 4.0) + (0.0 * 4.9) + (0.0 * 12.0) + (0.0 * 20.0) 
+        == iir->filteredOutputs[0]);
+    assert(1 == iir->feedBackPosition);
+    assert(1 == iir->feedForwardPosition);
 }
 
 /**
@@ -61,20 +61,24 @@ void IIRCalculatorTest() {
  */
 void IIRCalculatorTest2() {
     iir = iir_Init(2, fBack_coefs, 2, fForward_coefs); 
-    iirFilter *iirNew;
-    iirNew = IIRCalculator(iir, 35.0);
+    IIRCalculator(iir, 35.0);
 
-    assert(0.0 == iirNew->filteredOutputs[0]);
-    assert(1 == iirNew->feedBackPosition);
-    assert(1 == iirNew->feedForwardPosition);
-    iirNew = IIRCalculator(iirNew, 44.0);
+    assert((35.0 * 4.0) + (0.0 * 4.9) + (0.0 * 12.0) + (0.0 * 20.0) 
+        == iir->filteredOutputs[0]);
+    assert(1 == iir->feedBackPosition);
+    assert(1 == iir->feedForwardPosition);
+    IIRCalculator(iir, 44.0);
 
-    assert(0.0 == iirNew->filteredOutputs[1]);
-    assert(2 == iirNew->feedBackPosition);
-    assert(2 == iirNew->feedForwardPosition);
-    iirNew = IIRCalculator(iirNew, 7.0);
+    assert((35.0 * 4.0) + (44.0 * 4.9) + (140.0 * 12.0) + (0.0 * 20.0) 
+        == iir->filteredOutputs[1]);
+    assert(2 == iir->feedBackPosition);
+    assert(2 == iir->feedForwardPosition);
+    IIRCalculator(iir, 7.0);
 
-    assert(0.0 == iirNew->filteredOutputs[0]);
-    assert(0 == iirNew->feedBackPosition);
-    assert(0 == iirNew->feedForwardPosition);
+    double t1 = (7.0 * 4.0) + (44.0 * 4.9) + (140.0 * 12.0) + (2035.6 * 20.0) ;
+    double t2 = iir->filteredOutputs[0];
+    assert((7.0 * 4.0) + (44.0 * 4.9) + (140.0 * 12.0) + (2035.6 * 20.0) 
+        == iir->filteredOutputs[0]);
+    assert(1 == iir->feedBackPosition);
+    assert(1 == iir->feedForwardPosition);
 }

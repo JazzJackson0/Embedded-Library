@@ -6,6 +6,15 @@ typedef struct matrix Matrix;
 /**
  * @brief 
  * 
+ * @param rows 
+ * @param columns 
+ * @return ** Matrix* 
+ */
+Matrix* MatrixInit(int rows, int columns);
+
+/**
+ * @brief 
+ * 
  * @param m1 
  * @param m2 
  * @return ** Matrix* 

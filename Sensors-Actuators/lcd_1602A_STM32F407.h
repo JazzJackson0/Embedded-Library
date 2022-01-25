@@ -1,4 +1,6 @@
-//For use with the STM32F407. Can be tweaked to fit other microcontrollers.
+/*For use with the STM32F407. 
+Can be tweaked to fit other microcontrollers.
+...probably.*/
 #ifndef LCD_1602A_H_
 #define LCD_1602A_H_
 
@@ -26,7 +28,7 @@ void LCD_Instruct(uint8_t instruct);
  */
 void LCD_Display(uint16_t data);
 
-
+//LCD
 #define ADDR_LCD_CNTRL ( (LCD_Cntrl*) 0X40021018 ) //GPIOE_BSRR
 #define ADDR_LCD_DATA ( (LCD_Data_Out*) 0X40020C14 )
 
@@ -63,8 +65,8 @@ void LCD_Display(uint16_t data);
 #define CLEAR_DISPLAY 0x01
 #define RETURN_CURSOR_HOME 0x02
 
+//Structs-----------------------------------------------------
 typedef struct {
-	
 	volatile uint32_t dataMode:1;
 	volatile uint32_t read:1;
 	volatile uint32_t chipEnable:1;
@@ -73,15 +75,12 @@ typedef struct {
 	volatile uint32_t write:1;
 	volatile uint32_t chipDisable:1;
 	const uint32_t reserved1:13;
-	
 }LCD_Cntrl;
 
 
 typedef struct {
-	
 	volatile uint32_t data:8;
 	const uint32_t reserved:24;
-
 }LCD_Data_Out;
 
 

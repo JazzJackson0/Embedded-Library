@@ -39,11 +39,10 @@ void fir_InitTest() {
  */
 void FIRCalculatorTest() {
     fir = fir_Init(2, coefs);
-    firFilter *firNew;
-    firNew = FIRCalculator(fir, 49.0);
+    FIRCalculator(fir, 49.0);
 
-    assert(0.0 == firNew->filteredOutputs[0]);
-    assert(1 == firNew->currentPosition);
+    assert((49.0 * 5.0) + (0.0 * 6.0) == fir->filteredOutputs[0]);
+    assert(1 == fir->currentPosition);
 }
 
 /**
@@ -53,17 +52,16 @@ void FIRCalculatorTest() {
  */
 void FIRCalculatorTest2() {
     fir = fir_Init(2, coefs);
-    firFilter *firNew;
-    firNew = FIRCalculator(fir, 49.0);
+    FIRCalculator(fir, 49.0);
 
-    assert(0.0 == firNew->filteredOutputs[0]);
-    assert(1 == firNew->currentPosition);
-    firNew = FIRCalculator(firNew, 37.0);
+    assert((49.0 * 5.0) + (0.0 * 6.0) == fir->filteredOutputs[0]);
+    assert(1 == fir->currentPosition);
+    FIRCalculator(fir, 37.0);
 
-    assert(0.0 == firNew->filteredOutputs[1]);
-    assert(2 == firNew->currentPosition);
-    firNew = FIRCalculator(firNew, 23.0);
+    assert((49.0 * 5.0) + (37.0 * 6.0) == fir->filteredOutputs[1]);
+    assert(2 == fir->currentPosition);
+    FIRCalculator(fir, 23.0);
 
-    assert(0.0 == firNew->filteredOutputs[0]);
-    assert(0 == firNew->currentPosition);
+    assert((23.0 * 5.0) + (37.0 * 6.0) == fir->filteredOutputs[0]);
+    assert(1 == fir->currentPosition);
 }

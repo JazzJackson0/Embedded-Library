@@ -16,9 +16,9 @@ firFilter* fir_Init(int tapSize, double *coefficients);
  * 
  * @param filter 
  * @param newSample 
- * @return ** firFilter* 
+ * @return ** void 
  */
-firFilter* FIRCalculator(firFilter *filter, double newSample);
+void FIRCalculator(firFilter *filter, double newSample);
 
 //Structs
 struct fir {

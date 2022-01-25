@@ -21,7 +21,7 @@
  *      (2.1Kg * acceleration due to gravity)
  *              = 20.601N Upward Force
  * 
- * @param droneMass 
+ * @param droneMass Mass of the drone in grams
  * @param thrustRatio The "thrust" portion of the thrust-to-weight ratio
  * @return ** float: Upward force in Newtons.
  */

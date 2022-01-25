@@ -1,4 +1,5 @@
 #include <math.h>
+#include <stdlib.h>
 #include "FFT.h"
 #include "../Logic/complex_nums.h"
 
@@ -14,23 +15,29 @@ static int bitReverse(int num, unsigned int numOfBits);
 K_Values* radix2_FFT(float sample_frequency, int resolution, double *sample_vals) {
 
     complexNum *sample_values = ValuetoComplexNum(sample_vals, (int) sample_frequency);
+    
     float x = ((float) sample_frequency / resolution);
     float benchmark = x * sample_frequency;
     int tapSize = get_closest_powerOf2(benchmark);
     int M_stages = log10(tapSize) / log10(2);
     int upperK_Index;
-    K_Values *k_vals;
+
+    // k_vals will hold the output values
+    K_Values *k_vals = malloc(sizeof(K_Values));
     k_vals->numOfValues = (int) sample_frequency;
+    k_vals->lower = calloc(k_vals->numOfValues, sizeof(complexNum));
+    k_vals->upper = calloc(k_vals->numOfValues, sizeof(complexNum));
+
     complexNum Wn;
-    complexNum *upperK;
-    complexNum *lowerK;
-    complexNum *Evens;
-    complexNum *Odds;
+    complexNum *upperK = malloc(sizeof(complexNum));
+    complexNum *lowerK = malloc(sizeof(complexNum));
+    complexNum *Evens = malloc(sizeof(complexNum));
+    complexNum *Odds = malloc(sizeof(complexNum));
     complexNum twiddleXOdds;
 
     // Reverse Bits
     unsigned int N = (unsigned int) tapSize;
-    complexNum *temp_values;
+    complexNum *temp_values = malloc(sizeof(complexNum));
 
     for (int i = 0; i < N; i++) {
 
@@ -45,10 +52,11 @@ K_Values* radix2_FFT(float sample_frequency, int resolution, double *sample_vals
         
     }
     
-    temp_values = 0;
+    free(temp_values);
+    temp_values = ((void*)0);
     
     
-
+    // Calculation
     for (int m = 1; m <= M_stages; m++) {
 
         int n_Point_DFT = (int) pow(2, m);
@@ -98,6 +106,15 @@ K_Values* radix2_FFT(float sample_frequency, int resolution, double *sample_vals
 
     k_vals->lower = lowerK;
     k_vals->upper = upperK;
+
+    free(upperK);
+    free(lowerK);
+    free(Evens);
+    free(Odds);
+    upperK = ((void*)0);
+    lowerK = ((void*)0);
+    Evens = ((void*)0);
+    Odds = ((void*)0);
 
     return k_vals;
 

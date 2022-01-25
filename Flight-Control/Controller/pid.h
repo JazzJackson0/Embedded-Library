@@ -17,9 +17,9 @@ PIDController* PID_Init(void);
  * @param PID 
  * @param set_point 
  * @param current_measurement 
- * @return ** PIDController* 
+ * @return ** void 
  */
-PIDController* PID_Update(PIDController *PID, double set_point, double current_measurement);
+void PID_Update(PIDController *PID, double set_point, double current_measurement);
 /**
  * @brief 
  * 

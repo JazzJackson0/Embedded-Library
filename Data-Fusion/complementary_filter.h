@@ -11,9 +11,9 @@ typedef struct f_angles filteredAngles;
  * @param rotations 
  * @param gyroWeight 
  * @param accelWeight 
- * @return ** filteredAngles* 
+ * @return ** void* 
  */
-filteredAngles* complementary_filter(filteredAngles* angles, RotationAngles* rotations, float gyroWeight, float accelWeight);
+void complementary_filter(filteredAngles* angles, RotationAngles* rotations, float gyroWeight, float accelWeight);
 
 
 //Structs

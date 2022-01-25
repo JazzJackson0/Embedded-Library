@@ -2,8 +2,25 @@
 #include "../Logic/matrix_math.h"
 
 typedef struct kalman KalmanFilter;
+typedef struct dimensions Matrix_Dimensions;
 
 //DECLARATIONS
+
+/**
+ * @brief 
+ * 
+ * @param initialState Takes an array of Initial State Values
+ * @param stateTransMatrix Takes the address of a 2D array of State Trans Matrix values.
+ * @param inputMatrix Takes the address of a 2D array of Input Matrix values.
+ * @param stateVars_n Number of state variables
+ * @param inputs_p Number of Inputs
+ * @param outputs_m Number of Outputs
+ * @return ** KalmanFilter* 
+ */
+KalmanFilter* KalmanInit(double* initialState, double* stateTransMatrix, double* inputMatrix, 
+    int stateVars_n, int inputs_p, int outputs_m);
+
+    
 /**
  * @brief 
  * 
@@ -11,6 +28,7 @@ typedef struct kalman KalmanFilter;
  * @return ** KalmanFilter* 
  */
 KalmanFilter* kalman_filter(KalmanFilter *k_filter);
+
 
 //Structs
 struct kalman {

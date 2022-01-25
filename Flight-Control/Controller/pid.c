@@ -12,7 +12,7 @@ PIDController* PID_Init(void) {
 	return PID;
 }
 
-PIDController* PID_Update(PIDController *PID, double set_point, double current_measurement) {
+void PID_Update(PIDController *PID, double set_point, double current_measurement) {
 	
 	if (!PID->inAutoMode) return (void*) 0;
 	
@@ -42,8 +42,6 @@ PIDController* PID_Update(PIDController *PID, double set_point, double current_m
 		PID->previous_measurement = current_measurement;
 		PID->previous_time = current_time;
 	}
-	
-	return PID;
 }
 
 void Set_Tuning_Parameters(PIDController *PID, double kp, double ki, double kd) {

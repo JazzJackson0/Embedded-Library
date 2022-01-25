@@ -1,10 +1,11 @@
 #include "complex_nums.h"
 #include <math.h>
+#include <stdlib.h>
 
 
 complexNum* Get_SinusoidalBasis(double angle) {
 
-    complexNum *result;
+    complexNum *result = malloc(sizeof(complexNum));
 
     result->realPart = cos(angle);
     result->imaginaryPart = -sin(angle);
@@ -34,7 +35,7 @@ complexNum* Set_Z(double angle, double magnitude_r, int n) {
 
 complexNum* ValuetoComplexNum(double *realValues, int numOfValues) {
 
-    complexNum *cNum;
+    complexNum *cNum = malloc(numOfValues * sizeof(complexNum));
     for (int i = 0; i < numOfValues; i++) {
         cNum[i].realPart = realValues[i];
         cNum[i].imaginaryPart = 0.0;
@@ -44,5 +45,13 @@ complexNum* ValuetoComplexNum(double *realValues, int numOfValues) {
 }
 
 
-
+/*
+ * 			TO-DO
+ * 			-----
+ *  - 
+ *
+ *  - 
+ *  
+ *  - 
+ *  */
 

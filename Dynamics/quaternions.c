@@ -1,10 +1,12 @@
 #include "quaternions.h"
 #include <math.h>
+#include <stdlib.h>
 
+const double degree2Rad = 3.141592 / 180;
 
 Quaternion* MultiplyQuaternions(Quaternion *q, Quaternion *p) {
 
-    Quaternion *r;
+    Quaternion *r = malloc(sizeof(Quaternion));
     r->q0 = ((q->q0 * p->q0) - (q->q1 * p->q1) - (q->q2 * p->q2) - (q->q3 * p->q3));
     r->q1 = ((q->q0 * p->q1) - (q->q1 * p->q0) - (q->q2 * p->q3) - (q->q3 * p->q2));
     r->q2 = ((q->q0 * p->q2) - (q->q1 * p->q3) - (q->q2 * p->q0) - (q->q3 * p->q1));
@@ -22,7 +24,7 @@ Quaternion* DivideQuaternions(Quaternion *q, Quaternion *p) {
 
 Quaternion* Rotate_Vector(double *vector, Quaternion *q) {
 
-    Quaternion *P;
+    Quaternion *P = malloc(sizeof(Quaternion));
     P->q0 = vector[0];
     P->q1 = vector[1];
     P->q2 = vector[2];
@@ -33,20 +35,21 @@ Quaternion* Rotate_Vector(double *vector, Quaternion *q) {
 
 Quaternion* RotateByAngle(Quaternion *q, double angle) {
 
-    double sinCalculation = sin( angle / 2 );
+    Quaternion *r = malloc(sizeof(Quaternion));
+    double sinCalculation = sin( (angle / 2) * degree2Rad);
 
-    q->q0 = cos(angle / 2);
-    q->q1 *= sinCalculation;
-    q->q2 *= sinCalculation;
-    q->q2 *= sinCalculation;
+    r->q0 = cos((angle / 2) * degree2Rad);
+    r->q1 = q->q1 * sinCalculation;
+    r->q2 = q->q2 * sinCalculation;
+    r->q3 = q->q3 * sinCalculation;
 
-    return q;
+    return r;
 }
 
 
 Quaternion* NormalizeQuaternion(Quaternion *q) {
 
-    Quaternion *r;
+    Quaternion *r = malloc(sizeof(Quaternion));
     double error = 1 - Get_QuaternionLength(q);
     double denominator = sqrt((1 - error));
 
@@ -77,11 +80,13 @@ Quaternion* Get_QuaternionInverse(Quaternion *q) {
 
 Quaternion* Get_QuaternionConjugate(Quaternion *q) {
 
-    q->q1 *= -1;
-    q->q2 *= -1;
-    q->q3 *= -1;
+    Quaternion *r = malloc(sizeof(Quaternion));
+    r->q0 = q->q0;
+    r->q1 = q->q1 * -1.0;
+    r->q2 = q->q2 * -1.0;
+    r->q3 = q->q3 * -1.0;
 
-    return q;
+    return r;
 }
 
 
@@ -90,7 +95,7 @@ Quaternion* Get_QuaternionConjugate(Quaternion *q) {
 /*
  * 			TO-DO
  * 			-----
- *  - Test Code
+ *  - 
  *
  *  - 
  *  

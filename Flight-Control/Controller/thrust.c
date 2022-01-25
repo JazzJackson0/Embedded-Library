@@ -8,14 +8,13 @@
 
 //Globals--------------------------------------------------------------------------------------
 const float accel_grav = 9.81;
-const float drone_mass = 700; //g
 
 //Functions------------------------------------------------------------------------------------
 
 float Calculate_UpwardForce(float droneMass, uint8_t thrustRatio) {
 	
 	//Returns Newtons
-	return ((droneMass * thrustRatio) / 1000) * accel_grav; 
+	return (((droneMass * (float) thrustRatio) / (float) 1000)) * accel_grav; 
 }
 
 float Calculate_UpwardForcePerMotor(float upwardForce, uint8_t numOfMotors) {
@@ -28,3 +27,12 @@ float ThrustNewtons_to_ThrustGrams(float newtons) {
 	return (newtons / 9.81) * 1000;
 }
 
+/*
+ * 			TO-DO
+ * 			-----
+ *  - 
+ *
+ *  - 
+ *  
+ *  - 
+ *  */

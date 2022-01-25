@@ -29,12 +29,12 @@ int main(int argc, char *argv[]) {
 void Get_SinusoidalBasisTest() {
 
     assert(cos(30.0) == Get_SinusoidalBasis(30.0)->realPart);
-    assert(sin(30.0) == Get_SinusoidalBasis(30.0)->imaginaryPart);
+    assert(-sin(30.0) == Get_SinusoidalBasis(30.0)->imaginaryPart);
 }
 
 /**
  * @brief Testing when When n = 0
- *      The output should be the cos and sin of the input angle
+ *      The output should be the cos and -sin of the input angle
  *          divided by the magnitude (r) ^ 0.
  * 
  * @return ** void 
@@ -42,31 +42,31 @@ void Get_SinusoidalBasisTest() {
 void Set_ZTest_n0() {
 
     assert(cos(30.0) == Set_Z(30.0, 5.0, 0)->realPart);
-    assert(sin(30.0) == Set_Z(30.0, 5.0, 0)->imaginaryPart);
+    assert(-sin(30.0) == Set_Z(30.0, 5.0, 0)->imaginaryPart);
 }
 
 /**
  * @brief Testing when When n = 1
- *          The output should be the cos and sin of the input angle
+ *          The output should be the cos and -sin of the input angle
  *          divided by the magnitude (r) ^ 1.
  * @return ** void 
  */
 void Set_ZTest_n1() {
 
     assert((cos(30.0) / 5.0) == Set_Z(30.0, 5.0, 1)->realPart);
-    assert((sin(30.0) / 5.0) == Set_Z(30.0, 5.0, 1)->imaginaryPart);
+    assert((-sin(30.0) / 5.0) == Set_Z(30.0, 5.0, 1)->imaginaryPart);
 }
 
 /**
  * @brief Testing when When n > 1
- *          The output should be the cos and sin of the input angle
+ *          The output should be the cos and -sin of the input angle
  *          divided by the magnitude (r) ^ n.
  * @return ** void 
  */
 void Set_ZTest_n2() {
 
     assert((cos(30.0) / (5.0 * 5.0)) == Set_Z(30.0, 5.0, 2)->realPart);
-    assert((sin(30.0) / (5.0 * 5.0)) == Set_Z(30.0, 5.0, 2)->imaginaryPart);
+    assert((-sin(30.0) / (5.0 * 5.0)) == Set_Z(30.0, 5.0, 2)->imaginaryPart);
 }
 
 /**

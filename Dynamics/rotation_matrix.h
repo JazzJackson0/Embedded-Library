@@ -1,5 +1,6 @@
 #ifndef ROTATION_MATRIX_H
 #define ROTATION_MATRIX_H
+#include "../Logic/matrix_math.h"
 
 //DECLARATIONS
 /**
@@ -8,30 +9,30 @@
  * @param xRotation 
  * @param yRotation 
  * @param zRotation 
- * @return ** double** 
+ * @return ** Matrix* 
  */
-double** RotationMaster(double xRotation, double yRotation, double zRotation);
+Matrix* RotationMaster(double xRotation, double yRotation, double zRotation);
 /**
  * @brief 
  * 
  * @param rotationAngle 
- * @return ** double** 
+ * @return ** Matrix* 
  */
-double** RotateAroundX_Roll(double rotationAngle);
+Matrix* RotateAroundX_Roll(double rotationAngle);
 /**
  * @brief 
  * 
  * @param rotationAngle 
- * @return ** double** 
+ * @return ** Matrix* 
  */
-double** RotateAroundY_Pitch(double rotationAngle);
+Matrix* RotateAroundY_Pitch(double rotationAngle);
 /**
  * @brief 
  * 
  * @param rotationAngle 
- * @return ** double** 
+ * @return ** Matrix* 
  */
-double** RotateAroundZ_Yaw(double rotationAngle);
+Matrix* RotateAroundZ_Yaw(double rotationAngle);
 
 
 

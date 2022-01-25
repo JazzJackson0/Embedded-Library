@@ -54,7 +54,8 @@ void PID_InitTest() {
  * @return ** void 
  */
 void PID_UpdateTest() {
-    PIDController* pid = PID_Update(pid, 0.0, 0.0);
+    PIDController* pid = PID_Init();
+    PID_Update(pid, 0.0, 0.0);
     assert(0.0 == pid->proportional_gain);
     assert(0.0 == pid->integral_gain);
     assert(0.0 == pid->derivative_gain);

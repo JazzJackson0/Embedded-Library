@@ -17,9 +17,9 @@ int main(int argc, char *argv[]) {
  * @return ** void 
  */
 void Motor_MixTest() {
-    
-    assert(0.0 == Motor_Mix(0.0, 0.0, 0.0, 0.0)->front_Right);
-    assert(0.0 == Motor_Mix(0.0, 0.0, 0.0, 0.0)->front_Left);
-    assert(0.0 == Motor_Mix(0.0, 0.0, 0.0, 0.0)->back_Right);
-    assert(0.0 == Motor_Mix(0.0, 0.0, 0.0, 0.0)->back_Left);
+    _4Motors *Motor = Motor_Mix(100.0, 5.0, 20.0, 30.0);
+    assert(80.0 == Motor->front_Right);
+    assert(10.0 == Motor->front_Left);
+    assert(30.0 == Motor->back_Right);
+    assert(-20.0 == Motor->back_Left);
 }

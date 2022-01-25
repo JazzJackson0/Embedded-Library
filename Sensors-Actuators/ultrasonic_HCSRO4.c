@@ -1,31 +1,35 @@
 #include <stdint.h>
 #include "ultrasonic_HCSRO4.h"
 
+//Static Prototypes
+static void msDelay(int delay);
 
-void ultrasonicInit(void) {
+//------------
+void ultrasonicInit(char port, uint8_t pinNum, void (*pinOutFunc)(char, uint8_t, uint8_t)) {
 	
-	pinData->readData0_writeData1 = 1;
+	(*pinOutFunc)(port, pinNum, 1);
 	msDelay(0); //1 ms delay to init (10us is all that's really needed though)
 }
 
 
-uint8_t ultrasonicRead(void) {
+uint8_t ultrasonicRead(UltraSonicFuncs *functions, char outPort, uint8_t outPinNum, char inPort, 
+	uint8_t inPinNum, uint8_t timerNum) {
 	
-	pinData->readData0_writeData1 = 0; //Trig Low
+	functions->pinOutFunc(outPort, outPinNum, 0); // Trig Low
 	msDelay(0); //1ms Low Time (In place of 2us Low Time)
-	pinData->readData0_writeData1 = 1; //Trig High
+	functions->pinOutFunc(outPort, outPinNum, 1); // Trig High
 	msDelay(0); //1 ms pulse to start (10us is all that's really needed though)
-	pinData->readData0_writeData1 = 0; //Trig Low
+	functions->pinOutFunc(outPort, outPinNum, 0); // Trig Low
 	
-	outCompTimerStart(); //Start Measuring
-	while (pinData->readData0_writeData1 == 0);//Hold while Echo is Low
-	tim2ControlB->forceOutputCompareB = 1; //Stop Measuring
-	uint8_t measuredTime = tim2CountVal->rw_CounterValue;
-	
-	return measuredTime;
+	outCompTimerStart(); // HOW TO HANDLE TIMER START?
+
+	while (functions->getPinInFunc(inPort, inPinNum) == 0);// Hold while Echo is Low
+	return functions->stopTimeFunc(timerNum); //Currently only available for Arduino drivers
 }
 
-void msDelay(int delay) {
+
+//Helper Functions------------------------------------------------------------------------
+static void msDelay(int delay) {
 	
 	for (; delay > 0; delay--) {
 
@@ -37,7 +41,7 @@ void msDelay(int delay) {
 /*
  * 			TO-DO
  * 			-----
- *  - Remove old register struct references. Make more device agnostic.
+ *  - HOW TO HANDLE TIMER START? - line 25
  *
  *  - Test Code
  *  
