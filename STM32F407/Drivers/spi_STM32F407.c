@@ -152,6 +152,6 @@ static SPIx* Get_SPI(uint8_t spiNum) {
 		case 3:
 			return SPI3;
 		default:
-			return;
+			return ((void*)0);
 	}
 }

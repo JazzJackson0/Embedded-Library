@@ -184,7 +184,7 @@ static GEN_TIMER_2_5x* Get_Timer(uint8_t timerNum) {
 		case 5:
 			return TIM5;
 		default:
-			return;
+			return ((void*)0);
 	}
 }
 

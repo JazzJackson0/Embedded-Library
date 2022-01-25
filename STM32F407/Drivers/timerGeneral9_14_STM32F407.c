@@ -165,6 +165,6 @@ static GEN_TIMER_9_14x* Get_Timer(uint8_t timerNum) {
 		case 14:
 			return TIM14;
 		default:
-			return;
+			return ((void*)0);
 	}
 }

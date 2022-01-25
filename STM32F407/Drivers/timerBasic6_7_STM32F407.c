@@ -60,6 +60,6 @@ static BASIC_TIMx* Get_Timer(uint8_t timerNum) {
 		case 7:
 			return TIM7;
 		default:
-			return;
+			return ((void*)0);
 	}
 }

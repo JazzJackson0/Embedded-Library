@@ -157,7 +157,7 @@ static ADVANCED_TIMERx* Get_Timer(uint8_t timerNum) {
 		case 8:
 			return TIM8;
 		default:
-			return;
+			return ((void*)0);
 	}
 }
 

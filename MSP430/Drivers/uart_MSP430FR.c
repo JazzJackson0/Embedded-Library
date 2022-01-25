@@ -113,6 +113,6 @@ static UARTx* Get_UART(char *uartNum) {
 
 	if (uartNum == "A0") { return UART_A0; }
 	else if (uartNum == "A1") { return UART_A1; }
-	return;
+	return NULL;
 }
 

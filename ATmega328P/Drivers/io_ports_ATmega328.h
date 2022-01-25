@@ -32,7 +32,7 @@ uint8_t Pin_GetInput(char port, uint8_t pinNum);
  * @param pinState 
  * @return ** void 
  */
-void Pin_Out(char port, uint8_t pinNum, E_PinDirection pinState);
+void Pin_Out(char port, uint8_t pinNum, uint8_t pinState);
 /**
  * @brief 
  * 

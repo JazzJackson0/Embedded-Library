@@ -14,7 +14,7 @@
  * @param dmaNum 
  * @return ** void 
  */
-void DMA_Init(int dmaNum);
+void DMA_Init(uint8_t dmaNum);
 
 //CLOCK
 #define CLOCK 0x40023800

@@ -295,7 +295,7 @@ uint8_t Pin_GetInput(char port, uint8_t pinNum) {
 		case 15 :
 			return Port->InputReg.read_Pin15;
 		default :
-			return 42;
+			return 0;
 	}
 }
 
@@ -498,7 +498,7 @@ static GPIOx* Get_Port(char port) {
 		case 'I':
 			return I;
 		default:
-			return;
+			return ((void*)0);
 	}
 }
 

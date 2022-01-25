@@ -168,11 +168,11 @@ void Get_Date(char rtcID) {
 			uint8_t year3 = RTC->YearReg.BCD.rw_Decade;
 			uint8_t year2 = RTC->YearReg.BCD.rw_CenturyLowDigit;
 			uint8_t year1 = RTC->YearReg.BCD.rw_CenturyHighDigit;
-			char *weekString;
+			char **weekString = ((void*)0);
 			
-			char* weekList[] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+			char weekList[][9] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 			for (int i = 0; i < 7; i++) {
-				if (i == weekday) { *weekString = weekList[i]; }
+				if (i == weekday) { weekString = (char**)(weekList + i); }
 			}
 			//printf("%s: %u%u/%u%u/%u%u%u%u", weekString, month1, month2, date1, date2, year1, year2, year3, year4 );
 		}
@@ -191,11 +191,11 @@ void Get_Date(char rtcID) {
 			uint8_t year3 = RTC->YearReg.BCD.rw_Decade;
 			uint8_t year2 = RTC->YearReg.BCD.rw_CenturyLowDigit;
 			uint8_t year1 = RTC->YearReg.BCD.rw_CenturyHighDigit;
-			char *weekString;
+			char **weekString = ((void*)0);
 			
-			char* weekList[] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+			char weekList[][9] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 			for (int i = 0; i < 7; i++) {
-				if (i == weekday) { *weekString = weekList[i]; }
+				if (i == weekday) { weekString = (char**)(weekList + i); }
 			}
 			//printf("%s: %u%u/%u%u/%u%u%u%u", weekString, month1, month2, date1, date2, year1, year2, year3, year4 );
 		}

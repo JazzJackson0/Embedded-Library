@@ -127,7 +127,7 @@ static I2Cx* Get_I2C(uint8_t i2cNum) {
 		case 3:
 			return I2C3;
 		default:
-			return;
+			return ((void*)0);
 	}
 }
 

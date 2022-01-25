@@ -176,6 +176,6 @@ static TIMERAx* Get_TimerA(char* timerID) {
 	else if (timerID == "A1") { return Tim_A1; }
 	else if (timerID == "A2") { return Tim_A2; }
 	else if (timerID == "A3") { return Tim_A3; }
-	return;
+	return NULL;
 }
 

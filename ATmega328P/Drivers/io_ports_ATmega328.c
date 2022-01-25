@@ -2,7 +2,7 @@
 #include "io_ports_ATmega328.h"
 
 //Static Prototypes----------------------------------------------------------------
-PORTx* static Get_Port(char port);
+static PORTx* Get_Port(char port);
 
 //Global Variables-----------------------------------------------------------------
 MCU_CONTROL_PORTS *const ControlPorts = ADDR_MCU_CONTROL_PORTS;
@@ -74,7 +74,7 @@ uint8_t Pin_GetInput(char port, uint8_t pinNum) {
 	}
 }
 
-void Pin_Out(char port, uint8_t pinNum, E_PinDirection pinState) {
+void Pin_Out(char port, uint8_t pinNum, uint8_t pinState) {
 	
 	PORTx *const PORT = Get_Port(port);
 	switch (pinNum) {
@@ -143,17 +143,17 @@ void Pin_Toggle(char port, uint8_t pinNum) {
 }
 
 //Helper Functions--------------------------------------------------------------------------
-PORTx* static Get_Port(char port) {
+static PORTx* Get_Port(char port) {
 
-	swicth (port) {
+	switch (port) {
 		case 'B' :
 			return PORTB;
 		case 'C' :
 			return PORTC;
 		case 'D' :
 			return PORTD;
-		default:
-			return;
+		default :
+			return ((void*)0);
 	}
 }
 

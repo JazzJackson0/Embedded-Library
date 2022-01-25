@@ -170,7 +170,7 @@ static USARTx* Get_USART(uint8_t usartNum) {
 		case 6:
 			return USART6;
 		default:
-			return;
+			return ((void*)0);
 	}
 }
 

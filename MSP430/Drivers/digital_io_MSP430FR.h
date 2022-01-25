@@ -4,6 +4,7 @@
 //x69 Series only uses Ports 1,2,3,4 & J
 
 #include <stdint.h>
+#define NULL ((void*)0)
 
 typedef enum _PinType E_PinType;
 typedef enum _FunctionType E_FunctionType;

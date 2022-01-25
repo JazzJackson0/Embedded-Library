@@ -40,6 +40,6 @@ static DMAx* Get_DMA(uint8_t dmaNum) {
 		case 2:
 			return DMA2;
 		default:
-			return;
+			return ((void*)0);
 	}
 }

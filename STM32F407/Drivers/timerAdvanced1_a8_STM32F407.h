@@ -356,7 +356,7 @@ struct _advanced_timer {
 	TIM1_A8_COUNTER CounterReg; // 0x24
 	TIM1_A8_PRESCALER PrescalerReg; // 0x28
 	TIM1_A8_AUTORELOAD AutoReloadReg; // 0x2C
-	REPETITION_COUNTER CounterReg; // 0x30
+	REPETITION_COUNTER RepititionCounterReg; // 0x30
 	TIM1_A8_CAPTURECOMPx CaptureComp1Reg; // 0x34
 	TIM1_A8_CAPTURECOMPx CaptureComp2Reg; // 0x38
 	TIM1_A8_CAPTURECOMPx CaptureComp3Reg; // 0x3C

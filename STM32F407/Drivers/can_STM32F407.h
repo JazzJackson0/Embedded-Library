@@ -103,6 +103,19 @@ typedef union _filterBanks FILTER_BANKSx;
 #define ADDR_CAN2_MAIL_FILTERS ( (MAIL_FILTERSx*) ((CAN_BASE) + (0x800 + 0x180)) )
 #define ADDR_CAN2_FILTERBANKS ( (FILTER_BANKSx*) ((CAN_BASE) + (0x400 + 0x2B0) ) )
 
+//Enums----------------------------------------------------------------------
+
+//CAN_FILTER_SCALE
+enum _FilterSize {
+	_16BIT_CAN = 0, _32BIT_CAN = 1
+};
+
+//CAN_FILTER_MODE
+enum _FilterMode {
+	MASK_MODE = 0, LIST_MODE = 1
+};
+
+//Structs----------------------------------------------------------------------
 //Filter 
 struct _filter{
 	uint8_t filterNum;
@@ -140,18 +153,6 @@ union _Data {
 #define CRC_ERROR 0x06
 #define SETBY_SOFTWARE 0x07
 
-
-//Enums----------------------------------------------------------------------
-
-//CAN_FILTER_SCALE
-enum _FilterSize {
-	_16BIT_CAN = 0, _32BIT_CAN = 1
-};
-
-//CAN_FILTER_MODE
-enum _FilterMode {
-	MASK_MODE = 0, LIST_MODE = 1
-};
 
 
 //Clock Register-------------------------------------------------------------

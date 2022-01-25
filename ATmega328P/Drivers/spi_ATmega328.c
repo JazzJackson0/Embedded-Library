@@ -1,7 +1,5 @@
 #include <stdint.h>
 #include "spi_ATmega328.h"
-#include "io_ports_ATmega328.h"
-#include "timer_counter_ATmega328.h"
 
 //Global Variables-------------------------------------------------------
 //SPI

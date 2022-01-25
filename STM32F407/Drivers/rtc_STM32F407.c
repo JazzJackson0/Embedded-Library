@@ -62,7 +62,7 @@ void Get_Time(void) {
 	uint8_t hour1 = RTC->TimeReg.rw_HourTens;
 	uint8_t amPm = RTC->TimeReg.amOr24Hour0_pm1;
 	
-	char *hour12 = NULL;
+	char *hour12 = ((void*)0);
 	char pm[] = "PM";
 	char am[] = "AM";
 	hour12 = (amPm == 1) ? pm : am;

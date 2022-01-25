@@ -3,7 +3,7 @@
 #include "can_STM32F407.h"
 #include "gpio_STM32F407.h"
 
-//Static Prototypes----------------------------------------------------
+//Static Prototypes------------------------------------------------------
 static void CAN_PinInit(uint8_t canNum);
 static CANx* Get_CAN(uint8_t canNum);
 static MAIL_FILTERSx* Get_MailBoxANDFilters(uint8_t canNum);
@@ -198,7 +198,7 @@ uint8_t CAN_Transmit(uint8_t canNum, uint8_t mailboxNum, uint8_t *dataBuffer, ui
 			}
 		}
 
-		else { return; }
+		else { return 0; }
 	}
 	
 	switch (mailboxNum) {
@@ -251,7 +251,7 @@ Received_Data* CAN_Receive(uint8_t canNum, uint8_t mailboxNum, uint8_t numOfByte
 				}
 			}
 		}
-		else { return; }
+		else { return ((void*)0); }
 	}
 	return R_Data;
 }
@@ -296,7 +296,7 @@ static CANx* Get_CAN(uint8_t canNum) {
 		case 2:
 			return CAN2;
 		default:
-			return;
+			return ((void*)0);
 	}
 }
 
@@ -308,7 +308,7 @@ static MAIL_FILTERSx* Get_MailBoxANDFilters(uint8_t canNum) {
 		case 2:
 			return CAN2MailFilters;
 		default:
-			return;
+			return ((void*)0);
 	}
 }
 
@@ -320,7 +320,7 @@ static FILTER_BANKSx* Get_FilterBanks(uint8_t canNum) {
 		case 2:
 			return CAN2Bank;
 		default:
-			return;
+			return ((void*)0);
 	}
 }
 

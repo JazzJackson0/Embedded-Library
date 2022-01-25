@@ -35,7 +35,7 @@ uint8_t TWIMasterStart(uint8_t slaveAddress, E_Read_Write readWrite) {
 		TWI->ControlReg.twiEventInterruptOccurred = 1; //Initiates transmission
 	}
 	
-	else return -1;
+	else return 0;
 	
 	switch (readWrite) {
 		
@@ -51,7 +51,7 @@ uint8_t TWIMasterStart(uint8_t slaveAddress, E_Read_Write readWrite) {
 				return 1;
 	}
 	
-	return -2;
+	return 0;
 }
 
 uint8_t TWIMaster_Transmit(uint8_t data) {
@@ -65,7 +65,7 @@ uint8_t TWIMaster_Transmit(uint8_t data) {
 		return 1;
 	}
 	
-	else return -1;
+	else return 0;
 }
 
 

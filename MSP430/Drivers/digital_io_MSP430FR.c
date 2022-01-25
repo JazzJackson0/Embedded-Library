@@ -259,7 +259,7 @@ uint8_t Pin_GetInput(char port, uint8_t pinNum) {
 		case 7 :
 			return PORT->InputReg.read_Pin7;
 		default :
-			return;
+			return 0;
 	}
 }
 
@@ -316,7 +316,7 @@ static PORTSx* Get_Port(char port) {
 		case 'J':
 			return PORTJ;
 		default:
-			return;
+			return NULL;
 	}
 }
 

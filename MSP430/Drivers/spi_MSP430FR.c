@@ -97,6 +97,6 @@ static SPIx* Get_SPI(char* spiID) {
 	if (spiID == "A0") { return SPI_A0; }
 	else if (spiID == "A1") { return SPI_A1; }
 	else if (spiID == "B0") { return SPI_B0; }
-	return;
+	return NULL;
 }
 

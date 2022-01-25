@@ -6,6 +6,7 @@
 static void ADC_PinInit(uint8_t adcNumber);
 static void ADCClockSelect(uint8_t adcNumber);
 static ADCx* Get_ADC(char adcNum);
+static void Set_ChannelSamplePeriod(ADCx *ADC, E_Channel adcChannel, E_SamplePeriod cycles);
 
 //Global Variables-------------------------------------------------------
 ADC_CLOCK *const ADCClock = ADDR_ADC_CLOCK;
@@ -22,7 +23,7 @@ void ADCRegularChannel_Init(uint8_t adcNumber, E_Channel adcChannel, uint8_t con
 
 	//Set-up Channel for Analog signal.
 	ADC->ControlReg2.enable_ADC = 0;
-	Set_ChannelSamplePeriod(adcChannel, cycles);
+	Set_ChannelSamplePeriod(ADC, adcChannel, cycles);
 	
 	switch (conversionOrderNum) {
 		
@@ -187,9 +188,70 @@ static ADCx* Get_ADC(char adcNum) {
 		case 3:
 			return ADC3;
 		default:
-			return;
+			return ((void*)0);
 	}
 }
 
-		
+static void Set_ChannelSamplePeriod(ADCx *ADC, E_Channel adcChannel, E_SamplePeriod cycles) {
+	
+	switch (adcChannel) {
+		case 0 :
+			ADC->SampleTimeReg2.rw_Channel0SamplePeriod = cycles;
+			break;
+		case 1 :
+			ADC->SampleTimeReg2.rw_Channel1SamplePeriod = cycles;
+			break;
+		case 2 :
+			ADC->SampleTimeReg2.rw_Channel2SamplePeriod = cycles;
+			break;
+		case 3 :
+			ADC->SampleTimeReg2.rw_Channel3SamplePeriod = cycles;
+			break;
+		case 4 :
+			ADC->SampleTimeReg2.rw_Channel4SamplePeriod = cycles;
+			break;
+		case 5 :
+			ADC->SampleTimeReg2.rw_Channel5SamplePeriod = cycles;
+			break;
+		case 6 :
+			ADC->SampleTimeReg2.rw_Channel6SamplePeriod = cycles;
+			break;
+		case 7 :
+			ADC->SampleTimeReg2.rw_Channel7SamplePeriod = cycles;
+			break;
+		case 8 :
+			ADC->SampleTimeReg2.rw_Channel8SamplePeriod = cycles;
+			break;
+		case 9 :
+			ADC->SampleTimeReg2.rw_Channel9SamplePeriod = cycles;
+			break;
+		case 10 :
+			ADC->SampleTimeReg1.rw_Channel10SamplePeriod = cycles;
+			break;
+		case 11 :
+			ADC->SampleTimeReg1.rw_Channel11SamplePeriod = cycles;
+			break;
+		case 12 :
+			ADC->SampleTimeReg1.rw_Channel12SamplePeriod = cycles;
+			break;
+		case 13 :
+			ADC->SampleTimeReg1.rw_Channel13SamplePeriod = cycles;
+			break;
+		case 14 :
+			ADC->SampleTimeReg1.rw_Channel14SamplePeriod = cycles;
+			break;
+		case 15 :
+			ADC->SampleTimeReg1.rw_Channel15SamplePeriod = cycles;
+			break;
+		case 16 :
+			ADC->SampleTimeReg1.rw_Channel16SamplePeriod = cycles;
+			break;
+		case 17 :
+			ADC->SampleTimeReg1.rw_Channel17SamplePeriod = cycles;
+			break;
+		case 18 :
+			ADC->SampleTimeReg1.rw_Channel18SamplePeriod = cycles;
+			break;
+	}
+}		
 
