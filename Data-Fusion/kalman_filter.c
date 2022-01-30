@@ -11,10 +11,14 @@ static Matrix* Get_KalmanGainMatrix(KalmanFilter *k_filter);
 static Matrix* Get_UpdatedStateEstimate(KalmanFilter *k_filter);
 static Matrix* Get_UpdatedCovariance(KalmanFilter *k_filter);
 
-KalmanFilter* KalmanInit(double* initialState, double* stateTransMatrix, double* inputMatrix, 
-    int stateVars_n, int inputs_p, int outputs_m) {
+KalmanFilter* KalmanInit(double* initialState, Matrix *FMatrix, Matrix *BMatrix, 
+    Matrix *HMatrix, Matrix *PMatrix, Matrix *QMatrix, Matrix *RMatrix) {
     
     KalmanFilter *kf = malloc(sizeof(KalmanFilter));
+
+    int stateVars_n = FMatrix->rowNum;
+    int inputs_p = BMatrix->columnNum;
+    int outputs_m = RMatrix->rowNum;
 
     //State Transition Matrix (F)
     kf->state_trans_matrix = MatrixInit(stateVars_n, stateVars_n);
@@ -51,26 +55,18 @@ KalmanFilter* KalmanInit(double* initialState, double* stateTransMatrix, double*
     // Measurement Model Noise Auto Correlation Matrix (R)
     kf->autoCorrelatoinR = MatrixInit(outputs_m, outputs_m);
 
+    PopulateMatrix(kf->state_trans_matrix, FMatrix->matrix);
+    PopulateMatrix(kf->input_matrix, BMatrix->matrix);
+    PopulateMatrix(kf->measurement_matrix, HMatrix->matrix);
+    PopulateMatrix(kf->updatedCovariance, PMatrix->matrix);
+    PopulateMatrix(kf->autoCorrelatoinQ, QMatrix->matrix);
+    PopulateMatrix(kf->autoCorrelatoinR, RMatrix->matrix);
+    
     //Add values to Initial State vector, State Trans & Input Matrices
     for (int i = 0; i < stateVars_n; i++) {
 
         kf->updatedStateEstimate->matrix[i][0] = initialState[i];
-
-        for (int j = 0; j < stateVars_n; j++) {
-            kf->state_trans_matrix->matrix[i][j] = *(stateTransMatrix + (i * stateVars_n) + j);
-        }
-
-        for (int j = 0; j < inputs_p; j++) {
-            kf->input_matrix->matrix[i][j] = *(inputMatrix + (i * stateVars_n) + j);
-        }
     }
-
-    //Initialize the Covariance Matrices (P, Q and R)
-    for (int i = 0; i < stateVars_n; i++) {
-
-        //INITIALIZE HERE.
-    }
-
 
     return kf;
 }
@@ -112,25 +108,30 @@ static Matrix* Get_Innovation(KalmanFilter *k_filter, Matrix *sensorValues) {
 static Matrix* Get_InnovationCovariance(KalmanFilter *k_filter) {
 
     return Add_Matrices( 
-            Multiply_Matrices(
-                Multiply_Matrices( k_filter->measurement_matrix, k_filter->expectedCovariance), 
-                    Get_MatrixTranspose(k_filter->measurement_matrix)), k_filter->autoCorrelatoinR);
+        Multiply_Matrices(
+            Multiply_Matrices( k_filter->measurement_matrix, k_filter->expectedCovariance), 
+                Get_MatrixTranspose(k_filter->measurement_matrix)), k_filter->autoCorrelatoinR);
 }
 
 static Matrix* Get_KalmanGainMatrix(KalmanFilter *k_filter) {
 
-    //Will not work until Get_MatrixInverse has been implemented
-    return Multiply_Matrices(
-            Multiply_Matrices(k_filter->expectedCovariance, 
-                Get_MatrixTranspose(k_filter->measurement_matrix)), 
-                    Get_MatrixInverse(k_filter->innovationCovariance));
+    Matrix *inverse = MatrixInit(k_filter->expectedCovariance->rowNum, 
+       k_filter->expectedCovariance->columnNum);
+
+    Matrix *result = Multiply_Matrices(
+        Multiply_Matrices(k_filter->expectedCovariance, 
+            Get_MatrixTranspose(k_filter->measurement_matrix)), 
+                Get_MatrixInverse(k_filter->innovationCovariance, inverse));
+
+    free(inverse);
+    return result;
 }
 
 static Matrix* Get_UpdatedCovariance(KalmanFilter *k_filter) {
 
     return Subtract_Matrices(
-            k_filter->expectedCovariance, Multiply_Matrices(
-                Multiply_Matrices(k_filter->kalmanGainMatrix, k_filter->measurement_matrix),
+        k_filter->expectedCovariance, Multiply_Matrices(
+            Multiply_Matrices(k_filter->kalmanGainMatrix, k_filter->measurement_matrix),
                 k_filter->expectedCovariance));
 }
 
@@ -145,7 +146,7 @@ static Matrix* Get_UpdatedStateEstimate(KalmanFilter *k_filter) {
 /*
  * 			TO-DO
  * 			-----
- *  - Initializa P, Q and R
+ *  - 
  *
  *  - Add timestep loop to kalman filter 
  *  

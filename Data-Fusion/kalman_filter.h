@@ -10,15 +10,16 @@ typedef struct dimensions Matrix_Dimensions;
  * @brief 
  * 
  * @param initialState Takes an array of Initial State Values
- * @param stateTransMatrix Takes the address of a 2D array of State Trans Matrix values.
- * @param inputMatrix Takes the address of a 2D array of Input Matrix values.
- * @param stateVars_n Number of state variables
- * @param inputs_p Number of Inputs
- * @param outputs_m Number of Outputs
+ * @param FMatrix 
+ * @param BMatrix
+ * @param HMatrix 
+ * @param PMatrix 
+ * @param QMatrix 
+ * @param RMatrix 
  * @return ** KalmanFilter* 
  */
-KalmanFilter* KalmanInit(double* initialState, double* stateTransMatrix, double* inputMatrix, 
-    int stateVars_n, int inputs_p, int outputs_m);
+KalmanFilter* KalmanInit(double* initialState, Matrix *FMatrix, Matrix *BMatrix, Matrix *HMatrix,
+    Matrix *PMatrix, Matrix *QMatrix, Matrix *RMatrix);
 
     
 /**
