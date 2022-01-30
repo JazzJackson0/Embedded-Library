@@ -54,8 +54,10 @@ void PID_InitTest() {
  * @return ** void 
  */
 void PID_UpdateTest() {
+    // Not Yet Implemented
     PIDController* pid = PID_Init();
-    PID_Update(pid, 0.0, 0.0);
+    // Find a Library with e timekeeping function.
+    PID_Update(pid, 0.0, 0.0, );
     assert(0.0 == pid->proportional_gain);
     assert(0.0 == pid->integral_gain);
     assert(0.0 == pid->derivative_gain);
@@ -79,6 +81,7 @@ void PID_UpdateTest() {
  * @return ** void 
  */
 void Set_Tuning_ParametersTest() {
+    // Not Yet Implemented
     PIDController* pid = PID_Init();
     Set_Tuning_Parameters(pid, 0.0, 0.0, 0.0);
     assert(0.0 == pid->proportional_gain);
@@ -105,6 +108,7 @@ void Set_Tuning_ParametersTest() {
  * @return ** void 
  */
 void Set_Sample_TimeTest() {
+    // Not Yet Implemented
     PIDController* pid = PID_Init();
     Set_Sample_Time(pid, 0.0);
     assert(0.0 == pid->integral_gain);
@@ -117,6 +121,7 @@ void Set_Sample_TimeTest() {
  * 
  */
 void Set_Output_LimitsTest() {
+    // Not Yet Implemented
     PIDController* pid = PID_Init();
     Set_Output_Limits(pid, 0.0, 0.0);
     assert(1 == pid->output_data);
@@ -152,3 +157,14 @@ void Set_ControllerDirectionTest(){
     Set_ControllerDirection(pid, 0);
     assert(0 == pid->controller_direction);
 }
+
+
+/*
+ * 			TO-DO
+ * 			-----
+ *  - Find a Library with e timekeeping function for PID_Update
+ *
+ *  - 
+ *  
+ *  - 
+ *  */

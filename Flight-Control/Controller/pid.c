@@ -12,12 +12,13 @@ PIDController* PID_Init(void) {
 	return PID;
 }
 
-void PID_Update(PIDController *PID, double set_point, double current_measurement) {
+int PID_Update(PIDController *PID, double set_point, double current_measurement, 
+	double (*RTCTimeKeepingFunction)() ) {
 	
-	if (!PID->inAutoMode) return (void*) 0;
+	if (!PID->inAutoMode) return 0;
 	
 	/*Calculate dt: Time since last calculation*/
-	unsigned long current_time = someRTCTimeKeepingFunction(); //Use an RTC Function here
+	double current_time = (*RTCTimeKeepingFunction)(); //Use an RTC Function here
 	double change_in_time = (double) (current_time - PID->previous_time); // dt
 	
 	if (change_in_time >= PID->sample_time) {
@@ -42,6 +43,7 @@ void PID_Update(PIDController *PID, double set_point, double current_measurement
 		PID->previous_measurement = current_measurement;
 		PID->previous_time = current_time;
 	}
+	return 1;
 }
 
 void Set_Tuning_Parameters(PIDController *PID, double kp, double ki, double kd) {

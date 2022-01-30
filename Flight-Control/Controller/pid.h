@@ -11,15 +11,18 @@ typedef struct pid PIDController;
  * @return ** PIDController* 
  */
 PIDController* PID_Init(void);
+
 /**
  * @brief 
  * 
  * @param PID 
  * @param set_point 
  * @param current_measurement 
- * @return ** void 
+ * @param RTCTimeKeepingFunction 
+ * @return ** int 
  */
-void PID_Update(PIDController *PID, double set_point, double current_measurement);
+int PID_Update(PIDController *PID, double set_point, double current_measurement,
+	double (*RTCTimeKeepingFunction)());
 /**
  * @brief 
  * 
