@@ -3,6 +3,7 @@
 #include "matrix_math.h"
 
 void MatirxInitTest();
+void PopulateMatrixTest();
 void Add_MatricesTest_2x2();
 void Subtract_MatricesTest_2x2();
 void Multiply_MatricesTest_2x2();
@@ -11,14 +12,18 @@ void Get_MatrixInverseTest();
 
 Matrix *m1;
 Matrix *m2;
+double Data[2][2] = { {1.0, 2.0},
+                      {3.0, 4.0} };
 
 int main(int argc, char *argv[]) {
 
     MatirxInitTest();
+    PopulateMatrixTest();
     Add_MatricesTest_2x2();
     Subtract_MatricesTest_2x2();
     Multiply_MatricesTest_2x2();
     Get_MatrixTransposeTest_2x2();
+    Get_MatrixInverseTest();
     return 0;
 }
 
@@ -38,6 +43,20 @@ void MatirxInitTest() {
     assert(0.0 == m1->matrix[0][1]);
     assert(0.0 == m1->matrix[1][0]);
     assert(0.0 == m1->matrix[1][1]);
+}
+
+/**
+ * @brief 
+ * 
+ * @return ** void 
+ */
+void PopulateMatrixTest() {
+    m1 = MatrixInit(2, 2);
+    PopulateMatrix(m1, (double *)&Data);
+    assert(1.0 == m1->matrix[0][0]);
+    assert(2.0 == m1->matrix[0][1]);
+    assert(3.0 == m1->matrix[1][0]);
+    assert(4.0 == m1->matrix[1][1]);
 }
 
 /**
@@ -150,12 +169,26 @@ void Get_MatrixTransposeTest_2x2() {
  */
 void Get_MatrixInverseTest() {
     
+    m1 = MatrixInit(2, 2);
+    Matrix *inverse = MatrixInit(2, 2);
+    m1->matrix[0][0] = 1.0;
+    m1->matrix[0][1] = 2.0;
+    m1->matrix[1][0] = 3.0;
+    m1->matrix[1][1] = 4.0;
+
+    assert(1 == Get_MatrixInverse(m1, inverse));
+
+    assert(-2.0 == inverse->matrix[0][0]);
+    assert(1.0 == inverse->matrix[0][1]);
+    assert(1.5 == inverse->matrix[1][0]);
+    assert(-0.5 == inverse->matrix[1][1]);
 }
 
 
 /*
  * 			TO-DO
  * 			-----
+ *  - Add Test for PopulateMatrix()
  *  - Add tests for mismatched matrix dimension errors
  *
  *  - free memory?

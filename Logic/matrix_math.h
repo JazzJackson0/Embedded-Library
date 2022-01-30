@@ -15,6 +15,15 @@ Matrix* MatrixInit(int rows, int columns);
 /**
  * @brief 
  * 
+ * @param m Pointer to the Matrix you want to populate.
+ * @param data 2D Array of data to place in a given matrix.
+ * @return ** void 
+ */
+void PopulateMatrix(Matrix *m, double *data);
+
+/**
+ * @brief 
+ * 
  * @param m1 
  * @param m2 
  * @return ** Matrix* 
@@ -44,12 +53,14 @@ Matrix* Multiply_Matrices(Matrix *m1, Matrix *m2);
  */
 Matrix* Get_MatrixTranspose(Matrix *matrix);
 /**
- * @brief 
+ * @brief Function to calculate and store inverse, returns 0 if
+ *          matrix is singular, or if it is not square.
  * 
- * @param matrix 
- * @return ** Matrix* 
+ * @param A 
+ * @param inverse 
+ * @return ** int 
  */
-Matrix* Get_MatrixInverse(Matrix *matrix);
+int Get_MatrixInverse(Matrix *A, Matrix *inverse);
 
 
 struct matrix {
