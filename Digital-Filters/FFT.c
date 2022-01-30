@@ -9,12 +9,9 @@
 
 //Static Prototypes
 static int get_closest_powerOf2(float benchmark);
-static int bitReverse(int num, unsigned int numOfBits);
 
 
 K_Values* radix2_FFT(float sample_frequency, int resolution, double *sample_vals) {
-
-    complexNum *sample_values = ValuetoComplexNum(sample_vals, (int) sample_frequency);
     
     float x = ((float) sample_frequency / resolution);
     float benchmark = x * sample_frequency;
@@ -27,33 +24,39 @@ K_Values* radix2_FFT(float sample_frequency, int resolution, double *sample_vals
     k_vals->numOfValues = (int) sample_frequency;
     k_vals->lower = calloc(k_vals->numOfValues, sizeof(complexNum));
     k_vals->upper = calloc(k_vals->numOfValues, sizeof(complexNum));
-
-    complexNum Wn;
-    complexNum *upperK = malloc(sizeof(complexNum));
-    complexNum *lowerK = malloc(sizeof(complexNum));
+    
+    complexNum *upperK = malloc((k_vals->numOfValues / 2) * sizeof(complexNum));
+    complexNum *lowerK = malloc((k_vals->numOfValues / 2) * sizeof(complexNum));
     complexNum *Evens = malloc(sizeof(complexNum));
     complexNum *Odds = malloc(sizeof(complexNum));
+    complexNum Wn;
     complexNum twiddleXOdds;
 
-    // Reverse Bits
-    unsigned int N = (unsigned int) tapSize;
-    complexNum *temp_values = malloc(sizeof(complexNum));
-
-    for (int i = 0; i < N; i++) {
-
-        int new_i = bitReverse(i, (unsigned int)M_stages);
-        temp_values[i] = sample_values[i];
-
-        if (i < new_i) {
-            
-            sample_values[i] = sample_values[new_i];
-            sample_values[new_i] = temp_values[i];
-        }
-        
-    }
+    // Switch Indices: This simulates the Bit Reversal procedure. This way is way less of a headache.
+    int j = 0; 
+    double tempVal;
     
-    free(temp_values);
-    temp_values = ((void*)0);
+    for (int i = 1; i < tapSize - 1; i++) {
+        
+        int tapSizeSlice = tapSize / 2;
+      
+      while ( j >= tapSizeSlice ) {
+          
+          j = j - tapSizeSlice;
+          tapSizeSlice = tapSizeSlice / 2; 
+      }
+        
+      j = j + tapSizeSlice;
+                   
+      if (i < j) {
+          tempVal = sample_vals[i];
+          sample_vals[i] = sample_vals[j];
+          sample_vals[j] = tempVal;
+      }
+       
+    }
+
+    complexNum *sample_vals_complexVersion = ValuetoComplexNum(sample_vals, (int) sample_frequency);
     
     
     // Calculation
@@ -63,24 +66,26 @@ K_Values* radix2_FFT(float sample_frequency, int resolution, double *sample_vals
         int num_ofDFTs = tapSize / n_Point_DFT;
         int dft_Width = n_Point_DFT / 2;
 
-        for (int R = 0; R < dft_Width; R++) { // Number of operations per n-Point DFT
+        for (int widthIndex = 0; widthIndex < dft_Width; widthIndex++) { // Width of each butterfly
 
-            if (R != 0) { // if R = 0 then Wn^0 = (1 + j0)
+            if (widthIndex != 0) { // if R = 0 then Wn^0 = (1 + j0)
 
-                //Set up Twiddle Factor
-                Wn.realPart = cos((_1HZ * num_ofDFTs * R) / tapSize);
-                Wn.imaginaryPart = -sin((_1HZ * num_ofDFTs * R) / tapSize);
+                // Set up Twiddle Factor
+                int R = num_ofDFTs * widthIndex;
+                Wn.realPart = cos((_1HZ * R) / tapSize);
+                Wn.imaginaryPart = -sin((_1HZ * R) / tapSize);
             }
             
+            int upperLowerIndex = 0;
+            // loop over each n-point DFT in the current Stage
+            for (int upperK_Index = widthIndex; upperK_Index < tapSize; upperK_Index += n_Point_DFT) { 
 
-            for (int upperK_Index = R; upperK_Index < tapSize; upperK_Index += n_Point_DFT) { // loop over each n-point DFT in the current Stage
-
-                *Evens = sample_values[upperK_Index];
-                *Odds = Evens[dft_Width];
+                *Evens = sample_vals_complexVersion[upperK_Index]; 
+                *Odds = sample_vals_complexVersion[upperK_Index + dft_Width]; 
                 lowerK = Evens;
                 upperK = Odds;
 
-                if (R != 0) {  
+                if (widthIndex != 0) {  
                    
                     //Multiply Sum of Odds by the Twiddle Factor (Multiplying 2 Complex Nums)
                     twiddleXOdds.realPart = (Odds->realPart * Wn.realPart) - (Odds->imaginaryPart * Wn.imaginaryPart); 
@@ -93,13 +98,14 @@ K_Values* radix2_FFT(float sample_frequency, int resolution, double *sample_vals
                     twiddleXOdds.imaginaryPart = Odds->imaginaryPart;
                 }
 
-                // Calculate Lower k (Addition)
-                lowerK->realPart = Evens->realPart + twiddleXOdds.realPart;
-                lowerK->imaginaryPart = Evens->imaginaryPart + twiddleXOdds.imaginaryPart;
+                // Calculate Lower k (Addition) Where k = 0, 2, 4, 6, ..., n
+                lowerK[upperLowerIndex].realPart = Evens->realPart + twiddleXOdds.realPart;
+                lowerK[upperLowerIndex].imaginaryPart = Evens->imaginaryPart + twiddleXOdds.imaginaryPart;
 
-                // Calculate Upper k (Subtraction)
-                upperK->realPart = Evens->realPart - twiddleXOdds.realPart;
-                upperK->imaginaryPart = Evens->imaginaryPart - twiddleXOdds.imaginaryPart;
+                // Calculate Upper k (Subtraction) Where k = 1, 3, 5, 7, ..., n
+                upperK[upperLowerIndex].realPart = Evens->realPart - twiddleXOdds.realPart;
+                upperK[upperLowerIndex].imaginaryPart = Evens->imaginaryPart - twiddleXOdds.imaginaryPart;
+                upperLowerIndex++;
             }
         }
     }
@@ -107,11 +113,11 @@ K_Values* radix2_FFT(float sample_frequency, int resolution, double *sample_vals
     k_vals->lower = lowerK;
     k_vals->upper = upperK;
 
-    free(upperK);
-    free(lowerK);
-    free(Evens);
-    free(Odds);
-    upperK = ((void*)0);
+    //free(upperK);
+    //free(lowerK);
+    //free(Evens);
+    //free(Odds);
+    upperK = ((void*)0); //Will freeing upperK and lowerK ruin k_vals->lower & upper??????????
     lowerK = ((void*)0);
     Evens = ((void*)0);
     Odds = ((void*)0);
@@ -134,23 +140,6 @@ static int get_closest_powerOf2(float benchmark) {
         k++;
     }
     return 0;
-}
-
-static int bitReverse(int num, unsigned int numOfBits) {
-
-    unsigned int reverseNum, temp;
-
-    for (unsigned int i = 0; i < numOfBits; i++) {
-
-        temp = (num & (1 << i));
-        if (temp) { 
-
-            reverseNum |= (1 << (numOfBits - 1) - i);
-        }
-
-    return reverseNum;
-
-    }
 }
 
 
