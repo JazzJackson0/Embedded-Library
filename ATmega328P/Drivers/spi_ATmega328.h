@@ -19,27 +19,27 @@ typedef enum _SPIPolarity E_SPIPolarity;
 
 //DECLARATIONS
 /**
- * @brief 
+ * @brief Set Up SPI CLock
  * 
- * @param clockDiv 
- * @param phase 
- * @param polarity 
+ * @param clockDiv SPI Clock Prescaler Value (SPI_DIV_x: Where x = 4, 16, 64, 128)
+ * @param phase Clock Phase: _1ST_EDGE or _2ND_EDGE
+ * @param polarity Clock Polarity: HIGH_POL or LOW_POL
  * @return ** void 
  */
 void SPI_ClockSetup(E_ClockDivider clockDiv, E_Phase phase, E_SPIPolarity polarity);
 /**
- * @brief 
+ * @brief Initialize SPI
  * 
- * @param mode 
- * @param bitOrder 
+ * @param mode SPI Mode: MASTER or SLAVE
+ * @param bitOrder Order of Bits: LSB or MSB
  * @return ** void 
  */
 void SPI_Init(E_SPIMode mode, E_BitOrder bitOrder);
 /**
- * @brief 
+ * @brief Transmit ad receive data via SPI
  * 
- * @param data 
- * @return ** uint8_t 
+ * @param data Data to transmit
+ * @return ** uint8_t Received Data
  */
 uint8_t SPI_Transmit_and_Receive(uint8_t data);
 

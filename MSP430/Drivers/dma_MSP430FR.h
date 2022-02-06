@@ -6,9 +6,9 @@
 
 //DECLARATIONS
 /**
- * @brief 
+ * @brief Initialize DMA
  * 
- * @param dmaNum 
+ * @param dmaNum DMA Channel Number (0-2)
  * @return ** void 
  */
 void DMA_Init(uint8_t dmaNum);

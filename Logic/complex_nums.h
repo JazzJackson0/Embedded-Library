@@ -4,27 +4,27 @@ typedef struct c complexNum;
 
 //DECLARATIONS
 /**
- * @brief 
+ * @brief Ouput a Sinusoidal Basis for a given value.
  * 
- * @param angle 
- * @return ** complexNum*
+ * @param kt Amplitude/Magnitude value
+ * @return ** complexNum* Sinusiodal Basis
  */
-complexNum* Get_SinusoidalBasis(double angle);
+complexNum* Get_SinusoidalBasis(double kt);
 /**
- * @brief 
+ * @brief Output z-value (Used in Z-Transforms) for a given angle and Magnitude
  * 
- * @param angle 
- * @param magnitude_r 
- * @param n 
- * @return ** complexNum* 
+ * @param angle Desired angle
+ * @param magnitude_r Desired Magnitude/Amplitude value
+ * @param n Sample number
+ * @return ** complexNum* z-value
  */
 complexNum* Set_Z(double angle, double magnitude_r, int n);
 
 /**
- * @brief 
+ * @brief Convert a set of real values to a set of complex values
  * 
- * @param realValues 
- * @param numOfValues 
+ * @param realValues Set of values to convert
+ * @param numOfValues Number of values present in the set.
  * @return ** complexNum* 
  */
 complexNum* ValuetoComplexNum(double *realValues, int numOfValues);

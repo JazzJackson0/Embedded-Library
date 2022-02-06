@@ -8,37 +8,39 @@ typedef enum _TimerPrescaler E_TimerPrescaler;
 
 //DECLARATIONS
 /**
- * @brief 
- * 			- CLOCK SPEED: According to '3.2 Clock System Operation'
- *				+ MCLK & SMCLK = DCOCLK
- *				+ Then they are divided by 8
- *				-----------------------------
- *					- DCOCLK = 1MHz
- *					- SMCLK & MCLK = 1 MHz / 8
- *					- SMCLK & MCLK = 125KHz
+ * @brief Initialize and Start Timer
  * 
- * @param timerID 
- * @param prescale 
- * @param time 
+ * @param timerID Timer ID (A0-A3, B0)
+ * @param prescale Clock Prescaler value (DIV_x: Where x = 1, 2, 4, 8)
+ * @param time Time Goal: Example: Let (Clock Speed / Prescaler) = 1000Hz/Sec
+ * 							---- For 1sec Time Goal: Time = 1000(Hz)
+ * 						|||  00:00 ---> Time Goal |||  RESET
+ *						|||  00:00 ---> Time Goal |||  RESET |||  ETC...)
  * @return ** void 
  */
 void Timer_Start(char* timerID, E_TimerPrescaler prescale, uint32_t time);
 /**
- * @brief 
+ * @brief Initialize and Start Pulse Width Modulation
  * 
- * @param timerID 
- * @param prescale 
- * @param time 
- * @param dutyCycle 
+ * @param timerID Timer ID (A0-A3, B0)
+ * @param prescale Clock Prescaler value
+ * @param time Time Goal: Example: Let (Clock Speed / Prescaler) = 1000Hz/Sec
+ * 							---- For 1sec Time Goal: Time = 1000(Hz)
+ * 						|||  00:00 ---> Time Goal |||  RESET
+ *						|||  00:00 ---> Time Goal |||  RESET |||  ETC...)
+ * @param dutyCycle PWM Duty Cycle
  * @return ** void 
  */
 void PWM_Start(char* timerID, E_TimerPrescaler prescale, uint32_t time, float dutyCycle);
 /**
- * @brief 
+ * @brief Update Pulse Width Modulation with new Duty Cycle
  * 
- * @param timerID 
- * @param time 
- * @param dutycycle 
+ * @param timerID Timer ID (A0-A3, B0)
+ * @param time Time Goal: Example: Let (Clock Speed / Prescaler) = 1000Hz/Sec
+ * 							---- For 1sec Time Goal: Time = 1000(Hz)
+ * 						|||  00:00 ---> Time Goal |||  RESET
+ *						|||  00:00 ---> Time Goal |||  RESET |||  ETC...)
+ * @param dutycycle PWM Duty Cycle
  * @return ** void 
  */
 void PWM_Update(char* timerID, uint32_t time, float dutycycle);

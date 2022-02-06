@@ -11,75 +11,76 @@ typedef struct _filter Filter;
 
 //DECLARATIONS
 /**
- * @brief 
- * 			1Mbps Bit Rate Example:
- *				+ Prescaler = 1
- *				+ Num of Time Quanta = 16
- *					+ Seg 1 = 13
- *					+ Seg 2 = 2
- *					+ Resync Jump Width = 1 (Always 1)
- *					+ 13 + 2 + 1 = 16
- *				+ Obtained from bittiming.can
+ * @brief Set CAN Bit Rate
+ * 			|||  1 Mbps Bit Rate Example:
+ *				|||  Prescaler = 1
+ *				|||  Num of Time Quanta = 16
+ *					||| (a) Resync Jump Width = 1 (Always 1)
+ *					||| (b) Seg 1 = 13
+ *					||| (c) Seg 2 = 2
+ *					||| (d) 1 + 13 + 2 = 16
+ *				|||  Obtained from bittiming.can
  * 
- * @param canNum 
- * @param baudRatePrescale 
- * @param resyncJump 
- * @param timeSeg1 
- * @param timeSeg2 
+ * @param canNum CAN Number (1 - 2)
+ * @param baudRatePrescale BaudRate Prescaler
+ * @param resyncJump Resync Jump Widtth
+ * @param timeSeg1 Time Segment 1
+ * @param timeSeg2 Time Segment 2
  * @return ** void 
  */
-void CAN_SetBitTime(uint8_t canNum, uint8_t baudRatePrescale, uint8_t resyncJump, uint8_t timeSeg1, uint8_t timeSeg2);
+void CAN_SetBitTime(uint8_t canNum, uint8_t baudRatePrescale, uint8_t resyncJump, 
+	uint8_t timeSeg1, uint8_t timeSeg2);
 /**
- * @brief 
+ * @brief Set Up CAN Acceptance Filter
  * 
- * @param canNum 
- * @param filterInfo 
+ * @param canNum CAN Number (1 - 2)
+ * @param filterInfo Struct containing CAN Acceptance Filter Information
  * @return ** void 
  */
 void CAN_SetAcceptanceFilter(uint8_t canNum, Filter *filterInfo);
 /**
- * @brief 
+ * @brief Set Up CAN TX Mailbox
  * 
- * @param canNum 
- * @param mailboxNum 
- * @param standardID 
- * @param numOfBytes 
+ * @param canNum CAN Number (1 - 2)
+ * @param mailboxNum Mailbox Number (0 - 2)
+ * @param standardID Mailbox Acceptance Filter ID
+ * @param numOfBytes Mailbox Data Transmission Size (0 Bytes - 8 Bytes)
  * @return ** void 
  */
 void CAN_SetTXMailbox(uint8_t canNum, uint8_t mailboxNum, uint64_t standardID, uint8_t numOfBytes);
 /**
- * @brief 
+ * @brief Set Up CAN RX Mailbox
  * 
- * @param canNum 
- * @param mailboxNum 
- * @param standardID 
- * @param numOfBytes 
+ * @param canNum CAN Number (1 - 2)
+ * @param mailboxNum Mailbox Number (0 - 2)
+ * @param standardID Mailbox Acceptance Filter ID
+ * @param numOfBytes Mailbox Data Reception Size (0 Bytes - 8 Bytes)
  * @return ** void 
  */
 void CAN_SetRXMailbox(uint8_t canNum, uint8_t mailboxNum, uint64_t standardID, uint8_t numOfBytes);
 /**
- * @brief 
+ * @brief Initialize and Start CAN
  * 
- * @param canNum 
+ * @param canNum CAN Number (1 - 2)
  * @return ** void 
  */
 void CAN_Init_and_Start(uint8_t canNum);
 /**
- * @brief 
+ * @brief Transmit Data via CAN
  * 
- * @param canNum 
- * @param mailboxNum 
- * @param dataBuffer 
- * @param numOfBytes 
+ * @param canNum CAN Number (1 - 2)
+ * @param mailboxNum Mailbox Number (0 - 2)
+ * @param dataBuffer Data to transmit
+ * @param numOfBytes Number of Bytes to Transmit
  * @return ** uint8_t 
  */
 uint8_t CAN_Transmit(uint8_t canNum, uint8_t mailboxNum, uint8_t *dataBuffer, uint8_t numOfBytes);
 /**
- * @brief 
+ * @brief Receive Data via CAN
  * 
- * @param canNum 
- * @param mailboxNum 
- * @param numOfBytes 
+ * @param canNum CAN Number (1 - 2)
+ * @param mailboxNum Mailbox Number (0 - 2)
+ * @param numOfBytes Number of Bytes to Receive
  * @return ** Received_Data* 
  */
 Received_Data* CAN_Receive(uint8_t canNum, uint8_t mailboxNum, uint8_t numOfBytes);
@@ -116,14 +117,21 @@ enum _FilterMode {
 };
 
 //Structs----------------------------------------------------------------------
-//Filter 
+//Filter
+
+/**
+ * @brief |||  filterNum: Filter 0 - Filter 27 |||  filterSize: 16-Bit or 32-Bit 
+ * 		|||  filterMode: Mask Mode or List Mode |||  filterBankVal: Acceptance 
+ * 			Filter Bank Value (Standard ID will be compared to this) 
+ * 		|||  filterBankRegNum: Filter Bank Reg 1 or 2|||  fifoNum: FIFO 0 or FIFO 1
+ */
 struct _filter{
-	uint8_t filterNum;
-	E_FilterSize filterSize;
-	E_FilterMode filterMode;
-	uint64_t filterBankVal;
-	uint8_t filterBankRegNum; // 1 or 2
-	uint8_t fifoNum;
+	uint8_t filterNum; // Filter 0 - Filter 27
+	E_FilterSize filterSize; // _16BIT_CAN or _32BIT_CAN 
+	E_FilterMode filterMode; // MASK_MODE or LIST_MODE
+	uint64_t filterBankVal; // Acceptance Filter Bank Value (Standard ID will be compared to this) 
+	uint8_t filterBankRegNum; // Filter Bank Reg 1 or 2
+	uint8_t fifoNum; // FIFO 0 or FIFO 1
 };
 
 //Byte Container

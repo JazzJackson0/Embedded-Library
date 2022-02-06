@@ -9,30 +9,26 @@
 
 //DECLARATIONS
 /**
- * @brief 
- * 			Prescaler Example: 
- *				- Clock Speed / Presclaler = Number of Hz per Second
- *			
- *			Time Example: 
- *				- 00:00 -------> Time (Auto Reload)
- *						RESET
- *				- 00:00 -------> Time (Auto Reload)
- *						ETC...				
- *			Example:
- *				- Let (Clock Speed / Prescaler) = 1000Hz/Sec
- *				- If Time = 1000Hz, then Time = 1 sec
- * @param timerNum 
- * @param prescaler 
- * @param time 
+ * @brief Initialize and Start Timer				
+ * @param timerNum Timer Number (6 & 7)
+ * @param prescaler Timer Clock Prescaler Value (Clock Speed / Presclaler = Number of Hz per Second)
+ * @param time Time Goal: Example: Let (Clock Speed / Prescaler) = 1000Hz/Sec
+ * 							---- For 1sec Time Goal: Time = 1000(Hz)
+ * 						|||  00:00 ---> Time Goal |||  RESET
+ *						|||  00:00 ---> Time Goal |||  RESET |||  ETC...)
  * @return ** uint8_t 
  */
 uint8_t BasicTimer_Start(uint8_t timerNum, uint16_t prescaler, uint16_t time);
 /**
- * @brief 
+ * @brief Initialize and Start Timer. Timer will not repeat, but will return 1 upon
+ * 			reaching time goal.
  * 
- * @param timerNum 
- * @param prescaler 
- * @param time 
+ * @param timerNum Timer Number (6 & 7)
+ * @param prescaler Timer Clock Prescaler Value (Clock Speed / Presclaler = Number of Hz per Second)
+ * @param time Time Goal: Example: Let (Clock Speed / Prescaler) = 1000Hz/Sec
+ * 							---- For 1sec Time Goal: Time = 1000(Hz)
+ * 						|||  00:00 ---> Time Goal |||  RESET
+ *						|||  00:00 ---> Time Goal |||  RESET |||  ETC...)
  * @return ** uint8_t 
  */
 uint8_t BasicOneShotTimer_Start(uint8_t timerNum, uint16_t prescaler, uint16_t time);

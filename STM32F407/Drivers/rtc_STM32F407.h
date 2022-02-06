@@ -17,57 +17,57 @@
 
 //DECLARATIONS
 /**
- * @brief 
+ * @brief Initialize RTC
  * 
  * @return ** void 
  */
 void RTC_Init(void);
 /**
- * @brief 
+ * @brief Set the Time
  * 
- * @param hour 
- * @param minute 
- * @param second 
- * @param amPm 
+ * @param hour Hour Value
+ * @param minute Minute Value
+ * @param second Second Value
+ * @param amPm AM or PM
  * @return ** void 
  */
 void Set_Time(uint8_t hour, uint8_t minute, uint8_t second, uint8_t amPm);
 /**
- * @brief 
+ * @brief Set the Date
  * 
- * @param day 
- * @param month 
- * @param year 
- * @param weekday 
+ * @param day Day Value
+ * @param month Month Value
+ * @param year Year Value
+ * @param weekday Weekday (1: Monday - 7: Sunday)
  * @return ** void 
  */
 void Set_Date(uint8_t day, uint8_t month, uint8_t year, uint8_t weekday);
 /**
- * @brief 
+ * @brief Set time for Alarm
  * 
- * @param hour 
- * @param minute 
- * @param second 
- * @param amPm 
+ * @param hour Hour Value
+ * @param minute Minute Value
+ * @param second Second Value
+ * @param amPm AM or PM
  * @return ** void 
  */
 void Set_TimeAlarm(uint8_t hour, uint8_t minute, uint8_t second, uint8_t amPm);
 /**
- * @brief 
+ * @brief Set Date for Alarm
  * 
- * @param day 
- * @param dateWeek 
+ * @param day Day Value
+ * @param dateWeek 0: Date Units or 1: Weekday Values
  * @return ** void 
  */
 void Set_DateAlarm(uint8_t day, uint8_t dateWeek);
 /**
- * @brief 
+ * @brief Get current Time
  * 
  * @return ** void 
  */
 void Get_Time(void);
 /**
- * @brief 
+ * @brief Get current date
  * 
  * @return ** void 
  */

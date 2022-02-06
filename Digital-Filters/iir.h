@@ -4,21 +4,21 @@ typedef struct iir iirFilter;
 
 //DECLARATIONS
 /**
- * @brief 
+ * @brief Initialize IIR Filter
  * 
- * @param feedBackNum 
- * @param feedBack_coefs
- * @param feedForwardNum
- * @param feedForward_coefs 
- * @return ** iirFilter* 
+ * @param feedBackNum Number of Feedback Coefficients
+ * @param feedBack_coefs Feedback Coefficients
+ * @param feedForwardNum Number of Feedforward Coefficients
+ * @param feedForward_coefs Feedforward Coefficients
+ * @return ** iirFilter* Initialized IIR Filter
  */
 iirFilter* iir_Init(int feedBackNum, double *feedBack_coefs, 
     int feedForwardNum, double *feedForward_coefs);
 /**
- * @brief 
+ * @brief Filter incoming sample.
  * 
- * @param filter 
- * @param newSample 
+ * @param filter IIR Filter to be updated
+ * @param newSample New sample to be filtered
  * @return ** void 
  */
 void IIRCalculator(iirFilter *filter, double newSample);

@@ -8,48 +8,48 @@ typedef enum _ReadWrite E_ReadWrite;
 
 //DECLARATIONS
 /**
- * @brief 
- * 			Clock Control Clock Value Calculation:
- *				+ SCL FREQ GOAL: 100KHz = 10,000 ns(p)
- *					- Peripheral Clock Frequency: 8MHz = 125 ns(p)
- *					- [Clock Value * 125 ns(p) = 10,000 ns(p)]
- *					- Clock Value = 10,000 / 125 ns(p)
- *					- Clock Value = 80 (i.e. 0x50) 
+ * @brief Initialize I2C
+ * 			|||  Clock Control Clock Value Calculation Example:
+ *				|||  (1) SCL FREQ GOAL: 100KHz = 10,000 ns(p)
+ *					|||  (1a) Peripheral Clock Frequency: 8MHz = 125 ns(p)
+ *					|||  (1b) [Clock Value * 125 ns(p) = 10,000 ns(p)]
+ *					|||  (1c) Clock Value = 10,000 / 125 ns(p)
+ *					|||  (1d) Clock Value = 80 (i.e. 0x50)
  * 
- * @param i2cNumber 
- * @param apbClockFreqMHz Ex: 8 for 8MHz Clock
- * @param desiredI2CFrequencykHz (in KHz) Ex: 100 for 100KHz SCLK
+ * @param i2cNumber I2C Number (1 - 3)
+ * @param apbClockFreqMHz APB Clock Frequency in MHz (Ex: 8 for 8MHz Clock)
+ * @param desiredI2CFrequencykHz Desired I2C Frequency in KHz (Ex: 100 for 100KHz SCLK)
  * @return ** void 
  */
 void I2C_Init(uint8_t i2cNumber, uint8_t apbClockFreqMHz, uint8_t desiredI2CFrequencykHz);
 /**
- * @brief 
+ * @brief Start I2C as Master and start communication.
  * 
- * @param i2cNumber 
- * @param slaveAddress 
- * @param readWrite 
+ * @param i2cNumber I2C Number (1 - 3)
+ * @param slaveAddress Address of the Slave Device the host desires to communicate with.
+ * @param readWrite READ_BIT or WRITE_BIT
  * @return ** uint8_t 
  */
 uint8_t I2C_StartMaster_SendAddress(uint8_t i2cNumber, uint8_t slaveAddress, E_ReadWrite readWrite);
 /**
- * @brief 
+ * @brief Receive data via I2C
  * 
- * @param i2cNumber 
- * @return ** uint8_t 
+ * @param i2cNumber I2C Number (1 - 3)
+ * @return ** uint8_t Received data
  */
 uint8_t I2C_Receive(uint8_t i2cNumber);
 /**
- * @brief 
+ * @brief Transmit data via I2C
  * 
- * @param i2cNumber 
- * @param data 
+ * @param i2cNumber I2C Number (1 - 3)
+ * @param data Data to transmit
  * @return ** uint8_t 
  */
 uint8_t I2C_Transmit(uint8_t i2cNumber, uint8_t data);
 /**
- * @brief 
+ * @brief Send 'Stop Condition' to end current transmission.
  * 
- * @param i2cNumber 
+ * @param i2cNumber I2C Number (1 - 3)
  * @return ** void 
  */
 void I2C_Stop(uint8_t i2cNumber);

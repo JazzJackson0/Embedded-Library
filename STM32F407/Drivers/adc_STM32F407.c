@@ -17,7 +17,8 @@ ADCx *const ADC2 = ADDR_ADC2;
 ADCx *const ADC3 = ADDR_ADC3;
 
 
-void ADCRegularChannel_Init(uint8_t adcNumber, E_Channel adcChannel, uint8_t conversionOrderNum, E_SamplePeriod cycles) {
+void ADCRegularChannel_Init(uint8_t adcNumber, E_Channel adcChannel, 
+	uint8_t conversionOrderNum, E_SamplePeriod cycles) {
 	
 	ADCx *const ADC = Get_ADC(adcNumber);
 
@@ -79,11 +80,12 @@ void ADCRegularChannel_Init(uint8_t adcNumber, E_Channel adcChannel, uint8_t con
 }
 
 
-void ADC_Init(uint8_t adcNumber, E_Resolution resolution, E_ConvertLen singleContinuous, E_ConversionNum numOfConversions) {
+void ADC_RegularInit(uint8_t adcNumber, E_Resolution resolution, E_SingleCont singleContinuous, 
+	E_ConversionNum numOfConversions) {
 	
 	ADC_PinInit(adcNumber);
 	ADCClockSelect(adcNumber);
-	ADCx *const ADC = Get_ADC(adcNumber);;
+	ADCx *const ADC = Get_ADC(adcNumber);
 	
 	ADC->ControlReg1.rw_Resolution = resolution;
 	ADC->ControlReg2.singleConvert0_continuousConvert1 = singleContinuous;
@@ -94,16 +96,11 @@ void ADC_Init(uint8_t adcNumber, E_Resolution resolution, E_ConvertLen singleCon
 
 int16_t ADC_ReadRegularChannel(uint8_t adcNumber) {
 	
+	//How to handle continuous readings??
 	ADCx *const ADC = Get_ADC(adcNumber);
 	ADC->ControlReg2.start_RegChannelConversion = 1;
 	while (ADC->StatusReg.regChannelEndOfConversion == 0);	
 	return ADC->RegularDataReg.read_RegularConversionDataResult;
-}
-
-float Decibel_Out(uint16_t analogVolt) {
-	
-	return analogVolt * 0.775;
-	
 }
 
 //Helper Functions--------------------------------------------------------------------------------------------------------------

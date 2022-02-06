@@ -10,56 +10,55 @@ typedef enum _ADCPreDivider E_ADCPreDivider;
 typedef enum _DataFormat E_DataFormat;
 typedef enum _Resolution E_Resolution;
 typedef enum _SamplePeriod E_SamplePeriod;
-typedef enum _ConversionNum E_ConversionNum;
+typedef enum _singleContinuous E_SingleContinuous;
 typedef enum _ConversionChannel E_ConversionChannel;
 typedef enum _DiffSignal_ConvChannel E_DiffSignal_ConvChannel;
 typedef enum _ConversionMemory E_ConversionMemory;
 
 //DECLARATIONS
 /**
- * @brief 
- * 			- CLOCK SPEED: According to '3.2 Clock System Operation'
- *				+ MCLK & SMCLK = DCOCLK
- *				+ Then they are divided by 8
- *				+-----------------------------
- *					+ DCOCLK = 1MHz
- *					+ SMCLK & MCLK = 1 MHz / 8
- *					+ SMCLK & MCLK = 125KHz
+ * @brief Set ADC Clock source and speed.
  * 
- * @param clockSource 
- * @param clockDivide 
- * @param preDivide 
+ * @param clockSource Clock Source: (ADC12OSC_MODOSC, ADC_A_CLOCK, ADC_M_CLOCK, ADC_SM_CLOCK) 
+ * 						|||  SMCLK & MCLK = DCOCLK(1MHz) / 8  = 125KHz 
+ * 						|||  According to '3.2 Clock System Operation'
+ * @param preDivide ADC CLock 'Pre-Division' Prescaler Value. The First Prescale of the ADC Clock. 
+ * 					(ADC_PRE_DIV_x: Where x = 1, 4, 32, 64)
+ * @param clockDivide ADC Clock Prescaler Value. The Second Prescale of the ADC Clock. 
+ * 					(ADC_DIV_1 - ADC_DIV_8)
  * @return ** void 
  */
-void ADC_SetClockSpeed(E_ADCClockSource clockSource, E_ClockDivider clockDivide, 
-	E_ADCPreDivider preDivide);
+void ADC_SetClockSpeed(E_ADCClockSource clockSource, E_ADCPreDivider preDivide,
+	E_ClockDivider clockDivide);
 /**
- * @brief 
+ * @brief Initialize Conversion Channel
  * 
- * @param conversionChannel 
- * @param diffSigChannel 
- * @param memAddress 
+ * @param conversionChannel ADC Conversion Channel Number (NO_CH, A0 - A31)
+ * @param diffSigChannel ADC Differential Signal Conversion Channel Number
+ * 						(NO_DIF_CH, AxPOS_AyNEG: Where (x,y) = (0,1), (2,3), (4,5), ... (30,31))
+ * @param memAddress Memory Adddress for Results of given conversion channel. (MEM0 - MEM31)
  * @return ** void 
  */
 void ADC_ConversionChannelSetup(E_ConversionChannel conversionChannel, 
 	E_DiffSignal_ConvChannel diffSigChannel, E_ConversionMemory memAddress);
 /**
- * @brief 
+ * @brief Initialize ADC
  * 
- * @param dataFormat 
- * @param resolution 
- * @param cycles 
- * @param numOfConversions 
- * @param memAddress 
+ * @param dataFormat ADC Data Format: SIGNED or UNSIGNED data
+ * @param resolution ADC Resolution (_8BIT_ADC, _10BIT_ADC, _12BIT_ADC)
+ * @param cycles Number of Clock Cycles between ADC Conversions 
+ * 				(CYCLE_4 - CYCLE_512: In intervals of 2^n, where n = [2 - 9])
+ * @param singleContinuous A SINGLE conversion or CONTINUOUS conversions.
+ * @param memAddress Memory Adddress for Results of given conversion channel. (MEM0 - MEM31)
  * @return ** void 
  */
 void ADC_Init(E_DataFormat dataFormat, E_Resolution resolution, 
-	E_SamplePeriod cycles, E_ConversionNum numOfConversions, E_ConversionMemory memAddress);
+	E_SamplePeriod cycles, E_SingleContinuous singleContinuous, E_ConversionMemory memAddress);
 /**
- * @brief 
+ * @brief Start Conversion and Read ADC Result
  * 
- * @param memAddress 
- * @return ** int16_t 
+ * @param memAddress Memory Adddress for Results of given conversion channel. (MEM0 - MEM31)
+ * @return ** int16_t Conversion Result
  */
 int16_t ADC_Read(E_ConversionMemory memAddress);
 
@@ -139,32 +138,32 @@ enum _SamplePeriod {
 	CYCLE_384 = 0x09, CYCLE_512 = 0x0A
 };
 
-enum _ConversionNum {
+enum _singleContinuous {
 	CONTINUOUS = 1, SINGLE = 0
 };
 
 //ADC_CONVERSION_MEMORY_CONTROLx
 /*Input Channels for Non-Differential Input*/
 enum _ConversionChannel {
-	A0 = 0x00, A1 = 0x01, A2 = 0x02, A3 = 0x03,
+	NO_CH = 0x20, A0 = 0x00, A1 = 0x01, A2 = 0x02, A3 = 0x03,
 	A4 = 0x04, A5 = 0x05, A6 = 0x06, A7 = 0x07,
 	A8 = 0x08, A9 = 0x09, A10 = 0x0A, A11 = 0x0B,
 	A12 = 0x0C, A13 = 0x0D, A14 = 0x0E, A15 = 0x0F,
 	A16 = 0x10, A17 = 0x11, A18 = 0x12, A19 = 0x13,
 	A20 = 0x14, A21 = 0x15, A22 = 0x16, A23 = 0x17,
 	A24 = 0x18, A25 = 0x19, A26 = 0x1A, A27 = 0x1B,
-	A28 = 0x1C, A29 = 0x1D, A30 = 0x1E, A31 = 0x1F,
-	NO_CH = 0x20
+	A28 = 0x1C, A29 = 0x1D, A30 = 0x1E, A31 = 0x1F
+	
 };
 
 /*Input Channels for Differential Signal Input*/
 enum _DiffSignal_ConvChannel {
-	A0POS_A1NEG = 0x00, A2POS_A3NEG = 0x02, A4POS_A5NEG = 0x04,
-	A6POS_A7NEG = 0x06, A8POS_A9NEG = 0x08, A10POS_A11NEG = 0x0A,
-	A12POS_A13NEG = 0x0C, A14POS_A15NEG = 0x0E, A16POS_A17NEG = 0x10,
-	A18POS_A19NEG = 0x12, A20POS_A21NEG = 0x14, A22POS_A23NEG = 0x16,
-	A24POS_A25NEG = 0x18, A26POS_A27NEG = 0x1A, A28POS_A29NEG = 0x1C,
-	A30POS_A31NEG = 0x1E, NO_DIF_CH = 0x20
+	NO_DIF_CH = 0x20, A0POS_A1NEG = 0x00, A2POS_A3NEG = 0x02, 
+	A4POS_A5NEG = 0x04, A6POS_A7NEG = 0x06, A8POS_A9NEG = 0x08, 
+	A10POS_A11NEG = 0x0A, A12POS_A13NEG = 0x0C, A14POS_A15NEG = 0x0E, 
+	A16POS_A17NEG = 0x10, A18POS_A19NEG = 0x12, A20POS_A21NEG = 0x14, 
+	A22POS_A23NEG = 0x16, A24POS_A25NEG = 0x18, A26POS_A27NEG = 0x1A, 
+	A28POS_A29NEG = 0x1C, A30POS_A31NEG = 0x1E
 };
 
 enum _ConversionMemory {

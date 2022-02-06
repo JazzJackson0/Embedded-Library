@@ -10,58 +10,52 @@ typedef enum _AddressSize E_AddressSize;
 
 //DECLARATIONS
 /**
- * @brief 
+ * @brief Initialize I2C
  * 
- * 			- CLOCK SPEED: According to '3.2 Clock System Operation'
- *				+ MCLK & SMCLK = DCOCLK
- *				+ Then they are divided by 8
- *				+-----------------------------
- *					+ DCOCLK = 1MHx
- *					+ SMCLK & MCLK = 1 MHz / 8
- *					+ SMCLK & MCLK = 125KHz
- * 
- * @param clockSrc 
- * @param clockDivide 
- * @param mode 
- * @param ownSize 
+ * @param clockSrc Clock Source: (SLAVE_UCxCLK_I2C, MASTER_ACLK_I2C, MASTER_SMCLK_I2C) 
+ * 						|||  SMCLK & MCLK = DCOCLK(1MHz) / 8  = 125KHz 
+ * 						|||  According to '3.2 Clock System Operation'
+ * @param clockDivide Clock Prescaler Value
+ * @param mode I2C Mode: I2C_MASTER or I2C_SLAVE
+ * @param ownSize Size of own Address: _7BIT_I2C or _10BIT_I2C
  * @return ** void 
  */
 void I2C_Init(E_I2CClockSource clockSrc, uint16_t clockDivide, E_I2CMode mode, E_AddressSize ownSize);
 /**
- * @brief 
+ * @brief Set Address parameters of slave device connected to host.
  * 
- * @param slaveAddrs 
- * @param slaveSize 
+ * @param slaveAddrs Slave Address Value
+ * @param slaveSize Size of Slave Address:  _7BIT_I2C or _10BIT_I2C
  * @return ** void 
  */
 void I2C_SetSlaveAddress(uint16_t slaveAddrs, E_AddressSize slaveSize);
 /**
- * @brief 
+ * @brief Enable Receive Mode for I2C
  * 
  * @return ** void 
  */
 void Start_RX_Mode(void);
 /**
- * @brief 
+ * @brief Enable Transmit Mode for I2C
  * 
  * @return ** void 
  */
 void Start_TX_Mode(void);
 /**
- * @brief 
+ * @brief Receive data via I2C
  * 
- * @return ** uint8_t 
+ * @return ** uint8_t Data received
  */
 uint8_t I2C_Receive(void);
 /**
- * @brief 
+ * @brief Starts a Transmission of data via I2C
  * 
- * @param data 
+ * @param data Data to be transmitted.
  * @return ** uint8_t 
  */
 uint8_t I2C_Transmit(uint8_t data);
 /**
- * @brief 
+ * @brief Send 'Stop Condition' to end current I2C transmission.
  * 
  * @return ** void 
  */

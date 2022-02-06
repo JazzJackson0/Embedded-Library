@@ -24,22 +24,22 @@ typedef enum _AutoTrigSrc E_AutoTrigSrc;
 
 //DECLARATIONS
 /**
- * @brief Initialize and Start the ADC Conversion process.
+ * @brief Initialize ADC.
  * 			
- * 			- Arduino Uno Clock Speed Info
- *				+ ATmega defaults to 8MHz RC Prescaled to 1MHz.
- *				+ Arduino Uno Board overrides ATmega and defaults 
- *				  to 16MHz external xtal oscillator. 
- * @param channel 
- * @param clockDivide 
- * @param autoTrigSrc 
+ * @param channel ADC Channel (ADC_0 - ADC_5)
+ * @param clockDivide ADC Clock Speed Divider: 
+ * 						(ADC_DIV_2 - ADC_DIV_128: In intervals of 2^n, where n = [1 - 7])
+ * 						 |||  ATmega defaults to 8MHz RC Prescaled to 1MHz
+ * 						|||  Arduino Uno Board overrides ATmega and defaults to 
+ * 							16MHz external xtal oscillator
+ * @param autoTrigSrc ADC will start a conversion on a positive edge of the selected trigger signal.
  * @return ** void 
  */
-void ADC_Init_and_Start(E_Channel channel, E_ADCClockDivide clockDivide, E_AutoTrigSrc autoTrigSrc);
+void ADC_Init(E_Channel channel, E_ADCClockDivide clockDivide, E_AutoTrigSrc autoTrigSrc);
 /**
- * @brief 
+ * @brief Start Conversion and Read ADC Result
  * 
- * @return ** int16_t 
+ * @return ** int16_t Conversion Result
  */
 int16_t ADC_Read(void);
 

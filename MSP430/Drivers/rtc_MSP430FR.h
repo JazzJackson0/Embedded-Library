@@ -11,65 +11,66 @@
 
 //DECLARATIONS
 /**
- * @brief 
+ * @brief Initialize the RTC
  * 
- * @param rtcID 
+ * @param rtcID RTC ID (B or C)
  * @return ** void 
  */
 void RTC_Init(char rtcID);
 /**
- * @brief 
+ * @brief Set the Time
  * 
- * @param rtcID 
- * @param hour 
- * @param minute 
- * @param second 
+ * @param rtcID RTC ID (B or C)
+ * @param hour Hour Value
+ * @param minute Minute Value
+ * @param second Second Value
  * @return ** void 
  */
 void Set_Time(char rtcID, uint8_t hour, uint8_t minute, uint8_t second);
 //Get yearCentury, yearTens, and yearUnits to be 1 number that you split!!!!!!!!!!!!!!!!!!!
 /**
- * @brief 
+ * @brief Set the Date
  * 
- * @param rtcID 
- * @param day 
- * @param month 
- * @param weekday 
- * @param yearCentury 
- * @param yearTens 
- * @param yearUnits 
+ * @param rtcID RTC ID (B or C)
+ * @param day Day Value
+ * @param month Month Value
+ * @param weekday Weekday Value
+ * @param yearCentury Year (Century) value
+ * @param yearTens Year (Tens) value
+ * @param yearUnits Year (Units) value
  * @return ** void 
  */
-void Set_Date(char rtcID, uint8_t day, uint8_t month, uint8_t weekday, uint8_t yearCentury, uint8_t yearTens, uint8_t yearUnits);
+void Set_Date(char rtcID, uint8_t day, uint8_t month, uint8_t weekday, 
+	uint8_t yearCentury, uint8_t yearTens, uint8_t yearUnits);
 /**
- * @brief 
+ * @brief Set the Alarm Time
  * 
- * @param rtcID 
- * @param hour 
- * @param minute 
+ * @param rtcID RTC ID (B or C)
+ * @param hour Hour Value
+ * @param minute Minute Value
  * @return ** void 
  */
 void Set_TimeAlarm(char rtcID, uint8_t hour, uint8_t minute);
 /**
- * @brief 
+ * @brief Set Alarm Date
  * 
- * @param rtcID 
- * @param weekday 
- * @param monthDay 
+ * @param rtcID RTC ID (B or C)
+ * @param weekday Weekday Value (Sunday = 0 - Saturday = 6)
+ * @param monthDay Daye of the Month
  * @return ** void 
  */
 void Set_DateAlarm(char rtcID, uint8_t weekday, uint8_t monthDay);
 /**
- * @brief 
+ * @brief Get Current Time
  * 
- * @param rtcID 
+ * @param rtcID RTC ID (B or C)
  * @return ** void 
  */
 void Get_Time(char rtcID);
 /**
- * @brief 
+ * @brief Get Current Date
  * 
- * @param rtcID 
+ * @param rtcID RTC ID (B or C)
  * @return ** void 
  */
 void Get_Date(char rtcID);

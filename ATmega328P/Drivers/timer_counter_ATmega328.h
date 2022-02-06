@@ -27,46 +27,61 @@ typedef enum _ClockSpeed E_ClockSpeed;
 
 //DECLARATIONS
 /**
- * @brief 
+ * @brief Initialize and Start Timer
  * 
- * @param timerID 
- * @param clockSpeed 
- * @param time 
+ * @param timerID Timer ID (0-2)
+ * @param clockSpeed Timer Clock Speed 
+ * 					(NO_CLOCK, FULL_CLOCK, _DIV_x: Where x = 8, 64, 256, 1024, XTALCLOCK_FALLEDGE, 
+ * 					XTALCLOCK_RISEEDGE)
+ * @param time Time Goal: Example: Let (Clock Speed / Prescaler) = 1000Hz/Sec
+ * 							---- For 1sec Time Goal: Time = 1000(Hz)
+ * 						|||  00:00 ---> Time Goal |||  RESET
+ *						|||  00:00 ---> Time Goal |||  RESET |||  ETC...)
  * @return ** void 
  */
 void Timer_Start(uint8_t timerID, E_ClockSpeed clockSpeed, uint16_t time);
 /**
- * @brief 
+ * @brief Initialize and Start Timer. Timer will not repeat, but will return 1 upon
+ * 			reaching time goal.
  * 
- * @param timerID 
- * @param clockSpeed 
- * @param time 
- * @return ** uint8_t 
+ * @param timerID Timer ID (0-2)
+ * @param clockSpeed Timer Clock Speed
+ * @param time Time Goal: Example: Let (Clock Speed / Prescaler) = 1000Hz/Sec
+ * 							---- For 1sec Time Goal: Time = 1000(Hz)
+ * 						|||  00:00 ---> Time Goal |||  RESET
+ *						|||  00:00 ---> Time Goal |||  RESET |||  ETC...)
+ * @return ** uint8_t Value 1 is returned upon completion of timer.
  */
 uint8_t OneShotTimer_Start(uint8_t timerID, E_ClockSpeed clockSpeed, uint16_t time);
 /**
- * @brief 
+ * @brief Initialize PWM
  * 
- * @param timerID 
- * @param clockSpeed 
- * @param time 
- * @param dutyCycle 
+ * @param timerID Timer ID (0-2)
+ * @param clockSpeed Timer Clock Speed
+ * @param time Time Goal: Example: Let (Clock Speed / Prescaler) = 1000Hz/Sec
+ * 							---- For 1sec Time Goal: Time = 1000(Hz)
+ * 						|||  00:00 ---> Time Goal |||  RESET
+ *						|||  00:00 ---> Time Goal |||  RESET |||  ETC...)
+ * @param dutyCycle PWM Duty Cycle 
  * @return ** void 
  */
 void PWM_Init(uint8_t timerID, E_ClockSpeed clockSpeed, uint16_t time, float dutyCycle);
 /**
- * @brief 
+ * @brief Update PWM with new Duty Cycle
  * 
- * @param timerID 
- * @param time 
- * @param dutyCycle 
+ * @param timerID Timer ID (0-2)
+ * @param time Time Goal: Example: Let (Clock Speed / Prescaler) = 1000Hz/Sec
+ * 							---- For 1sec Time Goal: Time = 1000(Hz)
+ * 						|||  00:00 ---> Time Goal |||  RESET
+ *						|||  00:00 ---> Time Goal |||  RESET |||  ETC...)
+ * @param dutyCycle PWM Duty Cycle
  * @return ** void 
  */
 void PWM_Update(uint8_t timerID, uint16_t time, float dutyCycle);
 /**
- * @brief 
+ * @brief Stop Timer mid-count.
  * 
- * @param timerID 
+ * @param timerID Timer ID (0-2)
  * @return ** uint16_t 
  */
 uint16_t Stop_Timer(uint8_t timerID);
@@ -163,7 +178,7 @@ typedef struct _interrupt_flags INT_FLAG;
 enum _ClockSpeed {
 	NO_CLOCK = 0x00, FULL_CLOCK = 0x01, _DIV_8 = 0x02,
 	_DIV_64 = 0x03, _DIV_256 = 0x04, _DIV_1024 = 0x05,
-	EXTERNALCLOCK_FALLEDGE = 0x06, EXTERNALCLOCK_RISEEDGE = 0x07
+	XTALCLOCK_FALLEDGE = 0x06, XTALCLOCK_RISEEDGE = 0x07
 };
 
 //Registers----------------------------------------------------------------------------------------------

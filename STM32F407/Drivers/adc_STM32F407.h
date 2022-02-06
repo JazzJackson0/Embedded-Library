@@ -6,48 +6,46 @@
 
 typedef enum _Channel E_Channel;
 typedef enum _SamplePeriod E_SamplePeriod;
-typedef enum _Channel E_Resolution;
-typedef enum _Resolution E_ConvertLen;
+typedef enum _Resolution E_Resolution;
+typedef enum _singleCont E_SingleCont;
 typedef enum _ConversionNum E_ConversionNum;
 
 //DECLARATIONS
 /**
- * @brief 
+ * @brief Initialize a given ADC channel
  * 
- * @param adcNumber 
- * @param adcChannel 
- * @param conversionOrderNum 
- * @param cycles 
+ * @param adcNumber ADC Number. (1 - 3)
+ * @param adcChannel ADC (Regular) Channel Number. (CH_0 - CH_18)
+ * @param conversionOrderNum Set the conversion order for the Channel (1st - 16th conversion) 
+ * @param cycles Number of clock cycles per sample. (_x_CYCLES: Where x = 3, 15, 28, 56, 
+ * 				84, 112, 144, 480)
  * @return ** void 
  */
-void ADCRegularChannel_Init(uint8_t adcNumber, E_Channel adcChannel, uint8_t conversionOrderNum, E_SamplePeriod cycles);
+void ADCRegularChannel_Init(uint8_t adcNumber, E_Channel adcChannel, 
+	uint8_t conversionOrderNum, E_SamplePeriod cycles);
 /**
- * @brief 
+ * @brief Initialize ADC
  * 
- * @param adcNumber 
- * @param resolution 
- * @param singleContinuous 
- * @param numOfConversions 
+ * @param adcNumber ADC Number. (1 - 3)
+ * @param resolution ADC Resolution. (_xBIT_ADC: Where x = 10, 12, 16, 18)
+ * @param singleContinuous A SINGLE conversion or CONTINUOUS conversions.
+ * @param numOfConversions Number of Channels to be converted in the Sequence of 16.
+ * 							|||  _x_CONVERSION: Where x = 1 - 16
+ * 							||| Example: _3_CONVERSIONS = Only 1st, 2nd and 3rd Channels in
+ * 								conversion sequence will run (Out of a Max of a sequence of 16) .
  * @return ** void 
  */
-void ADC_Init(uint8_t adcNumber, E_Resolution resolution, E_ConvertLen singleContinuous, E_ConversionNum numOfConversions);
+void ADC_RegularInit(uint8_t adcNumber, E_Resolution resolution, E_SingleCont singleContinuous, 
+	E_ConversionNum numOfConversions);
 /**
- * @brief 
+ * @brief Start Conversion and Read Regular Channel Conversion Result. 
+ * 			Call once for each Channel in a Sequence
  * 
- * @param adcNumber 
- * @return ** int16_t 
+ * @param adcNumber ADC Number. (1 - 3)
+ * @return ** int16_t Regular Channel Conversion Result
  */
 int16_t ADC_ReadRegularChannel(uint8_t adcNumber);
-/**
- * @brief 
- * 			dB(mW): power relative to 1 milliwatt. 
- *			In audio and telephony, dBm is typically referenced relative to a 600 Ω impedance, 
- *			which corresponds to a voltage level of 0.775 volts or 775 millivolts/
- * 
- * @param analogVolt 
- * @return ** float 
- */
-float Decibel_Out(uint16_t analogVolt);
+
 
 //CLOCK
 #define CLOCK 0x40023800
@@ -188,7 +186,7 @@ enum _Resolution {
 };
 
 
-enum _ConvertLen {
+enum _singleCont {
 	SINGLE = 0, CONTINUOUS = 1
 };
 

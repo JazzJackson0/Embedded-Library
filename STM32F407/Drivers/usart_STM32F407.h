@@ -8,48 +8,41 @@ typedef enum _Parity E_Parity;
 
 //DECLARATIONS
 /**
- * @brief 
- * 			- Default System Clock (fclk) = HSI 16MHz w/ No prescales or PLL
- *				+ USART 1 & 6 fclk = APB2 High Speed Bus (84MHz MAX Freq)
- *				+ USART/UART 2,3,4 & 5 fclk = APB1 Low Speed Bus (42MHz MAX Freq)
+ * @brief Set USART Baud & Oversample Rates
+ * 				|||  Default System Clock (fclk): HSI 16MHz w/ No prescales or PLL
+ *				|||  USART 1 & 6 fclk: APB2 High Speed Bus (84MHz MAX Freq)
+ *				|||  USART/UART 2,3,4 & 5 fclk: APB1 Low Speed Bus (42MHz MAX Freq)
  *				
- *			- Calculating Baudrate:
- *				+ (Desired BaudRate) = fclk / (OverSampleRate * USARTDIV)
- *				+ Equation to Use: USARTDIV = fclk / (OverSampleRate * (Desired BaudRate))
  *			
- *				+  Example: Getting a 9600 Baud Rate 
- *					- USARTDIV = 104.1875
- *					- Mantissa = 104
- *					- Fraction = .1875 * (Oversampling Rate [16 in this case]) = 3
- * @param usartNumber 
- * @param baudRate 
- * @param overSampleRate 
+ * @param usartNumber USART Number (USART: 1-3, 6 UART: 4-5)
+ * @param baudRate USART BaudRate
+ * @param overSampleRate OverSample Rate: 8 or 16
  * @return ** void 
  */
 void USART_BaudRate_and_OverSample(uint8_t usartNumber, uint32_t baudRate, uint8_t overSampleRate);
 /**
- * @brief 
+ * @brief Initialize USART
  * 
- * @param usartNumber 
- * @param parityType 
- * @param dataBitSize 
- * @param stopBitSize 
+ * @param usartNumber USART Number (USART: 1-3, 6 UART: 4-5)
+ * @param parityType Parity Type: EVEN_PARITY, ODD_PARITY or NO_PARITY
+ * @param dataBitSize Data Frame Size: 8-Bit or 9-Bit
+ * @param stopBitSize Stop Bit Size: 0.5, 1.0, 1.5 or 2.0
  * @return ** void 
  */
 void USART_Init(uint8_t usartNumber, E_Parity parityType, uint8_t dataBitSize, float stopBitSize);
 /**
- * @brief 
+ * @brief Transmit data via USART
  * 
- * @param usartNumber 
- * @param data 
+ * @param usartNumber USART Number (USART: 1-3, 6 UART: 4-5)
+ * @param data Data to transmit
  * @return ** uint8_t 
  */
 uint8_t USART_Transmit(uint8_t usartNumber, uint8_t data);
 /**
- * @brief 
+ * @brief Receive data via USART
  * 
- * @param usartNumber 
- * @return ** uint8_t 
+ * @param usartNumber USART Number (USART: 1-3, 6 UART: 4-5)
+ * @return ** uint8_t Received Data
  */
 uint8_t USART_Receive(uint8_t usartNumber);
 

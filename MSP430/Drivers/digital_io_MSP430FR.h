@@ -12,30 +12,30 @@ typedef enum _PullUpDown E_PullUpDown;
 
  //DECLARATIONS
 /**
- * @brief 
+ * @brief Initialize Given Pin
  * 
- * @param port 
- * @param pinNum 
- * @param direction 
- * @param function 
- * @param pUppDwn 
+ * @param port Port ID (1 - 11, A - I)
+ * @param pinNum Pin Number
+ * @param direction Pin Direction: IN, OUT, NONE
+ * @param function Pin Function: PRIMARY_F, SECONDARY_F, TERTIARY_F, NO_F
+ * @param pUppDwn Set pin PullUp/PullDown settings: P_UP, P_DOWN, NONE
  * @return ** void 
  */
 void Pin_Init(char port, uint8_t pinNum, E_PinType direction, E_FunctionType function, E_PullUpDown pUppDwn);
 /**
- * @brief 
+ * @brief Get Input from given Pin
  * 
- * @param port 
- * @param pinNum 
- * @return ** uint8_t 
+ * @param port Port ID (1 - 11, A - I)
+ * @param pinNum Pin Number
+ * @return ** uint8_t Pin State: Low = 0, HIGH = 1
  */
 uint8_t Pin_GetInput(char port, uint8_t pinNum);
 /**
- * @brief 
+ * @brief Send signal out on given Pin
  * 
- * @param port 
- * @param pinNum 
- * @param pinState 
+ * @param port Port ID (1 - 11, A - I)
+ * @param pinNum Pin Number
+ * @param pinState State of Pin: Low = 0, HIGH = 1
  * @return ** void 
  */
 void Pin_Out(char port, uint8_t pinNum, uint8_t pinState);

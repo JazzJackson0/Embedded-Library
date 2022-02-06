@@ -12,40 +12,41 @@ typedef enum _BitOrder E_BitOrder;
 
 //DECLARATIONS
 /**
- * @brief 
- * 			SPI Clock:
- *				- SPI1 Clock = PCLK2 (AKA: APB2 84 MHz)
- *				- Baud Rate = PCLK2 / 2 = 42 MHz
+ * @brief Set SPI Clock Settings
  * 
- * @param spiNumber 
- * @param phase 
- * @param polarity 
- * @param prescaler 
+ * @param spiNumber SPI Number (1 - 3)
+ * @param phase Clock Phase: _1ST_EDGE or _2ND_EDGE
+ * @param polarity Clock Polarity: HIGH_POL or LOW_POL
+ * @param prescaler Clock Prescaler: Sets the BaudRate. 
+ * 					(CLOCK_DIV_x: Where x = 2, 4, 8, 16, 32, 64, 128, 256)
+ * 					|||  (Example: Prescaler Value = [2]
+ * 					|||  PCLK2 [AKA: APB2 84 MHz] -- SPI1 Clock Default
+ * 					|||  Baud Rate = PCLK2 / [2] = 42 MHz)
  * @return ** void 
  */
 void SPI_ClockSetup(uint8_t spiNumber, E_Phase phase, E_Polarity polarity, E_Prescaler prescaler);
 /**
- * @brief 
+ * @brief Initialize SPI
  * 
- * @param spiNumber 
- * @param mode 
- * @param bitOrder 
- * @param dataSize 
+ * @param spiNumber SPI Number (1 - 3)
+ * @param mode SPI Mode: SLAVE or MASTER
+ * @param bitOrder Order of Bits: LSB or MSB
+ * @param dataSize Size of data frame: 8-Bit or 16-Bit 
  * @return ** void 
  */
 void SPI_Init(uint8_t spiNumber, E_Mode mode, E_BitOrder bitOrder, uint8_t dataSize);
 /**
- * @brief 
+ * @brief Receive Data via SPI
  * 
- * @param spiNumber 
- * @return ** uint8_t 
+ * @param spiNumber SPI Number (1 - 3)
+ * @return ** uint8_t Received Data
  */
 uint8_t SPI_Receive(uint8_t spiNumber);
 /**
- * @brief 
+ * @brief Transmit Data via SPI
  * 
- * @param spiNumber 
- * @param data 
+ * @param spiNumber SPI Number (1 - 3)
+ * @param data Data to transmit
  * @return ** uint8_t 
  */
 uint8_t SPI_Transmit(uint8_t spiNumber, uint8_t data);

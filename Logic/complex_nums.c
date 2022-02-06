@@ -3,12 +3,13 @@
 #include <stdlib.h>
 
 
-complexNum* Get_SinusoidalBasis(double angle) {
+complexNum* Get_SinusoidalBasis(double kt) {
 
     complexNum *result = malloc(sizeof(complexNum));
 
-    result->realPart = cos(angle);
-    result->imaginaryPart = -sin(angle);
+    //Should I add 2pi to this?: k x 2pi x t
+    result->realPart = cos(kt); 
+    result->imaginaryPart = -sin(kt);
 
     return result;
 }

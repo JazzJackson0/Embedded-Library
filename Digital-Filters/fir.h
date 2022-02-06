@@ -4,18 +4,18 @@ typedef struct fir firFilter;
 
 //DECLARATIONS
 /**
- * @brief 
+ * @brief Initialize FIR Filter
  * 
- * @param tapSize 
- * @param coefficients
- * @return ** firFilter* 
+ * @param tapSize Filter Tap-Size
+ * @param coefficients Filter Coefficients
+ * @return ** firFilter* Initialized FIR Filter
  */
 firFilter* fir_Init(int tapSize, double *coefficients);
 /**
- * @brief 
+ * @brief Filter incoming sample.
  * 
- * @param filter 
- * @param newSample 
+ * @param filter FIR Filter to be updated
+ * @param newSample New sample to be filtered
  * @return ** void 
  */
 void FIRCalculator(firFilter *filter, double newSample);

@@ -4,63 +4,63 @@ typedef struct q Quaternion;
 
 //DECLARATIONS
 /**
- * @brief 
+ * @brief Multiply two quaternions
  * 
- * @param q 
- * @param p 
- * @return ** Quaternion* 
+ * @param q Left quaternion
+ * @param p Right quaternion
+ * @return ** Quaternion* Quaternion Product
  */
 Quaternion* MultiplyQuaternions(Quaternion *q, Quaternion *p);
 /**
- * @brief 
+ * @brief Divide two quaternions
  * 
- * @param q 
- * @param p 
- * @return ** Quaternion* 
+ * @param q Left quaternion
+ * @param p Right quaternion
+ * @return ** Quaternion* Quaternion Quotient
  */
 Quaternion* DivideQuaternions(Quaternion *q, Quaternion *p);
 /**
- * @brief 
+ * @brief Rotate a given vector around a given quaternion
  * 
- * @param vector 
- * @param q 
- * @return ** Quaternion* 
+ * @param vector Vector t rotate
+ * @param q Quaternion to rotate vector around.
+ * @return ** Quaternion* Resulting quaternion
  */
 Quaternion* Rotate_Vector(double *vector, Quaternion *q);
 /**
- * @brief 
+ * @brief Rotate quaternion by given angle
  * 
- * @param q 
- * @param angle 
- * @return ** Quaternion* 
+ * @param q Quaternion to rotate
+ * @param angle Angle of rotation
+ * @return ** Quaternion* Rotated quaternion.
  */
 Quaternion* RotateByAngle(Quaternion *q, double angle);
 /**
- * @brief 
+ * @brief Normalize quaternion
  * 
- * @param q 
- * @return ** Quaternion* 
+ * @param q Quaternion to normalize
+ * @return ** Quaternion* Normalized quaternion
  */
 Quaternion* NormalizeQuaternion(Quaternion *q);
 /**
- * @brief 
+ * @brief Get length of quaternion
  * 
- * @param q 
- * @return ** double 
+ * @param q Quaternion to get length of
+ * @return ** double Quaternion length
  */
 double Get_QuaternionLength(Quaternion *q);
 /**
- * @brief 
+ * @brief Get inverse of quaternion
  * 
- * @param q 
- * @return ** Quaternion* 
+ * @param q Quaternion to invert
+ * @return ** Quaternion* Quaternion inverse
  */
 Quaternion* Get_QuaternionInverse(Quaternion *q);
 /**
- * @brief 
+ * @brief Get conjugate of quaternion
  * 
- * @param q 
- * @return ** Quaternion* 
+ * @param q Quaternion to congugate
+ * @return ** Quaternion* Quaternion conjugate
  */
 Quaternion* Get_QuaternionConjugate(Quaternion *q);
 

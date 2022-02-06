@@ -8,22 +8,22 @@ Can be tweaked to fit other microcontrollers.
 
 //DECLARATIONS
 /**
- * @brief 
+ * @brief Initialize LCD
  * 
  * @return ** void 
  */
 void LCD_Init(void);
 /**
- * @brief 
+ * @brief Send instruction to LCD.
  * 
- * @param instruct 
+ * @param instruct Instruction to send to LCD
  * @return ** void 
  */
 void LCD_Instruct(uint8_t instruct);
 /**
- * @brief 
+ * @brief Display Data to LCD
  * 
- * @param data 
+ * @param data Data to display on LCD
  * @return ** void 
  */
 void LCD_Display(uint16_t data);

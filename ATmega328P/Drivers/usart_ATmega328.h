@@ -16,26 +16,27 @@ typedef enum _USARTMode E_USARTMode;
 
 //DECLARATIONS
 /**
- * @brief 
+ * @brief Initialize USART
  * 
- * @param mode 
- * @param parity 
- * @param polarity 
- * @param dataSize 
- * @param numOfStopBits 
+ * @param mode USART Mode: ASYNC, SYNC or MASTER_SPI
+ * @param parity Parity Bit: EVEN_PAR, ODD_PAR or NO_PAR
+ * @param polarity Clock Polarity: TX_ONRISE_RX_ONFALL,  TX_ONFALL_RX_ONRISE
+ * @param dataSize Data Frame Size: (5-Bits - 9-Bits)
+ * @param numOfStopBits Number of Stop Bits: 1 or 2
  * @return ** void 
  */
-void USART_Init(E_USARTMode mode, E_Parity parity, E_USARTPolarity polarity, uint8_t dataSize, uint8_t numOfStopBits);
+void USART_Init(E_USARTMode mode, E_Parity parity, E_USARTPolarity polarity, uint8_t dataSize, 
+	uint8_t numOfStopBits);
 /**
- * @brief 
+ * @brief Receive data via USART
  * 
- * @return *** uint8_t 
+ * @return *** uint8_t Data received
  */
 uint8_t USART_Receive(void);
 /**
- * @brief 
+ * @brief Transmit data via USART
  * 
- * @param data 
+ * @param data Data to transmit
  * @return ** void 
  */
 void USART_Transmit(uint8_t data);
@@ -99,7 +100,7 @@ enum _USARTPolarity {
 //USART_CONTROL_STATUS_C
 /*Parity Modes*/
 enum _Parity {
-	EVEN_PAR = 0x02, ODD_PAR = 0x03
+	NO_PAR = 0x00, EVEN_PAR = 0x02, ODD_PAR = 0x03
 };
 
 /*UART Mode Types*/

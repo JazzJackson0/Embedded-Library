@@ -71,7 +71,7 @@ KalmanFilter* KalmanInit(double* initialState, Matrix *FMatrix, Matrix *BMatrix,
     return kf;
 }
 
-KalmanFilter* kalman_filter(KalmanFilter *k_filter) {
+void kalman_filter(KalmanFilter *k_filter) {
 
     //Add timestep loop
     k_filter->expectedStateEstimate = Get_ExpectedStateEstimate(k_filter);
@@ -81,8 +81,6 @@ KalmanFilter* kalman_filter(KalmanFilter *k_filter) {
     k_filter->kalmanGainMatrix = Get_KalmanGainMatrix(k_filter);;
     k_filter->updatedStateEstimate = Get_UpdatedStateEstimate(k_filter);;
     k_filter->updatedCovariance = Get_UpdatedCovariance(k_filter);;
-
-    return k_filter;
 }
 
 //Helper Functions----------------------------------------------------------------------

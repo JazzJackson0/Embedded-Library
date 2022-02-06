@@ -116,7 +116,7 @@ void kalman_filterTest() {
     KalmanFilter *kf = KalmanInit(initialState, 
         fmatrix, bmatrix, hmatrix, pmatrix, qmatrix, rmatrix);
 
-    kf = kalman_filter(kf);
+    kalman_filter(kf);
     assert(0.0 == kf->updatedStateEstimate->matrix[0][0]);
     assert(0.0 == kf->updatedStateEstimate->matrix[0][1]);
 

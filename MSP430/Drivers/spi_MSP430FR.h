@@ -12,44 +12,34 @@ typedef enum _Polarity E_Polarity;
 
 //DECLARATIONS
 /**
- * @brief 
- * 			- BIT CLOCK VALUE
- *				+ fbitclock = (Clock Source)/(Value you Enter)
- *					- If (Value you Enter) = 0, fbitclock = (CLock Source)
- *			
- *			- CLOCK SPEED: According to '3.2 Clock System Operation'
- *				+ MCLK & SMCLK = DCOCLK
- *				+ Then they are divided by 8
- *				-----------------------------
- *					- DCOCLK = 1MHx
- *					- SMCLK & MCLK = 1 MHz / 8
- *					- SMCLK & MCLK = 125KHz			
- * 
- * @param spiNumber 
- * @param clockSrc 
- * @param clockDivide 
- * @param phase 
- * @param polarity 
+ * @brief Setup the SPI Clock Source, Speed, Phase and Polarity.
+ *
+ * @param spiNumber SPI Number (A0-A1, B0)
+ * @param clockSrc Clock Source: (SLAVE_UCxCLK_SPI, MASTER_ACLK_SPI, MASTER_SMCLK_SPI) 
+ * 						|||  SMCLK & MCLK = DCOCLK(1MHz) / 8  = 125KHz 
+ * 						|||  According to '3.2 Clock System Operation'
+ * @param clockDivide Bit Clock (fbitclock) Prescaler Value
+ * @param phase Clock Phase: _1ST_EDGE or _2ND_EDGE
+ * @param polarity Clock Polarity: HIGH_POL or LOW_POL
  * @return ** void 
  */
 void SPI_ClockSetup(char* spiNumber, E_SPIClockSource clockSrc, uint16_t clockDivide, E_Phase phase, E_Polarity polarity);
 /**
- * @brief 
+ * @brief Initialize SPI
  * 
- * @param spiNumber 
- * @param mode 
- * @param bitOrder 
- * @param dataSize 
+ * @param spiNumber SPI Number (A0-A1, B0)
+ * @param mode SPI Mode: SPI_MASTER or SPI_SLAVE
+ * @param bitOrder Order of Bits: LSB odr MSB
+ * @param dataSize Size of Data: 7-Bit or 8-Bit
  * @return ** void 
  */
 void SPI_Init(char* spiNumber, E_SPIMode mode, E_BitOrder bitOrder, uint8_t dataSize);
 /**
- * @brief 
+ * @brief Transmit and receive data via SPI
  * 
- * @param spiNumber 
- * @param data 
- * 			- To just receive, input 0x00 for data.
- * @return ** uint8_t 
+ * @param spiNumber SPI Number (A0-A1, B0)
+ * @param data Data to transmit |||  To just receive, input 0x00 for data.
+ * @return ** uint8_t Data Received
  */
 uint8_t SPI_Transmit_and_Receive(char* spiNumber, uint8_t data);
 

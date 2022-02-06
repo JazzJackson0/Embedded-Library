@@ -10,46 +10,40 @@ typedef enum _UARTClockSource E_UARTClockSource;
 
 //DECLARATIONS
 /**
- * @brief 
+ * @brief Set the Clock Source, BaudRate and Oversample Rate of a given UART
  * 
- * 			MSP430FR CLOCK SPEED: According to '3.2 Clock System Operation'
- *				+ MCLK & SMCLK = DCOCLK
- *				+ Then they are divided by 8
- *				-----------------------------
- *					- DCOCLK = 1MHz
- *					- SMCLK & MCLK = 1 MHz / 8
- *					- SMCLK & MCLK = 125KHz
- * 
- * @param uartNum 
- * @param clocksrc 
- * @param baudRate 
- * @param overSampleRate 
+ * @param uartNum UART Number (0 or 1)
+ * @param clocksrc Clock Source: (U_CLOCK, A_CLOCK, SM_CLOCK) 
+ * 						|||  SMCLK & MCLK = DCOCLK(1MHz) / 8  = 125KHz 
+ * 						|||  According to '3.2 Clock System Operation'
+ * @param baudRate UART BaudRate
+ * @param overSampleRate OverSample Rate: 0 or 16
  * @return ** void 
  */
 void USART_BaudRate_and_OverSample(char* uartNum, E_UARTClockSource clocksrc, uint32_t baudRate, uint8_t overSampleRate);
 /**
- * @brief 
+ * @brief Initialize UART
  * 
- * @param uartNum 
- * @param numOfStopBits 
- * @param dataSize 
- * @param parityType 
- * @param bitorder 
+ * @param uartNum UART Number (0 or 1)
+ * @param numOfStopBits Number of Stop Bits: 1 or 2
+ * @param dataSize Data Frame Size: 7-Bits or 8-Bits
+ * @param parityType Parity Type: EVEN_PARITY, ODD_PARITY, NO_PARITY
+ * @param bitorder Order of Bits: _LSB or _MSB
  * @return ** void 
  */
 void UART_Init(char* uartNum, uint8_t numOfStopBits, uint8_t dataSize, E_Parity parityType, E_UARTBitOrder bitorder);
 /**
- * @brief 
+ * @brief Receive Data over UART
  * 
- * @param uartNum 
- * @return ** uint8_t 
+ * @param uartNum UART Number (0 or 1)
+ * @return ** uint8_t Data received
  */
 uint8_t UART_Receive(char* uartNum);
 /**
- * @brief 
+ * @brief Transmit data over UART
  * 
- * @param uartNum 
- * @param data 
+ * @param uartNum UART Number (0 or 1)
+ * @param data Data to transmit
  * @return ** void 
  */
 void UART_Transmit(char* uartNum, uint8_t data);

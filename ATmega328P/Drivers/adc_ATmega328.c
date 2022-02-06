@@ -9,7 +9,7 @@ POWER_REDUCTION_ADC *const ADCPower = ADDR_POWER_REDUCTION_ADC;
 ADCx *const ADC = ADDR_ADC;
 
 
-void ADC_Init_and_Start(E_Channel channel, E_ADCClockDivide clockDivide, E_AutoTrigSrc autoTrigSrc) {
+void ADC_Init(E_Channel channel, E_ADCClockDivide clockDivide, E_AutoTrigSrc autoTrigSrc) {
 	
 	ADCPower->adcOn0_adcOff1 = 0;
 	
@@ -22,11 +22,12 @@ void ADC_Init_and_Start(E_Channel channel, E_ADCClockDivide clockDivide, E_AutoT
 	ADC->ControlStatusBReg.rw_AutoTriggerSource = autoTrigSrc;
 	ADC->ControlStatusAReg.enable_ADCAutoTrigger = 1;
 	
-	ADC->ControlStatusAReg.start_ADCConversion = 1; //Starts the first conversion in Free Run Mode
+	//ADC->ControlStatusAReg.start_ADCConversion = 1; //Starts the first conversion in Free Run Mode
 }
 
 int16_t ADC_Read(void) {
-
+	
+	ADC->ControlStatusAReg.start_ADCConversion = 1;
 	while (ADC->ControlStatusAReg.start_ADCConversion == 1);
 	uint8_t low = ADC->DataLowReg.RightAdjust.read_ADCConversionResult;
 	uint8_t high = ADC->DataHighReg.RightAdjust.read_ADCConversionResult;

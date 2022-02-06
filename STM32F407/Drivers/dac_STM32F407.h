@@ -6,20 +6,29 @@
 
 //DECLARATIONS
 /**
- * @brief 
+ * @brief Initialize DAC
  * 
- * @param dacNum 
+ * @param dacNum DAC Channel Number. (1 - 2)
  * @return ** void 
  */
 void DAC_Init(uint8_t dacNum);
 /**
  * @brief Sends Analog voltage value out to pin & also returns the value
  * 
- * @param dacNum 
- * @param digitalData 
+ * @param dacNum DAC Channel Number.  (1 - 2)
+ * @param digitalData Digital data to be converted to analog output data.
  * @return ** int16_t 
  */
 int16_t DAC_Out(uint8_t dacNum, int16_t digitalData);
+
+/**
+ * @brief Return the decibel value of a given analog output.
+ * 			
+ * 
+ * @param analogVolt Analog voltage value to be converted to decibels.
+ * @return ** float 
+ */
+float Decibel_Out(int16_t analogVolt);
 
 //CLOCK
 #define CLOCK 0x40023800

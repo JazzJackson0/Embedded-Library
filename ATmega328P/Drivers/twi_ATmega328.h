@@ -15,39 +15,39 @@ typedef enum _Read_Write E_Read_Write;
 
 //DECLARATIONS
 /**
- * @brief 
- * 		- Arduino Uno Clock Speed Info
- *			+ ATmega defaults to 8MHz RC Prescaled to 1MHz
- *			+ Arduino Uno Board overrides ATmega and defaults to 16MHz external xtal oscillator
+ * @brief Initialize Two Wire Interface
  * 
- * @param clockDivider 
- * @param bitRatekHz (In KHz) Ex: 500 for 500KHz
+ * @param clockDivider TWI Clock Speed Divider (DIV_x: Where x = 1, 4, 16, 64)
+ * 						|||  ATmega defaults to 8MHz RC Prescaled to 1MHz
+ * 						|||  Arduino Uno Board overrides ATmega and defaults to 16MHz external 
+ * 							xtal oscillator
+ * @param bitRatekHz Bit Rate in KHz |||  Ex: 500 for 500KHz
  * @return ** void 
  */
 void TWI_Init(E_TWIClockDivide clockDivider, uint8_t bitRatekHz);
 /**
- * @brief 
+ * @brief Start TWI as Master
  * 
- * @param slaveAddress 
- * @param readWrite 
+ * @param slaveAddress Address of Slave Device
+ * @param readWrite READ or WRITE Bit
  * @return ** uint8_t 
  */
 uint8_t TWIMasterStart(uint8_t slaveAddress, E_Read_Write readWrite);
 /**
- * @brief 
+ * @brief Transmit data from TWI Master Device.
  * 
- * @param data 
+ * @param data Data to transmit.
  * @return ** uint8_t 
  */
 uint8_t TWIMaster_Transmit(uint8_t data);
 /**
- * @brief 
+ * @brief Receive data to Master Device via TWI 
  * 
- * @return ** uint8_t 
+ * @return ** uint8_t Data Received
  */
 uint8_t TWIMaster_Receive(void);
 /**
- * @brief 
+ * @brief Send 'Stop Condition' to end current transmission.
  * 
  * @return ** void 
  */

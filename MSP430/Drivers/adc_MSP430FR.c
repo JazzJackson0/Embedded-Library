@@ -13,31 +13,35 @@ MEM_CTRL_ACCESSx *const MEM_CTRL_x = ADDR_MEM_CTRL;
 MEM_ACCESSx *const MEM_x = ADDR_MEM;
 
 
-void ADC_SetClockSpeed(E_ADCClockSource clockSource, E_ClockDivider clockDivide, E_ADCPreDivider preDivide) {
+void ADC_SetClockSpeed(E_ADCClockSource clockSource, E_ADCPreDivider preDivide, 
+	E_ClockDivider clockDivide) {
 	
 	ADCx *const ADC = ADC_x;
 	
 	ADC->ControlReg1.select_ClockSource = clockSource;
-	ADC->ControlReg1.rw_ClockDivider = clockDivide;
 	ADC->ControlReg1.rw_ADCClockPreDivider = preDivide;
+	ADC->ControlReg1.rw_ClockDivider = clockDivide;
+	
 }
 
 
-void ADC_ConversionChannelSetup(E_ConversionChannel conversionChannel, E_DiffSignal_ConvChannel diffSigChannel, E_ConversionMemory memAddress) {
+void ADC_ConversionChannelSetup(E_ConversionChannel conversionChannel, 
+	E_DiffSignal_ConvChannel diffSigChannel, E_ConversionMemory memAddress) {
 	
 	uint8_t x = memAddress;
 	ADCx *const ADC = ADC_x;
 	MEM_CTRL_ACCESSx *const MEM_CTRL = MEM_CTRL_x;
 	
-	if (conversionChannel == NONE) { MEM_CTRL->RegisterAccess[x].rw_InputChannel = diffSigChannel; }
+	if (conversionChannel == NO_CH) { MEM_CTRL->RegisterAccess[x].rw_InputChannel = diffSigChannel; }
 	
-	else if (diffSigChannel == NONE) { MEM_CTRL->RegisterAccess[x].rw_InputChannel = conversionChannel; }
+	else if (diffSigChannel == NO_DIF_CH) { MEM_CTRL->RegisterAccess[x].rw_InputChannel = conversionChannel; }
 	
 	ADC->ControlReg3.rw_ConversionStartAddress = memAddress;
 }
 
 
-void ADC_Init(E_DataFormat dataFormat, E_Resolution resolution, E_SamplePeriod cycles, E_ConversionNum numOfConversions, E_ConversionMemory memAddress) {
+void ADC_Init(E_DataFormat dataFormat, E_Resolution resolution, E_SamplePeriod cycles, 
+	E_SingleContinuous singleContinuous, E_ConversionMemory memAddress) {
 	
 	uint8_t x = memAddress;
 	ADCx *const ADC = ADC_x;
@@ -46,7 +50,7 @@ void ADC_Init(E_DataFormat dataFormat, E_Resolution resolution, E_SamplePeriod c
 	ADC->ControlReg2.unsignedBinaryDataFormat0_signedBinaryDataFormat1 = dataFormat;
 	ADC->ControlReg2.rw_Resolution = resolution;
 	
-	ADC->ControlReg0.sampleOnRiseEdge0_sampleOnRiseEdgeThenAuto1 = numOfConversions;
+	ADC->ControlReg0.sampleOnRiseEdge0_sampleOnRiseEdgeThenAuto1 = singleContinuous;
 	ADC->ControlReg0.rw_ADCSamplePeriodLengthReg0To7 = cycles;
 	
 	MEM_CTRL->RegisterAccess[x].rw_MaxAndMinVoltageMeasureThresholds = MAX_AVCC_MIN_AVSS;

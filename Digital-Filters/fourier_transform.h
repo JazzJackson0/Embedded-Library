@@ -5,19 +5,21 @@ typedef struct binData frequencyBin_data;
 
 //DECLARATIONS
 /**
- * @brief 
+ * @brief Run a fourier transform on signal sample data and output 
+ *        the signal's frequency information.
  * 
- * @param sample_values 
- * @param samples_per_sec 
- * @return ** frequencyBin_data* 
+ * @param sample_values Signal samples 
+ * @param samples_per_sec Number of samples taken per second (Sample Frequency)
+ * @return ** frequencyBin_data* Frequency domain data for a given signal.
  */
 frequencyBin_data* fourier_transform(float *sample_values, int const samples_per_sec);
 /**
- * @brief 
+ * @brief Run an inverse fourier transform on frequency data and output 
+ *        the values needed to create a signal of the given frequencies.
  * 
- * @param frequency_values 
- * @param samples_per_sec 
- * @return ** IDFT_sample_data* 
+ * @param frequency_values Desired Frequencies
+ * @param samples_per_sec Desired FIR tap-size
+ * @return ** complexNum* Values to be used as FIR Coefficients
  */
 complexNum* IDFT(float *frequency_values, int const samples_per_sec);
 

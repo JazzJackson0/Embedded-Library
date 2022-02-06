@@ -3,7 +3,8 @@
 
 //Static Prototypes-------------------------------------
 static void Initialize(PIDController *PID);
-
+#define AUTOMATIC 1			
+#define REVERSE 1
 
 PIDController* PID_Init(void) {
 	
@@ -89,14 +90,14 @@ void Set_Output_Limits(PIDController *PID, double min, double max) {
 	else if (PID->Integrator < PID->min_output) PID->Integrator = PID->min_output;
 }
 
-void Set_PIDMode(PIDController *PID, int mode) { 
+void Set_PIDMode(PIDController *PID, PIDMode mode) { 
 	
 	bool newAutoMode = (mode == AUTOMATIC);
 	if (newAutoMode && !PID->inAutoMode) Initialize(PID); //If going from manunal to auto
 	PID->inAutoMode = newAutoMode;
 }
 
-void Set_ControllerDirection(PIDController *PID, int direction) {
+void Set_ControllerDirection(PIDController *PID, PIDDirection direction) {
 	
 	PID->controller_direction = direction;
 }

@@ -8,36 +8,36 @@ typedef enum _PinDirection E_PinDirection;
 
 //DECLARATIONS
 /**
- * @brief 
+ * @brief Initialize a given pin.
  * 
- * @param port 
- * @param pinNum 
- * @param direction 
+ * @param port Port ID (B, C, or D)
+ * @param pinNum Pin Number
+ * @param direction Pin Direction: IN or OUT
  * @return ** void 
  */
 void Pin_Init(char port, uint8_t pinNum, E_PinDirection direction);
 /**
- * @brief 
+ * @brief Get input from a given pin
  * 
- * @param port 
- * @param pinNum 
+ * @param port Port ID (B, C, or D)
+ * @param pinNum Pin Number
  * @return ** uint8_t 
  */
 uint8_t Pin_GetInput(char port, uint8_t pinNum);
 /**
- * @brief 
+ * @brief Send signal out on given pin
  * 
- * @param port 
- * @param pinNum 
- * @param pinState 
+ * @param port Port ID (B, C, or D)
+ * @param pinNum Pin Number
+ * @param pinState Pin State: LOW = 0, HIGH = 1
  * @return ** void 
  */
 void Pin_Out(char port, uint8_t pinNum, uint8_t pinState);
 /**
- * @brief 
+ * @brief Toggle state of a given pin
  * 
- * @param port 
- * @param pinNum 
+ * @param port Port ID (B, C, or D)
+ * @param pinNum Pin Number
  * @return ** void 
  */
 void Pin_Toggle(char port, uint8_t pinNum);

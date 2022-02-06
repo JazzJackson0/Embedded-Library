@@ -9,7 +9,7 @@
 static void USART_PinInit(uint8_t usartNumber);
 static USARTx* Get_USART(uint8_t usartNum);
 static void Set_DataBitSize(uint8_t usartNumber, uint8_t dataBitSize);
-static void Set_StopBitSize(uint8_t usartNumber, uint8_t stopBitSize);
+static void Set_StopBitSize(uint8_t usartNumber, float stopBitSize);
 static void USARTClockSelect(uint8_t usartNumber);
 
 //Global Variables-------------------------------------------------------
@@ -185,13 +185,13 @@ static void Set_DataBitSize(uint8_t usartNumber, uint8_t dataBitSize) {
 	}
 }
 
-static void Set_StopBitSize(uint8_t usartNumber, uint8_t stopBitSize) {
+static void Set_StopBitSize(uint8_t usartNumber, float stopBitSize) {
 	
 	USARTx *const USART = Get_USART(usartNumber);
-	if (stopBitSize == 0.5) { USART->ControlReg2.numberOfStopBits = HALF_STOPBIT; }
-	if (stopBitSize == 1.0) { USART->ControlReg2.numberOfStopBits = ONE_STOPBIT; }
-	if (stopBitSize == 1.5) { USART->ControlReg2.numberOfStopBits = ONE_AND_HALF_STOPBIT; }
-	if (stopBitSize == 2.0) { USART->ControlReg2.numberOfStopBits = TWO_STOPBIT; }
+	if (stopBitSize == (float) 0.5) { USART->ControlReg2.numberOfStopBits = HALF_STOPBIT; }
+	if (stopBitSize == (float) 1.0) { USART->ControlReg2.numberOfStopBits = ONE_STOPBIT; }
+	if (stopBitSize == (float) 1.5) { USART->ControlReg2.numberOfStopBits = ONE_AND_HALF_STOPBIT; }
+	if (stopBitSize == (float) 2.0) { USART->ControlReg2.numberOfStopBits = TWO_STOPBIT; }
 }
 
 static void USARTClockSelect(uint8_t usartNumber) {

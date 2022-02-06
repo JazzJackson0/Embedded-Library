@@ -4,16 +4,16 @@ typedef struct matrix Matrix;
 
 //DECLARATIONS
 /**
- * @brief 
+ * @brief Initialize matrix
  * 
- * @param rows 
- * @param columns 
+ * @param rows Matrix Row Size
+ * @param columns Matrix Column Size
  * @return ** Matrix* 
  */
 Matrix* MatrixInit(int rows, int columns);
 
 /**
- * @brief 
+ * @brief Populate matrix with given values.
  * 
  * @param m Pointer to the Matrix you want to populate.
  * @param data 2D Array of data to place in a given matrix.
@@ -22,43 +22,44 @@ Matrix* MatrixInit(int rows, int columns);
 void PopulateMatrix(Matrix *m, double *data);
 
 /**
- * @brief 
+ * @brief Add two matrices
  * 
- * @param m1 
- * @param m2 
- * @return ** Matrix* 
+ * @param m1 Left Matrix
+ * @param m2 Right Matrix
+ * @return ** Matrix* Matrix Sum
  */
 Matrix* Add_Matrices(Matrix *m1, Matrix *m2);
 /**
- * @brief 
+ * @brief Subtract two matrices
  * 
- * @param m1 
- * @param m2 
- * @return ** Matrix* 
+ * @param m1 Left Matrix
+ * @param m2 Right Matrix
+ * @return ** Matrix* Matrix Difference
  */
 Matrix* Subtract_Matrices(Matrix *m1, Matrix *m2);
 /**
- * @brief 
+ * @brief Multiply two matrices
  * 
- * @param m1 
- * @param m2 
- * @return ** Matrix* 
+ * @param m1 Left Matrix
+ * @param m2 Right Matrix
+ * @return ** Matrix* Matrix Product
  */
 Matrix* Multiply_Matrices(Matrix *m1, Matrix *m2);
 /**
- * @brief 
+ * @brief Get transpose of a given matrix
  * 
- * @param matrix 
- * @return ** Matrix* 
+ * @param matrix Matrix to transpose
+ * @return ** Matrix* Transposed matrix
  */
 Matrix* Get_MatrixTranspose(Matrix *matrix);
 /**
  * @brief Function to calculate and store inverse, returns 0 if
  *          matrix is singular, or if it is not square.
  * 
- * @param A 
- * @param inverse 
- * @return ** int 
+ * @param A Matrix to Invert
+ * @param inverse Storage for Inverted matrix
+ * @return ** int 1 is returned upon successful inversion
+ *              0 is returned if matrix is singular or if it is not square.
  */
 int Get_MatrixInverse(Matrix *A, Matrix *inverse);
 

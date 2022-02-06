@@ -10,46 +10,46 @@ typedef enum _PullUpDown E_PullUpDown;
 
 //DECLARATIONS
 /**
- * @brief 
+ * @brief Initialize given pin.
  * 
- * @param port 
- * @param pinNum 
- * @param modeType 
+ * @param port Port ID (A - I)
+ * @param pinNum Pin Number
+ * @param modeType Pin Mode: IN, OUT, ANALOG, AF0-AF15 (Analog Functions)
  * @return ** void 
  */
 void Pin_Init(char port, uint8_t pinNum, E_PinModes modeType);
 /**
- * @brief 
+ * @brief Get Get Input from given Pin
  * 
- * @param port 
- * @param pinNum 
+ * @param port Port ID (A - I)
+ * @param pinNum Pin Number
  * @return ** uint8_t 
  */
 uint8_t Pin_GetInput(char port, uint8_t pinNum);
 /**
- * @brief 
+ * @brief Send signal out on given pin
  * 
- * @param port 
- * @param pinNum 
- * @param pinState 
+ * @param port Port ID (A - I)
+ * @param pinNum Pin Number
+ * @param pinState Pin State: LOW = 0, HIGH = 1
  * @return ** void 
  */
 void Pin_Out(char port, uint8_t pinNum, uint8_t pinState);
 /**
- * @brief 
+ * @brief Set Output Speed on given pin
  * 
- * @param port 
- * @param pinNum 
- * @param speed 
+ * @param port Port ID (A - I)
+ * @param pinNum Pin Number
+ * @param speed Pin Output Speed: LOW, MED, HIGH, VERY_HIGH
  * @return ** void 
  */
 void Pin_OutputSpeed(char port, uint8_t pinNum, E_OutSpeeds speed);
 /**
- * @brief 
+ * @brief Alter Pin's PullUp PullDown Settings
  * 
- * @param port 
- * @param pinNum 
- * @param upDown 
+ * @param port Port ID (A - I)
+ * @param pinNum Pin Number
+ * @param upDown Set Pin PullUp/PullDown setting to: NONE, UP or DOWN
  * @return ** void 
  */
 void Pin_PullUp_PullDown(char port, uint8_t pinNum, E_PullUpDown upDown);

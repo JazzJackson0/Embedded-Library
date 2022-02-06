@@ -7,28 +7,28 @@ typedef struct dimensions Matrix_Dimensions;
 //DECLARATIONS
 
 /**
- * @brief 
+ * @brief Initialize Kalman Filter
  * 
  * @param initialState Takes an array of Initial State Values
- * @param FMatrix 
- * @param BMatrix
- * @param HMatrix 
- * @param PMatrix 
- * @param QMatrix 
- * @param RMatrix 
- * @return ** KalmanFilter* 
+ * @param FMatrix State Transition Matrix (F)
+ * @param BMatrix Input Matrix (B)
+ * @param HMatrix Measurement Matrix (H)
+ * @param PMatrix Initial Covariance Matrix (P) & Updated Covariance Matrix (P+)
+ * @param QMatrix Auto Correlation Matrix 1 (Q)
+ * @param RMatrix Auto Correlation Matrix 2 (R)
+ * @return ** KalmanFilter* Initialized Kalman Filter
  */
 KalmanFilter* KalmanInit(double* initialState, Matrix *FMatrix, Matrix *BMatrix, Matrix *HMatrix,
     Matrix *PMatrix, Matrix *QMatrix, Matrix *RMatrix);
 
     
 /**
- * @brief 
+ * @brief Run Kalman Filter on incoming data
  * 
- * @param k_filter 
- * @return ** KalmanFilter* 
+ * @param k_filter Kalman Filter to be updated
+ * @return ** void 
  */
-KalmanFilter* kalman_filter(KalmanFilter *k_filter);
+void kalman_filter(KalmanFilter *k_filter);
 
 
 //Structs

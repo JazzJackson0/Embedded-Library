@@ -40,6 +40,16 @@ int16_t DAC_Out(uint8_t dacNum, int16_t digitalData) {
 	}
 }
 
+float Decibel_Out(int16_t analogVolt) {
+	
+	/*dB(mW): power relative to 1 milliwatt. 
+			In audio and telephony, dBm is typically referenced relative to a 600 Ω impedance, 
+			which corresponds to a voltage level of 0.775 volts or 775 millivolts
+ 	*/
+	return analogVolt * 0.775;
+	
+}
+
 //Helper Functions--------------------------------------------------------------------------------------------------------------
 
 

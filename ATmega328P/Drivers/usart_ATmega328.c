@@ -7,7 +7,8 @@ POWER_REDUCTION_USART *const USARTPower = ADDR_POWER_REDUCTION_USART;
 USARTx *const USART = ADDR_USART;
 
 
-void USART_Init(E_USARTMode mode, E_Parity parity, E_USARTPolarity polarity, uint8_t dataSize, uint8_t numOfStopBits) {
+void USART_Init(E_USARTMode mode, E_Parity parity, E_USARTPolarity polarity, uint8_t dataSize, 
+	uint8_t numOfStopBits) {
 	
 	USARTPower->usartOn0_usartOff1 = 0;
 	

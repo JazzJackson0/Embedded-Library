@@ -9,9 +9,9 @@
 
 //DECLARATIONS
 /**
- * @brief 
+ * @brief Initializ DMA
  * 
- * @param dmaNum 
+ * @param dmaNum DMA Number. (1 - 2)
  * @return ** void 
  */
 void DMA_Init(uint8_t dmaNum);
