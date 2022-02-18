@@ -1,8 +1,9 @@
 #ifndef DIFF_MOVE_H
 #define DIFF_MOVE_H
 
+// DECLARATIONS
 /**
- * @brief 
+ * @brief Initialize the Motors for Differential Steering
  * 
  * @return ** void 
  */
