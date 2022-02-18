@@ -1,6 +1,6 @@
 #include <stdint.h>
-#include "spi_MSP430FR.h"
-#include "digital_io_MSP430FR.h"
+#include "MSP430FR.SPI.h"
+#include "MSP430FR.DigitalIO.h"
 
 //Static Prototypes----------------------------------------------------
 static void SPI_PinInit(void);

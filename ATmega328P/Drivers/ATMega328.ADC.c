@@ -1,6 +1,6 @@
 #include <stdint.h>
 //#include <stdio.h>
-#include "adc_ATmega328.h"
+#include "ATmega328.ADC.h"
 
 
 //Global Variables-------------------------------------------------------

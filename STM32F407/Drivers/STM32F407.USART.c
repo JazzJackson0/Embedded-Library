@@ -1,6 +1,6 @@
 #include <stdint.h>
-#include "usart_STM32F407.h"
-#include "gpio_STM32F407.h"
+#include "STM32F407.USART.h"
+#include "STM32F407.GPIO.h"
 
 //Macros---------------------------------------------------------------
 #define CLOCK_SPEED 16

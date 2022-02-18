@@ -1,6 +1,6 @@
 #include <stdint.h>
 //#include <stdio.h>
-#include "rtc_MSP430FR.h"
+#include "MSP430FR.RTC.h"
 
 
 //Global Variables-------------------------------------------------------

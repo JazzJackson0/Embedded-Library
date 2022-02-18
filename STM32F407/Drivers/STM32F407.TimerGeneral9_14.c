@@ -1,7 +1,7 @@
 #include <stdint.h>
 #include <stdio.h>
-#include "timerGeneral9_14_STM32F407.h"
-#include "gpio_STM32F407.h"
+#include "STM32F407.TimerGeneral9_14.h"
+#include "STM32F407.GPIO.h"
 
 //Static Prototypes--------------------------------------------------------------
 static void PWM_PinInit(uint8_t timerNum);

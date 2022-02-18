@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "matrix_display.h"
+#include "MatrixDisplay.h"
 
 
 void Matrix_Display(double matrix[3][3]) {

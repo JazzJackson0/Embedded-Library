@@ -1,7 +1,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <inttypes.h>     // for formatting stdint types 
-#include "rtc_STM32F407.h"
+#include "STM32F407.RTC.h"
 
 //Global Variables-------------------------------------------------------
 RTCx *const RTC = ADDR_RTC;

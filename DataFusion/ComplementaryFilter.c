@@ -1,5 +1,5 @@
-#include "complementary_filter.h"
-#include "../Flight-Control/State-Estimator/sensordata_convert.h"
+#include "ComplementaryFilter.h"
+#include "../FlightControl/StateEstimator/SensorDataConvert.h"
 
 
 void complementary_filter(filteredAngles* angles, RotationAngles* rotations, 

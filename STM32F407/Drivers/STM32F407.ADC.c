@@ -1,6 +1,6 @@
 #include <stdint.h>
-#include "adc_STM32F407.h"
-#include "gpio_STM32F407.h"
+#include "STM32F407.ADC.h"
+#include "STM32F407.GPIO.h"
 
 //Static Prototypes------------------------------------------------------------
 static void ADC_PinInit(uint8_t adcNumber);

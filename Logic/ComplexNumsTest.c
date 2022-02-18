@@ -1,7 +1,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <math.h>
-#include "complex_nums.h"
+#include "ComplexNums.h"
 
 void Get_SinusoidalBasisTest();
 void Set_ZTest_n0();

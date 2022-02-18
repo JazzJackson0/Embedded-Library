@@ -1,7 +1,7 @@
 #include <stdint.h>
 //#include <stdio.h>
-#include "i2c_MSP430FR.h"
-#include "digital_io_MSP430FR.h"
+#include "MSP430FR.I2C.h"
+#include "MSP430FR.DigitalIO.h"
 
 //Static Prototypes----------------------------------------------------
 static void I2C_PinInit(void);

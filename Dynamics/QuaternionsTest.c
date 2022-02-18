@@ -1,7 +1,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <math.h>
-#include "quaternions.h"
+#include "Quaternions.h"
 
 void MultiplyQuaternionsTest();
 void DivideQuaternionsTest();

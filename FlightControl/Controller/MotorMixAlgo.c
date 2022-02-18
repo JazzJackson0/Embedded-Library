@@ -1,6 +1,6 @@
 #include <math.h>
 #include <stdlib.h>
-#include "motormix_algo.h"
+#include "MotormixAlgo.h"
 
 Motors* Motor_Mix(int numOfMotors, double thrustPID, double yawPID, double pitchPID, double rollPID) {
 	

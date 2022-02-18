@@ -1,6 +1,6 @@
 #include <assert.h>
 #include <stdlib.h>
-#include "iir.h"
+#include "IIR.h"
 
 void iir_InitTest();
 void IIRCalculatorTest();

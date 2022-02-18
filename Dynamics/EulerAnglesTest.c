@@ -1,6 +1,6 @@
 #include <assert.h>
 #include <math.h>
-#include "euler_angles.h"
+#include "EulerAngles.h"
 
 void RotMat_to_EulerAnglesTest();
 void RotMat_to_TaitBryanAnglesTest();

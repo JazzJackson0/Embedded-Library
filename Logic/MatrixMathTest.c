@@ -1,6 +1,6 @@
 #include <assert.h>
 #include <stdlib.h>
-#include "matrix_math.h"
+#include "MatrixMath.h"
 
 void MatirxInitTest();
 void PopulateMatrixTest();

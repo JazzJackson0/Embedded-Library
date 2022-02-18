@@ -1,7 +1,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <math.h>
-#include "rotation_matrix.h"
+#include "RotationMatrix.h"
 
 void RotationMasterTest();
 void RotateAroundX_RollTest();

@@ -1,7 +1,7 @@
 #include <stdint.h>
 #include <stdlib.h>
-#include "can_STM32F407.h"
-#include "gpio_STM32F407.h"
+#include "STM32F407.CAN.h"
+#include "STM32F407.GPIO.h"
 
 //Static Prototypes------------------------------------------------------
 static void CAN_PinInit(uint8_t canNum);

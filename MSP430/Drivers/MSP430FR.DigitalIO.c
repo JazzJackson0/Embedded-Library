@@ -1,5 +1,5 @@
 #include <stdint.h>
-#include "digital_io_MSP430FR.h"
+#include "MSP430FR.DigitalIO.h"
 
 //Static Prototypes------------------------------------------------------
 static void Watchdog_Off(void);

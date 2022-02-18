@@ -1,7 +1,7 @@
 #include <assert.h>
 #include <stdlib.h>
-#include "fourier_transform.h"
-#include "../Logic/complex_nums.h"
+#include "FourierTransform.h"
+#include "../Logic/ComplexNums.h"
 
 void fourier_transformTest();
 void IDFTTest();

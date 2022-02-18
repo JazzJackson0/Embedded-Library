@@ -1,4 +1,4 @@
-#include "euler_angles.h"
+#include "EulerAngles.h"
 #include <math.h>
 #include <stdlib.h>
 

@@ -2,12 +2,12 @@
 #include "DigitalSensorDriver.h"
 #include <stdint.h>
 #include <stdlib.h>
-#include "../STM32F407/Drivers/gpio_STM32F407.h"
-#include "../STM32F407/Drivers/timerGeneral2_5_STM32F407.h"
-//#include "../MSP430/Drivers/digital_io_MSP430FR.h"
-//#include "../MSP430/Drivers/timer_MSP430FR.h"
-//#include "../ATmega328P/Drivers/io_ports_ATmega328.h"
-//#include "../ATmega328P/Drivers/timer_counter_ATmega328.h"
+#include "../STM32F407/Drivers/STM32F407.GPIO.h"
+#include "../STM32F407/Drivers/STM32F407.TimerGeneral2_5.h"
+//#include "../MSP430/Drivers/MSP430FR.DigitalIO.h"
+//#include "../MSP430/Drivers/MSP430FR.Timer.h"
+//#include "../ATmega328P/Drivers/ATmega328.IOPorts.h"
+//#include "../ATmega328P/Drivers/ATmega328.TimerCounter.h"
 
 DigitalSensor* SensorInit(char port, uint8_t pinNum) {
     

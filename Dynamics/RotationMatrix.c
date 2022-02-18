@@ -1,6 +1,6 @@
 #include <math.h>
-#include "rotation_matrix.h"
-#include "../Logic/matrix_math.h"
+#include "RotationMatrix.h"
+#include "../Logic/MatrixMath.h"
 
 
 Matrix* RotationMaster(double xAngle, double yAngle, double zAngle) {

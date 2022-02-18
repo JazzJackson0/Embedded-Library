@@ -1,4 +1,4 @@
-#include "iir.h"
+#include "IIR.h"
 #include <stdlib.h>
 
 //Static Prototypes

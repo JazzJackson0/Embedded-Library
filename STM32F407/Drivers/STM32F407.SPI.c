@@ -1,6 +1,6 @@
 #include <stdint.h>
-#include "spi_STM32F407.h"
-#include "gpio_STM32F407.h"
+#include "STM32F407.SPI.h"
+#include "STM32F407.GPIO.h"
 
 //Static Prototypes---------------------------------------------
 static void SPI_PinInit(uint8_t spiNumber);

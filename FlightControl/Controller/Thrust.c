@@ -1,5 +1,5 @@
 #include <stdint.h>
-#include "thrust.h"
+#include "Thrust.h"
 
 /*Conversion Table-----------------------------------------------------------------------------
 	+ 1Kg = 9.81 N

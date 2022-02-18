@@ -1,8 +1,8 @@
 #include <math.h>
 #include <stdint.h>
 #include <stdlib.h>
-#include "fourier_transform.h"
-#include "../Logic/complex_nums.h"
+#include "FourierTransform.h"
+#include "../Logic/ComplexNums.h"
 
 #define PI 3.141592
 #define _1HZ (2 * PI)

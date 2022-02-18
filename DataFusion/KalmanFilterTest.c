@@ -1,7 +1,7 @@
 #include <assert.h>
 #include <stdlib.h>
-#include "kalman_filter.h"
-#include "../Logic/matrix_math.h"
+#include "KalmanFilter.h"
+#include "../Logic/MatrixMath.h"
 
 void kalman_filterTest();
 void kalmanInitTest();

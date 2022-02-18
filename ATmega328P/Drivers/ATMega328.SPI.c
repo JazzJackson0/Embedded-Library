@@ -1,5 +1,5 @@
 #include <stdint.h>
-#include "spi_ATmega328.h"
+#include "ATmega328.SPI.h"
 
 //Global Variables-------------------------------------------------------
 //SPI

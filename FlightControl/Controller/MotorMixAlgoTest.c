@@ -1,6 +1,6 @@
 #include <assert.h>
 #include <stdlib.h>
-#include "motormix_algo.h"
+#include "MotormixAlgo.h"
 
 void Motor_MixTest();
 

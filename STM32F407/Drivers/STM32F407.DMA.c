@@ -1,5 +1,5 @@
 #include <stdint.h>
-#include "dma_STM32F407.h"
+#include "STM32F407.DMA.h"
 
 //Static Prototypes------------------------------------------------------
 static DMAx* Get_DMA(uint8_t dmaNum);

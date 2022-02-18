@@ -1,4 +1,4 @@
-#include "fir.h"
+#include "FIR.h"
 #include <stdlib.h>
 
 //Static Prototypes

@@ -1,6 +1,6 @@
 #include <assert.h>
 #include <stdlib.h>
-#include "thrust.h"
+#include "Thrust.h"
 
 void Calculate_UpwardForceTest();
 void Calculate_UpwardForcePerMotorTest();

@@ -1,6 +1,6 @@
 #include <assert.h>
 #include <stdlib.h>
-#include "fir.h"
+#include "FIR.h"
 
 void fir_InitTest();
 void FIRCalculatorTest();

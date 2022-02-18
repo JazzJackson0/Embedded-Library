@@ -1,7 +1,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <math.h>
-#include "sensordata_convert.h"
+#include "SensorDataConvert.h"
 
 void Convert_GUnitToMps2Test();
 void Convert_RpsToDpsTest();

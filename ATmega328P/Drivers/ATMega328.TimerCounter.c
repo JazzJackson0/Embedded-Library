@@ -1,6 +1,6 @@
 #include <stdint.h>
 //#include <stdio.h>
-#include "timer_counter_ATmega328.h"
+#include "ATmega328.TimerCounter.h"
 
 //Static Prototypes-----------------------------------------------------------------
 static TIMER0_2* Get_Timer0_2(uint8_t timerID);
