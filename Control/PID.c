@@ -1,5 +1,5 @@
 #include <stdbool.h>
-#include "pid.h"
+#include "PID.h"
 
 //Static Prototypes-------------------------------------
 static void Initialize(PIDController *PID);

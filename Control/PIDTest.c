@@ -1,6 +1,6 @@
 #include <assert.h>
 #include <stdlib.h>
-#include "pid.h"
+#include "PID.h"
 
 void PID_InitTest();
 void PID_UpdateTest();
