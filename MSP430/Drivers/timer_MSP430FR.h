@@ -28,10 +28,10 @@ void Timer_Start(char* timerID, E_TimerPrescaler prescale, uint32_t time);
  * 							---- For 1sec Time Goal: Time = 1000(Hz)
  * 						|||  00:00 ---> Time Goal |||  RESET
  *						|||  00:00 ---> Time Goal |||  RESET |||  ETC...)
- * @param dutyCycle PWM Duty Cycle
+ * @param dutyCyclePercent PWM Duty Cycle as a percentage value (0% - 100%).
  * @return ** void 
  */
-void PWM_Start(char* timerID, E_TimerPrescaler prescale, uint32_t time, float dutyCycle);
+void PWM_Start(char* timerID, E_TimerPrescaler prescale, uint32_t time, float dutyCyclePercent);
 /**
  * @brief Update Pulse Width Modulation with new Duty Cycle
  * 
@@ -40,10 +40,10 @@ void PWM_Start(char* timerID, E_TimerPrescaler prescale, uint32_t time, float du
  * 							---- For 1sec Time Goal: Time = 1000(Hz)
  * 						|||  00:00 ---> Time Goal |||  RESET
  *						|||  00:00 ---> Time Goal |||  RESET |||  ETC...)
- * @param dutycycle PWM Duty Cycle
+ * @param dutyCyclePercent PWM Duty Cycle as a percentage value (0% - 100%).
  * @return ** void 
  */
-void PWM_Update(char* timerID, uint32_t time, float dutycycle);
+void PWM_Update(char* timerID, uint32_t time, float dutyCyclePercent);
 
 //TIMER
 typedef struct _timerA TIMERAx;

@@ -28,7 +28,7 @@ uint8_t AdvancedTimer_Start(uint8_t timerNum, uint16_t prescaler, uint16_t time)
 	return 1;
 }
 
-void AdvancedPWM_Start(uint8_t timerNum, uint8_t captCompNum, uint16_t prescaler, uint16_t time, float dutycycle) {
+void AdvancedPWM_Start(uint8_t timerNum, uint8_t captCompNum, uint16_t prescaler, uint16_t time, float dutyCyclePercent) {
 	
 	ADVANCED_TIMERx *const TIMER = Get_Timer(timerNum);
 	Activate_Clock(timerNum);
@@ -40,25 +40,28 @@ void AdvancedPWM_Start(uint8_t timerNum, uint8_t captCompNum, uint16_t prescaler
 	TIMER->ControlReg1.enable_AutoReloadPreload = 1;
 	TIMER->ControlReg1.enable_Counter = 1;
 
+	if ( dutyCyclePercent > 100.0 ) { dutyCyclePercent = 100.0; }
+	if ( dutyCyclePercent < 0.0 ) { dutyCyclePercent = 0.0; }
+
 	switch (captCompNum) {
 		case 1 :
 			TIMER->CaptureCompModeReg1.OutputCompareMode.rw_OutputComp1Mode = PWM_ACTIVE_UNTIL_MATCH;
-			TIMER->CaptureComp1Reg.rw_CaptureCompValue = (dutycycle * time);
+			TIMER->CaptureComp1Reg.rw_CaptureCompValue = ((dutyCyclePercent / 100) * time);
 			TIMER->CaptureCompEnableReg.enable_CaptComp1 = 1;
 			break;	
 		case 2 :
 			TIMER->CaptureCompModeReg1.OutputCompareMode.rw_OutputComp2Mode = PWM_ACTIVE_UNTIL_MATCH;
-			TIMER->CaptureComp2Reg.rw_CaptureCompValue = (dutycycle * time);
+			TIMER->CaptureComp2Reg.rw_CaptureCompValue = ((dutyCyclePercent / 100) * time);
 			TIMER->CaptureCompEnableReg.enable_CaptComp2 = 1;
 			break;
 		case 3 :
 			TIMER->CaptureCompModeReg2.OutputCompareMode.rw_OutputComp3Mode = PWM_ACTIVE_UNTIL_MATCH;
-			TIMER->CaptureComp3Reg.rw_CaptureCompValue = (dutycycle * time);
+			TIMER->CaptureComp3Reg.rw_CaptureCompValue = ((dutyCyclePercent / 100) * time);
 			TIMER->CaptureCompEnableReg.enable_CaptComp3 = 1;
 			break;
 		case 4 :
 			TIMER->CaptureCompModeReg2.OutputCompareMode.rw_OutputComp4Mode = PWM_ACTIVE_UNTIL_MATCH;
-			TIMER->CaptureComp4Reg.rw_CaptureCompValue = (dutycycle * time);
+			TIMER->CaptureComp4Reg.rw_CaptureCompValue = ((dutyCyclePercent / 100) * time);
 			TIMER->CaptureCompEnableReg.enable_CaptComp4 = 1;
 			break;
 	}
@@ -66,25 +69,28 @@ void AdvancedPWM_Start(uint8_t timerNum, uint8_t captCompNum, uint16_t prescaler
 	TIMER->ControlReg1.enable_Counter = 1;		
 }
 
-void AdvancedPWM_Update(uint8_t timerNum, uint8_t captCompNum, uint16_t time, float dutycycle) {
+void AdvancedPWM_Update(uint8_t timerNum, uint8_t captCompNum, uint16_t time, float dutyCyclePercent) {
 	
 	ADVANCED_TIMERx *const TIMER = Get_Timer(timerNum);
+
+	if ( dutyCyclePercent > 100.0 ) { dutyCyclePercent = 100.0; }
+	if ( dutyCyclePercent < 0.0 ) { dutyCyclePercent = 0.0; }
 	
 	switch (captCompNum) {
 		case 1 :
-			TIMER->CaptureComp1Reg.rw_CaptureCompValue = (dutycycle * time);
+			TIMER->CaptureComp1Reg.rw_CaptureCompValue = ((dutyCyclePercent / 100) * time);
 			TIMER->CaptureCompEnableReg.enable_CaptComp1 = 1;
 			break;	
 		case 2 :
-			TIMER->CaptureComp2Reg.rw_CaptureCompValue = (dutycycle * time);
+			TIMER->CaptureComp2Reg.rw_CaptureCompValue = ((dutyCyclePercent / 100) * time);
 			TIMER->CaptureCompEnableReg.enable_CaptComp2 = 1;
 			break;
 		case 3 :
-			TIMER->CaptureComp3Reg.rw_CaptureCompValue = (dutycycle * time);
+			TIMER->CaptureComp3Reg.rw_CaptureCompValue = ((dutyCyclePercent / 100) * time);
 			TIMER->CaptureCompEnableReg.enable_CaptComp3 = 1;
 			break;
 		case 4 :
-			TIMER->CaptureComp4Reg.rw_CaptureCompValue = (dutycycle * time);
+			TIMER->CaptureComp4Reg.rw_CaptureCompValue = ((dutyCyclePercent / 100) * time);
 			TIMER->CaptureCompEnableReg.enable_CaptComp4 = 1;
 			break;
 	}

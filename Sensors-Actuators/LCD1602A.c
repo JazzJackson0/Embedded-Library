@@ -1,6 +1,6 @@
 #include <stdint.h>
 #include "gpio_STM32F407.h"
-#include "lcd_1602A_STM32F407.h"
+#include "LCD1602A.h"
 
 // Static Prototypes------------------------------------------------
 static void LCD_DataOut(int num);

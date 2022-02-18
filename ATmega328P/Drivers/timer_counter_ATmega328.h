@@ -62,10 +62,10 @@ uint8_t OneShotTimer_Start(uint8_t timerID, E_ClockSpeed clockSpeed, uint16_t ti
  * 							---- For 1sec Time Goal: Time = 1000(Hz)
  * 						|||  00:00 ---> Time Goal |||  RESET
  *						|||  00:00 ---> Time Goal |||  RESET |||  ETC...)
- * @param dutyCycle PWM Duty Cycle 
+ * @param dutyCycle PWM Duty Cycle as a percentage value (0% - 100%). 
  * @return ** void 
  */
-void PWM_Init(uint8_t timerID, E_ClockSpeed clockSpeed, uint16_t time, float dutyCycle);
+void PWM_Start(uint8_t timerID, E_ClockSpeed clockSpeed, uint16_t time, float dutyCyclePercent);
 /**
  * @brief Update PWM with new Duty Cycle
  * 
@@ -74,10 +74,10 @@ void PWM_Init(uint8_t timerID, E_ClockSpeed clockSpeed, uint16_t time, float dut
  * 							---- For 1sec Time Goal: Time = 1000(Hz)
  * 						|||  00:00 ---> Time Goal |||  RESET
  *						|||  00:00 ---> Time Goal |||  RESET |||  ETC...)
- * @param dutyCycle PWM Duty Cycle
+ * @param dutyCycle PWM Duty Cycle as a percentage value (0% - 100%).
  * @return ** void 
  */
-void PWM_Update(uint8_t timerID, uint16_t time, float dutyCycle);
+void PWM_Update(uint8_t timerID, uint16_t time, float dutyCyclePercent);
 /**
  * @brief Stop Timer mid-count.
  * 

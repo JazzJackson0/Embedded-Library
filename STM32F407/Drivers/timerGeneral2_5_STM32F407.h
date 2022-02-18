@@ -21,31 +21,31 @@ uint8_t GeneralTimer2_5_Start(uint8_t timerNum, uint16_t prescaler, uint16_t tim
  * @brief Initialize and Start Pulse Width Modulation
  * 
  * @param timerNum Timer Number (2 - 5)
- * @param captCompNum Capture Compare Value
+ * @param captCompNum Capture Compare Number (1 - 4)
  * @param prescaler Timer Clock Prescaler Value (Clock Speed / Presclaler = Number of Hz per Second)
  * @param time Time Goal: Example: Let (Clock Speed / Prescaler) = 1000Hz/Sec
  * 							---- For 1sec Time Goal: Time = 1000(Hz)
  * 						|||  00:00 ---> Time Goal |||  RESET
  *						|||  00:00 ---> Time Goal |||  RESET |||  ETC...)
- * @param dutycycle PWM Duty Cycle
+ * @param dutyCyclePercent PWM Duty Cycle as a percentage value (0% - 100%).
  * @return ** void 
  */
 void GeneralTimer2_5_PWM_Start(uint8_t timerNum, uint8_t captCompNum, 
-	uint16_t prescaler, uint16_t time, float dutycycle);
+	uint16_t prescaler, uint16_t time, float dutyCyclePercent);
 /**
  * @brief Update Pulse Width Modulation with new Duty Cycle
  * 
  * @param timerNum Timer Number (2 - 5)
- * @param captCompNum Capture Compare Value
+ * @param captCompNum Capture Compare Number (1 - 4)
  * @param time Time Goal: Example: Let (Clock Speed / Prescaler) = 1000Hz/Sec
  * 							---- For 1sec Time Goal: Time = 1000(Hz)
  * 						|||  00:00 ---> Time Goal |||  RESET
  *						|||  00:00 ---> Time Goal |||  RESET |||  ETC...)
- * @param dutycycle PWM Duty Cycle
+ * @param dutyCyclePercent PWM Duty Cycle as a percentage value (0% - 100%).
  * @return ** void 
  */
 void GeneralTimer2_5_PWM_Update(uint8_t timerNum, uint8_t captCompNum, 
-	uint16_t time, float dutycycle);
+	uint16_t time, float dutyCyclePercent);
 
 
 //CLOCK

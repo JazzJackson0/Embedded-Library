@@ -92,8 +92,10 @@ uint8_t OneShotTimer_Start(uint8_t timerID, E_ClockSpeed clockSpeed, uint16_t ti
 }
 
 
-void PWM_Init(uint8_t timerID, E_ClockSpeed clockSpeed, uint16_t time, float dutyCycle) {
+void PWM_Start(uint8_t timerID, E_ClockSpeed clockSpeed, uint16_t time, float dutyCyclePercent) {
 	
+	if ( dutyCyclePercent > 100.0 ) { dutyCyclePercent = 100.0; }
+	if ( dutyCyclePercent < 0.0 ) { dutyCyclePercent = 0.0; }
 
 	if (timerID == 1) {
 		TIMER1 *const TIMER = TIM1;
@@ -108,8 +110,8 @@ void PWM_Init(uint8_t timerID, E_ClockSpeed clockSpeed, uint16_t time, float dut
 		TIMER->ControlBReg.select_ClockSource = clockSpeed;
 		TIMER->OutputCompareALowReg.rw_OutputCompAValue = time;
 		TIMER->OutputCompareAHighReg.rw_OutputCompAValue = time >> 8;
-		TIMER->OutputCompareBLowReg.rw_OutputCompBValue = (uint16_t) (dutyCycle * time);
-		TIMER->OutputCompareBHighReg.rw_OutputCompBValue = (uint16_t) (dutyCycle * time) >> 8;
+		TIMER->OutputCompareBLowReg.rw_OutputCompBValue = (uint16_t) ((dutyCyclePercent / 100) * time);
+		TIMER->OutputCompareBHighReg.rw_OutputCompBValue = (uint16_t) ((dutyCyclePercent / 100) * time) >> 8;
 		
 		//Start Timer
 		GeneralControl->reset_Tim0AndTim1Prescaler = 1;
@@ -126,7 +128,7 @@ void PWM_Init(uint8_t timerID, E_ClockSpeed clockSpeed, uint16_t time, float dut
 		
 		TIMER->ControlBReg.select_ClockSource = clockSpeed;
 		TIMER->OutputCompareAReg.rw_OutputCompareValue = time;
-		TIMER->OutputCompareBReg.rw_OutputCompareValue = (dutyCycle * time);
+		TIMER->OutputCompareBReg.rw_OutputCompareValue = ((dutyCyclePercent / 100) * time);
 		
 		//Start Timer
 		if (timerID == 2) { GeneralControl->reset_Tim2Prescaler = 1; }
@@ -135,12 +137,15 @@ void PWM_Init(uint8_t timerID, E_ClockSpeed clockSpeed, uint16_t time, float dut
 }
 
 
-void PWM_Update(uint8_t timerID, uint16_t time, float dutyCycle) {
+void PWM_Update(uint8_t timerID, uint16_t time, float dutyCyclePercent) {
+
+	if ( dutyCyclePercent > 100.0 ) { dutyCyclePercent = 100.0; }
+	if ( dutyCyclePercent < 0.0 ) { dutyCyclePercent = 0.0; }
 
 	if (timerID == 1) { 
 		TIMER1 *const TIMER = TIM1;
-		TIMER->OutputCompareBLowReg.rw_OutputCompBValue = (uint16_t) (dutyCycle * time);
-		TIMER->OutputCompareBHighReg.rw_OutputCompBValue = (uint16_t) (dutyCycle * time) >> 8;
+		TIMER->OutputCompareBLowReg.rw_OutputCompBValue = (uint16_t) ((dutyCyclePercent / 100) * time);
+		TIMER->OutputCompareBHighReg.rw_OutputCompBValue = (uint16_t) ((dutyCyclePercent / 100) * time) >> 8;
 		
 		//Start Timer
 		GeneralControl->reset_Tim0AndTim1Prescaler = 1;
@@ -148,7 +153,7 @@ void PWM_Update(uint8_t timerID, uint16_t time, float dutyCycle) {
 	
 	else {
 		TIMER0_2 *const TIMER = Get_Timer0_2(timerID);
-		TIMER->OutputCompareBReg.rw_OutputCompareValue = (dutyCycle * time);
+		TIMER->OutputCompareBReg.rw_OutputCompareValue = ((dutyCyclePercent / 100) * time);
 		
 		//Start Timer
 		if (timerID == 2) { GeneralControl->reset_Tim2Prescaler = 1; }

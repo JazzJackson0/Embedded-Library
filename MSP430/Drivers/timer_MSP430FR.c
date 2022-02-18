@@ -47,8 +47,10 @@ void Timer_Start(char* timerID, E_TimerPrescaler prescale, uint32_t time) {
 	}
 }
 
-void PWM_Start(char* timerID, E_TimerPrescaler prescale, uint32_t time, float dutyCycle) {
+void PWM_Start(char* timerID, E_TimerPrescaler prescale, uint32_t time, float dutyCyclePercent) {
 
+	if ( dutyCyclePercent > 100.0 ) { dutyCyclePercent = 100.0; }
+	if ( dutyCyclePercent < 0.0 ) { dutyCyclePercent = 0.0; }
 	
 	if (timerID == "B0") { 
 		
@@ -69,7 +71,7 @@ void PWM_Start(char* timerID, E_TimerPrescaler prescale, uint32_t time, float du
 		
 		
 		//WHAT PIN IS THE MODULATED OUTPUT ON???????????????????
-		TIMER->CaptureCompReg1.rw_CaptureCompareValue = (dutyCycle * time); //Output HIGH until this value.
+		TIMER->CaptureCompReg1.rw_CaptureCompareValue = ((dutyCyclePercent / 100) * time); //Output HIGH until this value.
 		TIMER->CaptureCompReg0.rw_CaptureCompareValue = time; //Output LOW until this value.
 		
 		TIMER->ControlReg.rw_TimerMode = UP_MODE; //Start the timer.
@@ -93,26 +95,29 @@ void PWM_Start(char* timerID, E_TimerPrescaler prescale, uint32_t time, float du
 		TIMER->CaptureCompControlReg0.rw_OutputMode = SET_RESET;
 		
 		//WHAT PIN IS THE MODULATED OUTPUT ON???????????????????
-		TIMER->CaptureCompReg1.rw_CaptureCompareValue = (dutyCycle * time); //Output HIGH until this value.
+		TIMER->CaptureCompReg1.rw_CaptureCompareValue = ((dutyCyclePercent / 100) * time); //Output HIGH until this value.
 		TIMER->CaptureCompReg0.rw_CaptureCompareValue = time; //Output LOW until this value.
 		
 		TIMER->ControlReg.rw_TimerMode = UP_MODE; //Start the timer.
 	}
 }
 
-void PWM_Update(char* timerID, uint32_t time, float dutycycle) {
+void PWM_Update(char* timerID, uint32_t time, float dutyCyclePercent) {
 
+	if ( dutyCyclePercent > 100.0 ) { dutyCyclePercent = 100.0; }
+	if ( dutyCyclePercent < 0.0 ) { dutyCyclePercent = 0.0; }
+	
 	if (timerID == "B0") { 
 		TIMERBx *const TIMER = Tim_B0;
 		
-		TIMER->CaptureCompReg1.rw_CaptureCompareValue = (dutycycle * time);
+		TIMER->CaptureCompReg1.rw_CaptureCompareValue = ((dutyCyclePercent / 100) * time);
 		TIMER->ControlReg.rw_TimerMode = UP_MODE; //Start the timer.
 	}
 	
 	else { 
 		TIMERAx *const TIMER = Get_TimerA(timerID);
 	
-		TIMER->CaptureCompReg1.rw_CaptureCompareValue = (dutycycle * time);
+		TIMER->CaptureCompReg1.rw_CaptureCompareValue = ((dutyCyclePercent / 100) * time);
 		TIMER->ControlReg.rw_TimerMode = UP_MODE; //Start the timer.
 	}
 }

@@ -35,7 +35,8 @@ uint8_t GeneralTimer9_14_Start(uint8_t timerNum, uint16_t prescaler, uint16_t ti
 }
 
 
-void GeneralTimer9_14_PWM_Start(uint8_t timerNum, uint8_t captCompNum, uint16_t prescaler, uint16_t time, float dutycycle) {
+void GeneralTimer9_14_PWM_Start(uint8_t timerNum, uint8_t captCompNum, uint16_t prescaler, 
+	uint16_t time, float dutyCyclePercent) {
 	
 	Activate_Clock(timerNum);
 	PWM_PinInit(timerNum);
@@ -47,15 +48,18 @@ void GeneralTimer9_14_PWM_Start(uint8_t timerNum, uint8_t captCompNum, uint16_t 
 	TIMER->ControlReg1.enable_AutoReloadPreload = 1;
 	TIMER->ControlReg1.enable_Counter = 1;
 
+	if ( dutyCyclePercent > 100.0 ) { dutyCyclePercent = 100.0; }
+	if ( dutyCyclePercent < 0.0 ) { dutyCyclePercent = 0.0; }
+
 	switch (captCompNum) {
 		case 1 :
 			TIMER->CaptureCompModeReg1.OutputCompareMode.rw_OutputComp1Mode = PWM_ACTIVE_UNTIL_MATCH;
-			TIMER->CaptureComp1Reg.rw_CaptureCompValue = (dutycycle * time);
+			TIMER->CaptureComp1Reg.rw_CaptureCompValue = ((dutyCyclePercent / 100) * time);
 			TIMER->CaptureCompEnableReg.enable_CaptComp1 = 1;
 			break;
 		case 2 :
 			TIMER->CaptureCompModeReg1.OutputCompareMode.rw_OutputComp2Mode = PWM_ACTIVE_UNTIL_MATCH;
-			TIMER->CaptureComp2Reg.rw_CaptureCompValue = (dutycycle * time);
+			TIMER->CaptureComp2Reg.rw_CaptureCompValue = ((dutyCyclePercent / 100) * time);
 			TIMER->CaptureCompEnableReg.enable_CaptComp2 = 1;
 			break;
 	}
@@ -63,16 +67,19 @@ void GeneralTimer9_14_PWM_Start(uint8_t timerNum, uint8_t captCompNum, uint16_t 
 	TIMER->ControlReg1.enable_Counter = 1;		
 }
 
-void GeneralTimer9_14_PWM_Update(uint8_t timerNum, uint8_t captCompNum, uint16_t time, float dutycycle) {
+void GeneralTimer9_14_PWM_Update(uint8_t timerNum, uint8_t captCompNum, uint16_t time, float dutyCyclePercent) {
 	GEN_TIMER_9_14x *const TIMER = Get_Timer(timerNum);
+
+	if ( dutyCyclePercent > 100.0 ) { dutyCyclePercent = 100.0; }
+	if ( dutyCyclePercent < 0.0 ) { dutyCyclePercent = 0.0; }
 
 	switch (captCompNum) {
 		case 1 :
-			TIMER->CaptureComp1Reg.rw_CaptureCompValue = (dutycycle * time);
+			TIMER->CaptureComp1Reg.rw_CaptureCompValue = ((dutyCyclePercent / 100) * time);
 			TIMER->CaptureCompEnableReg.enable_CaptComp1 = 1;
 			break;
 		case 2 :
-			TIMER->CaptureComp2Reg.rw_CaptureCompValue = (dutycycle * time);
+			TIMER->CaptureComp2Reg.rw_CaptureCompValue = ((dutyCyclePercent / 100) * time);
 			TIMER->CaptureCompEnableReg.enable_CaptComp2 = 1;
 			break;
 	}

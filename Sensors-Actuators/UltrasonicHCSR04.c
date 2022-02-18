@@ -1,5 +1,5 @@
 #include <stdint.h>
-#include "ultrasonic_HCSRO4.h"
+#include "UltrasonicHCSR04.h"
 
 //Static Prototypes
 static void msDelay(int delay);

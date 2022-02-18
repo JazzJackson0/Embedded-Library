@@ -1,6 +1,6 @@
 #include <stdint.h>
 #include <stddef.h>
-#include "gyro_accel_gy521.h"
+#include "GyroAccelGY521.h"
 
 //Macros & Prototypes----------------------------------------------------
 #define SLAVE_ADDRS_AND_READ 0xD3
