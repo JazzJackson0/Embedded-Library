@@ -1,5 +1,4 @@
 #include "FIR.h"
-#include <stdlib.h>
 
 //Static Prototypes
 static void fir_updateInput(firFilter *filter, double newSample);

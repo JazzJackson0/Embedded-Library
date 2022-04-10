@@ -2,13 +2,11 @@
 //Two Wire Interface: Atmel's version of I2C (Avoids trademark issues)
 #ifndef TWI_H_
 #define TWI_H_
-
+#include <stdint.h>
 /*TWI Pins ---------------------------
 		+ SDA 0: PC4
 		+ SCL 0: PC5
 		------------------------------------*/
-
-#include <stdint.h>
 
 typedef enum _TWIClockDivide E_TWIClockDivide;
 typedef enum _Read_Write E_Read_Write;

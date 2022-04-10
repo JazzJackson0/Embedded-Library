@@ -1,7 +1,4 @@
-#include <stdint.h>
-//#include <stdio.h>
 #include "MSP430FR.ADC.h"
-#include "MSP430FR.DigitalIO.h"
 
 //Static Prototypes----------------------------------------------------
 static void ADC_PinInit(void);

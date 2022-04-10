@@ -1,6 +1,5 @@
-#include <stdlib.h>
 #include "KalmanFilter.h"
-#include "../Logic/MatrixMath.h"
+
 
 //Static Prototypes
 static Matrix* Get_ExpectedStateEstimate(KalmanFilter *k_filter);

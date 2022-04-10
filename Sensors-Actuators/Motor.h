@@ -1,6 +1,7 @@
 #ifndef MOTOR_H
 #define MOTOR_H
 #include <stdint.h>
+#include <stdlib.h>
 #include "../STM32F407/Drivers/STM32F407.GPIO.h"
 #include "../STM32F407/Drivers/STM32F407.TimerGeneral2_5.h"
 //#include "../MSP430/Drivers/MSP430FR.DigitalIO.h"

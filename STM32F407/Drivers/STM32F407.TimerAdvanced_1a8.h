@@ -2,8 +2,9 @@
 #ifndef TIMERADVANCED1_A8_H_
 #define TIMERADVANCED1_A8_H_
 //Advanced Timers 1 & 8
-
 #include <stdint.h>
+#include <stdio.h>
+#include "STM32F407.GPIO.h"
 
 //DECLARATIONS
 /**

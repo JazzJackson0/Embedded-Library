@@ -1,5 +1,3 @@
-#include <stdlib.h>
-#include <math.h>
 #include "Odometry2Wheel.h"
 
 RobotOdom* OdometryInit(float trackwidth) {

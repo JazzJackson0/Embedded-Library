@@ -1,6 +1,3 @@
-#include <stdint.h>
-#include <stdlib.h>
-#include <math.h>
 #include "SensorDataConvert.h"
 
 void Convert_GUnitToMps2(Sensor_Reading* sensReadings, double x, double y, double z) {

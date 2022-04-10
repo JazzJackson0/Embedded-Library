@@ -1,6 +1,7 @@
 //STM32F407 Driver
 #ifndef INTERRUPTS_H_
 #define INTERRUPTS_H_
+#include <stdint.h>
 /*Interrupt Pins ---------------------------
 		+ No Alternate Function Assignments Needed
 			(Just use the Registers)

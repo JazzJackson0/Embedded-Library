@@ -3,8 +3,8 @@ Can be tweaked to fit other microcontrollers.
 ...probably.*/
 #ifndef LCD_1602A_H_
 #define LCD_1602A_H_
-
 #include <stdint.h>
+#include "STM32F407.GPIO.h"
 
 //DECLARATIONS
 /**

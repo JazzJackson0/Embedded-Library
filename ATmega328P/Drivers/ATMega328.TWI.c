@@ -1,7 +1,5 @@
-//AVR TWI is byte oriented and interrupt based
-#include <stdint.h>
-//#include <stdio.h>
 #include "ATmega328.TWI.h"
+//AVR TWI is byte oriented and interrupt based
 
 //Macros-----------------------------------------------------------------
 #define CLOCK_SPEED 16

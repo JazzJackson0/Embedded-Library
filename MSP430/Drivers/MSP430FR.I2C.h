@@ -1,8 +1,9 @@
 //MSP430FR59xx Driver
 #ifndef I2C_H_
 #define I2C_H_
-
 #include <stdint.h>
+//#include <stdio.h>
+#include "MSP430FR.DigitalIO.h"
 
 typedef enum _I2CClockSource E_I2CClockSource;
 typedef enum _I2CMode E_I2CMode;

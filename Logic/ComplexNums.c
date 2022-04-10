@@ -1,7 +1,4 @@
 #include "ComplexNums.h"
-#include <math.h>
-#include <stdlib.h>
-
 
 complexNum* Get_SinusoidalBasis(double kt) {
 

@@ -1,6 +1,5 @@
 #include "EulerAngles.h"
-#include <math.h>
-#include <stdlib.h>
+
 
 const double degree2Rad = 3.141592 / 180;
 

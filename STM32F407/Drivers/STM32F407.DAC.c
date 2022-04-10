@@ -1,6 +1,4 @@
-#include <stdint.h>
 #include "STM32F407.DAC.h"
-#include "STM32F407.GPIO.h"
 
 //Static Prototypes------------------------------------------------------
 static void DAC_PinInit(uint8_t dacNum);

@@ -1,7 +1,4 @@
-#include <stdint.h>
-//#include <stdio.h>
 #include "MSP430FR.Timer.h"
-#include "MSP430FR.DigitalIO.h"
 
 //Static Prototypes--------------------------------------------------------------
 static void PWM_PinInit(char* timerID);

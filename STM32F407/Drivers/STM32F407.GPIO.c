@@ -1,5 +1,3 @@
-#include <stdint.h>
-#include <stddef.h>
 #include "STM32F407.GPIO.h"
 
 //Static Prototypes-----------------------------------------------------------------

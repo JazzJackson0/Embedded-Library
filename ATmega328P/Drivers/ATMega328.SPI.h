@@ -1,7 +1,7 @@
 //ATmega328/P Driver
 #ifndef SPI_H_
 #define SPI_H_
-
+#include <stdint.h>
 /*SPI Pins ---------------------------------
 		+ SS0: PB2
 		+ MOSI0: PB3
@@ -9,7 +9,6 @@
 		+ SCK0: PB5
 		------------------------------------*/
 
-#include <stdint.h>
 
 typedef enum _ClockDivider E_ClockDivider;
 typedef enum _SPIMode E_SPIMode;

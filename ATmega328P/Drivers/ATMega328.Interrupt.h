@@ -1,6 +1,7 @@
 //ATmega328/P Driver
 #ifndef INTERRUPTS_H_
 #define INTERRUPTS_H_
+#include <stdint.h>
 /*INTERRUPT Pins ---------------------------
 		+ INT0: PD2
 		+ INT1: PD3

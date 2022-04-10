@@ -1,6 +1,9 @@
 //STM32F407 Driver
 #ifndef RTC_H_
 #define RTC_H_
+#include <stdint.h>
+#include <stdio.h>
+#include <inttypes.h>     // for formatting stdint types 
 /*RTC Pins ---------------------------
 		These are 'Additional Functions' not 'Alternate Functions'
 		Meaning: Functions are directly selected/enabled through peripheral registers.

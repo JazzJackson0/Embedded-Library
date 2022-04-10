@@ -1,8 +1,8 @@
 //STM32F407 Driver
 #ifndef USART_H_
 #define USART_H_
-
 #include <stdint.h>
+#include "STM32F407.GPIO.h"
 
 typedef enum _Parity E_Parity;
 

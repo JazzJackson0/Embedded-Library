@@ -1,6 +1,4 @@
-#include <stdint.h>
 #include "MSP430FR.UART.h"
-#include "MSP430FR.DigitalIO.h"
 
 //Static Prototypes----------------------------------------------------
 static void UART_PinInit(void);

@@ -1,4 +1,3 @@
-#include <stdint.h>
 #include "STM32F407.DMA.h"
 
 //Static Prototypes------------------------------------------------------

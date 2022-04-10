@@ -1,5 +1,6 @@
 #ifndef DIFF_MOVE_H
 #define DIFF_MOVE_H
+#include "../../Sensors-Actuators/Motor.h"
 
 // DECLARATIONS
 /**

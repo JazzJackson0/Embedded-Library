@@ -1,8 +1,9 @@
 //MSP430FR59xx Driver
 #ifndef TIMER_H_
 #define TIMER_H_
-
 #include <stdint.h>
+//#include <stdio.h>
+#include "MSP430FR.DigitalIO.h"
 
 typedef enum _TimerPrescaler E_TimerPrescaler;
 

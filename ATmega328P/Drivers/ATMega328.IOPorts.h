@@ -1,7 +1,6 @@
 //ATmega328/P Driver
 #ifndef IO_PORTS_H_
 #define IO_PORTS_H_
-
 #include <stdint.h>
 
 typedef enum _PinDirection E_PinDirection;

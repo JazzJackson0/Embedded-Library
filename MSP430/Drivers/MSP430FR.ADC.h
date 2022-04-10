@@ -1,8 +1,9 @@
 //MSP430FR59xx Driver
 #ifndef ADC_H_
 #define ADC_H_
-
 #include <stdint.h>
+//#include <stdio.h>
+#include "MSP430FR.DigitalIO.h"
 
 typedef enum _ADCClockSource E_ADCClockSource;
 typedef enum _ClockDivider E_ClockDivider;

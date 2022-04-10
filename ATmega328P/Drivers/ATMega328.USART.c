@@ -1,4 +1,3 @@
-#include <stdint.h>
 #include "ATmega328.USART.h"
 
 //Global Variables-------------------------------------------------------

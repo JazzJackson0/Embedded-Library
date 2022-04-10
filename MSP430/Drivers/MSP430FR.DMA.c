@@ -1,6 +1,4 @@
-#include <stdint.h>
 #include "MSP430FR.DMA.h"
-#include "MSP430FR.DigitalIO.h"
 
 //Static Prototypes------------------------------------------------------
 static void DMA_PinInit(void);

@@ -1,7 +1,5 @@
-#include <stdint.h>
-#include <stdio.h>
 #include "STM32F407.I2C.h"
-#include "STM32F407.GPIO.h"
+
 
 //Static Prototypes----------------------------------------------------
 static void I2C_PinInit(uint8_t i2cNumber);

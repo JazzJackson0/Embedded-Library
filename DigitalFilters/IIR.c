@@ -1,5 +1,5 @@
 #include "IIR.h"
-#include <stdlib.h>
+
 
 //Static Prototypes
 static void iir_updateInput(iirFilter *filter, double newSample);

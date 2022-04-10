@@ -1,5 +1,7 @@
 #ifndef ACK_MOVE_H
 #define ACK_MOVE_H
+#include "../../Sensors-Actuators/Motor.h"
+
 // Ackerman Steering
 
 // DECLARATIONS

@@ -1,6 +1,8 @@
 //ATmega328/P Driver
 #ifndef ADC_H_
 #define ADC_H_
+#include <stdint.h>
+//#include <stdio.h>
 /*ADC Pins ---------------------------
 
 		+ ADC Input Channel 0 (ADC0): PC0
@@ -16,7 +18,6 @@
 		+ AIN1: PD7
 		------------------------------------*/
 
-#include <stdint.h>
 
 typedef enum _Channel E_Channel;
 typedef enum _ADCClockDivide E_ADCClockDivide;

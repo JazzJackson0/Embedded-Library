@@ -1,8 +1,9 @@
 //STM32F407 Driver
 #ifndef I2C_H_
 #define I2C_H_
-
 #include <stdint.h>
+#include <stdio.h>
+#include "STM32F407.GPIO.h"
 
 typedef enum _ReadWrite E_ReadWrite;
 

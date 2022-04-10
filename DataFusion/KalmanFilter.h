@@ -1,5 +1,6 @@
 #pragma once
-#include "../Logic/matrix_math.h"
+#include <stdlib.h>
+#include "../Logic/MatrixMath.h"
 
 typedef struct kalman KalmanFilter;
 typedef struct dimensions Matrix_Dimensions;

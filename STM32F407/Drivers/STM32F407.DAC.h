@@ -1,8 +1,8 @@
 //STM32F407 Driver
 #ifndef DAC_H_
 #define DAC_H_
-
 #include <stdint.h>
+#include "STM32F407.GPIO.h"
 
 //DECLARATIONS
 /**

@@ -1,5 +1,3 @@
-#include <stdint.h>
-#include <stddef.h>
 #include "GyroAccelGY521.h"
 
 //Macros & Prototypes----------------------------------------------------

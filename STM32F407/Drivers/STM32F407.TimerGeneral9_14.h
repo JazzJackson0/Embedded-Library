@@ -2,8 +2,9 @@
 #ifndef TIMERGENERAL9_14_H_
 #define TIMERGENERAL9_14_H_
 //Genreal Purpose Timers 9-15
-
 #include <stdint.h>
+#include <stdio.h>
+#include "STM32F407.GPIO.h"
 
 //DECLARATIONS
 /**

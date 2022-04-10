@@ -1,8 +1,8 @@
 //STM32F407 Driver
 #ifndef SPI_H_
 #define SPI_H_
-
 #include <stdint.h>
+#include "STM32F407.GPIO.h"
 
 typedef enum _Phase E_Phase;
 typedef enum _Polarity E_Polarity;

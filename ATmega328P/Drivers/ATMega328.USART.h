@@ -1,14 +1,13 @@
 //ATmega328/P Driver
 #ifndef USART_H_
 #define USART_H_
-
+#include <stdint.h>
 /*USART Pins ---------------------------
 		+ USART External Clock (Input/Output): PD4
 		+ USART TX Pin: PD1
 		+ USART RX Pin: PD0
 		------------------------------------*/
 
-#include <stdint.h>
 
 typedef enum _USARTPolarity E_USARTPolarity;
 typedef enum _Parity E_Parity;

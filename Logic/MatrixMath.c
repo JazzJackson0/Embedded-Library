@@ -1,6 +1,4 @@
 #include "MatrixMath.h"
-#include <stdlib.h>
-#include <stdio.h>
 
 //Static Prototypes
 static void getCofactor(Matrix *A, Matrix *temp, int p, int q, int n);

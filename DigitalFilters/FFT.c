@@ -1,7 +1,5 @@
-#include <math.h>
-#include <stdlib.h>
 #include "FFT.h"
-#include "../Logic/complex_nums.h"
+
 
 //Macros
 #define PI 3.141592

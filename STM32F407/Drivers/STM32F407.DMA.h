@@ -1,11 +1,11 @@
 //STM32F407 Driver
 #ifndef DMA_H_
 #define DMA_H_
+#include <stdint.h>
 /*DMA Pins ---------------------------
 		+ No Pins Needed
 		------------------------------------*/
 
-#include <stdint.h>
 
 //DECLARATIONS
 /**

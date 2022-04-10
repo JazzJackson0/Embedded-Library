@@ -1,5 +1,7 @@
 #ifndef ODOMETRY_2WHEEL_H
 #define ODOMETRY_2WHEEL_H
+#include <stdlib.h>
+#include <math.h>
 
 typedef struct odom RobotOdom;
 

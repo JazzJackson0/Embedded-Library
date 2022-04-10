@@ -1,8 +1,9 @@
 //STM32F407 Driver
 #ifndef CAN_H_
 #define CAN_H_
-
 #include <stdint.h>
+#include <stdlib.h>
+#include "STM32F407.GPIO.h"
 
 typedef enum _FilterSize E_FilterSize;
 typedef enum _FilterMode E_FilterMode;

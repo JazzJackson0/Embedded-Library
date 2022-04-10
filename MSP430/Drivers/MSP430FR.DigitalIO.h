@@ -1,6 +1,7 @@
 //MSP430FR59xx Driver
 #ifndef DIGITAL_IO_H_
 #define DIGITAL_IO_H_
+#include <stdint.h>
 //x69 Series only uses Ports 1,2,3,4 & J
 
 #include <stdint.h>

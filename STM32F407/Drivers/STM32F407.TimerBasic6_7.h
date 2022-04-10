@@ -1,11 +1,14 @@
 //STM32F407 Driver
 #ifndef TIMERBASIC6_7_H_
 #define TIMERBASIC6_7_H_
+#include <stdint.h>
+#include <stdio.h>
+#include "STM32F407.GPIO.h"
 //Basic Timers 6-7
 /*TIMER Pins ---------------------------
 		+ No Pins Needed
 		------------------------------------*/
-#include <stdint.h>
+
 
 //DECLARATIONS
 /**

@@ -1,4 +1,3 @@
-#include <stdint.h>
 #include "UltrasonicHCSR04.h"
 
 //Static Prototypes

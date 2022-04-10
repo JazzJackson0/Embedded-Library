@@ -1,6 +1,8 @@
 //ATmega328/P Driver
 #ifndef TIMER_COUNTER_H_
 #define TIMER_COUNTER_H_
+#include <stdint.h>
+//#include <stdio.h>
 /*TIMER Pins ---------------------------		
 		+ Timer/Counter0 External Counter (Input): PC4
 		+ Timer/Counter0 Output Compare Match A (Output): PD6
@@ -21,7 +23,6 @@ TIM1 = 16-Bit Timer/Counter. With PWM Capability
 TIM2 = 8-Bit Timer/Counter. With PWM Capability AND Asynchronous Operation 
 */
 
-#include <stdint.h>
 
 typedef enum _ClockSpeed E_ClockSpeed;
 

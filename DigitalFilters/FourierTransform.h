@@ -1,5 +1,8 @@
 #pragma once
-#include <complex.h>
+#include <math.h>
+#include <stdint.h>
+#include <stdlib.h>
+#include "../Logic/ComplexNums.h"
 
 typedef struct binData frequencyBin_data;
 

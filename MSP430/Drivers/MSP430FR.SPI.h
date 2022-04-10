@@ -1,8 +1,9 @@
 //MSP430FR59xx Driver
 #ifndef SPI_H_
 #define SPI_H_
-
 #include <stdint.h>
+#include "MSP430FR.DigitalIO.h"
+
 
 typedef enum _SPIClockSource E_SPIClockSource;
 typedef enum _SPIMode E_SPIMode;

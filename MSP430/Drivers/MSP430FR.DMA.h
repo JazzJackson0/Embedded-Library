@@ -1,8 +1,10 @@
 //MSP430FR59xx Driver
 #ifndef DMA_H_
 #define DMA_H_
-//x69 Series only uses Channels 0, 1, 2
 #include <stdint.h>
+#include "MSP430FR.DigitalIO.h"
+//x69 Series only uses Channels 0, 1, 2
+
 
 //DECLARATIONS
 /**

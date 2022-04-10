@@ -1,5 +1,7 @@
 #ifndef GYRO_ACCEL_H
 #define GYRO_ACCEL_H
+#include <stdint.h>
+#include <stddef.h>
 
 //DECLARATIONS
 /**

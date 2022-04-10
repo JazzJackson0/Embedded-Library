@@ -1,5 +1,3 @@
-#include <stdint.h>
-#include "STM32F407.GPIO.h"
 #include "LCD1602A.h"
 
 // Static Prototypes------------------------------------------------

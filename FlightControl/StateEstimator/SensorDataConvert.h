@@ -1,5 +1,8 @@
 #ifndef SENSORDATA_CONVERT_H
 #define SENSORDATA_CONVERT_H
+#include <stdint.h>
+#include <stdlib.h>
+#include <math.h>
 
 typedef struct _sens Sensor_Reading;
 typedef struct r_angles RotationAngles;

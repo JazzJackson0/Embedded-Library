@@ -1,7 +1,4 @@
-#include <stdint.h>
-//#include <stdio.h>
 #include "MSP430FR.RTC.h"
-
 
 //Global Variables-------------------------------------------------------
 RTCB *const RTC_B = ADDR_RTCB;

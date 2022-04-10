@@ -1,13 +1,13 @@
 //MSP430FR59xx Driver
 #ifndef RTC_H_
 #define RTC_H_
+#include <stdint.h>
+//#include <stdio.h>
 //x69 Series only uses RTC B
 
 /*RTC Pins ----------------------------------
 		+ RTC Clock Calibration Output: P1-0 	[(Secondary Function)-(Direction Pin: 1)]
 		------------------------------------*/
-
-#include <stdint.h>
 
 //DECLARATIONS
 /**

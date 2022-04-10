@@ -1,5 +1,7 @@
 #pragma once
-#include "../Logic/complex_nums.h"
+#include <math.h>
+#include <stdlib.h>
+#include "../Logic/ComplexNums.h"
 
 typedef struct k K_Values;
 

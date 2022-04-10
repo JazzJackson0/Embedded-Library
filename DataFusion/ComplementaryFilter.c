@@ -1,6 +1,4 @@
 #include "ComplementaryFilter.h"
-#include "../FlightControl/StateEstimator/SensorDataConvert.h"
-
 
 void complementary_filter(filteredAngles* angles, RotationAngles* rotations, 
     float gyroWeight, float accelWeight) {

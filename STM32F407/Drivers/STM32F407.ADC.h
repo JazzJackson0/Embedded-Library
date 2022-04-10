@@ -1,8 +1,8 @@
 //STM32F407 Driver
 #ifndef ADC_H_
 #define ADC_H_
-
 #include <stdint.h>
+#include "STM32F407.GPIO.h"
 
 typedef enum _Channel E_Channel;
 typedef enum _SamplePeriod E_SamplePeriod;

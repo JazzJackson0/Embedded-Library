@@ -1,5 +1,7 @@
 #ifndef MOTORMIX_ALGO_H
 #define MOTORMIX_ALGO_H
+#include <math.h>
+#include <stdlib.h>
 
 typedef struct motors Motors;
 

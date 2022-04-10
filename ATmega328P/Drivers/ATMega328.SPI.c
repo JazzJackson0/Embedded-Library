@@ -1,4 +1,3 @@
-#include <stdint.h>
 #include "ATmega328.SPI.h"
 
 //Global Variables-------------------------------------------------------

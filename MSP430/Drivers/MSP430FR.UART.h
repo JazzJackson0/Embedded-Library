@@ -1,8 +1,8 @@
 //MSP430FR59xx Driver
 #ifndef UART_H_
 #define UART_H_
-
 #include <stdint.h>
+#include "MSP430FR.DigitalIO.h"
 
 typedef enum _Parity E_Parity;
 typedef enum _UARTBitOrder E_UARTBitOrder;

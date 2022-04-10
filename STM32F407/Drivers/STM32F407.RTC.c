@@ -1,6 +1,3 @@
-#include <stdint.h>
-#include <stdio.h>
-#include <inttypes.h>     // for formatting stdint types 
 #include "STM32F407.RTC.h"
 
 //Global Variables-------------------------------------------------------

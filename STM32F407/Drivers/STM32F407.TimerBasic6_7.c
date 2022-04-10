@@ -1,7 +1,4 @@
-#include <stdint.h>
-#include <stdio.h>
 #include "STM32F407.TimerBasic6_7.h"
-#include "STM32F407.GPIO.h"
 
 //Static Prototypes--------------------------------------------------------------
 static void Activate_Clock(uint8_t timerNum);

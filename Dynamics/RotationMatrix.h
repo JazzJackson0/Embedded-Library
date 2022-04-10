@@ -1,6 +1,7 @@
 #ifndef ROTATION_MATRIX_H
 #define ROTATION_MATRIX_H
-#include "../Logic/matrix_math.h"
+#include <math.h>
+#include "../Logic/MatrixMath.h"
 
 //DECLARATIONS
 /**
