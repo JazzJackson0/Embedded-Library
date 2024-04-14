@@ -31,6 +31,13 @@ void FIRCalculator(firFilter *filter, double newSample) {
     filter->filteredOutputs[filter->currentPosition - 1] = sum;
 }
 
+void fir_DeInit(firFilter* filter) {
+    free(filter->sample_values);
+    free(filter->filteredOutputs);
+    free(filter->coefficients);
+    free(filter);
+}
+
 //Helper Functions---------------------------------------------------------------------
 static void fir_updateInput(firFilter *filter, double newSample) {
     

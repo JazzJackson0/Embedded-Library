@@ -37,4 +37,6 @@ void complementary_filterTest() {
     assert( (0.80 * (20.0)) + (0.20 * (15.0)) == (int) fAngles->Filtered_Angle_Y);
     assert( (0.80 * (25.0)) + (0.20 * (20.0)) == (int) fAngles->Filtered_Angle_Z);
     //For come reason C is converting lvalue to int
+
+    free(rAngles);
 }

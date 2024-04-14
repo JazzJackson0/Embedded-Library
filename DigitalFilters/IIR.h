@@ -24,6 +24,13 @@ iirFilter* iir_Init(int feedBackNum, double *feedBack_coefs,
  */
 void IIRCalculator(iirFilter *filter, double newSample);
 
+/**
+ * @brief Deallocate memory allocated for iir object
+ * 
+ * @param iir IIR Filter
+ */
+void iir_DeInit(iirFilter* iir);
+
 //Structs
 struct iir {
     int feedBackNum;

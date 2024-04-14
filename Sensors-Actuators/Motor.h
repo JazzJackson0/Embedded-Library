@@ -29,6 +29,13 @@ Motor* Motor_Init(char directionPort1, int directionPin1,
 
 
 /**
+ * @brief Deinitialize motor
+ * 
+ * @param motor 
+ */
+void Motor_DeInit(Motor* motor);
+
+/**
  * @brief 
  * 
  * @param motor 

@@ -30,6 +30,14 @@ EulerAngle* RotMat_to_EulerAngles(double one, double two, double three);
  */
 EulerAngle* RotMat_to_TaitBryanAngles(double one, double two, double three);
 
+/**
+ * @brief Deallocate memory allocated to euler
+ * 
+ * @param euler 
+ */
+void recycle_Angles(EulerAngle* euler);
+
+
 //Structs
 struct euler {
     double Roll;

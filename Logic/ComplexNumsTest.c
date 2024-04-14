@@ -80,4 +80,6 @@ void ValuetoComplexNumTest() {
     complexNum *cNum = ValuetoComplexNum(values, 2);
     assert(3.7 == cNum[0].realPart);
     assert(9.2 == cNum[1].realPart);
+
+    recycle_complex_num(cNum);
 }

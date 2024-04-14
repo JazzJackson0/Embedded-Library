@@ -34,6 +34,8 @@ void RotMat_to_EulerAnglesTest() {
     assert(atan( ( sin(one) * sin(two) ) / ( cos(one) * sin(two) ) ) == euler->Roll);
     assert(atan( sqrt( 1 - ( cos(two) * cos(two) ) ) / cos(two) ) == euler->Pitch);
     assert(atan( ( sin(two) * sin(three) ) / ( cos(three) * sin(two) ) ) == euler->Yaw);
+
+    recycle_Angles(euler);
 }
 
 /**
@@ -56,4 +58,6 @@ void RotMat_to_TaitBryanAnglesTest() {
     assert(atan( cos(two) * sin(one) / ( cos(one) * cos(two) ) ) == euler->Roll);
     assert(atan( sin(two) / sqrt( 1 - ( sin(two) * sin(two) ) ) ) == euler->Pitch);
     assert(atan( cos(two) * sin(three) / ( cos(two) * cos(three) ) ) == euler->Yaw);
+
+    recycle_Angles(euler);
 }

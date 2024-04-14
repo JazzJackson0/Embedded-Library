@@ -62,6 +62,10 @@ void Get_AngularRotations(RotationAngles *rotations, Sensor_Reading *readings,
 
 }
 
+void RotationAnglesDeInit(RotationAngles* rotations) {
+	free(rotations);
+}
+
 /*
  * 			TO-DO
  * 			-----

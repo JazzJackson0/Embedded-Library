@@ -160,6 +160,8 @@ void Rotate_VectorTest() {
         == Rotate_Vector(vector, &q1)->q2);
     assert(MultiplyQuaternions(q_result, Get_QuaternionConjugate(&q1))->q3 
         == Rotate_Vector(vector, &q1)->q3);
+
+    recycle_quaternion(q_result);
 }
 
 void RotateByAngleTest() {

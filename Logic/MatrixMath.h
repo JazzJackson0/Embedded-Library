@@ -15,6 +15,13 @@ typedef struct matrix Matrix;
 Matrix* MatrixInit(int rows, int columns);
 
 /**
+ * @brief Deinitialize matrix
+ * 
+ * @param m 
+ */
+void MatrixDeInit(Matrix* m);
+
+/**
  * @brief Populate matrix with given values.
  * 
  * @param m Pointer to the Matrix you want to populate.

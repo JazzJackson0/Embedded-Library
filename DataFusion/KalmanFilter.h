@@ -31,6 +31,13 @@ KalmanFilter* KalmanInit(double* initialState, Matrix *FMatrix, Matrix *BMatrix,
  */
 void kalman_filter(KalmanFilter *k_filter);
 
+/**
+ * @brief Deallocate the memory given to the kalman filter.
+ * 
+ * @param k_filter 
+ */
+void kalmanDeInit(KalmanFilter *k_filter);
+
 
 //Structs
 struct kalman {

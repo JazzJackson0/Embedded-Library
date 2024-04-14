@@ -26,6 +26,21 @@ frequencyBin_data* fourier_transform(float *sample_values, int const samples_per
  */
 complexNum* IDFT(float *frequency_values, int const samples_per_sec);
 
+/**
+ * @brief Deallocate memory allocated to frequency_bins
+ * 
+ * @param frequency_bins Frequency domain data for a given signal.
+ */
+void fourier_transform_deinit(frequencyBin_data* frequency_bins);
+
+/**
+ * @brief Deallocate memory allocated to sample_coefficients
+ * 
+ * @param sample_coefficients Values to be used as FIR Coefficients
+ */
+void IDFT_deinit(complexNum* sample_coefficients);
+
+
 //Structs
 struct binData {
     //Fourier Coefficients

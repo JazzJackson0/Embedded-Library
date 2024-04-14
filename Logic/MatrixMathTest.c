@@ -43,6 +43,8 @@ void MatirxInitTest() {
     assert(0.0 == m1->matrix[0][1]);
     assert(0.0 == m1->matrix[1][0]);
     assert(0.0 == m1->matrix[1][1]);
+
+    MatrixDeInit(m1);
 }
 
 /**
@@ -57,6 +59,8 @@ void PopulateMatrixTest() {
     assert(2.0 == m1->matrix[0][1]);
     assert(3.0 == m1->matrix[1][0]);
     assert(4.0 == m1->matrix[1][1]);
+
+    MatrixDeInit(m1);
 }
 
 /**
@@ -84,6 +88,8 @@ void Add_MatricesTest_2x2() {
     assert(5.0 == Add_Matrices(m1, m2)->matrix[0][1]);
     assert(5.0 == Add_Matrices(m1, m2)->matrix[1][0]);
     assert(5.0 == Add_Matrices(m1, m2)->matrix[1][1]);
+
+    MatrixDeInit(m1);
 }
 
 /**
@@ -111,6 +117,8 @@ void Subtract_MatricesTest_2x2() {
     assert(7.0 == Subtract_Matrices(m1, m2)->matrix[0][1]);
     assert(7.0 == Subtract_Matrices(m1, m2)->matrix[1][0]);
     assert(7.0 == Subtract_Matrices(m1, m2)->matrix[1][1]);
+
+    MatrixDeInit(m1);
 }
 
 /**
@@ -139,6 +147,8 @@ void Multiply_MatricesTest_2x2() {
     assert(60.0 == Multiply_Matrices(m1, m2)->matrix[0][1]);
     assert(60.0 == Multiply_Matrices(m1, m2)->matrix[1][0]);
     assert(60.0 == Multiply_Matrices(m1, m2)->matrix[1][1]);
+
+    MatrixDeInit(m1);
 }
 
 /**
@@ -160,6 +170,8 @@ void Get_MatrixTransposeTest_2x2() {
     assert(3.0 == Get_MatrixTranspose(m1)->matrix[0][1]);
     assert(2.0 == Get_MatrixTranspose(m1)->matrix[1][0]);
     assert(4.0 == Get_MatrixTranspose(m1)->matrix[1][1]);
+
+    MatrixDeInit(m1);
 }
 
 /**
@@ -182,6 +194,8 @@ void Get_MatrixInverseTest() {
     assert(1.0 == inverse->matrix[0][1]);
     assert(1.5 == inverse->matrix[1][0]);
     assert(-0.5 == inverse->matrix[1][1]);
+
+    MatrixDeInit(m1);
 }
 
 

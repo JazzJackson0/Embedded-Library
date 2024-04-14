@@ -30,6 +30,8 @@ void fir_InitTest() {
     /* Pointers
     assert(2, fir->sample_values);
     assert(2, fir->filteredOutputs);*/
+
+    fir_DeInit(fir);
 }
 
 /**
@@ -43,6 +45,8 @@ void FIRCalculatorTest() {
 
     assert((49.0 * 5.0) + (0.0 * 6.0) == fir->filteredOutputs[0]);
     assert(1 == fir->currentPosition);
+
+    fir_DeInit(fir);
 }
 
 /**
@@ -64,4 +68,6 @@ void FIRCalculatorTest2() {
 
     assert((23.0 * 5.0) + (37.0 * 6.0) == fir->filteredOutputs[0]);
     assert(1 == fir->currentPosition);
+
+    fir_DeInit(fir);
 }

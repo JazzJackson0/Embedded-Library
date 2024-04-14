@@ -80,6 +80,8 @@ void kalmanInitTest() {
 
     // Check
 
+
+    kalmanDeInit(kf);
     free(fmatrix);
     free(bmatrix);
     free(pmatrix);
@@ -125,7 +127,7 @@ void kalman_filterTest() {
     assert(0.0 == kf->updatedCovariance->matrix[1][0]);
     assert(0.0 == kf->updatedCovariance->matrix[1][1]);
 
-
+    kalmanDeInit(kf);
     free(fmatrix);
     free(bmatrix);
     free(pmatrix);

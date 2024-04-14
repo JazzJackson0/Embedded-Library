@@ -35,6 +35,8 @@ void Convert_GUnitToMps2Test() {
     assert(20.0 / 0.10197162129779 == sens_readings->Ax_mps2);
     assert(50.0 / 0.10197162129779 == sens_readings->Ay_mps2);
     assert(85.5 / 0.10197162129779 == sens_readings->Az_mps2);
+
+    free(sens_readings);
 }
 
 /**
@@ -51,6 +53,8 @@ void Convert_RpsToDpsTest() {
     assert(60.0 / 0.017448352875489 == sens_readings->Gx_dps);
     assert(70.0 / 0.017448352875489 == sens_readings->Gy_dps);
     assert(93.0 / 0.017448352875489 == sens_readings->Gz_dps);
+
+    free(sens_readings);
 }
 
 void SensorReadingMpsUpdateTest() {
@@ -61,6 +65,8 @@ void SensorReadingMpsUpdateTest() {
     assert(1.0 == reading->Ax_mps2);
     assert(2.0 == reading->Ay_mps2);
     assert(3.0 == reading->Az_mps2);
+
+    free(reading);
 }
 
 void SensorReadingDpsUpdateTest() {
@@ -71,6 +77,8 @@ void SensorReadingDpsUpdateTest() {
     assert(4.0 == reading->Gx_dps);
     assert(5.0 == reading->Gy_dps);
     assert(6.0 == reading->Gz_dps);
+
+    free(reading);
 }
 
 /**
@@ -88,6 +96,8 @@ void RotationAnglesInitTest() {
     assert(0.0 == rotAngles->Angle_Gx);
     assert(0.0 == rotAngles->Angle_Gy);
     assert(0.0 == rotAngles->Angle_Gz);
+
+    RotationAnglesDeInit(rotAngles);
 
 }
 
@@ -112,4 +122,7 @@ void Get_AngularRotationsTest() {
     assert(4.0 == rotAngles->Angle_Gx);
     assert(6.0 == rotAngles->Angle_Gy);
     assert(8.0 == rotAngles->Angle_Gz);
+
+    RotationAnglesDeInit(rotAngles);
+    free(Readings);
 }

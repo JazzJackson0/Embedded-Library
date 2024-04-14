@@ -31,6 +31,12 @@ complexNum* Set_Z(double angle, double magnitude_r, int n);
  */
 complexNum* ValuetoComplexNum(double *realValues, int numOfValues);
 
+/**
+ * @brief Deallocate memory allocated to complexNum object
+ * 
+ * @param z 
+ */
+void recycle_complex_num(complexNum *z) ;
 
 // Structs
 struct c {

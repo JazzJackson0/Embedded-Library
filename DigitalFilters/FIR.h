@@ -21,6 +21,13 @@ firFilter* fir_Init(int tapSize, double *coefficients);
  */
 void FIRCalculator(firFilter *filter, double newSample);
 
+/**
+ * @brief Deallocate memory allocated to filter
+ * 
+ * @param filter 
+ */
+void fir_DeInit(firFilter* filter);
+
 //Structs
 struct fir {
 

@@ -36,6 +36,20 @@ frequencyBin_data* fourier_transform(float *sample_values, int const samples_per
     return frequency_bins;
 }
 
+void fourier_transform_deinit(frequencyBin_data* frequency_bins) {
+
+    free(frequency_bins->realPart);
+    free(frequency_bins->imaginaryPart);
+    free(frequency_bins->amplitude);
+    free(frequency_bins->nyquist_magnitude);
+    free(frequency_bins->phase);
+    free(frequency_bins);
+}
+
+void IDFT_deinit(complexNum* sample_coefficients) {
+    free(sample_coefficients);
+}
+
 complexNum* IDFT(float *frequency_values, int const num_of_bins) {
 
     complexNum *sample_coefficients = malloc(num_of_bins * sizeof(complexNum));

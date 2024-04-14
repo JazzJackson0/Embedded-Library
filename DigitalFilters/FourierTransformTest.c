@@ -47,6 +47,8 @@ void fourier_transformTest() {
     assert(binData->amplitude[3] < 0.001);
     assert(binData->nyquist_magnitude[3] < 0.001);
 
+    fourier_transform_deinit(binData);
+
 }
 
 /**
@@ -84,4 +86,6 @@ void IDFTTest() {
 
     assert(0.0 == sampleData[0].realPart);
     assert(0.0 == sampleData[0].imaginaryPart);
+
+    IDFT_deinit(sampleData);
 }

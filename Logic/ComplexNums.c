@@ -42,6 +42,10 @@ complexNum* ValuetoComplexNum(double *realValues, int numOfValues) {
     return cNum;
 }
 
+void recycle_complex_num(complexNum *z) {
+    free(z);
+}
+
 
 /*
  * 			TO-DO

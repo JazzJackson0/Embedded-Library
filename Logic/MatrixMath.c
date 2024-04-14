@@ -15,6 +15,13 @@ Matrix* MatrixInit(int rows, int columns) {
     return m;
 }
 
+void MatrixDeInit(Matrix* m) {
+    int rows = m->rowNum;
+    for (int i = 0; i < rows; i++) { free(m->matrix[i]); }
+    free(m->matrix);
+    free(m);
+}
+
 void PopulateMatrix(Matrix *m, double *data) {
 
     for (int i = 0; i < m->rowNum; i++) {

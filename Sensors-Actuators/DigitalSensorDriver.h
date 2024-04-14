@@ -20,6 +20,13 @@ typedef struct d_sensor DigitalSensor;
 DigitalSensor* SensorInit(char port, uint8_t pinNum);
 
 /**
+ * @brief DeInitialize Digital Sensor
+ * 
+ * @param DSensor Sensor object
+ */
+void SensorDeInit(DigitalSensor *DSensor);
+
+/**
  * @brief Get state of Digital Sensor
  * 
  * @param DSensor Sensor to obtain state from

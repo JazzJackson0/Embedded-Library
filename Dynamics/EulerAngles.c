@@ -51,6 +51,12 @@ EulerAngle* RotMat_to_TaitBryanAngles(double one, double two, double three) {
 }
 
 
+void recycle_Angles(EulerAngle* euler) {
+
+    free(euler);
+}
+
+
 /*
  * 			TO-DO
  * 			-----

@@ -82,6 +82,11 @@ void kalman_filter(KalmanFilter *k_filter) {
     k_filter->updatedCovariance = Get_UpdatedCovariance(k_filter);;
 }
 
+void kalmanDeInit(KalmanFilter *k_filter) {
+
+    free(k_filter);
+}
+
 //Helper Functions----------------------------------------------------------------------
 static Matrix* Get_ExpectedStateEstimate(KalmanFilter *k_filter) {
 

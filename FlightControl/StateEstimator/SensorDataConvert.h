@@ -75,6 +75,13 @@ RotationAngles* RotationAnglesInit(void);
 void Get_AngularRotations(RotationAngles *rotations, Sensor_Reading *readings, 
 	float sample_period);
 
+/**
+ * @brief Deallocate memory allocated to RotationAngles object
+ * 
+ * @param rotations 
+ */
+void RotationAnglesDeInit(RotationAngles* rotations);
+
 //Structs
 /**
  * @brief Sensor reading in mps^2 and dps

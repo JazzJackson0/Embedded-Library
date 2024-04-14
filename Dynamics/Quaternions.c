@@ -88,6 +88,10 @@ Quaternion* Get_QuaternionConjugate(Quaternion *q) {
     return r;
 }
 
+void recycle_quaternion(Quaternion *q) {
+    free(q);
+}
+
 
 
 

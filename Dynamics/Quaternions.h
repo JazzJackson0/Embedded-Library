@@ -66,6 +66,13 @@ Quaternion* Get_QuaternionInverse(Quaternion *q);
  */
 Quaternion* Get_QuaternionConjugate(Quaternion *q);
 
+/**
+ * @brief Deallocate memory allocated to Quaternion object
+ * 
+ * @param q 
+ */
+void recycle_quaternion(Quaternion *q);
+
 
 //Structs
 struct q {

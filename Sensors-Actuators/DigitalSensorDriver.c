@@ -21,3 +21,7 @@ uint8_t Get_SensorState(DigitalSensor *DSensor) {
 
     return DSensor->pinIn(DSensor->port, DSensor->pinNum);
 }
+
+void SensorDeInit(DigitalSensor* DSensor) {
+    free(DSensor);
+}

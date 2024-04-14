@@ -26,6 +26,15 @@ iirFilter* iir_Init(int feedBackNum, double *feedBack_coefs,
     return filter;
 }
 
+void iir_DeInit(iirFilter* iir) {
+
+    free(iir->sample_values);
+    free(iir->feedForward_coefs);
+    free(iir->feedBack_coefs);
+    free(iir->filteredOutputs);
+    free(iir);
+}
+
 
 void IIRCalculator(iirFilter *filter, double newSample) {
     

@@ -38,6 +38,10 @@ Motor* Motor_Init(char directionPort1, int directionPin1,
    return motor;
 }
 
+void Motor_DeInit(Motor* motor) {
+    free(motor);
+}
+
 
 
 void Update_Motor(Motor *motor, MotorDirection direction, float speed) {
@@ -52,7 +56,7 @@ void Update_Motor(Motor *motor, MotorDirection direction, float speed) {
         motor->pinOut(motor->DirectionPort1, motor->DirectionPin2, 1);
     }
 
-    motor->pwmStart(motor->timerID, 1, 16000, 1000, speed); // STM32 Version
+    motor->pwmStart(motor->timerIDNum, 1, 16000, 1000, speed); // STM32 Version
     //motor->pwmStart(motor->timerID, DIV_1, 1000, speed); // MSP430 Version
     //motor->pwmStart(motor->timerID, _DIV_8, 1000, speed); // ATMega328 Version
 }
