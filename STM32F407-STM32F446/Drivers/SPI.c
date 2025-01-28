@@ -1,4 +1,4 @@
-#include "STM32F407.SPI.h"
+#include "SPI.h"
 
 //Static Prototypes---------------------------------------------
 static void SPI_PinInit(uint8_t spiNumber);
@@ -69,25 +69,6 @@ uint8_t SPI_Transmit(uint8_t spiNumber, uint8_t data) {
 
 
 //Helper Functions--------------------------------------------------------------------------------------------------------------
-
-/**
-SPI Pins ---------------------------
-		+ SPI1_NSS: PA4, PA15 (AF5)
-		+ SPI1_SCK: PA5, PB3 (AF5)
-		+ SPI1_MISO: PA6, PB4 (AF5)
-		+ SPI1_MOSI: PA7, PB5 (AF5)
-		
-		+ SPI2_NSS: PB9, PB12, PI0 (AF5)
-		+ SPI2_SCK: PB10, PB13, PI1 (AF5)
-		+ SPI2_MISO: PB14, PC2, PI2 (AF5)
-		+ SPI2_MOSI: PB15, PC3, PI3 (AF5)
-		
-		+ SPI3_NSS: PA4, PA15 (AF6)
-		+ SPI3_SCK: PB3, PC10 (AF6)
-		+ SPI3_MISO: PB4, PC11 (AF6)
-		+ SPI3_MOSI: PB5, PC12 (AF6)
-		------------------------------------
-**/
 static void SPI_PinInit(uint8_t spiNumber) {
 	
 	switch(spiNumber) {

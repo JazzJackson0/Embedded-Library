@@ -1,4 +1,4 @@
-#include "STM32F407.USART.h"
+#include "USART.h"
 
 //Macros---------------------------------------------------------------
 #define CLOCK_SPEED 16
@@ -75,40 +75,6 @@ uint8_t USART_Receive(uint8_t usartNumber) {
 
 
 //Helper Functions--------------------------------------------------------------------------------------------------------------
-
-/**
-USART/UART Pins ---------------------------
-		+ USART1_CK: PA4 (AF7)
-		+ USART1_TX: PA2, PB6 (AF7)
-		+ USART1_RX: PA3, PB7 (AF7)
-		+ USART1_CTS: PA0 (AF7)
-		+ USART1_RTS: PA1 (AF7)
-		
-		+ USART2_CTS: PA0, PD3 (AF7)
-		+ USART2_RTS: PA1, PD4 (AF7)
-		+ USART2_TX: PA2, PD5 (AF7)
-		+ USART2_RX: PA3, PD6 (AF7)
-		+ USART2_CK: PA4, PD7 (AF7)
-		
-		+ USART3_TX: PB10, PC10, PD8 (AF7)
-		+ USART3_RX: PB11, PC11, PD9 (AF7)
-		+ USART3_CK: PB12, PC12, PD10 (AF7)
-		+ USART3_CTS: PB13, PD11 (AF7)
-		+ USART3_RTS: PB14, PD12 (AF7)
-		
-		+ UART4_TX: PA0, PC10 (AF8)
-		+ UART4_RX: PA1, PC11 (AF8)
-		
-		+ UART5_TX: PC12 (AF8)
-		+ UART5_RX: PD2 (AF8)
-		
-		+ USART6_TX: PC6, PG14 (AF8)
-		+ USART6_RX: PC7, PG9 (AF8)
-		+ USART6_CK: PC8, PG7 (AF8)
-		+ USART6_RTS: PG8, PG12 (AF8)
-		+ USART6_CTS: PG13, PG15 (AF8)
-		------------------------------------
-**/
 static void USART_PinInit(uint8_t usartNumber) {
 	
 	switch(usartNumber) {

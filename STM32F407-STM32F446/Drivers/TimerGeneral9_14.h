@@ -4,49 +4,7 @@
 //Genreal Purpose Timers 9-15
 #include <stdint.h>
 #include <stdio.h>
-#include "STM32F407.GPIO.h"
-
-//DECLARATIONS
-/**
- * @brief Initialize and Start Timer
- * @param timerNum Timer Number (9 - 14)
- * @param prescaler Timer Clock Prescaler Value (Clock Speed / Presclaler = Number of Hz per Second)
- * @param time Time Goal: Example: Let (Clock Speed / Prescaler) = 1000Hz/Sec
- * 							---- For 1sec Time Goal: Time = 1000(Hz)
- * 						|||  00:00 ---> Time Goal |||  RESET
- *						|||  00:00 ---> Time Goal |||  RESET |||  ETC...)
- * @return ** uint8_t 
- */
-uint8_t GeneralTimer9_14_Start(uint8_t timerNum, uint16_t prescaler, uint16_t time);
-/**
- * @brief Initialize and Start Pulse Width Modulation
- * @param timerNum Timer Number (9 - 14)
- * @param captCompNum Capture Compare Number (1 - 2)
- * @param prescaler Timer Clock Prescaler Value (Clock Speed / Presclaler = Number of Hz per Second)
- * @param time Time Goal: Example: Let (Clock Speed / Prescaler) = 1000Hz/Sec
- * 							---- For 1sec Time Goal: Time = 1000(Hz)
- * 						|||  00:00 ---> Time Goal |||  RESET
- *						|||  00:00 ---> Time Goal |||  RESET |||  ETC...)
- * @param dutyCyclePercent PWM Duty Cycle as a percentage value (0% - 100%).
- * @return ** void 
- */
-void GeneralTimer9_14_PWM_Start(uint8_t timerNum, uint8_t captCompNum, 
-	uint16_t prescaler, uint16_t time, float dutyCyclePercent);
-/**
- * @brief Update Pulse Width Modulation with new Duty Cycle
- * 
- * @param timerNum Timer Number (9 - 14)
- * @param captCompNum Capture Compare Number (1 - 2)
- * @param time Time Goal: Example: Let (Clock Speed / Prescaler) = 1000Hz/Sec
- * 							---- For 1sec Time Goal: Time = 1000(Hz)
- * 						|||  00:00 ---> Time Goal |||  RESET
- *						|||  00:00 ---> Time Goal |||  RESET |||  ETC...)
- * @param dutyCyclePercent PWM Duty Cycle as a percentage value (0% - 100%).
- * @return ** void 
- */
-void GeneralTimer9_14_PWM_Update(uint8_t timerNum, uint8_t captCompNum, 
-	uint16_t time, float dutyCyclePercent);
-
+#include "GPIO.h"
 
 //CLOCKS
 #define CLOCK 0x40023800
@@ -136,34 +94,68 @@ typedef struct _general_timer_9_14 GEN_TIMER_9_14x;
 #define CAPTURE_EVERY_4EVENTS 0x02
 #define CAPTURE_EVERY_8EVENTS 0x03
 
+/**
+TIMER Pins ---------------------------
+		+ TIM9_CH1: PA2, PE5 (AF3)
+		+ TIM9_CH2: PA3, PE6 (AF3)
+		
+		+ TIM10_CH1: PB8, PF6 (AF3)
+		
+		+ TIM11_CH1: PB9, PF7 (AF3)
+
+		+ TIM12_CH1: PB14, PH6 (AF9)
+		+ TIM12_CH2: PB15, PH9 (AF9)
+		
+		+ TIM13_CH1: PA6, PF8 (AF9)
+		
+		+ TIM14_CH1: PA7, PF9 (AF9)
+		------------------------------------
+**/
+
+//DECLARATIONS
+/**
+ * @brief Initialize and Start Timer
+ * @param timerNum Timer Number (9 - 14)
+ * @param prescaler Timer Clock Prescaler Value (Clock Speed / Presclaler = Number of Hz per Second)
+ * @param time Time Goal: Example: Let (Clock Speed / Prescaler) = 1000Hz/Sec
+ * 							---- For 1sec Time Goal: Time = 1000(Hz)
+ * 						|||  00:00 ---> Time Goal |||  RESET
+ *						|||  00:00 ---> Time Goal |||  RESET |||  ETC...)
+ * @return ** uint8_t 
+ */
+uint8_t GeneralTimer9_14_Start(uint8_t timerNum, uint16_t prescaler, uint16_t time);
+/**
+ * @brief Initialize and Start Pulse Width Modulation
+ * @param timerNum Timer Number (9 - 14)
+ * @param captCompNum Capture Compare Number (1 - 2)
+ * @param prescaler Timer Clock Prescaler Value (Clock Speed / Presclaler = Number of Hz per Second)
+ * @param time Time Goal: Example: Let (Clock Speed / Prescaler) = 1000Hz/Sec
+ * 							---- For 1sec Time Goal: Time = 1000(Hz)
+ * 						|||  00:00 ---> Time Goal |||  RESET
+ *						|||  00:00 ---> Time Goal |||  RESET |||  ETC...)
+ * @param dutyCyclePercent PWM Duty Cycle as a percentage value (0% - 100%).
+ * @return ** void 
+ */
+void GeneralTimer9_14_PWM_Start(uint8_t timerNum, uint8_t captCompNum, 
+	uint16_t prescaler, uint16_t time, float dutyCyclePercent);
+/**
+ * @brief Update Pulse Width Modulation with new Duty Cycle
+ * 
+ * @param timerNum Timer Number (9 - 14)
+ * @param captCompNum Capture Compare Number (1 - 2)
+ * @param time Time Goal: Example: Let (Clock Speed / Prescaler) = 1000Hz/Sec
+ * 							---- For 1sec Time Goal: Time = 1000(Hz)
+ * 						|||  00:00 ---> Time Goal |||  RESET
+ *						|||  00:00 ---> Time Goal |||  RESET |||  ETC...)
+ * @param dutyCyclePercent PWM Duty Cycle as a percentage value (0% - 100%).
+ * @return ** void 
+ */
+void GeneralTimer9_14_PWM_Update(uint8_t timerNum, uint8_t captCompNum, 
+	uint16_t time, float dutyCyclePercent);
+
 
 
 //Registers------------------------------------------------------------------------
-struct _general_timer_9_14 {
-	TIM9_14_CONTROL1 ControlReg1; // 0x00
-	GENERAL_TIMER_9_14_RESERVED reserved0; // 0x08
-	TIM9_AND_12_SLAVEMODE_CONTROL SlaveModeControlReg; // 0x08 -- ONLY AVAILABLE FOR TIM 9 & 12
-	TIM9_14_INTERRUPT_ENABLE DMAInterruptEnableReg; // 0x0C
-	TIM9_14_STATUS StatusReg; // 0x10
-	TIM9_14_EVENTGEN EventGenReg; // 0x14
-	TIM9_14_CAPTURECOMP_MODE1 CaptureCompModeReg1; // 0x18
-	GENERAL_TIMER_9_14_RESERVED reserved1; // 0x1C
-	TIM9_14_CAPTURECOMP_ENABLE CaptureCompEnableReg; // 0x20
-	TIM9_14_COUNTER CounterReg; // 0x24
-	TIM9_14_PRESCALER PrescalerReg; // 0x28
-	TIM9_14_AUTORELOAD AutoReloadReg; // 0x2C
-	GENERAL_TIMER_9_14_RESERVED reserved2; // 0x30
-	TIM9_14_CAPTURECOMPx CaptureComp1Reg; // 0x34
-	TIM9_14_CAPTURECOMPx CaptureComp2Reg; // 0x38 -- ONLY AVAILABLE FOR TIM 9 & 12
-	GENERAL_TIMER_9_14_RESERVED reserved3; // 0x3C
-	GENERAL_TIMER_9_14_RESERVED reserved4; // 0x40
-	GENERAL_TIMER_9_14_RESERVED reserved5; // 0x44
-	GENERAL_TIMER_9_14_RESERVED reserved6; // 0x48
-	GENERAL_TIMER_9_14_RESERVED reserved7; // 0x4C
-	TIM11_OPTION TIM11OptionReg; //0x50 
-};
-
-
 typedef struct {
 	const uint32_t reserved:32;
 }GENERAL_TIMER_9_14_RESERVED;
@@ -301,5 +293,36 @@ typedef struct {
 	volatile uint16_t rw_InternalTrig1Remap:2; //No Macros For This
 	const uint16_t reserved1:14;
 }TIM11_OPTION;
+
+
+
+
+
+
+struct _general_timer_9_14 {
+	TIM9_14_CONTROL1 ControlReg1; // 0x00
+	GENERAL_TIMER_9_14_RESERVED reserved0; // 0x08
+	TIM9_AND_12_SLAVEMODE_CONTROL SlaveModeControlReg; // 0x08 -- ONLY AVAILABLE FOR TIM 9 & 12
+	TIM9_14_INTERRUPT_ENABLE DMAInterruptEnableReg; // 0x0C
+	TIM9_14_STATUS StatusReg; // 0x10
+	TIM9_14_EVENTGEN EventGenReg; // 0x14
+	TIM9_14_CAPTURECOMP_MODE1 CaptureCompModeReg1; // 0x18
+	GENERAL_TIMER_9_14_RESERVED reserved1; // 0x1C
+	TIM9_14_CAPTURECOMP_ENABLE CaptureCompEnableReg; // 0x20
+	TIM9_14_COUNTER CounterReg; // 0x24
+	TIM9_14_PRESCALER PrescalerReg; // 0x28
+	TIM9_14_AUTORELOAD AutoReloadReg; // 0x2C
+	GENERAL_TIMER_9_14_RESERVED reserved2; // 0x30
+	TIM9_14_CAPTURECOMPx CaptureComp1Reg; // 0x34
+	TIM9_14_CAPTURECOMPx CaptureComp2Reg; // 0x38 -- ONLY AVAILABLE FOR TIM 9 & 12
+	GENERAL_TIMER_9_14_RESERVED reserved3; // 0x3C
+	GENERAL_TIMER_9_14_RESERVED reserved4; // 0x40
+	GENERAL_TIMER_9_14_RESERVED reserved5; // 0x44
+	GENERAL_TIMER_9_14_RESERVED reserved6; // 0x48
+	GENERAL_TIMER_9_14_RESERVED reserved7; // 0x4C
+	TIM11_OPTION TIM11OptionReg; //0x50 
+};
+
+
 
 #endif

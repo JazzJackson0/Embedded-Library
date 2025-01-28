@@ -2,50 +2,13 @@
 #ifndef ADC_H_
 #define ADC_H_
 #include <stdint.h>
-#include "STM32F407.GPIO.h"
+#include "GPIO.h"
 
 typedef enum _Channel E_Channel;
 typedef enum _SamplePeriod E_SamplePeriod;
 typedef enum _Resolution E_Resolution;
 typedef enum _singleCont E_SingleCont;
 typedef enum _ConversionNum E_ConversionNum;
-
-//DECLARATIONS
-/**
- * @brief Initialize a given ADC channel
- * 
- * @param adcNumber ADC Number. (1 - 3)
- * @param adcChannel ADC (Regular) Channel Number. (CH_0 - CH_18)
- * @param conversionOrderNum Set the conversion order for the Channel (1st - 16th conversion) 
- * @param cycles Number of clock cycles per sample. (_x_CYCLES: Where x = 3, 15, 28, 56, 
- * 				84, 112, 144, 480)
- * @return ** void 
- */
-void ADCRegularChannel_Init(uint8_t adcNumber, E_Channel adcChannel, 
-	uint8_t conversionOrderNum, E_SamplePeriod cycles);
-/**
- * @brief Initialize ADC
- * 
- * @param adcNumber ADC Number. (1 - 3)
- * @param resolution ADC Resolution. (_xBIT_ADC: Where x = 10, 12, 16, 18)
- * @param singleContinuous A SINGLE conversion or CONTINUOUS conversions.
- * @param numOfConversions Number of Channels to be converted in the Sequence of 16.
- * 							|||  _x_CONVERSION: Where x = 1 - 16
- * 							||| Example: _3_CONVERSIONS = Only 1st, 2nd and 3rd Channels in
- * 								conversion sequence will run (Out of a Max of a sequence of 16) .
- * @return ** void 
- */
-void ADC_RegularInit(uint8_t adcNumber, E_Resolution resolution, E_SingleCont singleContinuous, 
-	E_ConversionNum numOfConversions);
-/**
- * @brief Start Conversion and Read Regular Channel Conversion Result. 
- * 			Call once for each Channel in a Sequence
- * 
- * @param adcNumber ADC Number. (1 - 3)
- * @return ** int16_t Regular Channel Conversion Result
- */
-int16_t ADC_ReadRegularChannel(uint8_t adcNumber);
-
 
 //CLOCK
 #define CLOCK 0x40023800
@@ -154,6 +117,78 @@ typedef struct _adcCommon CommonADCRegisters;
 #define DIV_6 0x02
 #define DIV_8 0x03
 
+/**
+ADC Pins ---------------------------
+		These are 'Additional Functions' not 'Alternate Functions'
+		Meaning: Functions are directly selected/enabled through peripheral registers.
+		They are not selected through GPIOx_AFR registers.
+		
+		+ ADC3_IN4: PF6
+		+ ADC3_IN5: PF7
+		+ ADC3_IN6: PF8
+		+ ADC3_IN7: PF9
+		+ ADC3_IN8: PF10
+		+ ADC3_IN9: PF3
+		+ ADC3_IN14: PF4
+		+ ADC3_IN15: PF5
+	
+		+ ADC12_IN4: PA4
+		+ ADC12_IN5: PA5
+		+ ADC12_IN6: PA6
+		+ ADC12_IN7: PA7
+		+ ADC12_IN8: PB0
+		+ ADC12_IN9: PB1
+		+ ADC12_IN14: PC4
+		+ ADC12_IN15: PC5
+		
+		+ ADC123_IN0: PA0
+		+ ADC123_IN1: PA1
+		+ ADC123_IN2: PA2
+		+ ADC123_IN3: PA3
+		+ ADC123_IN10: PC0
+		+ ADC123_IN11: PC1
+		+ ADC123_IN12: PC2
+		+ ADC123_IN13: PC3
+		------------------------------------
+**/
+
+//DECLARATIONS
+/**
+ * @brief Initialize a given ADC channel
+ * 
+ * @param adcNumber ADC Number. (1 - 3)
+ * @param adcChannel ADC (Regular) Channel Number. (CH_0 - CH_18)
+ * @param conversionOrderNum Set the conversion order for the Channel (1st - 16th conversion) 
+ * @param cycles Number of clock cycles per sample. (_x_CYCLES: Where x = 3, 15, 28, 56, 
+ * 				84, 112, 144, 480)
+ * @return ** void 
+ */
+void ADCRegularChannel_Init(uint8_t adcNumber, E_Channel adcChannel, 
+	uint8_t conversionOrderNum, E_SamplePeriod cycles);
+/**
+ * @brief Initialize ADC
+ * 
+ * @param adcNumber ADC Number. (1 - 3)
+ * @param resolution ADC Resolution. (_xBIT_ADC: Where x = 10, 12, 16, 18)
+ * @param singleContinuous A SINGLE conversion or CONTINUOUS conversions.
+ * @param numOfConversions Number of Channels to be converted in the Sequence of 16.
+ * 							|||  _x_CONVERSION: Where x = 1 - 16
+ * 							||| Example: _3_CONVERSIONS = Only 1st, 2nd and 3rd Channels in
+ * 								conversion sequence will run (Out of a Max of a sequence of 16) .
+ * @return ** void 
+ */
+void ADC_RegularInit(uint8_t adcNumber, E_Resolution resolution, E_SingleCont singleContinuous, 
+	E_ConversionNum numOfConversions);
+/**
+ * @brief Start Conversion and Read Regular Channel Conversion Result. 
+ * 			Call once for each Channel in a Sequence
+ * 
+ * @param adcNumber ADC Number. (1 - 3)
+ * @return ** int16_t Regular Channel Conversion Result
+ */
+int16_t ADC_ReadRegularChannel(uint8_t adcNumber);
+
+
 //Enums----------------------------------------------------------------------
 //FOR ADC SEQUENCE Registers 1-3 (and Injected)
 /*Channels to be given a Conversion Order*/
@@ -205,35 +240,6 @@ enum _ConversionNum {
 };
 
 //Registers------------------------------------------------------------------
-struct _adc {
-
-	ADC_STATUS StatusReg; // 0x00
-	ADC_CONTROL1 ControlReg1; // 0x04
-	ADC_CONTROL2 ControlReg2; // 0x08
-	ADC_SAMPLETIME1 SampleTimeReg1; // 0x0C
-	ADC_SAMPLETIME2 SampleTimeReg2; // 0x10
-	ADC_INJECTED_CHANNEL_DATA_OFFSET InjChannelDataOffsetReg1; // 0x14
-	ADC_INJECTED_CHANNEL_DATA_OFFSET InjChannelDataOffsetReg2; // 0x18
-	ADC_INJECTED_CHANNEL_DATA_OFFSET InjChannelDataOffsetReg3; // 0x1C
-	ADC_INJECTED_CHANNEL_DATA_OFFSET InjChannelDataOffsetReg4; // 0x20
-	ADC_WATCHDOG_HIGHER_THRESHOLD WatchDogHighThreshReg; // 0x24
-	ADC_WATCHDOG_LOWER_THRESHOLD WatchDogLowThreshReg; // 0x28
-	ADC_REGULAR_SEQUENCE1 RegularSequenceReg1; // 0x2C
-	ADC_REGULAR_SEQUENCE2 RegularSequenceReg2; // 0x30
-	ADC_REGULAR_SEQUENCE3 RegularSequenceReg3; // 0x34
-	ADC_INJECTED_SEQUENCE InjectedSeqReg; // 0x38
-	ADC_INJECTED_DATA InjectedDataReg1; // 0x3C
-	ADC_INJECTED_DATA InjectedDataReg2; // 0x40
-	ADC_INJECTED_DATA InjectedDataReg3; // 0x44
-	ADC_INJECTED_DATA InjectedDataReg4; // 0x48
-	ADC_REGULAR_DATA RegularDataReg; // 0x4C
-};
-
-struct _adcCommon {
-	ADC_COMMON_STATUS CommonStatusReg; // 0x300
-	ADC_COMMON_CONTROL CommonControlReg; // 0x304
-	ADC_COMMON_REGDATA_DUAL_AND_TRIPPLE_NODES CommonRegularDataDualTrippleNodeReg; // 0x308
-};
 
 typedef struct {
 	const uint32_t reserved0:8;
@@ -440,6 +446,39 @@ typedef struct {
 	volatile uint32_t read_DataItem1:16;
 	volatile uint32_t read_DataItem2:16;
 }ADC_COMMON_REGDATA_DUAL_AND_TRIPPLE_NODES;
+
+
+
+
+struct _adc {
+
+	ADC_STATUS StatusReg; // 0x00
+	ADC_CONTROL1 ControlReg1; // 0x04
+	ADC_CONTROL2 ControlReg2; // 0x08
+	ADC_SAMPLETIME1 SampleTimeReg1; // 0x0C
+	ADC_SAMPLETIME2 SampleTimeReg2; // 0x10
+	ADC_INJECTED_CHANNEL_DATA_OFFSET InjChannelDataOffsetReg1; // 0x14
+	ADC_INJECTED_CHANNEL_DATA_OFFSET InjChannelDataOffsetReg2; // 0x18
+	ADC_INJECTED_CHANNEL_DATA_OFFSET InjChannelDataOffsetReg3; // 0x1C
+	ADC_INJECTED_CHANNEL_DATA_OFFSET InjChannelDataOffsetReg4; // 0x20
+	ADC_WATCHDOG_HIGHER_THRESHOLD WatchDogHighThreshReg; // 0x24
+	ADC_WATCHDOG_LOWER_THRESHOLD WatchDogLowThreshReg; // 0x28
+	ADC_REGULAR_SEQUENCE1 RegularSequenceReg1; // 0x2C
+	ADC_REGULAR_SEQUENCE2 RegularSequenceReg2; // 0x30
+	ADC_REGULAR_SEQUENCE3 RegularSequenceReg3; // 0x34
+	ADC_INJECTED_SEQUENCE InjectedSeqReg; // 0x38
+	ADC_INJECTED_DATA InjectedDataReg1; // 0x3C
+	ADC_INJECTED_DATA InjectedDataReg2; // 0x40
+	ADC_INJECTED_DATA InjectedDataReg3; // 0x44
+	ADC_INJECTED_DATA InjectedDataReg4; // 0x48
+	ADC_REGULAR_DATA RegularDataReg; // 0x4C
+};
+
+struct _adcCommon {
+	ADC_COMMON_STATUS CommonStatusReg; // 0x300
+	ADC_COMMON_CONTROL CommonControlReg; // 0x304
+	ADC_COMMON_REGDATA_DUAL_AND_TRIPPLE_NODES CommonRegularDataDualTrippleNodeReg; // 0x308
+};
 
 
 #endif

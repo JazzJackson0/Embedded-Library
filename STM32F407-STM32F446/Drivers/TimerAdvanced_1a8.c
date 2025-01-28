@@ -1,4 +1,4 @@
-#include "STM32F407.TimerAdvanced_1a8.h"
+#include "TimerAdvanced_1a8.h"
 
 //Static Prototypes--------------------------------------------------------------
 static void PWM_PinInit(uint8_t timerNum);
@@ -96,31 +96,6 @@ void AdvancedPWM_Update(uint8_t timerNum, uint8_t captCompNum, uint16_t time, fl
 }
 
 //Helper Functions--------------------------------------------------------------------------------------------------------------
-
-/**
-TIMER Pins ---------------------------
-		+ TIM1_CH1: PA8, PE9 (AF1)
-		+ TIM1_CH2: PA9, PE11 (AF1)
-		+ TIM1_CH3: PA10, PE13 (AF1)
-		+ TIM1_CH4: PA11, PE14 (AF1)
-		+ TIM1_CH1N: PA7 (AF1)
-		+ TIM1_CH1N: PB13, PE8 (AF1)
-		+ TIM1_CH2N: PB0, PB14, PE10 (AF1)
-		+ TIM1_CH3N: PB1, PB15, PE12 (AF1)
-		+ TIM1_ETR: PA12, PE7 (AF1)
-		+ TIM1_BKIN: PA6, PB12, PE15 (AF1)
-		
-		+ TIM8_CH1: PC6, PI5 (AF3)
-		+ TIM8_CH2: PC7, PI6 (AF3)
-		+ TIM8_CH3: PC8, PI7 (AF3)
-		+ TIM8_CH4: PC9, PI2 (AF3)
-		+ TIM8_CH1N: PA5, PA7, PH13 (AF3)
-		+ TIM8_CH2N: PB0, PB14, PH14 (AF3)
-		+ TIM8_CH3N: PB1, PB15, PH15 (AF3)
-		+ TIM8_ETR: PA0, PI3 (AF3)
-		+ TIM8_BKIN: PA6, PI4 (AF3)
-		------------------------------------
-**/
 static void PWM_PinInit(uint8_t timerNum) {
 	
 	switch (timerNum) {

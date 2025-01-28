@@ -2,21 +2,7 @@
 #ifndef EXT_INTERRUPTS_H_
 #define EXT_INTERRUPTS_H_
 #include <stdint.h>
-#include "STM32F407.GPIO.h"
-/*Interrupt Pins ---------------------------
-		+ No Alternate Function Assignments Needed
-			(Just use the Registers)
-		------------------------------------*/
-
-typedef enum _TriggerEdge E_TriggerEdge;
-typedef enum _Type E_Type;
-
-
-//DECLARATIONS
-void EXTIInit(uint8_t extiNum, char port, E_Type interruptType, E_TriggerEdge triggerSelect);
-
-
-void CancelInterruptRequest(uint8_t lineNumber);
+#include "GPIO.h"
 
 //Do Interrupts Even Need a Clock Source? There is Nothing in APB2
 //#define CLOCK 0x40023800
@@ -45,6 +31,22 @@ typedef struct exti_cfg EXTI_CFG;
 #define ADDRS_EXTICR3 ( (EXTI_CFG*) ((SYSCFG_BASE) + EXTICR3))
 #define ADDRS_EXTICR4 ( (EXTI_CFG*) ((SYSCFG_BASE) + EXTICR4))
 
+typedef enum _TriggerEdge E_TriggerEdge;
+typedef enum _Type E_Type;
+
+/*Interrupt Pins ---------------------------
+		+ No Alternate Function Assignments Needed
+			(Just use the Registers)
+		------------------------------------*/
+
+
+//DECLARATIONS
+void EXTIInit(uint8_t extiNum, char port, E_Type interruptType, E_TriggerEdge triggerSelect);
+
+void CancelInterruptRequest(uint8_t lineNumber);
+
+
+
 //Enums----------------------------------------------------------------------
 enum _TriggerEdge {
 	RISING = 0, FALLING = 1, RISING_FALLING = 2
@@ -57,16 +59,6 @@ enum _Type {
 
 
 //Registers----------------------------------------------------------------------
-
-struct _exti {
-	INTERRUPT_MASK MaskReg; // 0x00
-	INTERRUPT_EVENTMASK EventMaskReg; // 0x04
-	INTERRUPT_TRIGGER_SELECTION RisingTrigSelectReg; // 0x08
-	INTERRUPT_TRIGGER_SELECTION FallingTrigSelectReg; // 0x0C
-	SOFTWARE_INTERRUPT_EVENT SoftwareInterruptEventReg; // 0x10
-	PENDING PendingReg; // 0x14
-};
-
 
 // See Reference Manual pg 383 for clarity on field names
 typedef struct {
@@ -246,6 +238,20 @@ struct exti_cfg {
 	volatile uint32_t extiPortAndPin_2:4;
 	volatile uint32_t extiPortAndPin_3:4;
 	const uint32_t reserved:16;
+};
+
+
+
+
+
+
+struct _exti {
+	INTERRUPT_MASK MaskReg; // 0x00
+	INTERRUPT_EVENTMASK EventMaskReg; // 0x04
+	INTERRUPT_TRIGGER_SELECTION RisingTrigSelectReg; // 0x08
+	INTERRUPT_TRIGGER_SELECTION FallingTrigSelectReg; // 0x0C
+	SOFTWARE_INTERRUPT_EVENT SoftwareInterruptEventReg; // 0x10
+	PENDING PendingReg; // 0x14
 };
 
 #endif

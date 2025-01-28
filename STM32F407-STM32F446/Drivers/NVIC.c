@@ -1,4 +1,4 @@
-#include "STM32F407.NVIC.h"
+#include "NVIC.h"
 
 //Static Prototypes---------------------------------------------
 static uint8_t SetInterruptBit(NVIC_GENERIC *generic, E_NVICRegs regType, uint8_t offset, uint8_t vecTablePos, E_Bit bit);

@@ -4,9 +4,29 @@
 #include <stdint.h>
 #include <stddef.h>
 
+//CLOCK
+#define CLOCK 0x40023800
+#define AHB1 0x30
+#define ADDR_GPIOx_CLOCK ( (GPIOx_CLOCK*) ((CLOCK) + AHB1) )
+
+//GPIOx
+typedef struct _gpio GPIOx;
+#define GPIO_BASE 0x40000000
+#define ADDR_GPIOA ( (GPIOx*) ((GPIO_BASE) + 0x20000) )
+#define ADDR_GPIOB ( (GPIOx*) ((GPIO_BASE) + 0x20400) )
+#define ADDR_GPIOC ( (GPIOx*) ((GPIO_BASE) + 0x20800) )
+#define ADDR_GPIOD ( (GPIOx*) ((GPIO_BASE) + 0x20C00) )
+#define ADDR_GPIOE ( (GPIOx*) ((GPIO_BASE) + 0x21000) )
+#define ADDR_GPIOF ( (GPIOx*) ((GPIO_BASE) + 0x21400) )
+#define ADDR_GPIOG ( (GPIOx*) ((GPIO_BASE) + 0x21800) )
+#define ADDR_GPIOH ( (GPIOx*) ((GPIO_BASE) + 0x21C00) )
+#define ADDR_GPIOI ( (GPIOx*) ((GPIO_BASE) + 0x22000) )
+
 typedef enum _PinModes E_PinModes;
 typedef enum _OutSpeeds E_OutSpeeds;
 typedef enum _PullUpDown E_PullUpDown;
+
+
 
 //DECLARATIONS
 /**
@@ -54,25 +74,6 @@ void Pin_OutputSpeed(char port, uint8_t pinNum, E_OutSpeeds speed);
  */
 void Pin_PullUp_PullDown(char port, uint8_t pinNum, E_PullUpDown upDown);
 
-//CLOCK
-#define CLOCK 0x40023800
-#define AHB1 0x30
-#define ADDR_GPIOx_CLOCK ( (GPIOx_CLOCK*) ((CLOCK) + AHB1) )
-
-//GPIOx
-typedef struct _gpio GPIOx;
-#define GPIO_BASE 0x40000000
-#define ADDR_GPIOA ( (GPIOx*) ((GPIO_BASE) + 0x20000) )
-#define ADDR_GPIOB ( (GPIOx*) ((GPIO_BASE) + 0x20400) )
-#define ADDR_GPIOC ( (GPIOx*) ((GPIO_BASE) + 0x20800) )
-#define ADDR_GPIOD ( (GPIOx*) ((GPIO_BASE) + 0x20C00) )
-#define ADDR_GPIOE ( (GPIOx*) ((GPIO_BASE) + 0x21000) )
-#define ADDR_GPIOF ( (GPIOx*) ((GPIO_BASE) + 0x21400) )
-#define ADDR_GPIOG ( (GPIOx*) ((GPIO_BASE) + 0x21800) )
-#define ADDR_GPIOH ( (GPIOx*) ((GPIO_BASE) + 0x21C00) )
-#define ADDR_GPIOI ( (GPIOx*) ((GPIO_BASE) + 0x22000) )
-
-
 //Enums----------------------------------------------------------------------
 //GPIOx_MODE Register & GPIOx_ALTERNATE_FUNCT Registers
 /*Pin Modes & Alternate Functions*/
@@ -102,20 +103,6 @@ enum _PullUpDown {
 
 
 //Registers------------------------------------------------------------------
-struct _gpio {
-
-	GPIOx_MODE ModeReg; // 0x00
-	GPIOx_OUTPUTTYPE OutTypeReg; // 0x04
-	GPIOx_OUTPUTSPEED OutSpeedReg; // 0x08
-	GPIOx_PULLUP_PULLDOWN PullupPullDownReg; // 0x0C
-	GPIOx_INPUT InputReg; // 0x10
-	GPIOx_OUTPUT OutputReg; // 0x14
-	GPIOx_BIT_SETRESET BitSetResetReg; // 0x18
-	GPIOx_CONFIG_LOCK ConfigLockReg; // 0x1C
-	GPIOx_ALTERNATE_FUNCT_LOW AltFuncLowReg; // 0x20
-	GPIOx_ALTERNATE_FUNCT_HIGH AltFuncHighReg; // 0x24
-};
-
 typedef struct {
 	volatile uint32_t gpioA_StartTick:1;
 	volatile uint32_t gpioB_StartTick:1;
@@ -330,7 +317,19 @@ typedef volatile struct {
 }GPIOx_ALTERNATE_FUNCT_HIGH;
 
 
+struct _gpio {
 
+	GPIOx_MODE ModeReg; // 0x00
+	GPIOx_OUTPUTTYPE OutTypeReg; // 0x04
+	GPIOx_OUTPUTSPEED OutSpeedReg; // 0x08
+	GPIOx_PULLUP_PULLDOWN PullupPullDownReg; // 0x0C
+	GPIOx_INPUT InputReg; // 0x10
+	GPIOx_OUTPUT OutputReg; // 0x14
+	GPIOx_BIT_SETRESET BitSetResetReg; // 0x18
+	GPIOx_CONFIG_LOCK ConfigLockReg; // 0x1C
+	GPIOx_ALTERNATE_FUNCT_LOW AltFuncLowReg; // 0x20
+	GPIOx_ALTERNATE_FUNCT_HIGH AltFuncHighReg; // 0x24
+};
 
 
 #endif

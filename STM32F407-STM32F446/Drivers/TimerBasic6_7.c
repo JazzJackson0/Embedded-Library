@@ -1,4 +1,4 @@
-#include "STM32F407.TimerBasic6_7.h"
+#include "TimerBasic6_7.h"
 
 //Static Prototypes--------------------------------------------------------------
 static void Activate_Clock(uint8_t timerNum);

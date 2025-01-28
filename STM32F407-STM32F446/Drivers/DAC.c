@@ -1,4 +1,4 @@
-#include "STM32F407.DAC.h"
+#include "DAC.h"
 
 //Static Prototypes------------------------------------------------------
 static void DAC_PinInit(uint8_t dacNum);
@@ -48,18 +48,7 @@ float Decibel_Out(int16_t analogVolt) {
 	
 }
 
-//Helper Functions--------------------------------------------------------------------------------------------------------------
-
-
-/*DAC Pins ---------------------------
-		These are 'Additional Functions' not 'Alternate Functions'
-		Meaning: Functions are directly selected/enabled through peripheral registers.
-		They are not selected through GPIOx_AFR registers.
-
-		+ DAC_OUT1: PA4
-		+ DAC_OUT2: PA5
-		------------------------------------*/
-		
+// Helper Functions--------------------------------------------------------------------------------------------------------------
 static void DAC_PinInit(uint8_t dacNum) {
 	
 	switch (dacNum) {

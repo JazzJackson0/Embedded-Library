@@ -2,19 +2,6 @@
 #ifndef DMA_H_
 #define DMA_H_
 #include <stdint.h>
-/*DMA Pins ---------------------------
-		+ No Pins Needed
-		------------------------------------*/
-
-
-//DECLARATIONS
-/**
- * @brief Initializ DMA
- * 
- * @param dmaNum DMA Number. (1 - 2)
- * @return ** void 
- */
-void DMA_Init(uint8_t dmaNum);
 
 //CLOCK
 #define CLOCK 0x40023800
@@ -64,70 +51,21 @@ typedef struct _dma DMAx;
 #define FIFO_3_4THS 0x02
 #define FIFO_FULL 0x03
 
-// Registers--------------------------------------------------------------------
-struct _dma {
-	DMA_LOW_INTERRUPT_STATUS LowInterruptStatusReg; //0x00
-	DMA_HIGH_INTERRUPT_STATUS HighInterruptStatusReg; //0x04
-	DMA_LOW_INTERRUPT_FLAGCLEAR LowInterruptFlagClearReg; //0x08
-	DMA_HIGH_INTERRUPT_FLAGCLEAR HighInterruptFlagClearReg; //0x0C
+/*DMA Pins ---------------------------
+		+ No Pins Needed
+		------------------------------------*/
 
-	DMA_STREAMx_CONFIG Stream0ConfigReg; //0x10
-	DMA_STREAMx_NUMBEROF_DATA Stream0NumOfDataReg; //0x14
-	DMA_STREAMx_PERIPHERAL_ADDRESS Stream0PeripheralAddrsReg; //0x18
-	DMA_STREAMx_MEMORY0_ADDRESS Stream0Memory0AddressReg; //0x1C
-	DMA_STREAMx_MEMORY1_ADDRESS Stream0Memory1AddressReg; //0x20
-	DMA_STREAMx_FIFO_CONTROL Stream0FIFOControlReg; //0x24
 
-	DMA_STREAMx_CONFIG Stream1ConfigReg; //0x28
-	DMA_STREAMx_NUMBEROF_DATA Stream1NumOfDataReg; //0x2C
-	DMA_STREAMx_PERIPHERAL_ADDRESS Stream1PeripheralAddrsReg; //0x30
-	DMA_STREAMx_MEMORY0_ADDRESS Stream1Memory0AddressReg; //0x34
-	DMA_STREAMx_MEMORY1_ADDRESS Stream1Memory1AddressReg; //0x38
-	DMA_STREAMx_FIFO_CONTROL Stream1FIFOControlReg; //0x3C
+//DECLARATIONS
+/**
+ * @brief Initializ DMA
+ * 
+ * @param dmaNum DMA Number. (1 - 2)
+ * @return ** void 
+ */
+void DMA_Init(uint8_t dmaNum);
 
-	DMA_STREAMx_CONFIG Stream2ConfigReg; //0x40
-	DMA_STREAMx_NUMBEROF_DATA Stream2NumOfDataReg; //0x44
-	DMA_STREAMx_PERIPHERAL_ADDRESS Stream2PeripheralAddrsReg; //0x48
-	DMA_STREAMx_MEMORY0_ADDRESS Stream2Memory0AddressReg; //0x4C
-	DMA_STREAMx_MEMORY1_ADDRESS Stream2Memory1AddressReg; //0x50
-	DMA_STREAMx_FIFO_CONTROL Stream2FIFOControlReg; //0x54
-
-	DMA_STREAMx_CONFIG Stream3ConfigReg; //0x58
-	DMA_STREAMx_NUMBEROF_DATA Stream3NumOfDataReg; //0x5C
-	DMA_STREAMx_PERIPHERAL_ADDRESS Stream3PeripheralAddrsReg; //0x60
-	DMA_STREAMx_MEMORY0_ADDRESS Stream3Memory0AddressReg; //0x64
-	DMA_STREAMx_MEMORY1_ADDRESS Stream3Memory1AddressReg; //0x68
-	DMA_STREAMx_FIFO_CONTROL Stream3FIFOControlReg; //0x6C
-
-	DMA_STREAMx_CONFIG Stream4ConfigReg; //0x70
-	DMA_STREAMx_NUMBEROF_DATA Stream4NumOfDataReg; //0x74
-	DMA_STREAMx_PERIPHERAL_ADDRESS Stream4PeripheralAddrsReg; //0x78
-	DMA_STREAMx_MEMORY0_ADDRESS Stream4Memory0AddressReg; //0x7C
-	DMA_STREAMx_MEMORY1_ADDRESS Stream4Memory1AddressReg; //0x80
-	DMA_STREAMx_FIFO_CONTROL Stream4FIFOControlReg; //0x84
-
-	DMA_STREAMx_CONFIG Stream5ConfigReg; //0x88
-	DMA_STREAMx_NUMBEROF_DATA Stream5NumOfDataReg; //0x8C
-	DMA_STREAMx_PERIPHERAL_ADDRESS Stream5PeripheralAddrsReg; //0x90
-	DMA_STREAMx_MEMORY0_ADDRESS Stream5Memory0AddressReg; //0x94
-	DMA_STREAMx_MEMORY1_ADDRESS Stream5Memory1AddressReg; //0x98
-	DMA_STREAMx_FIFO_CONTROL Stream5FIFOControlReg; //0x9C
-
-	DMA_STREAMx_CONFIG Stream6ConfigReg; //0xA0
-	DMA_STREAMx_NUMBEROF_DATA Stream6NumOfDataReg; //0xA4
-	DMA_STREAMx_PERIPHERAL_ADDRESS Stream6PeripheralAddrsReg; //0xA8
-	DMA_STREAMx_MEMORY0_ADDRESS Stream6Memory0AddressReg; //0xAC
-	DMA_STREAMx_MEMORY1_ADDRESS Stream6Memory1AddressReg; //0xB0
-	DMA_STREAMx_FIFO_CONTROL Stream6FIFOControlReg; //0xB4
-	
-	DMA_STREAMx_CONFIG Stream7ConfigReg; //0xB8
-	DMA_STREAMx_NUMBEROF_DATA Stream7NumOfDataReg; //0xBC
-	DMA_STREAMx_PERIPHERAL_ADDRESS Stream7PeripheralAddrsReg; //0xC0
-	DMA_STREAMx_MEMORY0_ADDRESS Stream7Memory0AddressReg; //0xC4
-	DMA_STREAMx_MEMORY1_ADDRESS Stream7Memory1AddressReg; //0xC8
-	DMA_STREAMx_FIFO_CONTROL Stream7FIFOControlReg; //0xCC
-};
-
+// Registers-------------------------------------------------------------------
 typedef struct {
 	const uint32_t reserved0:21;
 	volatile uint32_t dma1_StartTick:1;
@@ -331,6 +269,70 @@ typedef struct {
 }DMA_STREAMx_FIFO_CONTROL;
 
 
+
+
+struct _dma {
+	DMA_LOW_INTERRUPT_STATUS LowInterruptStatusReg; //0x00
+	DMA_HIGH_INTERRUPT_STATUS HighInterruptStatusReg; //0x04
+	DMA_LOW_INTERRUPT_FLAGCLEAR LowInterruptFlagClearReg; //0x08
+	DMA_HIGH_INTERRUPT_FLAGCLEAR HighInterruptFlagClearReg; //0x0C
+
+	DMA_STREAMx_CONFIG Stream0ConfigReg; //0x10
+	DMA_STREAMx_NUMBEROF_DATA Stream0NumOfDataReg; //0x14
+	DMA_STREAMx_PERIPHERAL_ADDRESS Stream0PeripheralAddrsReg; //0x18
+	DMA_STREAMx_MEMORY0_ADDRESS Stream0Memory0AddressReg; //0x1C
+	DMA_STREAMx_MEMORY1_ADDRESS Stream0Memory1AddressReg; //0x20
+	DMA_STREAMx_FIFO_CONTROL Stream0FIFOControlReg; //0x24
+
+	DMA_STREAMx_CONFIG Stream1ConfigReg; //0x28
+	DMA_STREAMx_NUMBEROF_DATA Stream1NumOfDataReg; //0x2C
+	DMA_STREAMx_PERIPHERAL_ADDRESS Stream1PeripheralAddrsReg; //0x30
+	DMA_STREAMx_MEMORY0_ADDRESS Stream1Memory0AddressReg; //0x34
+	DMA_STREAMx_MEMORY1_ADDRESS Stream1Memory1AddressReg; //0x38
+	DMA_STREAMx_FIFO_CONTROL Stream1FIFOControlReg; //0x3C
+
+	DMA_STREAMx_CONFIG Stream2ConfigReg; //0x40
+	DMA_STREAMx_NUMBEROF_DATA Stream2NumOfDataReg; //0x44
+	DMA_STREAMx_PERIPHERAL_ADDRESS Stream2PeripheralAddrsReg; //0x48
+	DMA_STREAMx_MEMORY0_ADDRESS Stream2Memory0AddressReg; //0x4C
+	DMA_STREAMx_MEMORY1_ADDRESS Stream2Memory1AddressReg; //0x50
+	DMA_STREAMx_FIFO_CONTROL Stream2FIFOControlReg; //0x54
+
+	DMA_STREAMx_CONFIG Stream3ConfigReg; //0x58
+	DMA_STREAMx_NUMBEROF_DATA Stream3NumOfDataReg; //0x5C
+	DMA_STREAMx_PERIPHERAL_ADDRESS Stream3PeripheralAddrsReg; //0x60
+	DMA_STREAMx_MEMORY0_ADDRESS Stream3Memory0AddressReg; //0x64
+	DMA_STREAMx_MEMORY1_ADDRESS Stream3Memory1AddressReg; //0x68
+	DMA_STREAMx_FIFO_CONTROL Stream3FIFOControlReg; //0x6C
+
+	DMA_STREAMx_CONFIG Stream4ConfigReg; //0x70
+	DMA_STREAMx_NUMBEROF_DATA Stream4NumOfDataReg; //0x74
+	DMA_STREAMx_PERIPHERAL_ADDRESS Stream4PeripheralAddrsReg; //0x78
+	DMA_STREAMx_MEMORY0_ADDRESS Stream4Memory0AddressReg; //0x7C
+	DMA_STREAMx_MEMORY1_ADDRESS Stream4Memory1AddressReg; //0x80
+	DMA_STREAMx_FIFO_CONTROL Stream4FIFOControlReg; //0x84
+
+	DMA_STREAMx_CONFIG Stream5ConfigReg; //0x88
+	DMA_STREAMx_NUMBEROF_DATA Stream5NumOfDataReg; //0x8C
+	DMA_STREAMx_PERIPHERAL_ADDRESS Stream5PeripheralAddrsReg; //0x90
+	DMA_STREAMx_MEMORY0_ADDRESS Stream5Memory0AddressReg; //0x94
+	DMA_STREAMx_MEMORY1_ADDRESS Stream5Memory1AddressReg; //0x98
+	DMA_STREAMx_FIFO_CONTROL Stream5FIFOControlReg; //0x9C
+
+	DMA_STREAMx_CONFIG Stream6ConfigReg; //0xA0
+	DMA_STREAMx_NUMBEROF_DATA Stream6NumOfDataReg; //0xA4
+	DMA_STREAMx_PERIPHERAL_ADDRESS Stream6PeripheralAddrsReg; //0xA8
+	DMA_STREAMx_MEMORY0_ADDRESS Stream6Memory0AddressReg; //0xAC
+	DMA_STREAMx_MEMORY1_ADDRESS Stream6Memory1AddressReg; //0xB0
+	DMA_STREAMx_FIFO_CONTROL Stream6FIFOControlReg; //0xB4
+	
+	DMA_STREAMx_CONFIG Stream7ConfigReg; //0xB8
+	DMA_STREAMx_NUMBEROF_DATA Stream7NumOfDataReg; //0xBC
+	DMA_STREAMx_PERIPHERAL_ADDRESS Stream7PeripheralAddrsReg; //0xC0
+	DMA_STREAMx_MEMORY0_ADDRESS Stream7Memory0AddressReg; //0xC4
+	DMA_STREAMx_MEMORY1_ADDRESS Stream7Memory1AddressReg; //0xC8
+	DMA_STREAMx_FIFO_CONTROL Stream7FIFOControlReg; //0xCC
+};
 
 
 #endif

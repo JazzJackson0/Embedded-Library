@@ -1,4 +1,4 @@
-#include "STM32F407.CAN.h"
+#include "CAN.h"
 
 
 //Static Prototypes------------------------------------------------------
@@ -39,44 +39,44 @@ void CAN_SetAcceptanceFilter(uint8_t canNum, Filter *filterInfo) {
 	MAIL_FILTERSx *const CANMailFilters = Get_MailBoxANDFilters(canNum);
 	FILTER_BANKSx *const CANBank = Get_FilterBanks(canNum);
 	uint8_t bankNum = filterInfo->filterBankRegNum;
-	uint64_t filterBankVal = filterInfo->filterBankVal;
+	uint64_t identiferORMaskVal = filterInfo->identiferORMask;
 
 	CANMailFilters->FilterMasterReg.filterActive0_filterReadyToInitialize1 = 1;
 	
 	Set_FilterNumber_AssignFIFO_SetFilterMode(CANMailFilters, filterInfo->filterNum, filterInfo->filterSize, 
 		filterInfo->fifoNum, filterInfo->filterMode);
 	
-	CANBank->Banks[bankNum].bit0_Expects0_Expects1OrMatch1 = filterBankVal % 10;
-	filterBankVal /= 10;
-	CANBank->Banks[bankNum].bit1_Expects0_Expects1OrMatch1 = filterBankVal % 10;
-	filterBankVal /= 10;
-	CANBank->Banks[bankNum].bit2_Expects0_Expects1OrMatch1 = filterBankVal % 10;
-	filterBankVal /= 10;
-	CANBank->Banks[bankNum].bit3_Expects0_Expects1OrMatch1 = filterBankVal % 10;
-	filterBankVal /= 10;
-	CANBank->Banks[bankNum].bit4_Expects0_Expects1OrMatch1 = filterBankVal % 10;
-	filterBankVal /= 10;
-	CANBank->Banks[bankNum].bit5_Expects0_Expects1OrMatch1 = filterBankVal % 10;
-	filterBankVal /= 10;
-	CANBank->Banks[bankNum].bit6_Expects0_Expects1OrMatch1 = filterBankVal % 10;
-	filterBankVal /= 10;
-	CANBank->Banks[bankNum].bit7_Expects0_Expects1OrMatch1 = filterBankVal % 10;
-	filterBankVal /= 10;
-	CANBank->Banks[bankNum].bit8_Expects0_Expects1OrMatch1 = filterBankVal % 10;
-	filterBankVal /= 10;
-	CANBank->Banks[bankNum].bit9_Expects0_Expects1OrMatch1 = filterBankVal % 10;
-	filterBankVal /= 10;
-	CANBank->Banks[bankNum].bit10_Expects0_Expects1OrMatch1 = filterBankVal % 10;
-	filterBankVal /= 10;
-	CANBank->Banks[bankNum].bit11_Expects0_Expects1OrMatch1 = filterBankVal % 10;
-	filterBankVal /= 10;
-	CANBank->Banks[bankNum].bit12_Expects0_Expects1OrMatch1 = filterBankVal % 10;
-	filterBankVal /= 10;
-	CANBank->Banks[bankNum].bit13_Expects0_Expects1OrMatch1 = filterBankVal % 10;
-	filterBankVal /= 10;
-	CANBank->Banks[bankNum].bit14_Expects0_Expects1OrMatch1 = filterBankVal % 10;
-	filterBankVal /= 10;
-	CANBank->Banks[bankNum].bit15_Expects0_Expects1OrMatch1 = filterBankVal % 10;
+	CANBank->Banks[bankNum].bit0_IdentiferORMask = identiferORMaskVal % 10;
+	identiferORMaskVal /= 10;
+	CANBank->Banks[bankNum].bit1_IdentiferORMask = identiferORMaskVal % 10;
+	identiferORMaskVal /= 10;
+	CANBank->Banks[bankNum].bit2_IdentiferORMask = identiferORMaskVal % 10;
+	identiferORMaskVal /= 10;
+	CANBank->Banks[bankNum].bit3_IdentiferORMask = identiferORMaskVal % 10;
+	identiferORMaskVal /= 10;
+	CANBank->Banks[bankNum].bit4_IdentiferORMask = identiferORMaskVal % 10;
+	identiferORMaskVal /= 10;
+	CANBank->Banks[bankNum].bit5_IdentiferORMask = identiferORMaskVal % 10;
+	identiferORMaskVal /= 10;
+	CANBank->Banks[bankNum].bit6_IdentiferORMask = identiferORMaskVal % 10;
+	identiferORMaskVal /= 10;
+	CANBank->Banks[bankNum].bit7_IdentiferORMask = identiferORMaskVal % 10;
+	identiferORMaskVal /= 10;
+	CANBank->Banks[bankNum].bit8_IdentiferORMask = identiferORMaskVal % 10;
+	identiferORMaskVal /= 10;
+	CANBank->Banks[bankNum].bit9_IdentiferORMask = identiferORMaskVal % 10;
+	identiferORMaskVal /= 10;
+	CANBank->Banks[bankNum].bit10_IdentiferORMask = identiferORMaskVal % 10;
+	identiferORMaskVal /= 10;
+	CANBank->Banks[bankNum].bit11_IdentiferORMask = identiferORMaskVal % 10;
+	identiferORMaskVal /= 10;
+	CANBank->Banks[bankNum].bit12_IdentiferORMask = identiferORMaskVal % 10;
+	identiferORMaskVal /= 10;
+	CANBank->Banks[bankNum].bit13_IdentiferORMask = identiferORMaskVal % 10;
+	identiferORMaskVal /= 10;
+	CANBank->Banks[bankNum].bit14_IdentiferORMask = identiferORMaskVal % 10;
+	identiferORMaskVal /= 10;
+	CANBank->Banks[bankNum].bit15_IdentiferORMask = identiferORMaskVal % 10;
 
 	CANMailFilters->FilterMasterReg.filterActive0_filterReadyToInitialize1 = 0;
 	CANMailFilters->FilterActivationReg.enable_Filter0 = 1;
@@ -256,16 +256,6 @@ Received_Data* CAN_Receive(uint8_t canNum, uint8_t mailboxNum, uint8_t numOfByte
 
 
 //Helper Functions--------------------------------------------------------------------------------------------------------------
-
-/**
-CAN Pins ---------------------------
-		+ CAN1_TX: PA12, PB9, PD1, PH13 (AF9)
-		+ CAN1_RX: PA11, PB8, PD0, PI9 (AF9)
-
-		+ CAN2_TX: PB6, PB13 (AF9)
-		+ CAN2_RX: PB5, PB12 (AF9)
-		------------------------------------
-**/
 static void CAN_PinInit(uint8_t canNum) {
 
 	switch (canNum) {

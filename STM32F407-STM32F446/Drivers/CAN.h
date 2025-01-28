@@ -3,12 +3,41 @@
 #define CAN_H_
 #include <stdint.h>
 #include <stdlib.h>
-#include "STM32F407.GPIO.h"
+#include "GPIO.h"
+
+//CLOCK
+#define CLOCK 0x40023800
+#define APB1 0x40
+#define ADDR_CAN_CLOCK ( (CAN_CLOCK*) ((CLOCK) + APB1) )
+
+//CANx
+typedef struct _can CANx;
+typedef struct _mailbox_filters MAIL_FILTERSx;
+typedef union _filterBanks FILTER_BANKSx;
+#define CAN_BASE 0x40006000
+//
+#define ADDR_CAN1 ( (CANx*) ((CAN_BASE) + 0x400) )
+#define ADDR_CAN1_MAIL_FILTERS ( (MAIL_FILTERSx*) ((CAN_BASE) + (0x400 + 0x180)) )
+#define ADDR_CAN1_FILTERBANKS ( (FILTER_BANKSx*) ((CAN_BASE) + (0x400 + 0x240) ) )
+//
+#define ADDR_CAN2 ( (CANx*) ((CAN_BASE) + 0x800) )
+#define ADDR_CAN2_MAIL_FILTERS ( (MAIL_FILTERSx*) ((CAN_BASE) + (0x800 + 0x180)) )
+#define ADDR_CAN2_FILTERBANKS ( (FILTER_BANKSx*) ((CAN_BASE) + (0x400 + 0x2B0) ) )
 
 typedef enum _FilterSize E_FilterSize;
 typedef enum _FilterMode E_FilterMode;
 typedef union _Data Received_Data;
 typedef struct _filter Filter;
+
+/**
+CAN Pins ---------------------------
+		+ CAN1_TX: PA12, PB9, PD1, PH13 (AF9)
+		+ CAN1_RX: PA11, PB8, PD0, PI9 (AF9)
+
+		+ CAN2_TX: PB6, PB13 (AF9)
+		+ CAN2_RX: PB5, PB12 (AF9)
+		------------------------------------
+**/
 
 //DECLARATIONS
 /**
@@ -86,24 +115,6 @@ uint8_t CAN_Transmit(uint8_t canNum, uint8_t mailboxNum, uint8_t *dataBuffer, ui
  */
 Received_Data* CAN_Receive(uint8_t canNum, uint8_t mailboxNum, uint8_t numOfBytes);
 
-//CLOCK
-#define CLOCK 0x40023800
-#define APB1 0x40
-#define ADDR_CAN_CLOCK ( (CAN_CLOCK*) ((CLOCK) + APB1) )
-
-//CANx
-typedef struct _can CANx;
-typedef struct _mailbox_filters MAIL_FILTERSx;
-typedef union _filterBanks FILTER_BANKSx;
-#define CAN_BASE 0x40006000
-//
-#define ADDR_CAN1 ( (CANx*) ((CAN_BASE) + 0x400) )
-#define ADDR_CAN1_MAIL_FILTERS ( (MAIL_FILTERSx*) ((CAN_BASE) + (0x400 + 0x180)) )
-#define ADDR_CAN1_FILTERBANKS ( (FILTER_BANKSx*) ((CAN_BASE) + (0x400 + 0x240) ) )
-//
-#define ADDR_CAN2 ( (CANx*) ((CAN_BASE) + 0x800) )
-#define ADDR_CAN2_MAIL_FILTERS ( (MAIL_FILTERSx*) ((CAN_BASE) + (0x800 + 0x180)) )
-#define ADDR_CAN2_FILTERBANKS ( (FILTER_BANKSx*) ((CAN_BASE) + (0x400 + 0x2B0) ) )
 
 //Enums----------------------------------------------------------------------
 
@@ -130,7 +141,7 @@ struct _filter{
 	uint8_t filterNum; // Filter 0 - Filter 27
 	E_FilterSize filterSize; // _16BIT_CAN or _32BIT_CAN 
 	E_FilterMode filterMode; // MASK_MODE or LIST_MODE
-	uint64_t filterBankVal; // Acceptance Filter Bank Value (Standard ID will be compared to this) 
+	uint64_t identiferORMask; // Acceptance Filter Identifier Value or Mask Value (Standard ID will be compared to this) 
 	uint8_t filterBankRegNum; // Filter Bank Reg 1 or 2
 	uint8_t fifoNum; // FIFO 0 or FIFO 1
 };
@@ -163,106 +174,6 @@ union _Data {
 #define SETBY_SOFTWARE 0x07
 
 // Registers-----------------------------------------------------------------
-struct _can {
-	CAN_MASTER_CONTROL MasterControlReg; // 0x00
-	CAN_MASTER_SATUS MasterStatusReg; // 0x04
-	CAN_TRANSMIT_STATUS TransmitStatReg; // 0x08
-	CAN_RECEIVE_FIFO0 RXFIFOReg1; // 0x0C
-	CAN_RECEIVE_FIFO1 RXFIFOReg2; // 0x10
-	CAN_INTERRUPTS InterruptsReg; // 0x14
-	CAN_ERRORSTATUS ErrorStatusReg; // 0x18
-	CAN_BITTIMING BitTimingReg; // 0x1C
-};
-
-struct _mailbox_filters {
-	CAN_TX_MAILBOX_IDENTIFIER TXMailBox0IDReg; //0x180
-	CAN_TX_MAILBOX_DATALENCNTRL_TIMESTAMP TXMaiBox0DataLenCtrlTimeStampReg; //0x184
-	CAN_TX_MAILBOX_DATALOW TXMailBox0DataLowReg; //0x188
-	CAN_TX_MAILBOX_DATAHIGH TXMailBox0DataHighReg; //0x18C
-
-	CAN_TX_MAILBOX_IDENTIFIER TXMailBox1IDReg; //0x190
-	CAN_TX_MAILBOX_DATALENCNTRL_TIMESTAMP TXMaiBox1DataLenCtrlTimeStampReg; //0x194
-	CAN_TX_MAILBOX_DATALOW TXMailBox1DataLowReg; //0x198
-	CAN_TX_MAILBOX_DATAHIGH TXMailBox1DataHighReg; //0x19C
-
-	CAN_TX_MAILBOX_IDENTIFIER TXMailBox2IDReg; //0x1A0
-	CAN_TX_MAILBOX_DATALENCNTRL_TIMESTAMP TXMaiBox2DataLenCtrlTimeStampReg; //0x1A4
-	CAN_TX_MAILBOX_DATALOW TXMailBox2DataLowReg; //0x1A8
-	CAN_TX_MAILBOX_DATAHIGH TXMailBox2DataHighReg; //0x1AC
-	
-	CAN_RX_MAILBOX_IDENTIFIER RXMailBox0IDReg; //0x1B0
-	CAN_RX_MAILBOX_DATALENCNTRL_TIMESTAMP RXMaiBox0DataLenCtrlTimeStampReg; //0x1B4
-	CAN_RX_MAILBOX_DATALOW RXMailBox0DataLowReg; //0x1B8
-	CAN_RX_MAILBOX_DATAHIGH RXMailBox0DataHighReg; //0x1BC
-
-	CAN_RX_MAILBOX_IDENTIFIER RXMailBox1IDReg; //0x1C0
-	CAN_RX_MAILBOX_DATALENCNTRL_TIMESTAMP RXMaiBox1DataLenCtrlTimeStampReg; //0x1C4
-	CAN_RX_MAILBOX_DATALOW RXMailBox1DataLowReg; //0x1C8
-	CAN_RX_MAILBOX_DATAHIGH RXMailBox1DataHighReg; //0x1CC
-	CAN_RESERVED reserved0; // 0x1D0
-	CAN_RESERVED reserved1; // 0x1D4
-	CAN_RESERVED reserved2; // 0x1D8
-	CAN_RESERVED reserved3; // 0x1DC
-	CAN_RESERVED reserved4; // 0x1E0
-	CAN_RESERVED reserved5; // 0x1E4
-	CAN_RESERVED reserved6; // 0x1E8
-	CAN_RESERVED reserved7; // 0x1EC
-	CAN_RESERVED reserved8; // 0x1F0
-	CAN_RESERVED reserved9; // 0x1F4
-	CAN_RESERVED reserved10; // 0x1F8
-	CAN_RESERVED reserved11; // 0x1FC
-	CAN_FILTER_MASTER FilterMasterReg; // 0x200
-	CAN_FILTER_MODE FilterModeReg; // 0x204
-	CAN_RESERVED reserved12; // 0x208
-	CAN_FILTER_SCALE FilterScaleReg; // 0x20C
-	CAN_RESERVED reserved13; // 0x210
-	CAN_FILTER_FIFO_ASSIGNMENT FilterFIFOAssignReg; // 0x214
-	CAN_RESERVED reserved14; // 0x218
-	CAN_FILTER_ACTIVATION FilterActivationReg; // 0x21C
-	CAN_RESERVED reserved15; // 0x220
-	CAN_RESERVED reserved16; // 0x224
-	CAN_RESERVED reserved17; // 0x228
-	CAN_RESERVED reserved18; // 0x22C
-	CAN_RESERVED reserved19; // 0x230
-	CAN_RESERVED reserved20; // 0x234
-	CAN_RESERVED reserved21; // 0x238
-	CAN_RESERVED reserved22; // 0x23C
-};
-
-union _filterBanks {
-	struct  {
-		CAN_FILTERBANKi_REGISTERx FilterBank0; // Reg1: 0x240 | Reg2: 0x2B0
-		CAN_FILTERBANKi_REGISTERx FilterBank1; // Reg1: 00x244 | Reg2: 0x2B4
-		CAN_FILTERBANKi_REGISTERx FilterBank2; // Reg1: 00x248 | Reg2: 0x2B8
-		CAN_FILTERBANKi_REGISTERx FilterBank3; // Reg1: 00x24C | Reg2: 0x2BC
-		CAN_FILTERBANKi_REGISTERx FilterBank4; // Reg1: 00x250 | Reg2: 0x2C0
-		CAN_FILTERBANKi_REGISTERx FilterBank5; // Reg1: 00x254 | Reg2: 0x2C4
-		CAN_FILTERBANKi_REGISTERx FilterBank6; // Reg1: 00x258 | Reg2: 0x2C8
-		CAN_FILTERBANKi_REGISTERx FilterBank7; // Reg1: 00x25C | Reg2: 0x2CC
-		CAN_FILTERBANKi_REGISTERx FilterBank8; // Reg1: 00x260 | Reg2: 0x2D0
-		CAN_FILTERBANKi_REGISTERx FilterBank9; // Reg1: 00x264 | Reg2: 0x2D4
-		CAN_FILTERBANKi_REGISTERx FilterBank10; // Reg1: 00x268 | Reg2: 0x2D8
-		CAN_FILTERBANKi_REGISTERx FilterBank11; // Reg1: 00x26C | Reg2: 0x2DC
-		CAN_FILTERBANKi_REGISTERx FilterBank12; // Reg1: 00x270 | Reg2: 0x2E0
-		CAN_FILTERBANKi_REGISTERx FilterBank13; // Reg1: 00x274 | Reg2: 0x2E4
-		CAN_FILTERBANKi_REGISTERx FilterBank14; // Reg1: 00x278 | Reg2: 0x2E8
-		CAN_FILTERBANKi_REGISTERx FilterBank15; // Reg1: 00x27C | Reg2: 0x2EC
-		CAN_FILTERBANKi_REGISTERx FilterBank16; // Reg1: 00x280 | Reg2: 0x2F0
-		CAN_FILTERBANKi_REGISTERx FilterBank17; // Reg1: 00x284 | Reg2: 0x2F4
-		CAN_FILTERBANKi_REGISTERx FilterBank18; // Reg1: 00x288 | Reg2: 0x2F8
-		CAN_FILTERBANKi_REGISTERx FilterBank19; // Reg1: 00x28C | Reg2: 0x2FC
-		CAN_FILTERBANKi_REGISTERx FilterBank20; // Reg1: 00x290 | Reg2: 0x300
-		CAN_FILTERBANKi_REGISTERx FilterBank21; // Reg1: 00x294 | Reg2: 0x304
-		CAN_FILTERBANKi_REGISTERx FilterBank22; // Reg1: 00x298 | Reg2: 0x308
-		CAN_FILTERBANKi_REGISTERx FilterBank23; // Reg1: 00x29C | Reg2: 0x30C
-		CAN_FILTERBANKi_REGISTERx FilterBank24; // Reg1: 00x2A0 | Reg2: 0x310
-		CAN_FILTERBANKi_REGISTERx FilterBank25; // Reg1: 00x2A4 | Reg2: 0x314
-		CAN_FILTERBANKi_REGISTERx FilterBank26; // Reg1: 00x2A8 | Reg2: 0x318
-		CAN_FILTERBANKi_REGISTERx FilterBank27; // Reg1: 00x2AC | Reg2: 0x31C
-	};
-
-	CAN_FILTERBANKi_REGISTERx Banks[28];
-};
 
 
 //Clock Register-------------------------------------------------------------
@@ -642,43 +553,146 @@ typedef struct {
 }CAN_FILTER_ACTIVATION;
 
 typedef struct {
-	volatile uint32_t bit0_Expects0_Expects1OrMatch1:1;
-	volatile uint32_t bit1_Expects0_Expects1OrMatch1:1;
-	volatile uint32_t bit2_Expects0_Expects1OrMatch1:1;
-	volatile uint32_t bit3_Expects0_Expects1OrMatch1:1;
-	volatile uint32_t bit4_Expects0_Expects1OrMatch1:1;
-	volatile uint32_t bit5_Expects0_Expects1OrMatch1:1;
-	volatile uint32_t bit6_Expects0_Expects1OrMatch1:1;
-	volatile uint32_t bit7_Expects0_Expects1OrMatch1:1;
-	volatile uint32_t bit8_Expects0_Expects1OrMatch1:1;
-	volatile uint32_t bit9_Expects0_Expects1OrMatch1:1;
-	volatile uint32_t bit10_Expects0_Expects1OrMatch1:1;
-	volatile uint32_t bit11_Expects0_Expects1OrMatch1:1;
-	volatile uint32_t bit12_Expects0_Expects1OrMatch1:1;
-	volatile uint32_t bit13_Expects0_Expects1OrMatch1:1;
-	volatile uint32_t bit14_Expects0_Expects1OrMatch1:1;
-	volatile uint32_t bit15_Expects0_Expects1OrMatch1:1;
-	volatile uint32_t bit16_Expects0_Expects1OrMatch1:1;
-	volatile uint32_t bit17_Expects0_Expects1OrMatch1:1;
-	volatile uint32_t bit18_Expects0_Expects1OrMatch1:1;
-	volatile uint32_t bit19_Expects0_Expects1OrMatch1:1;
-	volatile uint32_t bit20_Expects0_Expects1OrMatch1:1;
-	volatile uint32_t bit21_Expects0_Expects1OrMatch1:1;
-	volatile uint32_t bit22_Expects0_Expects1OrMatch1:1;
-	volatile uint32_t bit23_Expects0_Expects1OrMatch1:1;
-	volatile uint32_t bit24_Expects0_Expects1OrMatch1:1;
-	volatile uint32_t bit25_Expects0_Expects1OrMatch1:1;
-	volatile uint32_t bit26_Expects0_Expects1OrMatch1:1;
-	volatile uint32_t bit27_Expects0_Expects1OrMatch1:1;
-	volatile uint32_t bit28_Expects0_Expects1OrMatch1:1;
-	volatile uint32_t bit29_Expects0_Expects1OrMatch1:1;
-	volatile uint32_t bit30_Expects0_Expects1OrMatch1:1;
-	volatile uint32_t bit31_Expects0_Expects1OrMatch1:1;
-	volatile uint32_t bit32_Expects0_Expects1OrMatch1:1;
+	volatile uint32_t bit0_IdentiferORMask:1;
+	volatile uint32_t bit1_IdentiferORMask:1;
+	volatile uint32_t bit2_IdentiferORMask:1;
+	volatile uint32_t bit3_IdentiferORMask:1;
+	volatile uint32_t bit4_IdentiferORMask:1;
+	volatile uint32_t bit5_IdentiferORMask:1;
+	volatile uint32_t bit6_IdentiferORMask:1;
+	volatile uint32_t bit7_IdentiferORMask:1;
+	volatile uint32_t bit8_IdentiferORMask:1;
+	volatile uint32_t bit9_IdentiferORMask:1;
+	volatile uint32_t bit10_IdentiferORMask:1;
+	volatile uint32_t bit11_IdentiferORMask:1;
+	volatile uint32_t bit12_IdentiferORMask:1;
+	volatile uint32_t bit13_IdentiferORMask:1;
+	volatile uint32_t bit14_IdentiferORMask:1;
+	volatile uint32_t bit15_IdentiferORMask:1;
+	volatile uint32_t bit16_IdentiferORMask:1;
+	volatile uint32_t bit17_IdentiferORMask:1;
+	volatile uint32_t bit18_IdentiferORMask:1;
+	volatile uint32_t bit19_IdentiferORMask:1;
+	volatile uint32_t bit20_IdentiferORMask:1;
+	volatile uint32_t bit21_IdentiferORMask:1;
+	volatile uint32_t bit22_IdentiferORMask:1;
+	volatile uint32_t bit23_IdentiferORMask:1;
+	volatile uint32_t bit24_IdentiferORMask:1;
+	volatile uint32_t bit25_IdentiferORMask:1;
+	volatile uint32_t bit26_IdentiferORMask:1;
+	volatile uint32_t bit27_IdentiferORMask:1;
+	volatile uint32_t bit28_IdentiferORMask:1;
+	volatile uint32_t bit29_IdentiferORMask:1;
+	volatile uint32_t bit30_IdentiferORMask:1;
+	volatile uint32_t bit31_IdentiferORMask:1;
+	volatile uint32_t bit32_IdentiferORMask:1;
 }CAN_FILTERBANKi_REGISTERx;
 
 
 
+
+
+struct _can {
+	CAN_MASTER_CONTROL MasterControlReg; // 0x00
+	CAN_MASTER_SATUS MasterStatusReg; // 0x04
+	CAN_TRANSMIT_STATUS TransmitStatReg; // 0x08
+	CAN_RECEIVE_FIFO0 RXFIFOReg1; // 0x0C
+	CAN_RECEIVE_FIFO1 RXFIFOReg2; // 0x10
+	CAN_INTERRUPTS InterruptsReg; // 0x14
+	CAN_ERRORSTATUS ErrorStatusReg; // 0x18
+	CAN_BITTIMING BitTimingReg; // 0x1C
+};
+
+
+struct _mailbox_filters {
+	CAN_TX_MAILBOX_IDENTIFIER TXMailBox0IDReg; //0x180
+	CAN_TX_MAILBOX_DATALENCNTRL_TIMESTAMP TXMaiBox0DataLenCtrlTimeStampReg; //0x184
+	CAN_TX_MAILBOX_DATALOW TXMailBox0DataLowReg; //0x188
+	CAN_TX_MAILBOX_DATAHIGH TXMailBox0DataHighReg; //0x18C
+
+	CAN_TX_MAILBOX_IDENTIFIER TXMailBox1IDReg; //0x190
+	CAN_TX_MAILBOX_DATALENCNTRL_TIMESTAMP TXMaiBox1DataLenCtrlTimeStampReg; //0x194
+	CAN_TX_MAILBOX_DATALOW TXMailBox1DataLowReg; //0x198
+	CAN_TX_MAILBOX_DATAHIGH TXMailBox1DataHighReg; //0x19C
+
+	CAN_TX_MAILBOX_IDENTIFIER TXMailBox2IDReg; //0x1A0
+	CAN_TX_MAILBOX_DATALENCNTRL_TIMESTAMP TXMaiBox2DataLenCtrlTimeStampReg; //0x1A4
+	CAN_TX_MAILBOX_DATALOW TXMailBox2DataLowReg; //0x1A8
+	CAN_TX_MAILBOX_DATAHIGH TXMailBox2DataHighReg; //0x1AC
+	
+	CAN_RX_MAILBOX_IDENTIFIER RXMailBox0IDReg; //0x1B0
+	CAN_RX_MAILBOX_DATALENCNTRL_TIMESTAMP RXMaiBox0DataLenCtrlTimeStampReg; //0x1B4
+	CAN_RX_MAILBOX_DATALOW RXMailBox0DataLowReg; //0x1B8
+	CAN_RX_MAILBOX_DATAHIGH RXMailBox0DataHighReg; //0x1BC
+
+	CAN_RX_MAILBOX_IDENTIFIER RXMailBox1IDReg; //0x1C0
+	CAN_RX_MAILBOX_DATALENCNTRL_TIMESTAMP RXMaiBox1DataLenCtrlTimeStampReg; //0x1C4
+	CAN_RX_MAILBOX_DATALOW RXMailBox1DataLowReg; //0x1C8
+	CAN_RX_MAILBOX_DATAHIGH RXMailBox1DataHighReg; //0x1CC
+	CAN_RESERVED reserved0; // 0x1D0
+	CAN_RESERVED reserved1; // 0x1D4
+	CAN_RESERVED reserved2; // 0x1D8
+	CAN_RESERVED reserved3; // 0x1DC
+	CAN_RESERVED reserved4; // 0x1E0
+	CAN_RESERVED reserved5; // 0x1E4
+	CAN_RESERVED reserved6; // 0x1E8
+	CAN_RESERVED reserved7; // 0x1EC
+	CAN_RESERVED reserved8; // 0x1F0
+	CAN_RESERVED reserved9; // 0x1F4
+	CAN_RESERVED reserved10; // 0x1F8
+	CAN_RESERVED reserved11; // 0x1FC
+	CAN_FILTER_MASTER FilterMasterReg; // 0x200
+	CAN_FILTER_MODE FilterModeReg; // 0x204
+	CAN_RESERVED reserved12; // 0x208
+	CAN_FILTER_SCALE FilterScaleReg; // 0x20C
+	CAN_RESERVED reserved13; // 0x210
+	CAN_FILTER_FIFO_ASSIGNMENT FilterFIFOAssignReg; // 0x214
+	CAN_RESERVED reserved14; // 0x218
+	CAN_FILTER_ACTIVATION FilterActivationReg; // 0x21C
+	CAN_RESERVED reserved15; // 0x220
+	CAN_RESERVED reserved16; // 0x224
+	CAN_RESERVED reserved17; // 0x228
+	CAN_RESERVED reserved18; // 0x22C
+	CAN_RESERVED reserved19; // 0x230
+	CAN_RESERVED reserved20; // 0x234
+	CAN_RESERVED reserved21; // 0x238
+	CAN_RESERVED reserved22; // 0x23C
+};
+
+union _filterBanks {
+	struct  {
+		CAN_FILTERBANKi_REGISTERx FilterBank0; // Reg1: 0x240 | Reg2: 0x2B0
+		CAN_FILTERBANKi_REGISTERx FilterBank1; // Reg1: 00x244 | Reg2: 0x2B4
+		CAN_FILTERBANKi_REGISTERx FilterBank2; // Reg1: 00x248 | Reg2: 0x2B8
+		CAN_FILTERBANKi_REGISTERx FilterBank3; // Reg1: 00x24C | Reg2: 0x2BC
+		CAN_FILTERBANKi_REGISTERx FilterBank4; // Reg1: 00x250 | Reg2: 0x2C0
+		CAN_FILTERBANKi_REGISTERx FilterBank5; // Reg1: 00x254 | Reg2: 0x2C4
+		CAN_FILTERBANKi_REGISTERx FilterBank6; // Reg1: 00x258 | Reg2: 0x2C8
+		CAN_FILTERBANKi_REGISTERx FilterBank7; // Reg1: 00x25C | Reg2: 0x2CC
+		CAN_FILTERBANKi_REGISTERx FilterBank8; // Reg1: 00x260 | Reg2: 0x2D0
+		CAN_FILTERBANKi_REGISTERx FilterBank9; // Reg1: 00x264 | Reg2: 0x2D4
+		CAN_FILTERBANKi_REGISTERx FilterBank10; // Reg1: 00x268 | Reg2: 0x2D8
+		CAN_FILTERBANKi_REGISTERx FilterBank11; // Reg1: 00x26C | Reg2: 0x2DC
+		CAN_FILTERBANKi_REGISTERx FilterBank12; // Reg1: 00x270 | Reg2: 0x2E0
+		CAN_FILTERBANKi_REGISTERx FilterBank13; // Reg1: 00x274 | Reg2: 0x2E4
+		CAN_FILTERBANKi_REGISTERx FilterBank14; // Reg1: 00x278 | Reg2: 0x2E8
+		CAN_FILTERBANKi_REGISTERx FilterBank15; // Reg1: 00x27C | Reg2: 0x2EC
+		CAN_FILTERBANKi_REGISTERx FilterBank16; // Reg1: 00x280 | Reg2: 0x2F0
+		CAN_FILTERBANKi_REGISTERx FilterBank17; // Reg1: 00x284 | Reg2: 0x2F4
+		CAN_FILTERBANKi_REGISTERx FilterBank18; // Reg1: 00x288 | Reg2: 0x2F8
+		CAN_FILTERBANKi_REGISTERx FilterBank19; // Reg1: 00x28C | Reg2: 0x2FC
+		CAN_FILTERBANKi_REGISTERx FilterBank20; // Reg1: 00x290 | Reg2: 0x300
+		CAN_FILTERBANKi_REGISTERx FilterBank21; // Reg1: 00x294 | Reg2: 0x304
+		CAN_FILTERBANKi_REGISTERx FilterBank22; // Reg1: 00x298 | Reg2: 0x308
+		CAN_FILTERBANKi_REGISTERx FilterBank23; // Reg1: 00x29C | Reg2: 0x30C
+		CAN_FILTERBANKi_REGISTERx FilterBank24; // Reg1: 00x2A0 | Reg2: 0x310
+		CAN_FILTERBANKi_REGISTERx FilterBank25; // Reg1: 00x2A4 | Reg2: 0x314
+		CAN_FILTERBANKi_REGISTERx FilterBank26; // Reg1: 00x2A8 | Reg2: 0x318
+		CAN_FILTERBANKi_REGISTERx FilterBank27; // Reg1: 00x2AC | Reg2: 0x31C
+	};
+
+	CAN_FILTERBANKi_REGISTERx Banks[28];
+};
 
 
 #endif

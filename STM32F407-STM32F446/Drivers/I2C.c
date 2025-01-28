@@ -1,4 +1,4 @@
-#include "STM32F407.I2C.h"
+#include "I2C.h"
 
 
 //Static Prototypes----------------------------------------------------
@@ -58,21 +58,6 @@ void I2C_Stop(uint8_t i2cNumber) {
 
 
 //Helper Functions--------------------------------------------------------------------------------------------------------------
-
-/**
-I2C Pins ---------------------------------
-		+ I2C1_SCL: PB6, PB8 (AF4)
-		+ I2C1_SDA: PB7, PB9 (AF4)
-		+ I2C1_SMBA PB5 (AF4)
-		
-		+ I2C2_SCL: PB10, PF1, PH4 (AF4)
-		+ I2C2_SDA: PB11, PF0, PH5 (AF4)
-		+ I2C2_SMBA PB12, PF2 (AF4)
-		
-		+ I2C3_SCL: PA8, PH7 (AF4)
-		+ I2C3_SCL: PC9, PH8 (AF4)
-		------------------------------------
-**/
 static void I2C_PinInit(uint8_t i2cNumber) {
 	
 	switch(i2cNumber) {

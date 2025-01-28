@@ -2,13 +2,67 @@
 #ifndef SPI_H_
 #define SPI_H_
 #include <stdint.h>
-#include "STM32F407.GPIO.h"
+#include "GPIO.h"
+
+//CLOCK
+#define CLOCK 0x40023800
+#define APB2 0x44
+#define APB1 0x40
+#define ADDR_SPI_CLOCK_1 ( (SPI_CLOCK_1*) ((CLOCK) + APB2) )
+#define ADDR_SPI_CLOCK_2_3 ( (SPI_CLOCK_2_3*) ((CLOCK) + APB1) )
+
+//SPIx
+typedef struct _spi SPIx;
+#define SPI_BASE 0x40013000
+#define ADDR_SPI1 ( (SPIx*) ((SPI_BASE) + 0x000) )
+#define ADDR_SPI2 ( (SPIx*) ((SPI_BASE) + 0x800) ) // And IS2
+#define ADDR_SPI3 ( (SPIx*) ((SPI_BASE) + 0xC00) ) // And IS3
+
+
+//SPI_I2S_CONFIG Register
+/*Len Of Transfer Data*/
+#define LEN_16BIT 0x00
+#define LEN_24BIT 0x01
+#define LEN_32BIT 0x02
+
+
+/*I2S Standards*/
+#define PHILLIPS_STANDARD 0x00
+#define MSB_JUSTIFIED_STANDARD 0x01
+#define LSB_JUSTIFIED_STANDARD 0x02
+#define PCM_STANDARD 0x03
+
+/*I2S Config Modes*/
+#define SLAVE_TRANSMIT 0x00
+#define SLAVE_RECEIVE 0x01
+#define MASTER_TRANSMIT 0x02
+#define MASTER_RECEIVE 0x03
 
 typedef enum _Phase E_Phase;
 typedef enum _Polarity E_Polarity;
 typedef enum _Prescaler E_Prescaler;
 typedef enum _Mode E_Mode;
 typedef enum _BitOrder E_BitOrder;
+
+
+/**
+SPI Pins ---------------------------
+		+ SPI1_NSS: PA4, PA15 (AF5)
+		+ SPI1_SCK: PA5, PB3 (AF5)
+		+ SPI1_MISO: PA6, PB4 (AF5)
+		+ SPI1_MOSI: PA7, PB5 (AF5)
+		
+		+ SPI2_NSS: PB9, PB12, PI0 (AF5)
+		+ SPI2_SCK: PB10, PB13, PI1 (AF5)
+		+ SPI2_MISO: PB14, PC2, PI2 (AF5)
+		+ SPI2_MOSI: PB15, PC3, PI3 (AF5)
+		
+		+ SPI3_NSS: PA4, PA15 (AF6)
+		+ SPI3_SCK: PB3, PC10 (AF6)
+		+ SPI3_MISO: PB4, PC11 (AF6)
+		+ SPI3_MOSI: PB5, PC12 (AF6)
+		------------------------------------
+**/
 
 //DECLARATIONS
 /**
@@ -52,41 +106,6 @@ uint8_t SPI_Receive(uint8_t spiNumber);
 uint8_t SPI_Transmit(uint8_t spiNumber, uint8_t data);
 
 
-//CLOCK
-#define CLOCK 0x40023800
-#define APB2 0x44
-#define APB1 0x40
-#define ADDR_SPI_CLOCK_1 ( (SPI_CLOCK_1*) ((CLOCK) + APB2) )
-#define ADDR_SPI_CLOCK_2_3 ( (SPI_CLOCK_2_3*) ((CLOCK) + APB1) )
-
-//SPIx
-typedef struct _spi SPIx;
-#define SPI_BASE 0x40013000
-#define ADDR_SPI1 ( (SPIx*) ((SPI_BASE) + 0x000) )
-#define ADDR_SPI2 ( (SPIx*) ((SPI_BASE) + 0x800) ) // And IS2
-#define ADDR_SPI3 ( (SPIx*) ((SPI_BASE) + 0xC00) ) // And IS3
-
-
-//SPI_I2S_CONFIG Register
-/*Len Of Transfer Data*/
-#define LEN_16BIT 0x00
-#define LEN_24BIT 0x01
-#define LEN_32BIT 0x02
-
-
-/*I2S Standards*/
-#define PHILLIPS_STANDARD 0x00
-#define MSB_JUSTIFIED_STANDARD 0x01
-#define LSB_JUSTIFIED_STANDARD 0x02
-#define PCM_STANDARD 0x03
-
-/*I2S Config Modes*/
-#define SLAVE_TRANSMIT 0x00
-#define SLAVE_RECEIVE 0x01
-#define MASTER_TRANSMIT 0x02
-#define MASTER_RECEIVE 0x03
-
-
 //Enums----------------------------------------------------------------------
 enum _Phase {
 	_1ST_EDGE = 0, _2ND_EDGE = 1
@@ -114,17 +133,6 @@ enum _BitOrder {
 };
 
 //Registers------------------------------------------------------------------
-struct _spi {
-	SPI_CONTROL1 ControlReg1; // 0x00
-	SPI_CONTROL2 ControlReg2; // 0x04
-	SPI_STATUS StatusReg; // 0x08
-	SPI_DATA DataReg; // 0x0C
-	SPI_CRC_POLYNOMIAL CRCPolynomialReg; // 0x10
-	SPI_RX_CRC RXCRCReg; // 0x14
-	SPI_TX_CRC TXCRCReg; // 0x18
-	SPI_I2S_CONFIG I2SConfigReg; // 0x1C
-	SPI_I2S_PRESCALER I2SPrescalerReg; // 0x20
-};
 
 typedef struct {
 	const uint32_t reserved0:12;
@@ -233,5 +241,25 @@ typedef struct {
 	volatile uint16_t enable_MasterClockOutput:1;
 	const uint16_t reserved:6;
 }SPI_I2S_PRESCALER;
+
+
+
+
+
+
+
+struct _spi {
+	SPI_CONTROL1 ControlReg1; // 0x00
+	SPI_CONTROL2 ControlReg2; // 0x04
+	SPI_STATUS StatusReg; // 0x08
+	SPI_DATA DataReg; // 0x0C
+	SPI_CRC_POLYNOMIAL CRCPolynomialReg; // 0x10
+	SPI_RX_CRC RXCRCReg; // 0x14
+	SPI_TX_CRC TXCRCReg; // 0x18
+	SPI_I2S_CONFIG I2SConfigReg; // 0x1C
+	SPI_I2S_PRESCALER I2SPrescalerReg; // 0x20
+};
+
+
 
 #endif

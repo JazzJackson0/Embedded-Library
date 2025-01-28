@@ -1,4 +1,4 @@
-#include "STM32F407.DMA.h"
+#include "DMA.h"
 
 //Static Prototypes------------------------------------------------------
 static DMAx* Get_DMA(uint8_t dmaNum);

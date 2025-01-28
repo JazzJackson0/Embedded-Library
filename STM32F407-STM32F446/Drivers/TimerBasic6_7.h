@@ -3,7 +3,30 @@
 #define TIMERBASIC6_7_H_
 #include <stdint.h>
 #include <stdio.h>
-#include "STM32F407.GPIO.h"
+#include "GPIO.h"
+
+//CLOCK
+#define CLOCK 0x40023800
+#define APB1 0x40
+#define ADDR_TIM6_7_CLOCK ( (TIM6_7_CLOCK*) ((CLOCK) + APB1) )
+
+//TIMERS
+typedef struct _basic_timer BASIC_TIMx;
+#define BASIC_TIM_BASE 0x40001000
+#define ADDR_TIM6 ( (BASIC_TIMx*) ((BASIC_TIM_BASE) + 0x000) )
+#define ADDR_TIM7 ( (BASIC_TIMx*) ((BASIC_TIM_BASE) + 0400) )
+
+//TIM6_7_CONTROL2
+/*Master Mode*/
+#define RESET 0x00
+#define COUNTEN_SIGNAL_AS_TRIGOUT 0x01
+#define UPDATEEVENT_AS_TRIGOUT 0x02
+#define COMPARE_PULSE_AS_TRIGOUT 0x03
+#define OUTCOMP1_AS_TRIGOUT 0x04
+#define OUTCOMP2_AS_TRIGOUT 0x05
+#define OUTCOMP3_AS_TRIGOUT 0x06
+#define OUTCOMP4_AS_TRIGOUT 0x07
+
 //Basic Timers 6-7
 /*TIMER Pins ---------------------------
 		+ No Pins Needed
@@ -36,44 +59,8 @@ uint8_t BasicTimer_Start(uint8_t timerNum, uint16_t prescaler, uint16_t time);
  */
 uint8_t BasicOneShotTimer_Start(uint8_t timerNum, uint16_t prescaler, uint16_t time);
 
-//CLOCK
-#define CLOCK 0x40023800
-#define APB1 0x40
-#define ADDR_TIM6_7_CLOCK ( (TIM6_7_CLOCK*) ((CLOCK) + APB1) )
-
-//TIMERS
-typedef struct _basic_timer BASIC_TIMx;
-#define BASIC_TIM_BASE 0x40001000
-#define ADDR_TIM6 ( (BASIC_TIMx*) ((BASIC_TIM_BASE) + 0x000) )
-#define ADDR_TIM7 ( (BASIC_TIMx*) ((BASIC_TIM_BASE) + 0400) )
-
-//TIM6_7_CONTROL2
-/*Master Mode*/
-#define RESET 0x00
-#define COUNTEN_SIGNAL_AS_TRIGOUT 0x01
-#define UPDATEEVENT_AS_TRIGOUT 0x02
-#define COMPARE_PULSE_AS_TRIGOUT 0x03
-#define OUTCOMP1_AS_TRIGOUT 0x04
-#define OUTCOMP2_AS_TRIGOUT 0x05
-#define OUTCOMP3_AS_TRIGOUT 0x06
-#define OUTCOMP4_AS_TRIGOUT 0x07
 
 // Registers------------------------------------------------------------------------
-struct _basic_timer {
-	TIM6_7_CONTROL1 ControlReg1; // 0x00
-	TIM6_7_CONTROL2 ControlReg2; // 0x04
-	BASIC_TIMER_RESERVED reserved0; // 0x08
-	TIM6_7_DMAINTERRUPT_ENABLE DMAInterruptEnableReg; // 0x0C
-	TIM6_7_STATUS StatusReg; // 0x10
-	TIM6_7_EVENTGEN EventGenReg; // 0x14
-	BASIC_TIMER_RESERVED reserved1; // 0x18
-	BASIC_TIMER_RESERVED reserved2; // 0x1C
-	BASIC_TIMER_RESERVED reserved3; // 0x20
-	TIM6_7_COUNTER CounterReg; // 0x24
-	TIM6_7_PRESCALER PrescalerReg; // 0x28
-	TIM6_7_AUTORELOAD AutoReloadReg; // 0x2C
-};
-
 typedef struct {
 	const uint32_t reserved1:32;
 }BASIC_TIMER_RESERVED;
@@ -130,5 +117,26 @@ typedef struct {
 typedef struct {
 	volatile uint16_t rw_AutoReloadValue:16;
 }TIM6_7_AUTORELOAD;
+
+
+
+
+
+struct _basic_timer {
+	TIM6_7_CONTROL1 ControlReg1; // 0x00
+	TIM6_7_CONTROL2 ControlReg2; // 0x04
+	BASIC_TIMER_RESERVED reserved0; // 0x08
+	TIM6_7_DMAINTERRUPT_ENABLE DMAInterruptEnableReg; // 0x0C
+	TIM6_7_STATUS StatusReg; // 0x10
+	TIM6_7_EVENTGEN EventGenReg; // 0x14
+	BASIC_TIMER_RESERVED reserved1; // 0x18
+	BASIC_TIMER_RESERVED reserved2; // 0x1C
+	BASIC_TIMER_RESERVED reserved3; // 0x20
+	TIM6_7_COUNTER CounterReg; // 0x24
+	TIM6_7_PRESCALER PrescalerReg; // 0x28
+	TIM6_7_AUTORELOAD AutoReloadReg; // 0x2C
+};
+
+
 
 #endif

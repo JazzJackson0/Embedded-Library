@@ -1,4 +1,4 @@
-#include "STM32F407.TimerGeneral9_14.h"
+#include "TimerGeneral9_14.h"
 
 //Static Prototypes--------------------------------------------------------------
 static void PWM_PinInit(uint8_t timerNum);
@@ -85,24 +85,6 @@ void GeneralTimer9_14_PWM_Update(uint8_t timerNum, uint8_t captCompNum, uint16_t
 }
 
 //Helper Functions--------------------------------------------------------------------------------------------------------------
-
-/**
-TIMER Pins ---------------------------
-		+ TIM9_CH1: PA2, PE5 (AF3)
-		+ TIM9_CH2: PA3, PE6 (AF3)
-		
-		+ TIM10_CH1: PB8, PF6 (AF3)
-		
-		+ TIM11_CH1: PB9, PF7 (AF3)
-
-		+ TIM12_CH1: PB14, PH6 (AF9)
-		+ TIM12_CH2: PB15, PH9 (AF9)
-		
-		+ TIM13_CH1: PA6, PF8 (AF9)
-		
-		+ TIM14_CH1: PA7, PF9 (AF9)
-		------------------------------------
-**/
 void PWM_PinInit(uint8_t timerNum) {
 	
 	switch (timerNum) {

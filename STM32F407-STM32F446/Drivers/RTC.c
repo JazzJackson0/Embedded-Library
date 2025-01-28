@@ -1,4 +1,4 @@
-#include "STM32F407.RTC.h"
+#include "RTC.h"
 
 //Global Variables-------------------------------------------------------
 RTCx *const RTC = ADDR_RTC;

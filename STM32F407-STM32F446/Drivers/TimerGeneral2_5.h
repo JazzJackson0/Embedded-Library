@@ -1,64 +1,26 @@
 //STM32F407 Driver
-#ifndef TIMERADVANCED1_A8_H_
-#define TIMERADVANCED1_A8_H_
-//Advanced Timers 1 & 8
+#ifndef TIMERGENERAL2_5_H_
+#define TIMERGENERAL2_5_H_
+//Genreal Purpose Timers 2-5
 #include <stdint.h>
 #include <stdio.h>
-#include "STM32F407.GPIO.h"
-
-//DECLARATIONS
-/**
- * @brief Initialize and Start Timer
- * @param timerNum Timer Number (1 & 8)
- * @param prescaler Timer Clock Prescaler Value (Clock Speed / Presclaler = Number of Hz per Second)
- * @param time Time Goal: Example: Let (Clock Speed / Prescaler) = 1000Hz/Sec
- * 							---- For 1sec Time Goal: Time = 1000(Hz)
- * 						|||  00:00 ---> Time Goal |||  RESET
- *						|||  00:00 ---> Time Goal |||  RESET |||  ETC...)
- * @return ** uint8_t 
- */
-uint8_t AdvancedTimer_Start(uint8_t timerNum, uint16_t prescaler, uint16_t time);
-/**
- * @brief Initialize and Start Pulse Width Modulation
- * @param timerNum Timer Number (1 & 8)
- * @param captCompNum Capture Compare Number (1 - 4)
- * @param prescaler Timer Clock Prescaler Value (Clock Speed / Presclaler = Number of Hz per Second)
- * @param time Time Goal: Example: Let (Clock Speed / Prescaler) = 1000Hz/Sec
- * 							---- For 1sec Time Goal: Time = 1000(Hz)
- * 						|||  00:00 ---> Time Goal |||  RESET
- *						|||  00:00 ---> Time Goal |||  RESET |||  ETC...)
- * @param dutyCyclePercent PWM Duty Cycle as a percentage value (0% - 100%).
- * @return ** void 
- */
-void AdvancedPWM_Start(uint8_t timerNum, uint8_t captCompNum, uint16_t prescaler, 
-	uint16_t time, float dutyCyclePercent);
-/**
- * @brief Update Pulse Width Modulation with new Duty Cycle
- * 
- * @param timerNum Timer Number (1 & 8)
- * @param captCompNum Capture Compare Number (1 - 4)
- * @param time Time Goal: Example: Let (Clock Speed / Prescaler) = 1000Hz/Sec
- * 							---- For 1sec Time Goal: Time = 1000(Hz)
- * 						|||  00:00 ---> Time Goal |||  RESET
- *						|||  00:00 ---> Time Goal |||  RESET |||  ETC...)
- * @param dutyCyclePercent PWM Duty Cycle as a percentage value (0% - 100%).
- * @return ** void 
- */
-void AdvancedPWM_Update(uint8_t timerNum, uint8_t captCompNum, uint16_t time, float dutyCyclePercent);
+#include "GPIO.h"
 
 //CLOCK
 #define CLOCK 0x40023800
-#define APB2 0x44
-#define ADDR_TIM1_8_CLOCK ( (TIM1_8_CLOCK*) ((CLOCK) + APB2) )
+#define APB1 0x40
+#define ADDR_TIM2_5_CLOCK ( (TIM2_5_CLOCK*) ((CLOCK) + APB1) )
 
 //TIMERS
-typedef struct _advanced_timer ADVANCED_TIMERx;
-#define TIM1_BASE 0x40010000
-#define ADDR_TIM1 ( (ADVANCED_TIMERx*) ((TIM1_BASE) + 0x000) )
-#define ADDR_TIM8 ( (ADVANCED_TIMERx*) ((TIM1_BASE) + 0x400) )
+typedef struct _general_timer_2_5 GEN_TIMER_2_5x;
+#define TIM_GEN_2_5_BASE 0x40000000
+#define ADDR_TIM2 ( (GEN_TIMER_2_5x*) ((TIM_GEN_2_5_BASE) + 0x000) )
+#define ADDR_TIM3 ( (GEN_TIMER_2_5x*) ((TIM_GEN_2_5_BASE) + 0x400) )
+#define ADDR_TIM4 ( (GEN_TIMER_2_5x*) ((TIM_GEN_2_5_BASE) + 0x800) )
+#define ADDR_TIM5 ( (GEN_TIMER_2_5x*) ((TIM_GEN_2_5_BASE) + 0xC00) )
 
 
-//TIM1_A8_CONTROL1
+//TIM2_5_CONTROL1
 /*Alignment Mode*/
 #define EDGE_ALIGN 0x00
 #define CENTER_ALIGN_DOWNCOUNT 0x01
@@ -69,7 +31,7 @@ typedef struct _advanced_timer ADVANCED_TIMERx;
 #define TIMCLOCK_x2 0x01
 #define TIMCLOCK_x4 0x02
 
-//TIM1_A8_CONTROL2
+//TIM2_5_CONTROL2
 /*Master Mode*/
 #define RESET 0x00
 #define COUNTEN_SIGNAL_AS_TRIGOUT 0x01
@@ -80,7 +42,7 @@ typedef struct _advanced_timer ADVANCED_TIMERx;
 #define OUTCOMP3_AS_TRIGOUT 0x06
 #define OUTCOMP4_AS_TRIGOUT 0x07
 
-//TIM1_A8_SLAVEMODE_CONTROL & TIM1_A8_CAPTURECOMP_MODE1 (For Input Capture Filter)
+//TIM2_5_SLAVEMODE_CONTROL & TIM2_5_CAPTURECOMP_MODE1 (For Input Capture Filter)
 /*Slave Mode Selection*/
 #define DISABLE_SLAVEMODE 0x00
 #define ENCODERMODE_1 0x01
@@ -117,7 +79,7 @@ typedef struct _advanced_timer ADVANCED_TIMERx;
 #define DIV32_5EVENTVAL 0x0E
 #define DIV32_6EVENTVAL 0x0F
 
-//TIM1_A8_CAPTURECOMP_MODE1
+//TIM2_5_CAPTURECOMP_MODE1
 /*Output Compare Modes*/
 #define FROZEN 0x00
 #define ACTIVE_ON_MATCH 0x01
@@ -132,41 +94,96 @@ typedef struct _advanced_timer ADVANCED_TIMERx;
 #define MAPTO_TI2 0x02
 #define MAPTO_TRC 0x03
 /*Input Capture Prescaler*/
-#define A1_8_NO_PRESSCALE 0x00
+#define G2_5_NO_PRESCALE 0x00
 #define CAPTURE_EVERY_2EVENTS 0x01
 #define CAPTURE_EVERY_4EVENTS 0x02
 #define CAPTURE_EVERY_8EVENTS 0x03
 
+/**
+TIMER Pins ---------------------------
+		
+		+ TIM2_CH1: PA15 (AF1)
+		+ TIM2_CH2: PA1, PB3 (AF1)
+		+ TIM2_CH3: PA2, PB10 (AF1)
+		+ TIM2_CH4: PA3, PB11 (AF1)
+		+ TIM2_CH1_ETR: PA0, PA5 (AF1)
+		+ TIM2_ETR: PA15 (AF1)
 
-//Registers------------------------------------------------------------------------
-struct _advanced_timer {
-	TIM1_A8_CONTROL1 ControlReg1; // 0x00
-	TIM1_A8_CONTROL2 ControlReg2; // 0x04
-	TIM1_A8_SLAVEMODE_CONTROL SlaveModeControlReg; // 0x08
-	TIM1_A8_DMAINTERRUPT_ENABLE DMAInterruptEnableReg; // 0x0C
-	TIM1_A8_STATUS StatusReg; // 0x10
-	TIM1_A8_EVENTGEN EventGenReg; // 0x14
-	TIM1_A8_CAPTURECOMP_MODE1 CaptureCompModeReg1; // 0x18
-	TIM1_A8_CAPTURECOMP_MODE2 CaptureCompModeReg2; // 0x1C
-	TIM1_A8_CAPTURECOMP_ENABLE CaptureCompEnableReg; // 0x20
-	TIM1_A8_COUNTER CounterReg; // 0x24
-	TIM1_A8_PRESCALER PrescalerReg; // 0x28
-	TIM1_A8_AUTORELOAD AutoReloadReg; // 0x2C
-	REPETITION_COUNTER RepititionCounterReg; // 0x30
-	TIM1_A8_CAPTURECOMPx CaptureComp1Reg; // 0x34
-	TIM1_A8_CAPTURECOMPx CaptureComp2Reg; // 0x38
-	TIM1_A8_CAPTURECOMPx CaptureComp3Reg; // 0x3C
-	TIM1_A8_CAPTURECOMPx CaptureComp4Reg; // 0x40
-	BREAK_AND_DATETIME BreakAndDateTimeReg; // 0x44
-	TIM1_A8_DMA_CONTROL DMAControlReg; // 0x48
-	TIM1_A8_DMA_FULLTXADDRESS DMAFullTXAddressReg; // 0x4C
-};
+		+ TIM3_CH1: PA6, PB4, PC6 (AF2)
+		+ TIM3_CH2: PA7, PB5, PC7 (AF2)
+		+ TIM3_CH3: PB0, PC8 (AF2)
+		+ TIM3_CH4: PB1, PC9 (AF2)
+		+ TIM3_ETR: PD2 (AF2)
+
+		+ TIM4_CH1: PB6, PD12 (AF2)
+		+ TIM4_CH2: PB7, PD13 (AF2)
+		+ TIM4_CH3: PB8, PD14 (AF2)
+		+ TIM4_CH4: PB9, PD15 (AF2)
+		+ TIM4_ETR: PE0 (AF2)
+		
+		+ TIM5_CH1: PA0, PH10 (AF2)
+		+ TIM5_CH2: PA1, PH11 (AF2)
+		+ TIM5_CH3: PA2, PH12 (AF2)
+		+ TIM5_CH4: PA3, PI0 (AF2)
+		------------------------------------
+**/
+
+//DECLARATIONS
+/**
+ * @brief Initialize and Start Timer		
+ * @param timerNum Timer Number (2 - 5)
+ * @param prescaler Timer Clock Prescaler Value (Clock Speed / Presclaler = Number of Hz per Second)
+ * @param time Time Goal: Example: Let (Clock Speed / Prescaler) = 1000Hz/Sec
+ * 							---- For 1sec Time Goal: Time = 1000(Hz)
+ * 						|||  00:00 ---> Time Goal |||  RESET
+ *						|||  00:00 ---> Time Goal |||  RESET |||  ETC...)
+ * @return ** uint8_t 
+ */
+uint8_t GeneralTimer2_5_Start(uint8_t timerNum, uint16_t prescaler, uint16_t time);
+/**
+ * @brief Initialize and Start Pulse Width Modulation
+ * 
+ * @param timerNum Timer Number (2 - 5)
+ * @param captCompNum Capture Compare Number (1 - 4)
+ * @param prescaler Timer Clock Prescaler Value (Clock Speed / Presclaler = Number of Hz per Second)
+ * @param time Time Goal: Example: Let (Clock Speed / Prescaler) = 1000Hz/Sec
+ * 							---- For 1sec Time Goal: Time = 1000(Hz)
+ * 						|||  00:00 ---> Time Goal |||  RESET
+ *						|||  00:00 ---> Time Goal |||  RESET |||  ETC...)
+ * @param dutyCyclePercent PWM Duty Cycle as a percentage value (0% - 100%).
+ * @return ** void 
+ */
+void GeneralTimer2_5_PWM_Start(uint8_t timerNum, uint8_t captCompNum, 
+	uint16_t prescaler, uint16_t time, float dutyCyclePercent);
+/**
+ * @brief Update Pulse Width Modulation with new Duty Cycle
+ * 
+ * @param timerNum Timer Number (2 - 5)
+ * @param captCompNum Capture Compare Number (1 - 4)
+ * @param time Time Goal: Example: Let (Clock Speed / Prescaler) = 1000Hz/Sec
+ * 							---- For 1sec Time Goal: Time = 1000(Hz)
+ * 						|||  00:00 ---> Time Goal |||  RESET
+ *						|||  00:00 ---> Time Goal |||  RESET |||  ETC...)
+ * @param dutyCyclePercent PWM Duty Cycle as a percentage value (0% - 100%).
+ * @return ** void 
+ */
+void GeneralTimer2_5_PWM_Update(uint8_t timerNum, uint8_t captCompNum, 
+	uint16_t time, float dutyCyclePercent);
+
+
+// Registers----------------------------------------------------------------------
 
 typedef struct {
-	volatile uint32_t tim1_StartTick:1;
-	volatile uint32_t tim8_StartTick:1;
-	const uint32_t reserved:30;
-}TIM1_8_CLOCK ;
+	const uint32_t reserved:32;
+}GENERAL_TIMER_2_5_RESERVED;
+
+typedef struct {
+	volatile uint32_t tim2_StartTick:1;
+	volatile uint32_t tim3_StartTick:1;
+	volatile uint32_t tim4_StartTick:1;
+	volatile uint32_t tim5_StartTick:1;
+	const uint32_t reserved:28;
+}TIM2_5_CLOCK;
 
 typedef struct {
 	volatile uint16_t enable_Counter:1;
@@ -178,24 +195,15 @@ typedef struct {
 	volatile uint16_t enable_AutoReloadPreload:1;
 	volatile uint16_t rw_ClockDivisionRatio:2;
 	const uint16_t reserved:6;
-}TIM1_A8_CONTROL1;
+}TIM2_5_CONTROL1;
 
 typedef struct {
-	volatile uint16_t preloadCCxECCxNEAndOCxM:1;
-	const uint16_t reserved0:1;
-	volatile uint16_t updatePreloadsWithCOMGBit0_updatePreloadsWithCOMGAndRiseEdge1:1;
+	const uint16_t reserved0:3;
 	volatile uint16_t dmaSendOnCaptCompEvent0_dmaSendOnUpdateEvent1:1;
 	volatile uint16_t rw_MasterMode:3;
 	volatile uint16_t channel1ToTimInput0_channel123toTimInput1:1;
-	volatile uint16_t OutComp1LowIdle0_OutComp1HighIdle1:1;
-	volatile uint16_t OutComp1NLowIdle0_OutComp1NHighIdle1:1;
-	volatile uint16_t OutComp2LowIdle0_OutComp2HighIdle1:1;
-	volatile uint16_t OutComp2NLowIdle0_OutComp2NHighIdle1:1;
-	volatile uint16_t OutComp3LowIdle0_OutComp3HighIdle1:1;
-	volatile uint16_t OutComp3NLowIdle0_OutComp3NHighIdle1:1;
-	volatile uint16_t OutComp4LowIdle0_OutComp4HighIdle1:1;
-	const uint16_t reserved1:1;
-}TIM1_A8_CONTROL2;
+	const uint16_t reserved1:8;
+}TIM2_5_CONTROL2;
 
 typedef struct {
 	volatile uint16_t rw_SlaveModeSelection:3;
@@ -206,7 +214,7 @@ typedef struct {
 	volatile uint16_t rw_ExternalTriggerPrescaler:2;
 	volatile uint16_t enable_ExternalClock:1;
 	volatile uint16_t polarityActiveHigh0_polarityActiveLow1:1;
-}TIM1_A8_SLAVEMODE_CONTROL;
+}TIM2_5_SLAVEMODE_CONTROL;
 
 typedef struct {
 	volatile uint16_t enable_UpdateInterrupt:1;
@@ -214,18 +222,18 @@ typedef struct {
 	volatile uint16_t enable_CaptureComp2:1;
 	volatile uint16_t enable_CaptureComp3:1;
 	volatile uint16_t enable_CaptureComp4:1;
-	volatile uint16_t enable_COMInterrupt:1;
+	const uint16_t reserved0:1;
 	volatile uint16_t enable_TriggerInterrupt:1;
-	volatile uint16_t enable_BreakInterrupt:1;
+	const uint16_t reserved1:1;
 	volatile uint16_t enable_DMAReqInterrupt:1;
 	volatile uint16_t enable_CaptureComp1DMAReq:1;
 	volatile uint16_t enable_CaptureComp2DMAReq:1;
 	volatile uint16_t enable_CaptureComp3DMAReq:1;
 	volatile uint16_t enable_CaptureComp4DMAReq:1;
-	volatile uint16_t enable_COMDMAReq:1;
+	const uint16_t reserved2:1;
 	volatile uint16_t enable_TriggerDMAReq:1;
 	const uint16_t reserved3:1;
-}TIM1_A8_DMAINTERRUPT_ENABLE;
+}TIM2_5_DMAINTERRUPT_ENABLE;
 
 typedef struct {
 	volatile uint16_t updateInterruptOccurred:1;
@@ -233,15 +241,15 @@ typedef struct {
 	volatile uint16_t captureComp2InterruptOccurred:1;
 	volatile uint16_t captureComp3InterruptOccurred:1;
 	volatile uint16_t captureComp4InterruptOccurred:1;
-	volatile uint16_t comInterruptOccurred:1;
+	const uint16_t reserved0:1;
 	volatile uint16_t triggerInterruptOccurred:1;
-	volatile uint16_t breakInterruptOccurred:1;
+	const uint16_t reserved1:2;
 	volatile uint16_t captureComp1OvercaptureOccurred:1;
 	volatile uint16_t captureComp2OvercaptureOccurred:1;
 	volatile uint16_t captureComp3OvercaptureOccurred:1;
 	volatile uint16_t captureComp4OvercaptureOccurred:1;
 	const uint16_t reserved2:3;
-}TIM1_A8_STATUS;
+}TIM2_5_STATUS;
 
 typedef struct {
 	volatile uint16_t generate_UpdateEvent:1;
@@ -249,11 +257,10 @@ typedef struct {
 	volatile uint16_t generate_CaptureCompare2Event:1;
 	volatile uint16_t generate_CaptureCompare3Event:1;
 	volatile uint16_t generate_CaptureCompare4Event:1;
-	volatile uint16_t generate_UpdateCaptCompControlBits:1;
+	const uint16_t reserved0:1;
 	volatile uint16_t generate_TriggerEvent:1;
-	volatile uint16_t generate_Break:1;
-	const uint16_t reserved1:8;
-}TIM1_A8_EVENTGEN;
+	const uint16_t reserved1:9;
+}TIM2_5_EVENTGEN;
 
 typedef union {
 	struct {
@@ -277,7 +284,7 @@ typedef union {
 		volatile uint16_t rw_InputCapt2Prescaler:2;
 		volatile uint16_t rw_InputCapt2Filter:4;
 	}InputCaptureMode;
-}TIM1_A8_CAPTURECOMP_MODE1;
+}TIM2_5_CAPTURECOMP_MODE1;
 
 typedef union {
 	struct {
@@ -301,89 +308,133 @@ typedef union {
 		volatile uint16_t rw_InputCapt4Prescaler:2;
 		volatile uint16_t rw_InputCapt4Filter:4;
 	}InputCaptureMode;
-}TIM1_A8_CAPTURECOMP_MODE2;
+}TIM2_5_CAPTURECOMP_MODE2;
 
 typedef struct {
 	volatile uint16_t enable_CaptComp1:1;
 	volatile uint16_t cc1Polarity_highOrPart1Input0_lowOrPart1Input1:1;
-	volatile uint16_t enable_ComplementaryCaptComp1:1;
-	volatile uint16_t ccc1Polarity_highOrPart1Input0_lowOrPart1Input1:1;
+	const uint16_t reserved0:1;
+	volatile uint16_t cc1PolarityPart2Input:1;
 	volatile uint16_t enable_CaptComp2:1;
 	volatile uint16_t cc2Polarity_highOrPart1Input0_lowOrPart1Input1:1;
-	volatile uint16_t enable_ComplementaryCaptComp2:1;
-	volatile uint16_t ccc2Polarity_highOrPart1Input0_lowOrPart1Input1:1;
+	const uint16_t reserved1:1;
+	volatile uint16_t cc2PolarityPart2Input:1;
 	volatile uint16_t enable_CaptComp3:1;
 	volatile uint16_t cc3Polarity_highOrPart1Input0_lowOrPart1Input1:1;
-	volatile uint16_t enable_ComplementaryCaptComp3:1;
-	volatile uint16_t ccc3Polarity_highOrPart1Input0_lowOrPart1Input1:1;
+	const uint16_t reserved2:1;
+	volatile uint16_t cc3PolarityPart2Input:1;
 	volatile uint16_t enable_CaptComp4:1;
 	volatile uint16_t cc4Polarity_highOrPart1Input0_lowOrPart1Input1:1;
-	const uint16_t reserved:1;
-	volatile uint16_t ccc4Polarity_highOrPart1Input0_lowOrPart1Input1:1;
-}TIM1_A8_CAPTURECOMP_ENABLE; // Alternate version for STM32F446 below
+	const uint16_t reserved3:1;
+	volatile uint16_t cc4PolarityPart2Input:1;
+}TIM2_5_CAPTURECOMP_ENABLE;
+
+typedef union {
+	struct {
+		volatile uint32_t rw_CounterValue:32;
+	}HighCounter;
+
+	struct {
+		volatile uint32_t rw_CounterValue:16;
+		const uint32_t reserved:16;
+	}NormalCounter;
+}TIM2_5_COUNTER; // Alternate STM32F446 Version below
 
 /*
-Alternate version for STM32F446
+Alternate STM32F446 Version
 typedef struct {
-	volatile uint16_t enable_CaptComp1:1;
-	volatile uint16_t cc1Polarity_highOrPart1Input0_lowOrPart1Input1:1;
-	volatile uint16_t enable_ComplementaryCaptComp1:1;
-	volatile uint16_t ccc1Polarity_highOrPart1Input0_lowOrPart1Input1:1;
-	volatile uint16_t enable_CaptComp2:1;
-	volatile uint16_t cc2Polarity_highOrPart1Input0_lowOrPart1Input1:1;
-	volatile uint16_t enable_ComplementaryCaptComp2:1;
-	volatile uint16_t ccc2Polarity_highOrPart1Input0_lowOrPart1Input1:1;
-	volatile uint16_t enable_CaptComp3:1;
-	volatile uint16_t cc3Polarity_highOrPart1Input0_lowOrPart1Input1:1;
-	volatile uint16_t enable_ComplementaryCaptComp3:1;
-	volatile uint16_t ccc3Polarity_highOrPart1Input0_lowOrPart1Input1:1;
-	volatile uint16_t enable_CaptComp4:1;
-	volatile uint16_t cc4Polarity_highOrPart1Input0_lowOrPart1Input1:1;
-	const uint16_t reserved:2;
-}TIM1_A8_CAPTURECOMP_ENABLE;
+	volatile uint16_t rw_CounterValue:16;
+}TIM2_5_COUNTER;
 */
 
 typedef struct {
-	volatile uint16_t rw_CounterValue:16;
-}TIM1_A8_COUNTER;
-
-typedef struct {
 	volatile uint16_t rw_PrescalerValue:16;
-}TIM1_A8_PRESCALER;
+}TIM2_5_PRESCALER;
 
+typedef union {
+	struct {
+		volatile uint32_t rw_AutoReloadValue:32;
+	}HighAutoReload;
+
+	struct {
+		volatile uint32_t rw_AutoReloadValue:16;
+		const uint32_t reserved:16;
+	}NormalAutoReload;
+}TIM2_5_AUTORELOAD; // Alternate STM32F446 Version below
+
+/*
+Alternate STM32F446 Version
 typedef struct {
 	volatile uint16_t rw_AutoReloadValue:16;
-}TIM1_A8_AUTORELOAD;
+}TIM2_5_AUTORELOAD;
+*/
 
-typedef struct {
-	volatile uint16_t rw_RepetitionCounterValue:8;
-	const uint16_t reserved:8;
-}REPETITION_COUNTER;
+typedef union {
+	struct {
+		volatile uint32_t rw_CaptureCompValue:32;
+	}HighCaptureComp;
 
-typedef struct {
-	volatile uint16_t rw_CaptureCompValue:16;
-}TIM1_A8_CAPTURECOMPx;
-
-typedef struct {
-	volatile uint16_t rw_DeadTimeGeneratorSetUp:8;
-	volatile uint16_t rw_LockConfiguration:2;
-	volatile uint16_t rw_OffStateForIdleMode:1;
-	volatile uint16_t rw_OffStateForRunMode:1;
-	volatile uint16_t enable_BreakInputs:1;
-	volatile uint16_t breakInPolarityLow0_breakInPolarityHigh1:1;
-	volatile uint16_t enable_AutoOutput:1;
-	volatile uint16_t enable_MainOutput:1;
-}BREAK_AND_DATETIME;
+	struct {
+		volatile uint32_t rw_CaptureCompValue:16;
+		const uint32_t reserved:16;
+	}NormalCaptureComp;
+}TIM2_5_CAPTURECOMPx;
 
 typedef struct {
 	volatile uint16_t rw_DAMBaseAddress:5;
 	const uint16_t reserved0:3;
 	volatile uint16_t rw_DMABurstLength:5;
 	const uint16_t reserved1:3;
-}TIM1_A8_DMA_CONTROL;
+}TIM2_5_DMA_CONTROL;
 
 typedef struct {
-	volatile uint32_t rw_DMABurstAccessRegister:32;
-}TIM1_A8_DMA_FULLTXADDRESS;
+	volatile uint16_t rw_DMABurstAccessRegister:16;
+}TIM2_5_DMA_FULLTXADDRESS;
+
+typedef union {
+	struct {
+		const uint16_t reserved0:10;
+		volatile uint16_t rw_InternalTrig1Remap:2; //No Macros For This
+		const uint16_t reserved1:4;
+	}TIM2Option;
+
+	struct {
+		const uint16_t reserved0:6;
+		volatile uint16_t rw_TimerInput4Remap:2; //No Macros For This
+		const uint16_t reserved1:8;
+	}TIM5Option;
+}TIM2_5_OPTION;
+
+
+
+
+
+
+
+struct _general_timer_2_5 {
+	TIM2_5_CONTROL1 ControlReg1; // 0x00
+	TIM2_5_CONTROL2 ControlReg2; // 0x04
+	TIM2_5_SLAVEMODE_CONTROL SlaveModeControlReg; // 0x08
+	TIM2_5_DMAINTERRUPT_ENABLE DMAInterruptEnableReg; // 0x0C
+	TIM2_5_STATUS StatusReg; // 0x10
+	TIM2_5_EVENTGEN EventGenReg; // 0x14
+	TIM2_5_CAPTURECOMP_MODE1 CaptureCompModeReg1; // 0x18
+	TIM2_5_CAPTURECOMP_MODE2 CaptureCompModeReg2; // 0x1C
+	TIM2_5_CAPTURECOMP_ENABLE CaptureCompEnableReg; // 0x20
+	TIM2_5_COUNTER CounterReg; // 0x24
+	TIM2_5_PRESCALER PrescalerReg; // 0x28
+	TIM2_5_AUTORELOAD AutoReloadReg; // 0x2C
+	GENERAL_TIMER_2_5_RESERVED reserved0; // 0x30
+	TIM2_5_CAPTURECOMPx CaptureComp1Reg; // 0x34
+	TIM2_5_CAPTURECOMPx CaptureComp2Reg; // 0x38
+	TIM2_5_CAPTURECOMPx CaptureComp3Reg; // 0x3C
+	TIM2_5_CAPTURECOMPx CaptureComp4Reg; // 0x40
+	GENERAL_TIMER_2_5_RESERVED reserved1; // 0x44
+	TIM2_5_DMA_CONTROL DMAControlReg; // 0x48
+	TIM2_5_DMA_FULLTXADDRESS DMAFullTXAddressReg; // 0x4C
+	TIM2_5_OPTION OptionReg; //0x50 
+};
+
+
 
 #endif

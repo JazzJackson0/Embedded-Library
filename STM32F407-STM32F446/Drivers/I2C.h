@@ -3,9 +3,42 @@
 #define I2C_H_
 #include <stdint.h>
 #include <stdio.h>
-#include "STM32F407.GPIO.h"
+#include "GPIO.h"
+
+//CLOCK
+#define CLOCK 0x40023800
+#define APB1 0x40
+#define ADDR_I2C_CLOCK ( (I2C_CLOCK*) ((CLOCK) + APB1) )
+
+//I2Cx
+typedef struct _i2c I2Cx;
+#define I2C_BASE 0x40005000
+#define ADDR_I2C1 ( (I2Cx*) ((I2C_BASE) + 0x400) )
+#define ADDR_I2C2 ( (I2Cx*) ((I2C_BASE) + 0x800) )
+#define ADDR_I2C3 ( (I2Cx*) ((I2C_BASE) + 0xC00) )
+
+
+//I2C_CONTROL1
+/*SMBus Type*/
+#define SMBUS_DEVICE 0x00
+#define SMBUS_HOST 0x01
 
 typedef enum _ReadWrite E_ReadWrite;
+
+/**
+I2C Pins ---------------------------------
+		+ I2C1_SCL: PB6, PB8 (AF4)
+		+ I2C1_SDA: PB7, PB9 (AF4)
+		+ I2C1_SMBA PB5 (AF4)
+		
+		+ I2C2_SCL: PB10, PF1, PH4 (AF4)
+		+ I2C2_SDA: PB11, PF0, PH5 (AF4)
+		+ I2C2_SMBA PB12, PF2 (AF4)
+		
+		+ I2C3_SCL: PA8, PH7 (AF4)
+		+ I2C3_SCL: PC9, PH8 (AF4)
+		------------------------------------
+**/
 
 //DECLARATIONS
 /**
@@ -55,43 +88,12 @@ uint8_t I2C_Transmit(uint8_t i2cNumber, uint8_t data);
  */
 void I2C_Stop(uint8_t i2cNumber);
 
-//CLOCK
-#define CLOCK 0x40023800
-#define APB1 0x40
-#define ADDR_I2C_CLOCK ( (I2C_CLOCK*) ((CLOCK) + APB1) )
-
-//I2Cx
-typedef struct _i2c I2Cx;
-#define I2C_BASE 0x40005000
-#define ADDR_I2C1 ( (I2Cx*) ((I2C_BASE) + 0x400) )
-#define ADDR_I2C2 ( (I2Cx*) ((I2C_BASE) + 0x800) )
-#define ADDR_I2C3 ( (I2Cx*) ((I2C_BASE) + 0xC00) )
-
-
-//I2C_CONTROL1
-/*SMBus Type*/
-#define SMBUS_DEVICE 0x00
-#define SMBUS_HOST 0x01
-
 //Enums----------------------------------------------------------------------
 enum _ReadWrite {
 	WRITE_BIT = 0, READ_BIT = 1
 };
 
 //Registers------------------------------------------------------------------
-struct _i2c {
-	I2C_CONTROL1 ControlReg1; //0x00
-	I2C_CONTROL2 ControlReg2; //0x04
-	I2C_OWNADDRESS1 OwnAddressReg1; //0x08
-	I2C_OWNADDRESS2 OwnAddressReg2; //0x0C
-	I2C_DATA DataReg; //0x10
-	I2C_STATUS1 StatusReg1; //0x14
-	I2C_STATUS2 StatusReg2; //0x18
-	I2C_CLOCKCONTROL ClockControlReg; //0x1C
-	I2C_RISETIME RiseTimeReg; //0x20
-	I2C_NOISEFILTER NoiseFilterReg; //0x24
-};
-
 typedef struct {
 	const uint32_t reserved0:21;
 	volatile uint32_t i2c1_StartTick:1;
@@ -214,6 +216,19 @@ typedef struct {
 
 
 
+
+struct _i2c {
+	I2C_CONTROL1 ControlReg1; //0x00
+	I2C_CONTROL2 ControlReg2; //0x04
+	I2C_OWNADDRESS1 OwnAddressReg1; //0x08
+	I2C_OWNADDRESS2 OwnAddressReg2; //0x0C
+	I2C_DATA DataReg; //0x10
+	I2C_STATUS1 StatusReg1; //0x14
+	I2C_STATUS2 StatusReg2; //0x18
+	I2C_CLOCKCONTROL ClockControlReg; //0x1C
+	I2C_RISETIME RiseTimeReg; //0x20
+	I2C_NOISEFILTER NoiseFilterReg; //0x24
+};
 
 
 #endif

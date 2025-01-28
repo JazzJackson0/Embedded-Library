@@ -1,6 +1,6 @@
-#include "STM32F407.ExternalInterrupt.h"
-#include "STM32F407.NVIC.h"
-#include "STM32F407.CPU.h"
+#include "ExternalInterrupt.h"
+#include "NVIC.h"
+#include "CPU.h"
 
 typedef enum _ReadWrite {
 	READ = 0, WRITE = 1
@@ -558,7 +558,8 @@ static void enableSoftwareLine(uint8_t lineNumber) {
  * Interrupt handler must write 1 to this bit to clear the pending state
  * NOTE: Writing a 1 to one of these bits will clear the pending state of the interrupt (to cancel the IRQn request)
  * 
- * @param lineNumber 
+ * @param lineNumber The line to read or write to
+ * @param rw Indicates whether you want to read the line or write to it.
  */
 static uint8_t triggerState(uint8_t lineNumber, E_ReadWrite rw) {
 

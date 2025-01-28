@@ -4,11 +4,21 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+typedef struct nvic_generic NVIC_GENERIC; // Can represent ISER, ICER, ISPER, ICPR & IABR
+// NVIC
+// // Add (IPR## x 4) to the interrupt# number specified in the struct fields
+typedef struct nvic_set_priority SET_PRIORITY_X;
+
+typedef struct _set_as_software SET_AS_SOFTWARE;
+#define ADDR_STIR ((SET_AS_SOFTWARE*) 0xE00)
+
+// Needed for SET_SOFTWARE_TRIGGER_X to work
+typedef struct _config_ctrl CONFIG_CTRL;
+#define ADDR_SCR ((CONFIG_CTRL*) 0x10)
+
 typedef enum _NVICRegs  E_NVICRegs;
 typedef enum _bit E_Bit;
 typedef enum _interruptType E_InterruptType;
-
-typedef struct nvic_generic NVIC_GENERIC; // Can represent ISER, ICER, ISPER, ICPR & IABR
 
 
 // DECLARATIONS-------------------------------------------------------------------------------------
@@ -40,18 +50,6 @@ uint8_t NVIC_InterruptIsActive(uint8_t vecTablePos);
  * @param type 
  */
 void NVICInterruptInit(uint8_t vecTablePos, uint8_t priority, E_InterruptType type);
-
-
-// NVIC
-// // Add (IPR## x 4) to the interrupt# number specified in the struct fields
-typedef struct nvic_set_priority SET_PRIORITY_X;
-
-typedef struct _set_as_software SET_AS_SOFTWARE;
-#define ADDR_STIR ((SET_AS_SOFTWARE*) 0xE00)
-
-// Needed for SET_SOFTWARE_TRIGGER_X to work
-typedef struct _config_ctrl CONFIG_CTRL;
-#define ADDR_SCR ((CONFIG_CTRL*) 0x10)
 
 
 //Enums----------------------------------------------------------------------

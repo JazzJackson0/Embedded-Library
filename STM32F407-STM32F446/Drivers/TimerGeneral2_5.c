@@ -1,4 +1,4 @@
-#include "STM32F407.TimerGeneral2_5.h"
+#include "TimerGeneral2_5.h"
 
 //Static Prototypes--------------------------------------------------------------
 static void PWM_PinInit(uint8_t timerNum);
@@ -98,35 +98,6 @@ void GeneralTimer2_5_PWM_Update(uint8_t timerNum, uint8_t captCompNum, uint16_t 
 }
 
 //Helper Functions--------------------------------------------------------------------------------------------------------------
-
-/**
-TIMER Pins ---------------------------
-		
-		+ TIM2_CH1: PA15 (AF1)
-		+ TIM2_CH2: PA1, PB3 (AF1)
-		+ TIM2_CH3: PA2, PB10 (AF1)
-		+ TIM2_CH4: PA3, PB11 (AF1)
-		+ TIM2_CH1_ETR: PA0, PA5 (AF1)
-		+ TIM2_ETR: PA15 (AF1)
-
-		+ TIM3_CH1: PA6, PB4, PC6 (AF2)
-		+ TIM3_CH2: PA7, PB5, PC7 (AF2)
-		+ TIM3_CH3: PB0, PC8 (AF2)
-		+ TIM3_CH4: PB1, PC9 (AF2)
-		+ TIM3_ETR: PD2 (AF2)
-
-		+ TIM4_CH1: PB6, PD12 (AF2)
-		+ TIM4_CH2: PB7, PD13 (AF2)
-		+ TIM4_CH3: PB8, PD14 (AF2)
-		+ TIM4_CH4: PB9, PD15 (AF2)
-		+ TIM4_ETR: PE0 (AF2)
-		
-		+ TIM5_CH1: PA0, PH10 (AF2)
-		+ TIM5_CH2: PA1, PH11 (AF2)
-		+ TIM5_CH3: PA2, PH12 (AF2)
-		+ TIM5_CH4: PA3, PI0 (AF2)
-		------------------------------------
-**/
 static void PWM_PinInit(uint8_t timerNum) {
 	
 	switch (timerNum) {

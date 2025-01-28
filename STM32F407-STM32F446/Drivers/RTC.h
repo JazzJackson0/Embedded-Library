@@ -4,6 +4,37 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <inttypes.h>     // for formatting stdint types 
+
+//RTC
+typedef struct _rtc RTCx;
+#define RTC_BASE 0x40002800
+#define ADDR_RTC ( (RTCx*) (RTC_BASE) )
+
+//RTC_DATE Register
+/*Weekday Units*/
+#define MONDAY 0x01
+#define TUESDAY 0x02
+#define WEDNESDAY 0x03
+#define THURSDAY 0x04
+#define FRIDAY 0x05
+#define SATURDAY 0x06
+#define SUNDAY 0x07
+	
+
+//RTC_CONTROL Register
+/*Wakeup Clock Type*/
+#define RTC_DIV_16 0x00
+#define RTC_DIV_8 0x01
+#define RTC_DIV_4 0x02
+#define RTC_DIV_2 0x03
+#define SYNC_PRESCALE 0x05
+#define SYNC_PRESCALE_AND_2_TO16POW 0x07
+
+/*Output Selection*/
+#define ALARM_A 0x01
+#define ALARM_B 0x02
+#define WAKEUP 0x03
+
 /*RTC Pins ---------------------------
 		These are 'Additional Functions' not 'Alternate Functions'
 		Meaning: Functions are directly selected/enabled through peripheral registers.
@@ -76,11 +107,6 @@ void Get_Time(void);
  */
 void Get_Date(void);
 
-//RTC
-typedef struct _rtc RTCx;
-#define RTC_BASE 0x40002800
-#define ADDR_RTC ( (RTCx*) (RTC_BASE) )
-
 //Unused Enums----------------------------------------------------------------------
 /*
 RTC_TIME & ALARMS & TIMESTAMP_TIME
@@ -90,76 +116,8 @@ typedef enum {
 	PM = 0x01
 }E_AMPM;
 	*/
-	
-	
-//RTC_DATE Register
-/*Weekday Units*/
-#define MONDAY 0x01
-#define TUESDAY 0x02
-#define WEDNESDAY 0x03
-#define THURSDAY 0x04
-#define FRIDAY 0x05
-#define SATURDAY 0x06
-#define SUNDAY 0x07
-	
-
-//RTC_CONTROL Register
-/*Wakeup Clock Type*/
-#define RTC_DIV_16 0x00
-#define RTC_DIV_8 0x01
-#define RTC_DIV_4 0x02
-#define RTC_DIV_2 0x03
-#define SYNC_PRESCALE 0x05
-#define SYNC_PRESCALE_AND_2_TO16POW 0x07
-
-/*Output Selection*/
-#define ALARM_A 0x01
-#define ALARM_B 0x02
-#define WAKEUP 0x03
 
 // Registers----------------------------------------------------------------------------
-struct _rtc {
-	RTC_TIME TimeReg; // 0x00
-	RTC_DATE DateReg; // 0x04
-	RTC_CONTROL ControlReg; // 0x08
-	RTC_INITIALIZATION_AND_STATUS InitAndStatusReg; // 0x0C
-	RTC_PRESCALER PrescalerReg; // 0x10
-	RTC_WAKEUP_TIMER WakeupTimerReg; // 0x14
-	RTC_CALIBRATION1 Calibration1Reg; // 0x18
-	RTC_ALARM_A AlarmAReg; // 0x1C
-	RTC_ALARM_B AlarmBReg; // 0x20
-	RTC_WRITE_PROTECTION WriteProtectionReg; // 0x24
-	RTC_SUB_SECOND SubSecondReg; // 0x28
-	RTC_SHIFT_CONTROL ShiftControlReg; // 0x2C
-	RTC_TIMESTAMP_TIME TimestampTimeReg; // 0x30
-	RTC_TIMESTAMP_DATE TimestampDateReg; // 0x34
-	RTC_TIMESTAMP_SUBSECOND TimestampSubSecondReg; // 0x38
-	RTC_CALIBRATION2 Calibration2Reg; // 0x3C
-	RTC_TAMPER_AND_ALTFUNC_CONFIG TamperAndAltFuncConfigReg; // 0x40
-	RTC_ALARM_A_SUBSECOND AlarmASubSecReg; // 0x44
-	RTC_ALARM_B_SUBSECOND AlarmBSubSecReg; // 0x48
-	RTC_RESERVED reserved; // 0x4C
-	RTC_BACKUPS BackupReg1; // 0x50
-	RTC_BACKUPS BackupReg2; // 0x54
-	RTC_BACKUPS BackupReg3; // 0x58
-	RTC_BACKUPS BackupReg4; // 0x5C
-	RTC_BACKUPS BackupReg5; // 0x60
-	RTC_BACKUPS BackupReg6; // 0x64
-	RTC_BACKUPS BackupReg7; // 0x68
-	RTC_BACKUPS BackupReg8; // 0x6C
-	RTC_BACKUPS BackupReg9; // 0x70
-	RTC_BACKUPS BackupReg10; // 0x74
-	RTC_BACKUPS BackupReg11; // 0x78
-	RTC_BACKUPS BackupReg12; // 0x7C
-	RTC_BACKUPS BackupReg13; // 0x80
-	RTC_BACKUPS BackupReg14; // 0x84
-	RTC_BACKUPS BackupReg15; // 0x88
-	RTC_BACKUPS BackupReg16; // 0x8C
-	RTC_BACKUPS BackupReg17; // 0x90
-	RTC_BACKUPS BackupReg18; // 0x94
-	RTC_BACKUPS BackupReg19; // 0x98
-	RTC_BACKUPS BackupReg20; // 0x9C
-};
 
 typedef struct {
 	const uint32_t reserved:32;
@@ -377,6 +335,56 @@ typedef struct {
 typedef struct {
 	volatile uint32_t rw_BackupRegister:32;
 }RTC_BACKUPS;
+
+
+
+
+
+
+
+
+struct _rtc {
+	RTC_TIME TimeReg; // 0x00
+	RTC_DATE DateReg; // 0x04
+	RTC_CONTROL ControlReg; // 0x08
+	RTC_INITIALIZATION_AND_STATUS InitAndStatusReg; // 0x0C
+	RTC_PRESCALER PrescalerReg; // 0x10
+	RTC_WAKEUP_TIMER WakeupTimerReg; // 0x14
+	RTC_CALIBRATION1 Calibration1Reg; // 0x18
+	RTC_ALARM_A AlarmAReg; // 0x1C
+	RTC_ALARM_B AlarmBReg; // 0x20
+	RTC_WRITE_PROTECTION WriteProtectionReg; // 0x24
+	RTC_SUB_SECOND SubSecondReg; // 0x28
+	RTC_SHIFT_CONTROL ShiftControlReg; // 0x2C
+	RTC_TIMESTAMP_TIME TimestampTimeReg; // 0x30
+	RTC_TIMESTAMP_DATE TimestampDateReg; // 0x34
+	RTC_TIMESTAMP_SUBSECOND TimestampSubSecondReg; // 0x38
+	RTC_CALIBRATION2 Calibration2Reg; // 0x3C
+	RTC_TAMPER_AND_ALTFUNC_CONFIG TamperAndAltFuncConfigReg; // 0x40
+	RTC_ALARM_A_SUBSECOND AlarmASubSecReg; // 0x44
+	RTC_ALARM_B_SUBSECOND AlarmBSubSecReg; // 0x48
+	RTC_RESERVED reserved; // 0x4C
+	RTC_BACKUPS BackupReg1; // 0x50
+	RTC_BACKUPS BackupReg2; // 0x54
+	RTC_BACKUPS BackupReg3; // 0x58
+	RTC_BACKUPS BackupReg4; // 0x5C
+	RTC_BACKUPS BackupReg5; // 0x60
+	RTC_BACKUPS BackupReg6; // 0x64
+	RTC_BACKUPS BackupReg7; // 0x68
+	RTC_BACKUPS BackupReg8; // 0x6C
+	RTC_BACKUPS BackupReg9; // 0x70
+	RTC_BACKUPS BackupReg10; // 0x74
+	RTC_BACKUPS BackupReg11; // 0x78
+	RTC_BACKUPS BackupReg12; // 0x7C
+	RTC_BACKUPS BackupReg13; // 0x80
+	RTC_BACKUPS BackupReg14; // 0x84
+	RTC_BACKUPS BackupReg15; // 0x88
+	RTC_BACKUPS BackupReg16; // 0x8C
+	RTC_BACKUPS BackupReg17; // 0x90
+	RTC_BACKUPS BackupReg18; // 0x94
+	RTC_BACKUPS BackupReg19; // 0x98
+	RTC_BACKUPS BackupReg20; // 0x9C
+};
 
 
 #endif

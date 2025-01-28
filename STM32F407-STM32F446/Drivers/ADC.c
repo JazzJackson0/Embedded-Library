@@ -1,4 +1,4 @@
-#include "STM32F407.ADC.h"
+#include "ADC.h"
 
 
 //Static Prototypes------------------------------------------------------------
@@ -103,41 +103,6 @@ int16_t ADC_ReadRegularChannel(uint8_t adcNumber) {
 }
 
 //Helper Functions--------------------------------------------------------------------------------------------------------------
-	
-/**
-ADC Pins ---------------------------
-		These are 'Additional Functions' not 'Alternate Functions'
-		Meaning: Functions are directly selected/enabled through peripheral registers.
-		They are not selected through GPIOx_AFR registers.
-		
-		+ ADC3_IN4: PF6
-		+ ADC3_IN5: PF7
-		+ ADC3_IN6: PF8
-		+ ADC3_IN7: PF9
-		+ ADC3_IN8: PF10
-		+ ADC3_IN9: PF3
-		+ ADC3_IN14: PF4
-		+ ADC3_IN15: PF5
-	
-		+ ADC12_IN4: PA4
-		+ ADC12_IN5: PA5
-		+ ADC12_IN6: PA6
-		+ ADC12_IN7: PA7
-		+ ADC12_IN8: PB0
-		+ ADC12_IN9: PB1
-		+ ADC12_IN14: PC4
-		+ ADC12_IN15: PC5
-		
-		+ ADC123_IN0: PA0
-		+ ADC123_IN1: PA1
-		+ ADC123_IN2: PA2
-		+ ADC123_IN3: PA3
-		+ ADC123_IN10: PC0
-		+ ADC123_IN11: PC1
-		+ ADC123_IN12: PC2
-		+ ADC123_IN13: PC3
-		------------------------------------
-**/
 static void ADC_PinInit(uint8_t adcNumber) {
 	
 	switch (adcNumber) {
