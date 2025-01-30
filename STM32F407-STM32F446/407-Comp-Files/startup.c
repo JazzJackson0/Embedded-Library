@@ -17,6 +17,7 @@ extern uint32_t _ebss;
 
 void __libc_init_array(void);
 
+// weak: Linker will automatically replace function with any stringer definitions found 
 int main(void);
 void Reset_Handler(void);
 void NMI_Handler			(void)__attribute__((weak, alias ("Default_Handler")));
