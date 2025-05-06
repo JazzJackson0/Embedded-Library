@@ -1,6 +1,8 @@
 #pragma once
 #include "../FlightControl/StateEstimator/SensorDataConvert.h"
 
+#define FILTERED_ANGLE_INIT { 0.0, 0.0, 0.0 }
+
 typedef struct f_angles filteredAngles;
 
 //DECLARATIONS
@@ -13,7 +15,7 @@ typedef struct f_angles filteredAngles;
  * @param accelWeight Accelerometer Weighting Coefficient
  * @return ** void* 
  */
-void complementary_filter(filteredAngles* angles, RotationAngles* rotations, float gyroWeight, float accelWeight);
+void complementary_filter(filteredAngles* angles, RotationAngles rotations, float gyroWeight, float accelWeight);
 
 
 //Structs
@@ -24,6 +26,6 @@ struct f_angles {
     double Filtered_Angle_Z;
 };
 
-#define FILTERED_ANGLE_INIT { 0.0, 0.0, 0.0 }
+
 
 

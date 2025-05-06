@@ -21,7 +21,7 @@ typedef struct motors Motors;
  * @param rollPID Roll PID Value
  * @return ** Motors* Amount of thrust required per motor
  */
-Motors* Motor_Mix(int numOfMotors, double thrustPID, double yawPID, double pitchPID, double rollPID);
+Motors Motor_Mix(int numOfMotors, double thrustPID, double yawPID, double pitchPID, double rollPID);
 
 /**
  * @brief Amounts of thrust per motor

@@ -2,6 +2,9 @@
 #define PID_H
 #include <stdbool.h>
 
+#define AUTOMATIC 1			
+#define REVERSE 1
+
 typedef struct pid PIDController;
 typedef enum mode PIDMode;
 typedef enum dir PIDDirection;
@@ -10,9 +13,9 @@ typedef enum dir PIDDirection;
 /**
  * @brief Initialize the PID Controller
  * 
- * @return ** PIDController* Initialized PID
+ * @return ** PIDController Initialized PID
  */
-PIDController* PID_Init(void);
+PIDController PID_Init(void);
 
 /**
  * @brief Run PID on incoming data.

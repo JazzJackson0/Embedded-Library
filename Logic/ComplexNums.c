@@ -1,32 +1,31 @@
 #include "ComplexNums.h"
 
-complexNum* Get_SinusoidalBasis(double kt) {
+complexNum Get_SinusoidalBasis(double kt) {
 
-    complexNum *result = malloc(sizeof(complexNum));
+    complexNum result = {
 
-    //Should I add 2pi to this?: k x 2pi x t
-    result->realPart = cos(kt); 
-    result->imaginaryPart = -sin(kt);
+        // Should I add 2pi to this?: k x 2pi x t
+        cos(kt),
+        -sin(kt)
+    };
 
     return result;
 }
 
-complexNum* Set_Z(double angle, double magnitude_r, int n) {
+complexNum Set_Z(double angle, double magnitude_r, int n) {
 
-    complexNum *z = Get_SinusoidalBasis(angle);
+    complexNum z = Get_SinusoidalBasis(angle);
 
-    //Simulating magnitude = magnitude ^ 0
+    // Simulating magnitude = magnitude ^ 0
     if (n == 0) { magnitude_r = 1; }
     
-    //Simulating magnitude = magnitude ^ n
-    if (n > 1) { 
-        
+    // Simulating magnitude = magnitude ^ n
+    if (n > 1) 
         for (int i = 2; i <= n; i++) { magnitude_r *= magnitude_r; }
-     }
 
-    //Simulating magnitude = magnitude ^ 1
-    z->realPart *= (1 / magnitude_r);
-    z->imaginaryPart *= (1 / magnitude_r);
+    // Simulating magnitude = magnitude ^ 1
+    z.realPart *= (1 / magnitude_r);
+    z.imaginaryPart *= (1 / magnitude_r);
 
     return z;
 }

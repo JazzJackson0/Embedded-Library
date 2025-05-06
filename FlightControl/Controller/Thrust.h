@@ -1,6 +1,8 @@
 #pragma once
 #include <stdint.h>
 
+#define ACEL_GRAV 9.81;
+
 //DECLARATIONS
 /**
  * @brief Calculates the resultig upward force from a given thrust value and the vehicle's mass.

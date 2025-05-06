@@ -2,13 +2,10 @@
 
 //Static Prototypes-------------------------------------
 static void Initialize(PIDController *PID);
-#define AUTOMATIC 1			
-#define REVERSE 1
 
-PIDController* PID_Init(void) {
+PIDController PID_Init(void) {
 	
-	PIDController PIDTarget = PID_INIT;
-	PIDController *PID = &PIDTarget;
+	PIDController PID = PID_INIT;
 	return PID;
 }
 

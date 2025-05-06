@@ -1,46 +1,35 @@
 #pragma once
 #include <math.h>
 #include <stdlib.h>
+#include "RotationMatrix.h"
+#include "../Logic/MatrixMath.h"
 
-typedef struct euler EulerAngle;
 
 //DECLARATIONS
 /**
- * @brief Convert given rotation angles to euler angles.
- *          |||  Example: for XZX rotation matrix: one = x-rotation, 
- *              two = z-rotation, three = x-rotation.
- *          |||  Available Sets: XZX, XYX, YXY, YZY, ZYZ, ZXZ
+ * @brief Define the orientation given the 3 Euler Angles
  * 
- * @param one The (X,Y or Z) angle of rotation in your corresponding rotation matrix
- * @param two The (X,Y or Z) angle of rotation in your corresponding rotation matrix
- * @param three The (X,Y or Z) angle of rotation in your corresponding rotation matrix
- * @return ** EulerAngle* 
+ * @param roll The Roll Rotation 
+ * @param pitch The Pitch Rotation
+ * @param yaw The Yaw Rotation
+ * @return ** The Final Orientation Rotation Matrix 
  */
-EulerAngle* RotMat_to_EulerAngles(double one, double two, double three);
+Matrix EulerOrientation_XYZ(double roll, double pitch, double yaw);
 /**
- * @brief Convert given rotation angles to tait-bryan angles.
- *          |||  Example: for XZY rotation matrix: one = x-rotation, 
- *              two = z-rotation, three = y-rotation.
- *          |||  Available Sets: XZY, XYZ, YXZ, YZX, ZYX, ZXY
+ * @brief Define the orientation given the 3 Euler Angles
  * 
- * @param one The (X,Y or Z) angle of rotation in your corresponding rotation matrix 
- * @param two The (X,Y or Z) angle of rotation in your corresponding rotation matrix
- * @param three The (X,Y or Z) angle of rotation in your corresponding rotation matrix
- * @return ** EulerAngle* 
+ * @param roll The Roll Rotation 
+ * @param pitch The Pitch Rotation
+ * @param yaw The Yaw Rotation
+ * @return ** The Final Orientation Rotation Matrix 
  */
-EulerAngle* RotMat_to_TaitBryanAngles(double one, double two, double three);
-
+Matrix EulerOrientation_ZYX(double roll, double pitch, double yaw);
 /**
- * @brief Deallocate memory allocated to euler
+ * @brief Define the orientation given the 3 Euler Angles
  * 
- * @param euler 
+ * @param pitch The Pitch Rotation
+ * @param yaw The Yaw Rotation
+ * @return ** The Final Orientation Rotation Matrix 
  */
-void recycle_Angles(EulerAngle* euler);
+Matrix EulerOrientation_ZYZ(double pitch, double yaw);
 
-
-//Structs
-struct euler {
-    double Roll;
-    double Pitch;
-    double Yaw;
-};
